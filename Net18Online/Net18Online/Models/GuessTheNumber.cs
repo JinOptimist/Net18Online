@@ -49,12 +49,36 @@ namespace Net18Online.Models
             {
                 Console.WriteLine($"Your range: [{MinValue};{MaxValue}]");
                 var guess = ReadNumber("Enter your guess");
+
+                while(guess < MinValue || guess > MaxValue)
+                {
+                    Console.WriteLine("---------------------------------------");
+                    Console.WriteLine("Error: Your number is not in the range!");
+                    Console.WriteLine("---------------------------------------");
+                    Console.WriteLine("Try again...");
+                    Console.WriteLine($"Your range: [{MinValue};{MaxValue}]");
+                    guess = ReadNumber("Enter your guess");
+                }
+
                 if (guess == Number)
                 {
                     _isSecondGamerWin = true;
                     break;
+                }else if(guess < Number)
+                {
+                    Console.WriteLine("--------------------------");
+                    Console.WriteLine("The desired number more...");
+                    Console.WriteLine("--------------------------");
                 }
+                else
+                {
+                    Console.WriteLine("--------------------------");
+                    Console.WriteLine("The desired number less...");
+                    Console.WriteLine("--------------------------");
+                }
+
                 attempt++;
+
             } while (attempt < MaxAttempt);
         }
 
@@ -68,7 +92,9 @@ namespace Net18Online.Models
 
                 if (MaxValue < MinValue)
                 {
+                    Console.WriteLine("----------------------------------------------------");
                     Console.WriteLine("Error: Your min value range is greater than the max!");
+                    Console.WriteLine("----------------------------------------------------");
                     Console.WriteLine("Try again...");
                     Console.WriteLine($"Your min value range is {MinValue}");
                 }
@@ -84,7 +110,9 @@ namespace Net18Online.Models
 
                 if(Number < MinValue || Number > MaxValue)
                 {
+                    Console.WriteLine("------------------------------------------------");
                     Console.WriteLine("Error: Your number is not included in the range!");
+                    Console.WriteLine("------------------------------------------------");
                     Console.WriteLine("Try again...");
                     Console.WriteLine($"Your range: [{MinValue};{MaxValue}]");
                 }
