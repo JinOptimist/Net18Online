@@ -16,6 +16,10 @@ namespace Net18Online.Interfaces
         /// Is this player bot or real player
         /// </summary>
         bool isBot { get; set; }
+        /// <summary>
+        /// Current attempt count of player
+        /// </summary>
+        int AttemptCount { get; set; }
         string Name { get; set; }
     }
 }

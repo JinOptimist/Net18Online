@@ -8,11 +8,11 @@ namespace Net18Online.Models
         /// <summary>
         /// Pool of players in current game
         /// </summary>
-        private Player[] players;
+        private List<Player> players;
 
         public GuessTheNumber(int size)
         {
-            players = new Player[size];
+            var players = new List<Player>();
         }
         /// <summary>
         /// Number which we try to guess

@@ -23,6 +23,11 @@ namespace Net18Online.Models
         /// Max attempt before lose
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Current attempt count of player
+        /// </summary>
+        public int AttemptCount { get; set; }
         bool IGuess.isBot {
             get
             {
