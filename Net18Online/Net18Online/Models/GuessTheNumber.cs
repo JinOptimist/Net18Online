@@ -69,12 +69,14 @@ namespace Net18Online.Models
                     Console.WriteLine("--------------------------");
                     Console.WriteLine("The desired number more...");
                     Console.WriteLine("--------------------------");
+                    MinValue = guess;
                 }
                 else
                 {
                     Console.WriteLine("--------------------------");
                     Console.WriteLine("The desired number less...");
                     Console.WriteLine("--------------------------");
+                    MaxValue = guess;
                 }
 
                 attempt++;
