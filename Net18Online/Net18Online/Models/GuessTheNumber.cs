@@ -1,22 +1,82 @@
-﻿
-
+﻿using System.ComponentModel;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Net18Online.Models
 {
     public class GuessTheNumber
     {
         /// <summary>
+        /// Pool of players in current game
+        /// </summary>
+        private Player[] players;
+
+        public GuessTheNumber(int size)
+        {
+            players = new Player[size];
+        }
+        /// <summary>
         /// Number which we try to guess
         /// </summary>
-        public int Number { get; set; }
+        public int GuessedNumber { get; set; }
 
         /// <summary>
-        /// Max attempt before lose
+        /// Upper limit of the potentially guessed number
         /// </summary>
-        public int MaxAttempt { get; set; }
+        public int MaxNumber { get; set; } = 100;
+
+        /// <summary>
+        /// Lower limit of the potentially guessed number
+        /// </summary>
+        public int MinNumber { get; set; } = 1;
+
+        /// <summary>
+        /// Max attempt before lose. Use log2 because of advice option
+        /// </summary>
+        private int _maxAttempt { 
+                get {
+                    return _maxAttempt;
+                }
+                set {
+                _maxAttempt = (int)Math.Log2(MaxNumber);
+                } 
+        }
+        /// <summary>
+        /// Checkbox that activates, if game options allows them
+        /// </summary>
+        private bool _advicesOn;
 
         private bool _isSecondGamerWin;
 
+        internal class Advice
+        {
+            private GuessTheNumber? parent;
+
+            internal int Id { get; set; }
+            internal string AdviceName { get; set; }
+
+            public Advice(GuessTheNumber parent)
+            {
+                this.parent = parent;
+            }
+
+            void DividedByTwo(int suppossedNumber)
+            {
+                if (parent.GuessedNumber % suppossedNumber == 0)
+                    Console.WriteLine("Guessed number is divided by " + suppossedNumber);
+                else
+                    Console.WriteLine("Guessed number is NOT divided by " + suppossedNumber);
+            }
+
+            void MoreThanGuessed(int suppossedNumber)
+            {
+                if (parent.GuessedNumber < suppossedNumber)
+                    Console.WriteLine($"Suppossed number {suppossedNumber} is MORE than guessed");
+                else
+                    Console.WriteLine($"Suppossed number {suppossedNumber} is LESS than guessed");
+            }
+        }
+
+        #region codeForRewrite
         public void Start()
         {
             FirstGamerSetTheNumber();
@@ -66,5 +126,6 @@ namespace Net18Online.Models
             var numberStr = Console.ReadLine();
             return int.Parse(numberStr);
         }
+        #endregion
     }
 }
