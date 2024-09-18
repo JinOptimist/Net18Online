@@ -30,6 +30,70 @@ namespace Net18Online.Models
             ShowResult();
         }
 
+        public void StartWithImbaBot()
+        {
+            FirstGamerSetTheRange();
+
+            FirstGamerSetTheNumber();
+
+            ImbaBotTryGuessTheNumber();
+
+            ShowResult();
+        }
+
+        private void ImbaBotTryGuessTheNumber()
+        {
+            var attempt = 0;
+            var lastGuess = 0.1;
+            do
+            {
+                Console.WriteLine($"There are {MaxAttempt - attempt} attempts left!");
+                Console.WriteLine($"Your range: [{MinValue};{MaxValue}]");
+                var guess = (MaxValue + MinValue) / 2;
+
+                if (lastGuess != guess)
+                {
+                    lastGuess = guess;
+                    Console.WriteLine($"The bot assumes that it is {guess}");
+                }
+                else
+                {
+                    if (MaxValue > 0)
+                    {
+                        guess = MaxValue;
+                    }
+                    else
+                    {
+                        guess = MinValue;
+                    }
+                    Console.WriteLine($"The bot assumes that it is {guess}");
+                }
+
+                if (guess == Number)
+                {
+                    _isSecondGamerWin = true;
+                    break;
+                }
+                else if (guess < Number)
+                {
+                    Console.WriteLine("------------------------");
+                    Console.WriteLine("The desired number more!");
+                    Console.WriteLine("------------------------");
+                    MinValue = guess;
+                }
+                else
+                {
+                    Console.WriteLine("------------------------");
+                    Console.WriteLine("The desired number less!");
+                    Console.WriteLine("------------------------");
+                    MaxValue = guess;
+                }
+
+                attempt++;
+
+            } while (attempt < MaxAttempt);
+        }
+
         private void ShowResult()
         {
             if (_isSecondGamerWin)
