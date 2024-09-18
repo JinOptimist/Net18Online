@@ -1,4 +1,4 @@
-﻿using Net18Online.Models;
+﻿using Net18Online.Services;
 
-var game1 = new GuessTheNumber();
-game1.Start();
+var app = new AppService(args);
+app.Run();
