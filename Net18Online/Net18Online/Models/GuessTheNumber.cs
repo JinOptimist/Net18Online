@@ -47,6 +47,7 @@ namespace Net18Online.Models
             var attempt = 0;
             do
             {
+                Console.WriteLine($"There are {MaxAttempt - attempt} attempts left!");
                 Console.WriteLine($"Your range: [{MinValue};{MaxValue}]");
                 var guess = ReadNumber("Enter your guess");
 
@@ -66,16 +67,16 @@ namespace Net18Online.Models
                     break;
                 }else if(guess < Number)
                 {
-                    Console.WriteLine("--------------------------");
-                    Console.WriteLine("The desired number more...");
-                    Console.WriteLine("--------------------------");
+                    Console.WriteLine("------------------------");
+                    Console.WriteLine("The desired number more!");
+                    Console.WriteLine("------------------------");
                     MinValue = guess;
                 }
                 else
                 {
-                    Console.WriteLine("--------------------------");
-                    Console.WriteLine("The desired number less...");
-                    Console.WriteLine("--------------------------");
+                    Console.WriteLine("------------------------");
+                    Console.WriteLine("The desired number less!");
+                    Console.WriteLine("------------------------");
                     MaxValue = guess;
                 }
 
@@ -121,8 +122,13 @@ namespace Net18Online.Models
 
             } while (Number < MinValue || Number > MaxValue);
 
-            MaxAttempt = ReadNumber("Enter max attempt count");
+            MaxAttempt = AutoCountMaxAttempt();
             Console.Clear();
+        }
+
+        private int AutoCountMaxAttempt()
+        {
+            return (int)Math.Ceiling(Math.Log2(MaxValue - MinValue + 1)) + 1;
         }
 
         private int ReadNumber(string message)
