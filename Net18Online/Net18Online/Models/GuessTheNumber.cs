@@ -1,6 +1,8 @@
 ﻿
 
 
+using System.Numerics;
+
 namespace Net18Online.Models
 {
     public class GuessTheNumber
@@ -14,6 +16,8 @@ namespace Net18Online.Models
         /// Max attempt before lose
         /// </summary>
         public int MaxAttempt { get; set; }
+        public int MinNumber { get; set; }
+        public int MaxNumber {  get; set; }
 
         private bool _isSecondGamerWin;
 
@@ -43,19 +47,33 @@ namespace Net18Online.Models
             var attempt = 0;
             do
             {
-                var guess = ReadNumber("Enter your guess");
+                var guess = ReadNumber($"Введите ваше предположение (от {MinNumber} до {MaxNumber}):");
                 if (guess == Number)
                 {
                     _isSecondGamerWin = true;
                     break;
                 }
+                else if (guess < Number) 
+                {
+                    Console.WriteLine("Your guess is too low.");
+                    MinNumber = Math.Max(guess + 1, MinNumber);
+                }
+                else 
+                {
+                    Console.WriteLine("Your guess is too high.");
+                    MaxNumber = Math.Min(guess - 1, MaxNumber);
+                }
+                Console.WriteLine($"New guessing range: from {MinNumber} to {MaxNumber}");
                 attempt++;
             } while (attempt < MaxAttempt);
         }
 
         private void FirstGamerSetTheNumber()
         {
-            Number = ReadNumber("Enter the number");
+           
+            MinNumber = ReadNumber("Enter lower limit of the range:");
+            MaxNumber = ReadNumber("Enter upper limit of the range:");
+            Number = ReadNumber($"Enter the number to guess (between {MinNumber} and {MaxNumber}):");
             MaxAttempt = ReadNumber("Enter max attempt count");
             Console.Clear();
         }
