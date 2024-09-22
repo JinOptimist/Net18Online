@@ -242,7 +242,7 @@ namespace Net18Online.Models
 
         }
 
-        private void TypeOfSearch()
+        private void TypeOfSearch() // Choose the type of search: random or binary
         {
             Console.Clear();
             Console.WriteLine("Now you need to choose a method for searching for a number." +
@@ -273,7 +273,7 @@ namespace Net18Online.Models
         }
         
 
-        private void ComputerTryGuessTheNumberWithAttepmts()
+        private void ComputerTryGuessTheNumberWithAttepmts() // Random search. We have an attempts and we try to guess with random
         {
             Console.Clear();
             MaxAttempt = CalculateMaxAttempts(Num_Start_Range, Num_End_Range); // Calculate the maximum number of attempts
@@ -335,7 +335,7 @@ namespace Net18Online.Models
 
                 }
             }
-            if (_isComputerWin == false)
+            if (_isComputerWin == false) // If attempt >= MaxAttempt computer loose
             {
                 Console.WriteLine("\nHow did I lose?");
                 
