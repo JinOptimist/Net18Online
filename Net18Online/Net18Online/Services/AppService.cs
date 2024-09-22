@@ -1,28 +1,21 @@
 ﻿using Net18Online.Models;
+using Net18Online.Services.ConsoleHandlers;
 
 namespace Net18Online.Services;
 public class AppService
 {
-    private string[] _args;
-
-    public AppService(string[] args)
-    {
-        _args = args;
-    }
-
     public void Run()
     {
-        var setting = new SettingService(Path.Combine("Configuration", "config.json"), _args).GetSetting();
+        var notifier = new ConsoleNotifier();
+        var inputReceiver = new ConsoleInputHandler();
+        var gm = new GameManager(notifier, inputReceiver);
+        var game = gm.BuildGame();
 
-        var robot = new ComputerPlayer(setting.MinNumber, setting.MaxNumber);
-        var human = new HumanPlayer(setting.MinNumber, setting.MaxNumber);
-
-        var gm = new GameManager(robot, human, setting);
         while (true)
         {
-            gm.Start();
-            Console.WriteLine("Do you want to play again? (Y/N)");
-            if (Console.ReadLine()?.ToLower() != "y")
+            game.Play();
+            notifier.Inform("Do you want to play again? (Y/N)");
+            if (inputReceiver.GetUserInput().ToLower() != "y")
                 break;
         }
     }

@@ -1,5 +1,8 @@
 ﻿{
-  "GuessAttempts": 3,
-  "MaxNumber": 10,
-  "MinNumber": 1
+  "GuessAttempts": 4,
+  "MaxNumber": 50,
+  "MinNumber": 1,
+  "IsAutoSetAttempts": true,
+  "IsUpdateRanges": true,
+  "IsEnableHints":  true
 }

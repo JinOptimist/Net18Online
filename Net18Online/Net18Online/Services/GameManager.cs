@@ -1,77 +1,74 @@
 ﻿using Net18Online.Models;
 using Net18Online.Models.Abstractions;
 
-namespace Net18Online.Services
+namespace Net18Online.Services;
+public class GameManager
 {
-    public class GameManager
+    private INotifier _notifier;
+    private IUserDataReceiver _userDataReceiver;
+    private MenuProvider _menu;
+    private GameSetting _settings;
+    private const string FirstPlayerIdentifier = "first";
+    private const string SecondPlayerIdentifier = "second";
+
+    public GameManager(INotifier notifier, IUserDataReceiver userDataReceiver)
     {
-        private IChoosable _riddler;
-        private IChoosable _guesser;
-        private GameSetting _gameSetting;
-        private int _attemptsNumber;
-        private bool _isHintMode;
+        _notifier = notifier;
+        _userDataReceiver = userDataReceiver;
+        _menu = new MenuProvider(_notifier, _userDataReceiver);
+        _settings = new SettingsProvider(Path.Combine("Configuration", "config.json")).GetSetting();
+    }
+    private void Greeting()
+    {
+        _notifier.Major($"Hello, {Environment.UserName}!");
+        _notifier.Major("You are welcomed by the manager of the \"Guess the number game\"!");
+    }
 
-        public GameManager(IChoosable riddler, IChoosable guesser, GameSetting gameSetting)
+    public Game BuildGame()
+    {
+        Greeting();
+        var mode = _menu.SelectMode();
+
+        Player firstPlayer;
+        Player secondPlayer;
+        switch (mode)
         {
-            _riddler = riddler;
-            _guesser = guesser;
-            _gameSetting = gameSetting;
+            case GameMode.PlayerVsComputer:
+                firstPlayer = new ComputerPlayer(_settings, GetComputerPlayerName());
+                secondPlayer = new HumanPlayer(_settings, GetHumanPlayerName(), _notifier, _userDataReceiver);
+                break;
+            case GameMode.PlayerVsPlayer:
+                firstPlayer = new HumanPlayer(_settings, GetHumanPlayerName(FirstPlayerIdentifier), _notifier, _userDataReceiver);
+                secondPlayer = new HumanPlayer(_settings, GetHumanPlayerName(SecondPlayerIdentifier), _notifier, _userDataReceiver);
+                break;
+            case GameMode.ComputerVsComputer:
+                firstPlayer = new ComputerPlayer(_settings, GetComputerPlayerName(FirstPlayerIdentifier));
+                secondPlayer = new ComputerPlayer(_settings, GetComputerPlayerName(SecondPlayerIdentifier));
+                break;
+            default:
+                throw new ArgumentException("Unknow game mode selected");
         }
+        return new Game(firstPlayer, secondPlayer, _settings, _notifier);
+    }
 
-        public void Start()
-        {
-            Initialize();
-            
-            var riddlersNumber = _riddler.ChooseNumber();
-            var gameResult = GuessTheNumber(riddlersNumber);
+    private string GetComputerPlayerName(string? playerIdentifier = null) =>
+        "Bot player" +
+        (string.IsNullOrEmpty(playerIdentifier) ? string.Empty : $"({playerIdentifier})");
 
-            ShowResult(gameResult);
-        }
+    private string GetHumanPlayerName(string? playerIdentifier = null)
+    {
+        var message = playerIdentifier == null ?
+            "Please, enter human player name:" :
+            $"Please, enter {playerIdentifier} human player name:";
+        
+        _notifier.Assist(message);
+        var name = _userDataReceiver.GetUserInput();
 
-        private void Initialize()
-        {
-            _attemptsNumber = 0;
+        if (!string.IsNullOrEmpty(name))
+            return name;
 
-            ConsoleWriterUtil.PrintConsoleInfo("Do you want to enable hints? (Y/N)");
-            _isHintMode = Console.ReadLine()?.ToLower() == "y";
-        }
-
-        private bool GuessTheNumber(int riddlersNumber)
-        {
-            while (_attemptsNumber < _gameSetting.GuessAttempts)
-            {
-                Console.WriteLine();
-                ConsoleWriterUtil.PrintConsoleInfo($"Player guesses the number, attempts left: {_gameSetting.GuessAttempts - _attemptsNumber}");
-                _attemptsNumber++;
-
-                var guessNumber = _guesser.ChooseNumber();
-                if (guessNumber == riddlersNumber)
-                    return true;
-
-                CheckHint(guessNumber, riddlersNumber);
-
-            }
-            return false;
-        }
-
-        private void CheckHint(int guessNumber, int riddlersNumber)
-        {
-            if (!_isHintMode || _attemptsNumber == _gameSetting.GuessAttempts) 
-                return;
-
-            var hintText = (guessNumber < riddlersNumber) ?
-                "The entered number is less than the desired one" :
-                "The entered number is greater than the desired one";
-            ConsoleWriterUtil.PrintConsoleHint(hintText);
-        }
-
-        private void ShowResult(bool gameResult)
-        {
-            if (gameResult)
-                ConsoleWriterUtil.PrintConsoleWin($"The number is guessed in {_attemptsNumber} attempts");
-            else
-                ConsoleWriterUtil.PrintConsoleLoss("The number was not guessed");
-            Console.WriteLine();
-        }
+        if (string.IsNullOrEmpty(playerIdentifier))
+            return nameof(HumanPlayer);
+        return $"{nameof(HumanPlayer)} ({playerIdentifier})";
     }
 }

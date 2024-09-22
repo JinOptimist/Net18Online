@@ -5,11 +5,14 @@ public class ComputerPlayer : Player
 {
     private Random _random;
 
-    public ComputerPlayer(int minNumber, int maxNumber) : base(minNumber, maxNumber)
+    public ComputerPlayer(GameSetting gameSetting, string name) : base(gameSetting, name)
     {
         _random = new Random();
     }
 
-    public override int ChooseNumber() =>
+    public override int GuessANumber() =>
+        (MaxNumber - MinNumber) / 2 + MinNumber;
+
+    public override int ThinkANumber() =>
         _random.Next(MinNumber, MaxNumber + 1);
 }
