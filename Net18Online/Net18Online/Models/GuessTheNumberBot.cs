@@ -1,7 +1,7 @@
 ﻿
 namespace Net18Online.Models
 {
-    public class GuessTheNumber
+    class GuessTheNumberBot
     {
         /// <summary>
         /// Number which we try to guess
@@ -14,14 +14,14 @@ namespace Net18Online.Models
         private int _MaxRangeNumber;
         public int MaxRangeNumber
         {
-            get 
-            { 
-                return _MaxRangeNumber; 
+            get
+            {
+                return _MaxRangeNumber;
             }
-            set 
-            { 
-                if (value<MinRangeNumber) { _MaxRangeNumber = MinRangeNumber*5; } 
-                else { _MaxRangeNumber = value; } 
+            set
+            {
+                if (value < MinRangeNumber) { _MaxRangeNumber = MinRangeNumber * 5; }
+                else { _MaxRangeNumber = value; }
             }
         }
 
@@ -56,10 +56,11 @@ namespace Net18Online.Models
         private void SecondGamerTryGuessTheNumber()
         {
             var attempt = 0;
+            var random = new Random();
             do
             {
-                Console.WriteLine("You have "+ (MaxAttempt-attempt) + " left");
-                var guess = ReadNumber("Enter your guess", MinRangeNumber, MaxRangeNumber);
+                var guess = random.Next(MinRangeNumber, MaxRangeNumber+1);
+                Console.WriteLine(guess);
                 if (guess == Number)
                 {
                     _isSecondGamerWin = true;
@@ -76,7 +77,7 @@ namespace Net18Online.Models
             MinRangeNumber = ReadNumber("Enter range min");
             MaxRangeNumber = ReadNumber("Enter range max");
             Number = ReadNumber("Enter the number", MinRangeNumber, MaxRangeNumber);
-            MaxAttempt = CalculateAttempts((MaxRangeNumber-MinRangeNumber));
+            MaxAttempt = CalculateAttempts((MaxRangeNumber - MinRangeNumber));
             Console.Clear();
         }
 
@@ -109,11 +110,11 @@ namespace Net18Online.Models
         {
             if (guess < Number)
             {
-                Console.WriteLine("\nThe number is larger than guess\n");
+                Console.WriteLine("The number is larger than guess\n");
             }
             else
             {
-                Console.WriteLine("\nThe number is less than guess\n");
+                Console.WriteLine("The number is less than guess\n");
             }
         }
         private void ChangeRange(int guess)
@@ -127,6 +128,6 @@ namespace Net18Online.Models
                 MaxRangeNumber = guess;
             }
         }
-        private int CalculateAttempts(int range) => Convert.ToInt32((range*0.1));
+        private int CalculateAttempts(int range) => Convert.ToInt32((range * 0.1));
     }
 }
