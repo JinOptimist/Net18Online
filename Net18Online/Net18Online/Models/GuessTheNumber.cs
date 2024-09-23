@@ -199,8 +199,9 @@ namespace Net18Online.Models
         {
             Console.WriteLine(message);
             var numberStr = Console.ReadLine();
+            var number = 0;
 
-            while (!int.TryParse(numberStr, out var num))
+            while (!int.TryParse(numberStr, out number))
             {
                 Console.WriteLine("Error: You didn't enter an integer!");
                 Console.WriteLine("Try again...");
@@ -208,7 +209,7 @@ namespace Net18Online.Models
                 numberStr = Console.ReadLine();
             }
             
-            return int.Parse(numberStr);
+            return number;
         }
     }
 }
