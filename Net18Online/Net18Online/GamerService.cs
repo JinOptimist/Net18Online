@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections.Generic;
 using Net18Online.Net18Online.Models;
 
@@ -12,26 +12,26 @@ public class GamerService
 {
     private List<Gamer> gamers = new List<Gamer>();
 
-    // Конструктор
+    // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
     public GamerService()
     {
-        Console.WriteLine("Сколько игроков играет?");
+        Console.WriteLine("РЎРєРѕР»СЊРєРѕ РёРіСЂРѕРєРѕРІ РёРіСЂР°РµС‚?");
         try
         {
             var playersCount = int.Parse(Console.ReadLine());
             for( int i = 0 ; i < playersCount ; i++ )
             {
-                // Добавляем нового игрока
+                // Р”РѕР±Р°РІР»СЏРµРј РЅРѕРІРѕРіРѕ РёРіСЂРѕРєР°
                 this.gamers.Add(new Gamer(i));
             }
         } catch( FormatException )
         {
-            Console.WriteLine("Ошибка: Введите корректное число.");
+            Console.WriteLine("РћС€РёР±РєР°: Р’РІРµРґРёС‚Рµ РєРѕСЂСЂРµРєС‚РЅРѕРµ С‡РёСЃР»Рѕ.");
         }
     }
 
     /// <summary>
-    /// Метод для получения списка игроков
+    /// РњРµС‚РѕРґ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ СЃРїРёСЃРєР° РёРіСЂРѕРєРѕРІ
     /// </summary>
     /// <returns></returns>
     public List<Gamer> GetGamers()
@@ -40,7 +40,7 @@ public class GamerService
     }
 
     /// <summary>
-    /// Метод для добавления игрока
+    /// РњРµС‚РѕРґ РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ РёРіСЂРѕРєР°
     /// </summary>
     /// <param name="gamer"></param>
     /// <returns></returns>
