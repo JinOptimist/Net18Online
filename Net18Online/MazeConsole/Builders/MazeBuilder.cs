@@ -17,8 +17,23 @@ namespace MazeConsole.Builders
 
             BuildWall();
             BuildGround();
+            BuildSnake();
 
             return _maze;
+        }
+
+        private void BuildSnake()
+        {
+            for (int y = 0; y < _maze.Height; y++)
+            {
+                for (var x = 0; x < _maze.Width; x++)
+                {
+                    if (x == y)
+                    {
+                        _maze[x, y] = new Snake(x, y);
+                    }
+                }
+            }
         }
 
         private void BuildGround()
