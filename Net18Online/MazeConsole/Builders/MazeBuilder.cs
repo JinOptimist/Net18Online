@@ -17,8 +17,43 @@ namespace MazeConsole.Builders
 
             BuildWall();
             BuildGround();
+            BuildDungeon();
 
             return _maze;
+        }
+        /// <summary>
+        /// Find a ground with a random coordinates and replace it with Dungeon
+        /// </summary>
+        private void BuildDungeon()
+        {
+            var dungeonCount = AutoDungeonCount();
+            Random _random = new();
+            var x = 0;
+            var y = 0;
+
+            for (var i = 0; i < dungeonCount; i++)
+            {
+                do
+                {
+                    x = _random.Next(0, _maze.Width - 1);
+                    y = _random.Next(0, _maze.Height - 1);
+                }
+                while (_maze[x, y].Symbol == '#' || _maze[x, y] is Dungeon);
+                
+                _maze[x, y] = new Dungeon(x, y);
+            }
+                             
+        }
+
+        private int AutoDungeonCount()
+        {
+            var size = Math.Min(_maze.Width, _maze.Height);
+            var dungeonCount = size / 10;
+
+            return dungeonCount > 0 
+                ? dungeonCount
+                : 1 ;
+
         }
 
         private void BuildGround()
