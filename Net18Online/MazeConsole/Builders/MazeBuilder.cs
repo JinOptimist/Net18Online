@@ -17,6 +17,7 @@ namespace MazeConsole.Builders
 
             BuildWall();
             BuildGround();
+            BuildChest();
 
             return _maze;
         }
@@ -42,6 +43,20 @@ namespace MazeConsole.Builders
                 for (var x = 0; x < _maze.Width; x++)
                 {
                     _maze[x, y] = new Wall(x, y);
+                }
+            }
+        }
+
+        private void BuildChest()
+        {
+            for (int y = 0; y < _maze.Height; y++)
+            {
+                for (var x = 0; x < _maze.Width; x++)
+                {
+                    if (x == 3 && y % 2 != 1)
+                    {
+                        _maze[x, y] = new Chest(x, y);
+                    }
                 }
             }
         }
