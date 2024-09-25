@@ -1,5 +1,6 @@
 ﻿using MazeConsole.Models;
 using MazeConsole.Models.Cells;
+using MazeConsole.Models.Cells.Character;
 
 namespace MazeConsole.Builders
 {
@@ -25,7 +26,17 @@ namespace MazeConsole.Builders
             BuildWindow();
             BuildCoin();
 
+            BuildHero();
+
             return _maze;
+        }
+
+        private void BuildHero()
+        {
+            var grounds = _maze.Cells.OfType<Ground>().ToList();
+            var ground = GetRandom(grounds);
+            var hero = new Hero(ground.X, ground.Y, _maze);
+            _maze.Hero = hero;
         }
 
         private void BuildCoin()
@@ -34,13 +45,11 @@ namespace MazeConsole.Builders
                 .OfType<Ground>()
                 .ToList();
 
-            var countOfCellOfTypeGround = grounds.Count();
-            var randomIndex = _random.Next(0, countOfCellOfTypeGround);
-            var randomGround = grounds[randomIndex];
+            var randomGround = GetRandom(grounds);
 
             var coinX = randomGround.X;
             var coinY = randomGround.Y;
-            var coin = new Coin(coinX, coinY);
+            var coin = new Coin(coinX, coinY, _maze);
             _maze[coin.X, coin.Y] = coin;
         }
 
@@ -52,7 +61,7 @@ namespace MazeConsole.Builders
                 {
                     if (x == y)
                     {
-                        _maze[x, y] = new Snake(x, y);
+                        _maze[x, y] = new Snake(x, y, _maze);
                     }
                 }
             }
@@ -71,7 +80,7 @@ namespace MazeConsole.Builders
                 y = _random.Next(0, _maze.Height - 1);
             }
             while (_maze[x, y].Symbol == '.');
-            _maze[x, y] = new Ghost(x, y);
+            _maze[x, y] = new Ghost(x, y, _maze);
         }
 
         /// <summary>
@@ -92,7 +101,7 @@ namespace MazeConsole.Builders
                 }
                 while (_maze[x, y].Symbol == '#' || _maze[x, y] is Dungeon);
 
-                _maze[x, y] = new Dungeon(x, y);
+                _maze[x, y] = new Dungeon(x, y, _maze);
             }
 
         }
@@ -110,16 +119,38 @@ namespace MazeConsole.Builders
 
         private void BuildGround()
         {
-            for (int y = 0; y < _maze.Height; y++)
+            var wallReadyToDestroy = new List<BaseCell>();
+            wallReadyToDestroy.Add(GetRandom(_maze.Cells));
+
+            do
             {
-                for (var x = 0; x < _maze.Width; x++)
-                {
-                    if (x % 2 != y % 2)
-                    {
-                        _maze[x, y] = new Ground(x, y);
-                    }
-                }
-            }
+                var miner = GetRandom(wallReadyToDestroy);
+                _maze[miner.X, miner.Y] = new Ground(miner.X, miner.Y, _maze);
+                wallReadyToDestroy.Remove(miner);
+
+                var nearWalls = GetNearCells<Wall>(miner);
+                wallReadyToDestroy.AddRange(nearWalls);
+
+                wallReadyToDestroy = wallReadyToDestroy
+                    .Where(wall =>
+                        GetNearCells<Ground>(wall).Count == 1)
+                    .ToList();
+
+            } while (wallReadyToDestroy.Any());
+        }
+
+        private List<CellType> GetNearCells<CellType>(BaseCell miner)
+            where CellType : BaseCell
+        {
+            return _maze
+                .Cells
+                .OfType<CellType>()
+                .Where(cell =>
+                   cell.X == miner.X && cell.Y == miner.Y + 1
+                || cell.X == miner.X && cell.Y == miner.Y - 1
+                || cell.X == miner.X + 1 && cell.Y == miner.Y
+                || cell.X == miner.X - 1 && cell.Y == miner.Y)
+                .ToList();
         }
 
         public void BuildWall()
@@ -128,7 +159,7 @@ namespace MazeConsole.Builders
             {
                 for (var x = 0; x < _maze.Width; x++)
                 {
-                    _maze[x, y] = new Wall(x, y);
+                    _maze[x, y] = new Wall(x, y, _maze);
                 }
             }
         }
@@ -144,7 +175,7 @@ namespace MazeConsole.Builders
                 {
                     if (x % 3 == 0 && y % 2 == 0)
                     {
-                        _maze[x, y] = new Water(x, y);
+                        _maze[x, y] = new Water(x, y, _maze);
                     }
                 }
             }
@@ -160,7 +191,7 @@ namespace MazeConsole.Builders
                     switch (windowCount)
                     {
                         case < 2 when _maze[x, y] is Wall:
-                            _maze[x, y] = new Window(x, y);
+                            _maze[x, y] = new Window(x, y, _maze);
                             windowCount++;
                             break;
                         case 2:
@@ -168,6 +199,14 @@ namespace MazeConsole.Builders
                     }
                 }
             }
+        }
+
+        private T GetRandom<T>(List<T> cells)
+        {
+            var countOfCells = cells.Count();
+            var randomIndex = _random.Next(0, countOfCells);
+            var randomCell = cells[randomIndex];
+            return randomCell;
         }
     }
 }
