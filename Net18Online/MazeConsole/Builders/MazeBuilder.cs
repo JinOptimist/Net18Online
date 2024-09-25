@@ -5,6 +5,7 @@ namespace MazeConsole.Builders
 {
     public class MazeBuilder
     {
+        private Random _random = new();
         private Maze _maze;
 
         public Maze Build(int width, int height)
@@ -22,8 +23,25 @@ namespace MazeConsole.Builders
             BuildSnake();
             BuildDungeon();
             BuildWindow();
+            BuildCoin();
 
             return _maze;
+        }
+
+        private void BuildCoin()
+        {
+            var grounds = _maze.Cells
+                .OfType<Ground>()
+                .ToList();
+
+            var countOfCellOfTypeGround = grounds.Count();
+            var randomIndex = _random.Next(0, countOfCellOfTypeGround);
+            var randomGround = grounds[randomIndex];
+
+            var coinX = randomGround.X;
+            var coinY = randomGround.Y;
+            var coin = new Coin(coinX, coinY);
+            _maze[coin.X, coin.Y] = coin;
         }
 
         private void BuildSnake()
@@ -49,9 +67,8 @@ namespace MazeConsole.Builders
             var y = 0;
             do
             {
-                Random random_coordinate = new Random();
-                x = random_coordinate.Next(0, _maze.Width - 1);
-                y = random_coordinate.Next(0, _maze.Height - 1);
+                x = _random.Next(0, _maze.Width - 1);
+                y = _random.Next(0, _maze.Height - 1);
             }
             while (_maze[x, y].Symbol == '.');
             _maze[x, y] = new Ghost(x, y);
@@ -63,7 +80,6 @@ namespace MazeConsole.Builders
         private void BuildDungeon()
         {
             var dungeonCount = AutoDungeonCount();
-            Random _random = new();
             var x = 0;
             var y = 0;
 
