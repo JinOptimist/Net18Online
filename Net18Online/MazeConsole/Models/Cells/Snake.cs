@@ -2,9 +2,9 @@
 {
     public class Snake : BaseCell
     {
-        private const int _health = 20;
+        private const int HEALTH = 20;
 
-        public int Damage { get { return 1; } }
+        public int Damage => 1;
 
         public Snake(int x, int y) : base(x, y)
         {
