@@ -21,7 +21,7 @@ namespace MazeConsole.Builders
             BuildWall();
 
             int startX = _random.Next(1, width - 1);
-            if (startX % 2 == 0) startX++; // Ensure the start is an odd for proper passage creation
+            if (startX % 2 == 0) startX++; // Ensure the start is an odd for proper working of CreatePassages()
 
             CreatePassages(startX, 1);
 
@@ -55,11 +55,11 @@ namespace MazeConsole.Builders
             {
                 if (x == entranceX)
                 {
-                    _maze[x, 0] = new Ground(x, 0); // Create the entrance at the specified point
+                    _maze[x, 0] = new Ground(x, 0);
                 }
                 else
                 {
-                    _maze[x, 0] = new Wall(x, 0);  // All other cells on the top row are walls
+                    _maze[x, 0] = new Wall(x, 0);
                 }
             }
         }
@@ -101,17 +101,17 @@ namespace MazeConsole.Builders
         {
             var totalCells = _maze.Width * _maze.Height;
 
-            var maxCoins = totalCells / 15; 
-            var maxChests = totalCells / 90; 
+            var maxCoins = totalCells / 15;
+            var maxChests = totalCells / 90;
 
             var coinCount = 0;
             var chestCount = 0;
 
             var availableCells = new List<(int x, int y)>();
 
-            ///<summary>
+            /// <summary>
             /// Shuffle all available passagable cells to make it look naturally
-            ///</summary>
+            /// </summary>
             for (int y = 0; y < _maze.Height; y++)
             {
                 for (int x = 0; x < _maze.Width; x++)
