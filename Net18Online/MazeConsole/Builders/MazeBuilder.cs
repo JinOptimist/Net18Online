@@ -27,7 +27,7 @@ namespace MazeConsole.Builders
 
             BuildPit();
 
-            BuildHero();
+
 
             return _maze;
         }
