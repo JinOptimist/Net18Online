@@ -149,11 +149,11 @@ namespace MazeConsole.Builders
         private bool CanPlaceCoin(int x, int y)
         {
             var validAdjacentCount = CountAdjacentValidCells(x, y);
-            return validAdjacentCount >= 2; // At least 2 valid adjacent cells (ground, coin, or chest)
+            return validAdjacentCount >= 2; 
         }
 
         /// <summary>
-        /// Counts adjacent valid cells (Ground, Coin, or Chest)
+        /// Counts adjacent valid cells
         /// </summary>
         private int CountAdjacentValidCells(int x, int y)
         {
@@ -181,7 +181,7 @@ namespace MazeConsole.Builders
         private bool CanPlaceChest(int x, int y)
         {
             var validAdjacentCount = CountAdjacentValidCells(x, y);
-            return validAdjacentCount >= 1; // At least 1 valid adjacent cell (ground, coin, or chest)
+            return validAdjacentCount >= 1; 
         }
     }
 }
