@@ -17,6 +17,7 @@ namespace MazeConsole.Builders
 
             BuildWall();
             BuildGround();
+            BuildWater();
             BuildGhost();
 
             return _maze;
@@ -60,6 +61,23 @@ namespace MazeConsole.Builders
                 for (var x = 0; x < _maze.Width; x++)
                 {
                     _maze[x, y] = new Wall(x, y);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Build cell with Water type
+        /// </summary>
+        public void BuildWater()
+        {
+            for (int y = 0; y < _maze.Height; y++)
+            {
+                for (var x = 0; x < _maze.Width; x++)
+                {
+                    if (x % 3 == 0 && y % 2 == 0)
+                    {
+                        _maze[x, y] = new Water(x, y);
+                    }
                 }
             }
         }
