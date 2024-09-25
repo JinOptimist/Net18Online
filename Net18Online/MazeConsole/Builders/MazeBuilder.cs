@@ -27,9 +27,11 @@ namespace MazeConsole.Builders
             BuildCoin();
 
             BuildHero();
-
+            BuilPit();
             return _maze;
         }
+
+
 
         private void BuildHero()
         {
@@ -180,7 +182,21 @@ namespace MazeConsole.Builders
                 }
             }
         }
-
+        private void BuilPit()
+        {
+            var count = 0;
+            for (int y = 0; y < _maze.Height; y++)
+            {
+                for (var x = 0; x < _maze.Width; x++)
+                {
+                    count++;
+                    if (count % 4 == 0)
+                    {
+                        _maze[x, y] = new Pit(x, y, _maze);
+                    }
+                }
+            }
+        }
         public void BuildWindow()
         {
             int windowCount = 0;
