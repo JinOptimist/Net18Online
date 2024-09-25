@@ -1,4 +1,5 @@
-﻿namespace MazeConsole.Models.Cells
+﻿
+namespace MazeConsole.Models.Cells
 {
     public class Wall : BaseCell
     {
