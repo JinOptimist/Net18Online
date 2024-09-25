@@ -65,6 +65,9 @@ namespace MazeConsole.Builders
             }
         }
 
+        /// <summary>
+        /// Build cell with Water type
+        /// </summary>
         public void BuildWater()
         {
             for (int y = 0; y < _maze.Height; y++)
