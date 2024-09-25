@@ -17,6 +17,7 @@ namespace MazeConsole.Builders
 
             BuildWall();
             BuildGround();
+            BuildTeleport();
 
             return _maze;
         }
@@ -44,6 +45,15 @@ namespace MazeConsole.Builders
                     _maze[x, y] = new Wall(x, y);
                 }
             }
+        }
+
+        private void BuildTeleport()
+        {
+            var portalInputCells = _maze.Cells.First(c => c.Symbol == '.');
+            var portalOutputCells = _maze.Cells.Last(c => c.Symbol == '.');
+
+            _maze[portalInputCells.X, portalInputCells.Y] = new Teleport(portalInputCells.X, portalInputCells.Y);
+            _maze[portalOutputCells.X, portalOutputCells.Y] = new Teleport(portalOutputCells.X, portalOutputCells.Y);
         }
     }
 }
