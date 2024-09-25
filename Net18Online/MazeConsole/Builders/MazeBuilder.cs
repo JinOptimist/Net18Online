@@ -36,7 +36,7 @@ namespace MazeConsole.Builders
                 x = random_coordinate.Next(0, _maze.Width - 1);
                 y = random_coordinate.Next(0, _maze.Height - 1);
             }
-            while (_maze[x, y].Symbol == '.');
+            while (_maze[x, y].Symbol != '#');
             _maze[x, y] = new Ghost(x, y);
         }
         private void BuildGround()
