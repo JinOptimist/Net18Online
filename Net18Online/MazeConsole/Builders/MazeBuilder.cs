@@ -24,10 +24,9 @@ namespace MazeConsole.Builders
             BuildSnake();
             BuildDungeon();
             BuildWindow();
+            BuildCoin();
 
-            BuildPit();
-
-
+            BuildHero();
 
             return _maze;
         }
@@ -201,24 +200,6 @@ namespace MazeConsole.Builders
                 }
             }
         }
-
-        public void BuildPit()
-        {
-            var count = 0;
-            for (var y = 0; y < _maze.Height; y++)
-            {
-                for (var x = 0; x < _maze.Width; x++)
-                {
-                    count++;
-                    if (count % 4 == 0)
-                    {
-                        _maze[x, y] = new Pit(x, y, _maze);
-                    }
-                }
-            }
-        }
-    
-
 
         private T GetRandom<T>(List<T> cells)
         {
