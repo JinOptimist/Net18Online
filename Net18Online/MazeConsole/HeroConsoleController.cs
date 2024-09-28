@@ -47,11 +47,10 @@ namespace MazeConsole
                 var destinationCell = maze[destinationX, destinationY];
                 if (destinationCell?.TryStep(maze.Hero) ?? false)
                 {
+                    mazeDrawer.Move(maze, destinationX, destinationY);
                     maze.Hero.X = destinationX;
                     maze.Hero.Y = destinationY;
                 }
-
-                mazeDrawer.Draw(maze);
             }
         }
     }

@@ -5,6 +5,8 @@ namespace MazeConsole.Models
 {
     public class Maze
     {
+        public int ConsoleCursorDrawerTop;
+        public int ConsoleCursorDrawerLeft;
         public int Width { get; set; }
         public int Height { get; set; }
         public List<BaseCell> Cells { get; set; } = new List<BaseCell>();

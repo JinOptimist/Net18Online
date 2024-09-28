@@ -19,15 +19,8 @@ namespace MazeConsole.Builders
 
             BuildWall();
             BuildGround();
-            BuildWater();
-            BuildGhost();
-            BuildSnake();
-            BuildDungeon();
-            BuildWindow();
-            BuildCoin();
-
             BuildHero();
-            BuilPit();
+
             return _maze;
         }
 
