@@ -17,7 +17,10 @@ namespace MazeConsole.Models.Cells
 
         public override bool TryStep(BaseCharacter character)
         {
-            return false; 
+
+            character.Health--;
+            character.Coins = 0;
+            return true; 
         }
     }
 }
