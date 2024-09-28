@@ -1,6 +1,7 @@
 ﻿using MazeConsole.Models;
 using MazeConsole.Models.Cells;
 using MazeConsole.Models.Cells.Character;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MazeConsole.Builders
 {
@@ -19,15 +20,11 @@ namespace MazeConsole.Builders
 
             BuildWall();
             BuildGround();
-            BuildWater();
-            BuildGhost();
+
             BuildSnake();
-            BuildDungeon();
-            BuildWindow();
-            BuildCoin();
 
             BuildHero();
-            BuilPit();
+
             return _maze;
         }
 
@@ -57,16 +54,30 @@ namespace MazeConsole.Builders
 
         private void BuildSnake()
         {
-            for (int y = 0; y < _maze.Height; y++)
+            var listOfCorners = GetCorners<Ground>();
+            for (int i = 0; i < listOfCorners.Count; i++)
             {
-                for (var x = 0; x < _maze.Width; x++)
-                {
-                    if (x == y)
-                    {
-                        _maze[x, y] = new Snake(x, y, _maze);
-                    }
-                }
+                _maze[listOfCorners[i].X, listOfCorners[i].Y] = new Snake(listOfCorners[i].X, listOfCorners[i].Y, _maze);
             }
+        }
+
+        private List<T> GetCorners<T>()
+            where T : BaseCell
+        {
+            return _maze
+            .Cells
+            .OfType<T>()
+            .Where(ground =>
+               GetSimbol(_maze[ground.X, ground.Y + 1]) == '#' && GetSimbol(_maze[ground.X - 1, ground.Y]) == '#' && GetSimbol(_maze[ground.X, ground.Y - 1]) == '.' && GetSimbol(_maze[ground.X + 1, ground.Y]) == '.'
+            || GetSimbol(_maze[ground.X, ground.Y + 1]) == '#' && GetSimbol(_maze[ground.X + 1, ground.Y]) == '#' && GetSimbol(_maze[ground.X, ground.Y - 1]) == '.' && GetSimbol(_maze[ground.X - 1, ground.Y]) == '.'
+            || GetSimbol(_maze[ground.X, ground.Y - 1]) == '#' && GetSimbol(_maze[ground.X - 1, ground.Y]) == '#' && GetSimbol(_maze[ground.X, ground.Y + 1]) == '.' && GetSimbol(_maze[ground.X + 1, ground.Y]) == '.'
+            || GetSimbol(_maze[ground.X, ground.Y - 1]) == '#' && GetSimbol(_maze[ground.X + 1, ground.Y]) == '#' && GetSimbol(_maze[ground.X, ground.Y + 1]) == '.' && GetSimbol(_maze[ground.X - 1, ground.Y]) == '.')
+            .ToList();
+        }
+
+        private char GetSimbol(BaseCell? cell)
+        {
+            return cell is null ? ' ' : cell.Symbol;
         }
 
         /// <summary>

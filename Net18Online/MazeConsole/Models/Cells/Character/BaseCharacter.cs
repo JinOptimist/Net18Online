@@ -6,10 +6,12 @@
         {
         }
 
-        public int Health { get; set; }
+        public abstract int Health { get; set; }
 
-        public int Coins { get; set; }
-       
+        public abstract int Coins { get; set; }
+
+        public abstract int Damage { get; set; }
+
 
         public override bool TryStep(BaseCharacter character)
         {
