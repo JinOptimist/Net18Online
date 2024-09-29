@@ -1,4 +1,6 @@
 ﻿using MazeConsole.Builders;
+using MazeConsole.Models;
+using MazeConsole.Models.Cells;
 
 namespace MazeConsole
 {
@@ -43,6 +45,26 @@ namespace MazeConsole
                     case ConsoleKey.Escape:
                         return;
                 }
+
+                for (int y = 0; y < maze.Height; y++)
+                {
+                    for (var x = 0; x < maze.Width; x++)
+                    {
+                        if(maze[x,y] is MonsterCell monsterCell)
+                        {
+                            monsterCell.Move(x,y, maze);   
+                           try 
+                            {
+                                monsterCell.Move(x,y,maze);
+                            }
+                            catch (NullReferenceException ex)
+                            {Console.WriteLine(ex.Message);}
+                            catch (Exception ex)
+                            {Console.WriteLine(ex.Message);}
+                        }
+                    }
+                }
+                
 
                 var destinationCell = maze[destinationX, destinationY];
                 if (destinationCell?.TryStep(maze.Hero) ?? false)
