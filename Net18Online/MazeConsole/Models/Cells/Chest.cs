@@ -16,7 +16,6 @@
         public override void InteractWithCell()
         {
             Console.WriteLine("Yay! You found a chest! +10 money");
-            Maze.Money += 10; 
         }
     }
 }

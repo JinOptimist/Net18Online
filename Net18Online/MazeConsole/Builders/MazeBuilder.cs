@@ -2,6 +2,7 @@
 using MazeConsole.Models;
 using System.Linq;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace MazeConsole.Builders
 {
@@ -21,7 +22,10 @@ namespace MazeConsole.Builders
             BuildWall();
 
             int startX = _random.Next(1, width - 1);
-            if (startX % 2 == 0) startX++; // Ensure the start is an odd for proper working of CreatePassages()
+            if (startX % 2 == 0)
+            {
+                startX++; // Ensure the start is an odd for proper working of CreatePassages()
+            }
 
             CreatePassages(startX, 1);
 
@@ -72,23 +76,26 @@ namespace MazeConsole.Builders
             _maze[x, y] = new Ground(x, y); // Set the chosen cell as a passage cell (ground is passagable now)
 
             // Randomize directions: north, south, east, west
-            var directions = new List<(int dx, int dy)> { (0, -2), (0, 2), (-2, 0), (2, 0) };
+            var directions = new List<(int changeX, int changeY)> { (0, -2), (0, 2), (-2, 0), (2, 0) };
             directions = directions.OrderBy(d => _random.Next()).ToList();
 
-            foreach (var (dx, dy) in directions)
+            foreach (var (changeX, changeY) in directions)
             {
-                int nx = x + dx;
-                int ny = y + dy;
+                var newX_Position = x + changeX;
+                var newY_Position = y + changeY;
 
-                if (nx > 0 && ny > 0 && nx < _maze.Width - 1 && ny < _maze.Height - 1)
+                if (newX_Position > 0 && newY_Position > 0 && newX_Position < _maze.Width - 1 && newY_Position < _maze.Height - 1)
                 {
-                    if (_maze[nx, ny] is Wall)
+                    if (_maze[newX_Position, newY_Position] is Wall)
                     {
-                        // Create a passage through the intermediate cell
-                        _maze[x + dx / 2, y + dy / 2] = new Ground(x + dx / 2, y + dy / 2);
-                        _maze[nx, ny] = new Ground(nx, ny);
+                        _maze[newX_Position, newY_Position] = new Ground(newX_Position, newY_Position);
 
-                        CreatePassages(nx, ny);
+                        // Create a passage through the intermediate cell
+                        var intermediateCell_X = x + changeX / 2;
+                        var intermediateCell_Y = y + changeY / 2;
+                        _maze[intermediateCell_X, intermediateCell_Y] = new Ground(intermediateCell_X, intermediateCell_Y);
+
+                        CreatePassages(newX_Position, newY_Position);
                     }
                 }
             }
@@ -116,7 +123,7 @@ namespace MazeConsole.Builders
             {
                 for (int x = 0; x < _maze.Width; x++)
                 {
-                    if (_maze[x, y] is Ground && !(coinCount >= maxCoins && chestCount >= maxChests))
+                    if (_maze[x, y] is Ground)
                     {
                         availableCells.Add((x, y));
                     }
@@ -138,7 +145,9 @@ namespace MazeConsole.Builders
                 }
 
                 if (coinCount >= maxCoins && chestCount >= maxChests)
+                {
                     break;
+                }
             }
         }
 
@@ -159,10 +168,22 @@ namespace MazeConsole.Builders
         {
             var count = 0;
 
-            if (x > 0 && IsValidAdjacentCell(_maze[x - 1, y])) count++;
-            if (x < _maze.Width - 1 && IsValidAdjacentCell(_maze[x + 1, y])) count++;
-            if (y > 0 && IsValidAdjacentCell(_maze[x, y - 1])) count++;
-            if (y < _maze.Height - 1 && IsValidAdjacentCell(_maze[x, y + 1])) count++;
+            if (x > 0 && IsValidAdjacentCell(_maze[x - 1, y]))
+            {
+                count++;
+            }
+            if (x < _maze.Width - 1 && IsValidAdjacentCell(_maze[x + 1, y]))
+            {
+                count++;
+            }
+            if (y > 0 && IsValidAdjacentCell(_maze[x, y - 1]))
+            {
+                count++;
+            }
+            if (y < _maze.Height - 1 && IsValidAdjacentCell(_maze[x, y + 1]))
+            {
+                count++;
+            }
 
             return count;
         }
