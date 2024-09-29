@@ -19,6 +19,7 @@ namespace MazeConsole
                 var destinationY = maze.Hero.Y;
 
                 var key = Console.ReadKey();
+                Console.Write('\b');
                 switch (key.Key)
                 {
                     case ConsoleKey.D:
