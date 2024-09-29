@@ -1,4 +1,5 @@
 ﻿using MazeConsole.Builders;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MazeConsole
 {
@@ -24,34 +25,52 @@ namespace MazeConsole
                     case ConsoleKey.D:
                     case ConsoleKey.RightArrow:
                         destinationX++;
+                        MovingPlayer();
                         break;
                     case ConsoleKey.A:
                     case ConsoleKey.LeftArrow:
                         destinationX--;
+                        MovingPlayer();
                         break;
                     case ConsoleKey.W:
                     case ConsoleKey.UpArrow:
                         destinationY--;
+                        MovingPlayer();
                         break;
                     case ConsoleKey.S:
                     case ConsoleKey.DownArrow:
                         destinationY++;
+                        MovingPlayer();
                         break;
                     case ConsoleKey.Spacebar:
+                        Console.SetCursorPosition(0, 13);
                         maze[destinationX, destinationY].InteractWithCell(maze.Hero);
+                        Console.SetCursorPosition(maze.Hero.X+1, maze.Hero.Y + 1);
+                        Console.Write(maze[maze.Hero.X+1, maze.Hero.Y].Symbol);
                         continue;
                     case ConsoleKey.Escape:
                         return;
                 }
 
-                var destinationCell = maze[destinationX, destinationY];
-                if (destinationCell?.TryStep(maze.Hero) ?? false)
+                void MovingPlayer()
                 {
-                    maze.Hero.X = destinationX;
-                    maze.Hero.Y = destinationY;
+                    var destinationCell = maze[destinationX, destinationY];
+                    if (destinationCell?.TryStep(maze.Hero) ?? false)
+                    {
+                        Console.SetCursorPosition(maze.Hero.X + 1, maze.Hero.Y + 1);
+                        Console.Write("\b");
+                        Console.Write(maze[maze.Hero.X, maze.Hero.Y].Symbol);
+                        maze.Hero.X = destinationX;
+                        maze.Hero.Y = destinationY;
+                        Console.SetCursorPosition(destinationX + 1, destinationY + 1);
+                        Console.Write("\b@");
+                    }
                 }
 
-                mazeDrawer.Draw(maze);
+
+                //mazeDrawer.Draw(maze);
+                //Console.WriteLine(maze.Hero.Health);
+                //Console.WriteLine(maze[destinationX, destinationY].Symbol);
             }
         }
     }

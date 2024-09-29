@@ -25,13 +25,18 @@ namespace MazeConsole.Builders
             BuildDungeon();
             BuildWindow();
             BuildCoin();
+            BuildBomb();
 
             BuildHero();
             BuilPit();
             return _maze;
         }
 
-
+        private void BuildBomb()
+        {
+            var bom = new Bomb(1, 3, _maze);
+            _maze[1, 3] = bom;
+        }
 
         private void BuildHero()
         {
