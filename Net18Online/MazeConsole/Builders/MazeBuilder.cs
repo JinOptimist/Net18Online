@@ -55,6 +55,20 @@ namespace MazeConsole.Builders
             _maze[coin.X, coin.Y] = coin;
         }
 
+        private void BuildCellSVET()
+        {
+            var grounds = _maze.Cells
+                .OfType<Ground>()
+                .ToList();
+
+            var randomGround = GetRandom(grounds);
+
+            var magicX = randomGround.X;
+            var magicY = randomGround.Y;
+            var magic = new CellSVET(magicX, magicY, _maze);
+            _maze[magic.X, magic.Y] = magic;
+        }
+
         private void BuildSnake()
         {
             for (int y = 0; y < _maze.Height; y++)
