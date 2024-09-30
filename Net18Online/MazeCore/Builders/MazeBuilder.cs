@@ -30,7 +30,7 @@ namespace MazeCore.Builders
             BuildTeleport();
             BuilPit();
 
-            // Build Enemies
+            // Build Npc
             BuildGoblins();
 
 

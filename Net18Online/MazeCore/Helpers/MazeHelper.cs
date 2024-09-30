@@ -1,7 +1,5 @@
 ﻿using MazeCore.Models;
 using MazeCore.Models.Cells;
-using System;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace MazeCore.Helpers
 {

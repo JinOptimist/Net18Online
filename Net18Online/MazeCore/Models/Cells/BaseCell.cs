@@ -1,5 +1,4 @@
-﻿using MazeCore.Models;
-using MazeCore.Models.Cells.Character;
+﻿using MazeCore.Models.Cells.Character;
 
 namespace MazeCore.Models.Cells
 {
