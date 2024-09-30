@@ -29,6 +29,7 @@ namespace MazeConsole.Builders
             BuildTeleport();
 
             BuildHero();
+            BuildMerchant();
             BuilPit();
             return _maze;
         }
@@ -253,6 +254,18 @@ namespace MazeConsole.Builders
 
             _maze[portalInputCells.X, portalInputCells.Y] = new Teleport(portalInputCells.X, portalInputCells.Y, _maze);
             _maze[portalOutputCells.X, portalOutputCells.Y] = new Teleport(portalOutputCells.X, portalOutputCells.Y, _maze);
+        }
+
+        /// <summary>
+        /// Generate Merchant in Maze
+        /// </summary>
+        private void BuildMerchant()
+        {
+            var grounds = _maze.Cells.OfType<Ground>().ToList();
+            var randomGround = GetRandom(grounds);
+
+            var merchant = new Merchant(randomGround.X, randomGround.Y, _maze);
+            _maze[randomGround.X, randomGround.Y] = merchant;
         }
     }
 }
