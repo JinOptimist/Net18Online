@@ -1,9 +1,5 @@
-﻿using MazeCore.Helpers;
-using MazeCore.Models;
-using MazeCore.Models.Cells.Character;
+﻿using MazeCore.Models.Cells.Character;
 using MazeCore.Models.Cells.Enums;
-using System;
-using System.Text;
 
 namespace MazeCore.Models.Cells
 {
@@ -45,9 +41,6 @@ namespace MazeCore.Models.Cells
                     AddEventInfo($"You found a lot of coins. Now you have {character.Coins}");
                     break;
             }
-
-            Console.ReadKey();
-
         }
 
         public override bool TryStep(BaseCharacter character)
@@ -101,4 +94,3 @@ namespace MazeCore.Models.Cells
                 .Max();
     }
 }
-
