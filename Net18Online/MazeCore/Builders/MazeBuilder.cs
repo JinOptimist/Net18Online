@@ -1,12 +1,12 @@
-﻿using MazeConsole.Models;
-using MazeConsole.Models.Cells;
-using MazeConsole.Models.Cells.Character;
+﻿using MazeCore.Helpers;
+using MazeCore.Models;
+using MazeCore.Models.Cells;
+using MazeCore.Models.Cells.Character;
 
-namespace MazeConsole.Builders
+namespace MazeCore.Builders
 {
     public class MazeBuilder
     {
-        private Random _random = new();
         private Maze _maze;
 
         public Maze Build(int width, int height)
@@ -17,6 +17,7 @@ namespace MazeConsole.Builders
                 Height = height,
             };
 
+            // Build maze
             BuildWall();
             BuildGround();
             BuildTreasury();
@@ -27,13 +28,29 @@ namespace MazeConsole.Builders
             BuildWindow();
             BuildCoin();
             BuildTeleport();
-
-            BuildHero();
             BuilPit();
+
+            // Build Enemies
+            BuildGoblins();
+
+
+            // Build Hero
+            BuildHero();
+            
             return _maze;
         }
 
-
+        private void BuildGoblins(int goblinCount = 3)
+        {
+            var grounds = _maze.Cells.OfType<Ground>().ToList();
+            for (int i = 0; i < goblinCount; i++)
+            {
+                var ground = GetRandom(grounds);
+                var goblin = new Goblin(ground.X, ground.Y, _maze);
+                _maze.Npcs.Add(goblin);
+                grounds.Remove(ground);
+            }
+        }
 
         private void BuildHero()
         {
@@ -101,8 +118,8 @@ namespace MazeConsole.Builders
             {
                 do
                 {
-                    x = _random.Next(0, _maze.Width - 1);
-                    y = _random.Next(0, _maze.Height - 1);
+                    x = _maze.Random.Next(0, _maze.Width - 1);
+                    y = _maze.Random.Next(0, _maze.Height - 1);
                 }
                 while (_maze[x, y].Symbol == '#' || _maze[x, y] is Dungeon);
 
@@ -147,15 +164,7 @@ namespace MazeConsole.Builders
         private List<CellType> GetNearCells<CellType>(BaseCell miner)
             where CellType : BaseCell
         {
-            return _maze
-                .Cells
-                .OfType<CellType>()
-                .Where(cell =>
-                   cell.X == miner.X && cell.Y == miner.Y + 1
-                || cell.X == miner.X && cell.Y == miner.Y - 1
-                || cell.X == miner.X + 1 && cell.Y == miner.Y
-                || cell.X == miner.X - 1 && cell.Y == miner.Y)
-                .ToList();
+            return MazeHelper.GetNearCells<CellType>(_maze, miner);
         }
 
         public void BuildWall()
@@ -190,12 +199,12 @@ namespace MazeConsole.Builders
 
             var groundCells = _maze.Cells.OfType<Ground>().ToList();
 
-            foreach (var groundCell in groundCells) 
+            foreach (var groundCell in groundCells)
             {
                 var nearGrounds = GetNearCells<Ground>(groundCell);
                 if (nearGrounds.Count == 3)
                 {
-                    _maze[groundCell.X, groundCell.Y ] = new Pit(groundCell.X, groundCell.Y, _maze);
+                    _maze[groundCell.X, groundCell.Y] = new Pit(groundCell.X, groundCell.Y, _maze);
                 }
             }
         }
@@ -211,10 +220,10 @@ namespace MazeConsole.Builders
                         _maze[x, y] = new Window(x, y, _maze);
                         windowCount++;
                     }
-                     if (windowCount > 2)
+                    if (windowCount > 2)
                     {
                         return;
-                     }
+                    }
                 }
             }
         }
@@ -240,11 +249,9 @@ namespace MazeConsole.Builders
         }
         private T GetRandom<T>(List<T> cells)
         {
-            var countOfCells = cells.Count();
-            var randomIndex = _random.Next(0, countOfCells);
-            var randomCell = cells[randomIndex];
-            return randomCell;
+            return MazeHelper.GetRandom(_maze, cells);
         }
+
         public void BuildTreasury()
         {
             var numberOfTreasuries = 0;
@@ -258,8 +265,8 @@ namespace MazeConsole.Builders
             }
             for (var y = 0; y < numberOfTreasuries; y++)
             {
-                var valueWidth = _random.Next(0, _maze.Width - 1);
-                var valueHeight = _random.Next(0, _maze.Height - 1);
+                var valueWidth = _maze.Random.Next(0, _maze.Width - 1);
+                var valueHeight = _maze.Random.Next(0, _maze.Height - 1);
                 _maze[valueWidth, valueHeight] = new Treasury(valueWidth, valueHeight, _maze);
 
             }

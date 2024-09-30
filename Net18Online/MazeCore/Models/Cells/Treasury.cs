@@ -1,12 +1,12 @@
-﻿using MazeConsole.Models.Cells;
-using MazeConsole.Models.Cells.Character;
+﻿using MazeCore.Models;
+using MazeCore.Models.Cells.Character;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MazeConsole.Models.Cells
+namespace MazeCore.Models.Cells
 {
     public class Treasury : BaseCell
     {
@@ -18,7 +18,7 @@ namespace MazeConsole.Models.Cells
 
         public override void InteractWithCell(BaseCharacter character)
         {
-            Console.WriteLine("step setp");
+            AddEventInfo("step setp");
         }
 
         public override bool TryStep(BaseCharacter character)

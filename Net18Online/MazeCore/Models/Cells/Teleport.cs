@@ -1,6 +1,7 @@
-﻿using MazeConsole.Models.Cells.Character;
+﻿using MazeCore.Models;
+using MazeCore.Models.Cells.Character;
 
-namespace MazeConsole.Models.Cells
+namespace MazeCore.Models.Cells
 {
     public class Teleport : BaseCell
     {

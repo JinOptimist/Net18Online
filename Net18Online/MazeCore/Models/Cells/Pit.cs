@@ -1,13 +1,8 @@
-﻿using MazeConsole.Models.Cells.Character;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MazeCore.Models.Cells.Character;
 
-namespace MazeConsole.Models.Cells
+namespace MazeCore.Models.Cells
 {
-    internal class Pit : BaseCell
+    public class Pit : BaseCell
     {
         public Pit(int x, int y, Maze maze) : base(x, y, maze)
         {
@@ -19,21 +14,21 @@ namespace MazeConsole.Models.Cells
 
         public override void InteractWithCell(BaseCharacter character)
         {
-            if (character is Hero hero) 
+            if (character is Hero hero)
             {
                 if (hero.IsTrappedInPit && !hero.HasLadder)
                 {
-                    Console.WriteLine("You are trapped in the pit. Press L to buy a ladder.");
+                    AddEventInfo("You are trapped in the pit. Press L to buy a ladder.");
                     var key = Console.ReadKey();
                     if (key.Key == ConsoleKey.L)
                     {
-                        hero.HasLadder = true;  
-                        hero.IsTrappedInPit = false;  
-                        Console.WriteLine("You can now escape the pit.");
+                        hero.HasLadder = true;
+                        hero.IsTrappedInPit = false;
+                        AddEventInfo("You can now escape the pit.");
                     }
                 }
             };
-           
+
         }
 
 
@@ -44,18 +39,18 @@ namespace MazeConsole.Models.Cells
             {
                 if (!hero.HasLadder)
                 {
-                                       
-                    hero.IsTrappedInPit = true;  
-                    return true;  
+
+                    hero.IsTrappedInPit = true;
+                    return true;
                 }
                 else
-                {                                        
-                    return true;  
+                {
+                    return true;
                 }
             }
 
             return true;
         }
     }
-    
+
 }

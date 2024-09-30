@@ -1,7 +1,8 @@
-﻿using MazeConsole.Models.Cells.Character;
+﻿using MazeCore.Models;
+using MazeCore.Models.Cells.Character;
 using System.Text;
 
-namespace MazeConsole.Models.Cells
+namespace MazeCore.Models.Cells
 {
     public class Dungeon : BaseCell
     {
@@ -14,7 +15,7 @@ namespace MazeConsole.Models.Cells
 
         public override void InteractWithCell(BaseCharacter character)
         {
-            Console.WriteLine("Step Step Step....");
+            AddEventInfo("Step Step Step....");
         }
 
         public override bool TryStep(BaseCharacter character)

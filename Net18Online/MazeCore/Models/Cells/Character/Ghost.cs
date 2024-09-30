@@ -1,4 +1,4 @@
-﻿namespace MazeConsole.Models.Cells.Character
+﻿namespace MazeCore.Models.Cells.Character
 {
 
     public class Ghost : BaseCharacter
@@ -14,7 +14,7 @@
         /// </summary>
         public override void InteractWithCell(BaseCharacter character)
         {
-            Console.WriteLine("BooOoo");
+            AddEventInfo("BooOoo");
             Maze[X, Y] = new Coin(X, Y, Maze);
         }
 

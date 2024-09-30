@@ -5,7 +5,9 @@ VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Net18Online", "Net18Online\Net18Online.csproj", "{176EA754-3C30-4884-842F-7E8EB3F2A6B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MazeConsole", "MazeConsole\MazeConsole.csproj", "{4C9943FA-30D1-4324-B863-3A80BBDA449C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MazeConsole", "MazeConsole\MazeConsole.csproj", "{4C9943FA-30D1-4324-B863-3A80BBDA449C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MazeCore", "MazeCore\MazeCore.csproj", "{27ECCC93-9846-4317-99E5-E367F3F13636}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{4C9943FA-30D1-4324-B863-3A80BBDA449C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C9943FA-30D1-4324-B863-3A80BBDA449C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C9943FA-30D1-4324-B863-3A80BBDA449C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27ECCC93-9846-4317-99E5-E367F3F13636}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27ECCC93-9846-4317-99E5-E367F3F13636}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27ECCC93-9846-4317-99E5-E367F3F13636}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27ECCC93-9846-4317-99E5-E367F3F13636}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

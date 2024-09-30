@@ -1,5 +1,5 @@
-﻿using MazeConsole.Builders;
-using MazeConsole.Models.Cells;
+﻿using MazeCore.Builders;
+using MazeCore.Models.Cells;
 
 namespace MazeConsole
 {
@@ -54,11 +54,16 @@ namespace MazeConsole
                         return;
                 }
 
-                var destinationCell = maze[destinationX, destinationY];
+                var destinationCell = maze.GetTopLevelItem(destinationX, destinationY);
                 if (destinationCell?.TryStep(maze.Hero) ?? false)
                 {
                     maze.Hero.X = destinationX;
                     maze.Hero.Y = destinationY;
+                }
+
+                foreach (var npc in maze.Npcs)
+                {
+                    npc.Move();
                 }
 
                 mazeDrawer.Draw(maze);

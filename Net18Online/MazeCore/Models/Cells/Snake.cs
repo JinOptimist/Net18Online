@@ -1,6 +1,6 @@
-﻿using MazeConsole.Models.Cells.Character;
+﻿using MazeCore.Models.Cells.Character;
 
-namespace MazeConsole.Models.Cells
+namespace MazeCore.Models.Cells
 {
     public class Snake : BaseCell
     {
@@ -16,7 +16,7 @@ namespace MazeConsole.Models.Cells
 
         public override void InteractWithCell(BaseCharacter character)
         {
-            Console.WriteLine("Fight");
+            AddEventInfo("Fight");
         }
 
         public override bool TryStep(BaseCharacter character)

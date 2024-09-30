@@ -1,4 +1,6 @@
-﻿namespace MazeConsole.Models.Cells.Character
+﻿using MazeCore.Models;
+
+namespace MazeCore.Models.Cells.Character
 {
     public abstract class BaseCharacter : BaseCell
     {
@@ -9,7 +11,7 @@
         public int Health { get; set; }
 
         public int Coins { get; set; }
-       
+
 
         public override bool TryStep(BaseCharacter character)
         {
