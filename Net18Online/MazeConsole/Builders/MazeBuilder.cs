@@ -25,9 +25,9 @@ namespace MazeConsole.Builders
             BuildDungeon();
             BuildWindow();
             BuildCoin();
-            BuilPit();
 
             BuildHero();
+            BuilPit();
             return _maze;
         }
 
