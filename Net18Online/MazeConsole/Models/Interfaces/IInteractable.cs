@@ -4,6 +4,6 @@ namespace MazeConsole.Models.Interfaces
 {
     public interface IInteractable
     {
-        void Interact(Hero hero);
+        void Interact(BaseCharacter character);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MazeConsole.Builders;
+using MazeConsole.Models.Interfaces;
 
 namespace MazeConsole
 {
@@ -12,7 +13,7 @@ namespace MazeConsole
             ///<summary>
             ///Use 'true' as third parameter to use alternate algorithm to generate Maze
             ///</summary>
-            var maze = mazeBuilder.Build(15, 12, true); 
+            var maze = mazeBuilder.Build(15, 12);
             mazeDrawer.Draw(maze);
 
 
@@ -48,13 +49,30 @@ namespace MazeConsole
                 }
 
                 var destinationCell = maze[destinationX, destinationY];
+
+                #region Interfaces logic
+                ///<summary>
+                ///All interfaces logic realization
+                ///</summary>
+                if (destinationCell is IInteractable interactable)
+                {
+                    interactable.Interact(maze.Hero);
+                }
+
+                if (destinationCell is IAttackable attackable)
+                {
+                    attackable.Attack(maze.Hero);
+                }
+                #endregion
+
                 if (destinationCell?.TryStep(maze.Hero) ?? false)
                 {
                     maze.Hero.X = destinationX;
                     maze.Hero.Y = destinationY;
-                }
 
-                mazeDrawer.Draw(maze);
+
+                    mazeDrawer.Draw(maze);
+                }
             }
         }
     }

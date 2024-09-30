@@ -36,7 +36,9 @@ namespace MazeConsole.Builders
             BuildWindow();
             BuildCoin();
             BuildTeleport();
+
             BuildHero();
+            BuildMerchant();
             BuilPit();
 
             return _maze;

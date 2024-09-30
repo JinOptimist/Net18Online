@@ -1,6 +1,7 @@
-﻿using MazeConsole.Models.Interfaces;
+﻿using MazeConsole.Models.Cells.Character;
+using MazeConsole.Models.Interfaces;
 
-namespace MazeConsole.Models.Cells.Character
+namespace MazeConsole.Models.Cells
 {
     internal class Merchant : BaseCharacter, IInteractable
     {
@@ -10,42 +11,46 @@ namespace MazeConsole.Models.Cells.Character
 
         public override char Symbol => 'M';
 
-        /// <summary>
-        /// Merchant interaction: Selling Healing Salve (+5 Health)
-        /// </summary>
-        public void Interact(Hero hero)
+        public void Interact(BaseCharacter character)
         {
-            const int healingCost = 3;  
-            const int healingAmount = 5; 
+            // Clear the previous line
+            Console.SetCursorPosition(0, Console.CursorTop);
+            Console.Write(new string(' ', Console.WindowWidth)); 
+            Console.SetCursorPosition(0, Console.CursorTop - 1); 
 
-            if (hero.Coins >= healingCost)
+            ///<summary>
+            ///Interaction logic: Buying health salve +5 Health
+            ///</summary>
+            Console.WriteLine("The merchant offers a healing potion for 5 coins. Do you want to buy? (Y/N)");
+
+            var key = Console.ReadKey(true).Key;
+            if (key == ConsoleKey.Y)
             {
-                hero.Coins -= healingCost;
-                hero.Health += healingAmount;
-                Console.WriteLine($"{hero.Name} buys a Healing Salve and restores {healingAmount} health!");
+                if (character.Coins >= 5)
+                {
+                    character.Coins -= 5;
+                    character.Health += 5;
+                    Console.WriteLine("You bought a healing potion. +5 health.");
+                }
+                else
+                {
+                    Console.WriteLine("Not enough coins to buy the healing potion.");
+                }
             }
             else
             {
-                Console.WriteLine($"{hero.Name} doesn't have enough coins for Healing Salve.");
+                Console.WriteLine("You declined the merchant's offer.");
             }
         }
 
         public override bool TryStep(BaseCharacter character)
         {
-            if (character is Hero hero)
-            {
-                Interact(hero);
-            }
-
-            return true;
+            return true; //Allows the hero to move onto the merchant's cell
         }
 
         public override void InteractWithCell(BaseCharacter character)
         {
-            if (character is Hero hero)
-            {
-                Interact(hero);
-            }
+            Interact(character);
         }
     }
 }
