@@ -2,13 +2,6 @@
 using MazeConsole.Models.Cells;
 using MazeConsole.Models.Cells.Character;
 
-//ДЗ
-//Добавить логику по месту, куда вы добавляете свои ячейки
-//Добавить взаимодействие с героем
-//Убрать мерцания при движении героя
-//Добавить второй способ генерации стен в лабиринте
-//** 5) Предложить изменения для Монстров в нашем лабиринте
-
 namespace MazeConsole.Builders
 {
     public class MazeBuilder
@@ -27,12 +20,12 @@ namespace MazeConsole.Builders
             BuildWall();
             BuildGround();
             BuildWater();
-            //BuildGhost();
-            //BuildSnake();
-            //BuildDungeon();
-            //BuildWindow();
-            //BuildCoin();
-            //BuilPit();
+            BuildGhost();
+            BuildSnake();
+            BuildDungeon();
+            BuildWindow();
+            BuildCoin();
+            BuilPit();
 
             BuildHero();
             return _maze;
