@@ -34,7 +34,7 @@ namespace MazeConsole.Models.Cells
                 /// </summary>
             }
             else {
-                Console.WriteLine("Not correct number");
+                Console.WriteLine("Due to your mistake, the treasury doors will no longer open");
             }
         }
 

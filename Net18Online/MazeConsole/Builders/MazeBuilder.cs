@@ -231,12 +231,10 @@ namespace MazeConsole.Builders
         }
         private void BuildTreasury()
         {
-            int numberOfTreasuries = 0;
             var grounds = _maze.Cells
                 .OfType<Ground>()
                 .ToList();
-
-            do
+            foreach (var i in grounds)
             {
                 var randomGround = GetRandom(grounds);
                 var treasuryX = randomGround.X;
@@ -248,10 +246,9 @@ namespace MazeConsole.Builders
                     _maze[treasuryX - 1, treasuryY] is Wall))
                 {
                     _maze[treasury.X, treasury.Y] = treasury;
-                    numberOfTreasuries++;
+                    break;
                 }
             }
-            while (numberOfTreasuries < 1);
         }
 
         private void BuildTeleport()
