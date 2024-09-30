@@ -236,12 +236,11 @@ namespace MazeConsole.Builders
             {
                 numberOfTreasuries = _maze.Height / 5;
             }
-            for (int y = 0; y < numberOfTreasuries; y++)
+            for (var y = 0; y < numberOfTreasuries; y++)
             {
-                Random rnd = new Random();
-                int valueWidth = rnd.Next(0, _maze.Width - 1);
-                int valueHeight = rnd.Next(0, _maze.Height - 1);
-                _maze[valueWidth, valueHeight] = new Treasury(valueWidth, valueHeight);
+                var valueWidth = _random.Next(0, _maze.Width - 1);
+                var valueHeight = _random.Next(0, _maze.Height - 1);
+                _maze[valueWidth, valueHeight] = new Treasury(valueWidth, valueHeight, _maze);
 
             }
         }
