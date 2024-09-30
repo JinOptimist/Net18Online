@@ -251,8 +251,8 @@ namespace MazeConsole.Builders
             var portalInputCells = _maze.Cells.First(c => c.Symbol == '.');
             var portalOutputCells = _maze.Cells.Last(c => c.Symbol == '.');
 
-            _maze[portalInputCells.X, portalInputCells.Y] = new Teleport(portalInputCells.X, portalInputCells.Y);
-            _maze[portalOutputCells.X, portalOutputCells.Y] = new Teleport(portalOutputCells.X, portalOutputCells.Y);
+            _maze[portalInputCells.X, portalInputCells.Y] = new Teleport(portalInputCells.X, portalInputCells.Y, _maze);
+            _maze[portalOutputCells.X, portalOutputCells.Y] = new Teleport(portalOutputCells.X, portalOutputCells.Y, _maze);
         }
     }
 }
