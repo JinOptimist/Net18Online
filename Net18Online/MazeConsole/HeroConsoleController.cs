@@ -9,7 +9,10 @@ namespace MazeConsole
             var mazeBuilder = new MazeBuilder();
             var mazeDrawer = new MazeDrawer();
 
-            var maze = mazeBuilder.Build(15, 12);
+            ///<summary>
+            ///Use 'true' as third parameter to use alternate algorithm to generate Maze
+            ///</summary>
+            var maze = mazeBuilder.Build(15, 12, true); 
             mazeDrawer.Draw(maze);
 
 

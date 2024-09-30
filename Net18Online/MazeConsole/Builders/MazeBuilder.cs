@@ -9,7 +9,7 @@ namespace MazeConsole.Builders
         private Random _random = new();
         private Maze _maze;
 
-        public Maze Build(int width, int height)
+        public Maze Build(int width, int height, bool useAlternateAlgorithmForWallGeneration = false)
         {
             _maze = new Maze
             {
@@ -18,7 +18,16 @@ namespace MazeConsole.Builders
             };
 
             BuildWall();
-            BuildGround();
+
+            if (useAlternateAlgorithmForWallGeneration)
+            {
+                BuildGroundUsingGrowingTree();
+            }
+            else
+            {
+                BuildGround();
+            }
+
             BuildTreasury();
             BuildWater();
             BuildGhost();
@@ -27,10 +36,9 @@ namespace MazeConsole.Builders
             BuildWindow();
             BuildCoin();
             BuildTeleport();
-
             BuildHero();
-            BuildMerchant();
             BuilPit();
+
             return _maze;
         }
 
@@ -256,9 +264,9 @@ namespace MazeConsole.Builders
             _maze[portalOutputCells.X, portalOutputCells.Y] = new Teleport(portalOutputCells.X, portalOutputCells.Y, _maze);
         }
 
-        /// <summary>
-        /// Generate Merchant in Maze
-        /// </summary>
+        ///<summary>
+        ///Generate Merchant in Maze
+        ///</summary>
         private void BuildMerchant()
         {
             var grounds = _maze.Cells.OfType<Ground>().ToList();
@@ -266,6 +274,40 @@ namespace MazeConsole.Builders
 
             var merchant = new Merchant(randomGround.X, randomGround.Y, _maze);
             _maze[randomGround.X, randomGround.Y] = merchant;
+        }
+
+        private void BuildGroundUsingGrowingTree()
+        {
+            //List of cells that can be expanded (walls that can be turned into ground)
+            var cellsToExpand = new List<BaseCell>();
+
+            var startX = _random.Next(1, _maze.Width - 1);
+            var startY = _random.Next(1, _maze.Height - 1);
+
+            cellsToExpand.Add(new Ground(startX, startY, _maze));
+            _maze[startX, startY] = new Ground(startX, startY, _maze);
+
+            while (cellsToExpand.Count > 0)
+            {
+                var currentCell = cellsToExpand[_random.Next(cellsToExpand.Count)];
+                var nearWalls = GetNearCells<Wall>(currentCell);
+                var validWalls = nearWalls.Where(wall => GetNearCells<Ground>(wall).Count == 1).ToList();
+
+                if (validWalls.Count > 0)
+                {
+                    //Randomly selecting one of the walls and turning it into the ground cell
+                    var selectedWall = validWalls[_random.Next(validWalls.Count)];
+                    _maze[selectedWall.X, selectedWall.Y] = new Ground(selectedWall.X, selectedWall.Y, _maze);
+
+                    //Add the new cell to the list for further expansion
+                    cellsToExpand.Add(selectedWall);
+                }
+                else
+                {
+                    //If the current cell can no longer expand, remove it from the list
+                    cellsToExpand.Remove(currentCell);
+                }
+            }
         }
     }
 }
