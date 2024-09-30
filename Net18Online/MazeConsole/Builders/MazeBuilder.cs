@@ -72,19 +72,20 @@ namespace MazeConsole.Builders
         }
 
         /// <summary>
-        /// Find a Wall with random coordinates and replace it with a Ghost 
+        /// Find a Ground with random coordinates and replace it with a Ghost 
         /// </summary>
         private void BuildGhost()
         {
-            var x = 0;
-            var y = 0;
-            do
-            {
-                x = _random.Next(0, _maze.Width - 1);
-                y = _random.Next(0, _maze.Height - 1);
-            }
-            while (_maze[x, y].Symbol == '.');
-            _maze[x, y] = new Ghost(x, y, _maze);
+            var grounds = _maze.Cells
+                .OfType<Ground>()
+                .ToList();
+
+            var randomGround = GetRandom(grounds);
+
+            var ghostX = randomGround.X;
+            var ghostY = randomGround.Y;
+            var ghost = new Ghost(ghostX, ghostY, _maze);
+            _maze[ghost.X, ghost.Y] = ghost;
         }
 
         /// <summary>
