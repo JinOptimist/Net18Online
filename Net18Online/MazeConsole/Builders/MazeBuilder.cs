@@ -19,6 +19,7 @@ namespace MazeConsole.Builders
 
             BuildWall();
             BuildGround();
+            BuildTreasury();
             BuildWater();
             BuildGhost();
             BuildSnake();
@@ -223,6 +224,26 @@ namespace MazeConsole.Builders
             var randomIndex = _random.Next(0, countOfCells);
             var randomCell = cells[randomIndex];
             return randomCell;
+        }
+        public void BuildTreasury()
+        {
+            var numberOfTreasuries = 0;
+            if (_maze.Width < _maze.Height)
+            {
+                numberOfTreasuries = _maze.Width / 5;
+            }
+            else
+            {
+                numberOfTreasuries = _maze.Height / 5;
+            }
+            for (int y = 0; y < numberOfTreasuries; y++)
+            {
+                Random rnd = new Random();
+                int valueWidth = rnd.Next(0, _maze.Width - 1);
+                int valueHeight = rnd.Next(0, _maze.Height - 1);
+                _maze[valueWidth, valueHeight] = new Treasury(valueWidth, valueHeight);
+
+            }
         }
     }
 }
