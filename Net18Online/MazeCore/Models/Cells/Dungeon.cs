@@ -36,6 +36,14 @@ namespace MazeCore.Models.Cells
                     character.Health += (int)procent;
                     AddEventInfo($"You found some health points, your health has increased by 20%. Now you have {character.Health}");
                     break;
+                case Treasure.HandfulOfCoins:
+                    character.Coins += 3;
+                    AddEventInfo($"You found some coins. Now you have {character.Coins}");
+                    break;
+                case Treasure.LotOfCoins:
+                    character.Coins += 10;
+                    AddEventInfo($"You found a lot of coins. Now you have {character.Coins}");
+                    break;
             }
 
             Console.ReadKey();
