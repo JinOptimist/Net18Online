@@ -1,4 +1,5 @@
-﻿using MazeConsole.Models;
+﻿using MazeConsole.Builders;
+using MazeConsole.Models;
 
 namespace MazeConsole
 {
@@ -7,7 +8,6 @@ namespace MazeConsole
         public virtual void Draw(Maze maze)
         {
             Console.Clear();
-            Console.WriteLine($"Maze has {maze.Cells.Count} cells");
 
             for (int y = 0; y < maze.Height; y++)
             {
@@ -20,5 +20,27 @@ namespace MazeConsole
                 Console.WriteLine();
             }
         }
+
+        public void UpdatePlayerPosition(int oldX, int oldY, int newX, int newY, Maze maze)
+        {
+            maze.Hero.X = newX;
+            maze.Hero.Y = newY;
+
+            Console.SetCursorPosition(oldX, oldY);
+            Console.Write(maze.GetTopLevelItem(oldX, oldY).Symbol);
+
+            Console.SetCursorPosition(newX, newY);
+            Console.Write(maze.GetTopLevelItem(newX, newY).Symbol);
+
+        }
+        public void DrawEmty(Maze maze)
+        {
+            Console.SetCursorPosition(0, maze.Height);
+            Console.Write(' ');
+            Console.SetCursorPosition(0, maze.Height);
+        }
     }
 }
+
+
+

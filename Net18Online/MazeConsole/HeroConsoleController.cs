@@ -39,19 +39,18 @@ namespace MazeConsole
                         break;
                     case ConsoleKey.Spacebar:
                         maze[destinationX, destinationY].InteractWithCell(maze.Hero);
+                        Console.SetCursorPosition(0, maze.Height);
                         continue;
                     case ConsoleKey.Escape:
                         return;
                 }
-
+                
                 var destinationCell = maze[destinationX, destinationY];
                 if (destinationCell?.TryStep(maze.Hero) ?? false)
                 {
-                    maze.Hero.X = destinationX;
-                    maze.Hero.Y = destinationY;
+                    mazeDrawer.UpdatePlayerPosition(maze.Hero.X, maze.Hero.Y, destinationX, destinationY, maze);
                 }
-
-                mazeDrawer.Draw(maze);
+                mazeDrawer.DrawEmty(maze);
             }
         }
     }

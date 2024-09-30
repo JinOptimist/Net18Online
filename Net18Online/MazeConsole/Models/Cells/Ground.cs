@@ -10,12 +10,12 @@ namespace MazeConsole.Models.Cells
 
         public override char Symbol => '.';
 
-        public override void InteractWithCell(BaseCharacter character)
+        public override void InteractWithCell(BaseCharacter baseCharacter)
         {
-            Console.WriteLine("step setp");
+            Console.WriteLine("step step");
         }
 
-        public override bool TryStep(BaseCharacter character)
+        public override bool TryStep(BaseCharacter baseCharacter)
         {
             return true;
         }

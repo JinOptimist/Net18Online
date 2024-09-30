@@ -9,7 +9,6 @@
         public int Health { get; set; }
 
         public int Coins { get; set; }
-       
 
         public override bool TryStep(BaseCharacter character)
         {

@@ -8,7 +8,6 @@
 
         public string Name { get; set; }
 
-      
         public override char Symbol => '@';
 
         public override void InteractWithCell(BaseCharacter character)

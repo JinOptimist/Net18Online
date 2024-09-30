@@ -18,6 +18,8 @@ namespace MazeConsole.Models.Cells
         public override void InteractWithCell(BaseCharacter character)
         {
             Console.WriteLine("Glug glug");
+            character.Health -= 1;
+            //Thread.Sleep(2000);
         }
     }
 }
