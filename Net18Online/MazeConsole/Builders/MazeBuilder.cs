@@ -229,20 +229,18 @@ namespace MazeConsole.Builders
             var randomCell = cells[randomIndex];
             return randomCell;
         }
-        public void BuildTreasury()
+        private void BuildTreasury()
         {
             int numberOfTreasuries = 0;
             var grounds = _maze.Cells
                 .OfType<Ground>()
                 .ToList();
 
-            int treasuryX = 0;
-            int treasuryY = 0;
             do
             {
                 var randomGround = GetRandom(grounds);
-                treasuryX = randomGround.X;
-                treasuryY = randomGround.Y;
+                var treasuryX = randomGround.X;
+                var treasuryY = randomGround.Y;
                 var treasury = new Treasury(treasuryX, treasuryY, _maze);
                 if ((_maze[treasuryX, treasuryY + 1] is Wall &&
                     _maze[treasuryX, treasuryY - 1] is Wall) ||
