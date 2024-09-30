@@ -119,40 +119,83 @@ namespace MazeConsole.Builders
 
         }
 
-        private void BuildGround()
+        public void BuildGround()
         {
-            var wallReadyToDestroy = new List<BaseCell>();
-            wallReadyToDestroy.Add(GetRandom(_maze.Cells));
+            var sets = new Dictionary<int, List<BaseCell>>();
+            var nextSetId = 1;
 
-            do
+            for (int y = 0; y < _maze.Height; y += 2)
             {
-                var miner = GetRandom(wallReadyToDestroy);
-                _maze[miner.X, miner.Y] = new Ground(miner.X, miner.Y, _maze);
-                wallReadyToDestroy.Remove(miner);
+                for (int x = 0; x < _maze.Width; x += 2)
+                {
+                    _maze[x, y] = new Ground(x, y, _maze);
+                    if (!sets.ContainsKey(nextSetId))
+                    {
+                        sets[nextSetId] = new List<BaseCell>();
+                    }
+                    sets[nextSetId].Add(_maze[x, y]);
+                    nextSetId++;
+                }
 
-                var nearWalls = GetNearCells<Wall>(miner);
-                wallReadyToDestroy.AddRange(nearWalls);
-
-                wallReadyToDestroy = wallReadyToDestroy
-                    .Where(wall =>
-                        GetNearCells<Ground>(wall).Count == 1)
-                    .ToList();
-
-            } while (wallReadyToDestroy.Any());
+                if (y < _maze.Height - 1)
+                {
+                    MergeSets(sets, y);
+                    CreateVerticalConnections(sets, y);
+                }
+            }
         }
 
-        private List<CellType> GetNearCells<CellType>(BaseCell miner)
-            where CellType : BaseCell
+        private void MergeSets(Dictionary<int, List<BaseCell>> sets, int y)
         {
-            return _maze
-                .Cells
-                .OfType<CellType>()
-                .Where(cell =>
-                   cell.X == miner.X && cell.Y == miner.Y + 1
-                || cell.X == miner.X && cell.Y == miner.Y - 1
-                || cell.X == miner.X + 1 && cell.Y == miner.Y
-                || cell.X == miner.X - 1 && cell.Y == miner.Y)
-                .ToList();
+            foreach (var set in sets.Values)
+            { 
+                var mergeCandidates = set.Where(cell => cell.Y == y).ToList();
+                foreach (var cell in mergeCandidates)
+                {
+                    if (_random.Next(2) == 0)
+                    {
+                        var rightCell = _maze[cell.X + 2, cell.Y];
+                        if (rightCell is Wall && GetNearCells<Ground>(rightCell).Count == 1)
+                        {
+                            _maze[cell.X + 1, cell.Y] = new Ground(cell.X + 1, cell.Y, _maze);
+                            _maze[cell.X + 2, cell.Y] = new Ground(cell.X + 2, cell.Y, _maze);
+                            set.Add(_maze[cell.X + 2, cell.Y]);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void CreateVerticalConnections(Dictionary<int, List<BaseCell>> sets, int y)
+        {
+            foreach (var set in sets.Values)
+            {
+                var verticalConnections = set.Where(cell => cell.Y == y).ToList();
+                foreach (var cell in verticalConnections)
+                {
+                    if (_random.Next(2) == 0)
+                    {
+                        var belowCell = _maze[cell.X, cell.Y + 2];
+                        if (belowCell is Wall && GetNearCells<Ground>(belowCell).Count == 1)
+                        {
+                            _maze[cell.X, cell.Y + 1] = new Ground(cell.X, cell.Y + 1, _maze);
+                            _maze[cell.X, cell.Y + 2] = new Ground(cell.X, cell.Y + 2, _maze);
+                            set.Add(_maze[cell.X, cell.Y + 2]);
+                        }
+                    }
+                }
+            }
+        }
+
+        private List<CellType> GetNearCells<CellType>(BaseCell cell)
+        where CellType : BaseCell
+        {
+            return _maze.Cells
+            .OfType<CellType>()
+            .Where(c =>
+                (c.X == cell.X && (c.Y == cell.Y + 1 || c.Y == cell.Y - 1)) ||
+                (c.Y == cell.Y && (c.X == cell.X + 1 || c.X == cell.X - 1)))
+            .ToList();
         }
 
         public void BuildWall()
