@@ -39,7 +39,9 @@ namespace MazeConsole
                         break;
                     case ConsoleKey.Spacebar:
                         maze[destinationX, destinationY].InteractWithCell(maze.Hero);
-                        continue;
+                        destinationX = maze.Hero.X;
+                        destinationY = maze.Hero.Y;
+                        break;
                     case ConsoleKey.Escape:
                         return;
                 }

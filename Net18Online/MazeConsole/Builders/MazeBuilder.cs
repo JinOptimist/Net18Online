@@ -248,11 +248,36 @@ namespace MazeConsole.Builders
 
         private void BuildTeleport()
         {
-            var portalInputCells = _maze.Cells.First(c => c.Symbol == '.');
-            var portalOutputCells = _maze.Cells.Last(c => c.Symbol == '.');
+            var numberTeleportCellsInMaze = 5;
 
-            _maze[portalInputCells.X, portalInputCells.Y] = new Teleport(portalInputCells.X, portalInputCells.Y, _maze);
-            _maze[portalOutputCells.X, portalOutputCells.Y] = new Teleport(portalOutputCells.X, portalOutputCells.Y, _maze);
+            var groundCellsWithTwoWallNeighborhood = _maze
+                .Cells
+                .OfType<Ground>()
+                .Where(cell => GetSimilarCellOnAxisX<Teleport>(cell).Count == 0)
+                .ToList();
+
+            var countIteration = groundCellsWithTwoWallNeighborhood.Count < numberTeleportCellsInMaze
+                ? groundCellsWithTwoWallNeighborhood.Count
+                : numberTeleportCellsInMaze;
+
+            for (var i = 1; i <= countIteration; i++)
+            {
+                var randomCell = GetRandom(groundCellsWithTwoWallNeighborhood);
+
+                _maze[randomCell.X, randomCell.Y] = new Teleport(randomCell.X, randomCell.Y, _maze);
+
+                groundCellsWithTwoWallNeighborhood.Remove(randomCell);
+            }
+        }
+
+        private List<T> GetSimilarCellOnAxisX<T>(BaseCell cell)
+            where T : BaseCell
+        {
+            return _maze
+                .Cells
+                .OfType<T>()
+                .Where(c => c.X == cell.X)
+                .ToList();
         }
     }
 }
