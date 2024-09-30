@@ -2,17 +2,21 @@
 
 namespace MazeConsole.Models.Cells
 {
-    public class Teleport : BaseCell
+    public class Snake : BaseCell
     {
-        public override char Symbol => '^';
+        private const int HEALTH = 20;
 
-        public Teleport(int x, int y, Maze maze) : base(x, y, maze)
+        public int Damage => 1;
+
+        public Snake(int x, int y, Maze maze) : base(x, y, maze)
         {
         }
 
+        public override char Symbol => 's';
+
         public override void InteractWithCell(BaseCharacter character)
         {
-            Console.WriteLine("Moving...");
+            Console.WriteLine("Fight");
         }
 
         public override bool TryStep(BaseCharacter character)
