@@ -19,14 +19,43 @@ namespace MazeConsole.Models.Cells
 
         public override void InteractWithCell(BaseCharacter character)
         {
-            Console.WriteLine("Oops you fell into a pit");
+            if (character is Hero hero) 
+            {
+                if (hero.IsTrappedInPit && !hero.HasLadder)
+                {
+                    Console.WriteLine("You are trapped in the pit. Press L to buy a ladder.");
+                    var key = Console.ReadKey();
+                    if (key.Key == ConsoleKey.L)
+                    {
+                        hero.HasLadder = true;  
+                        hero.IsTrappedInPit = false;  
+                        Console.WriteLine("You can now escape the pit.");
+                    }
+                }
+            };
+           
         }
 
 
 
         public override bool TryStep(BaseCharacter character)
         {
-            return true; 
+            if (character is Hero hero)
+            {
+                if (!hero.HasLadder)
+                {
+                                       
+                    hero.IsTrappedInPit = true;  
+                    return true;  
+                }
+                else
+                {                                        
+                    return true;  
+                }
+            }
+
+            return true;
         }
     }
+    
 }

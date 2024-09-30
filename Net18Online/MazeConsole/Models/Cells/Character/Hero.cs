@@ -7,8 +7,9 @@
         }
 
         public string Name { get; set; }
+        public bool HasLadder {  get; set; } = false;
+        public bool IsTrappedInPit { get; set; } = false;
 
-      
         public override char Symbol => '@';
 
         public override void InteractWithCell(BaseCharacter character)
