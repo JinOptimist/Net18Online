@@ -18,7 +18,24 @@ namespace MazeConsole.Models.Cells
 
         public override void InteractWithCell(BaseCharacter character)
         {
-            Console.WriteLine("step setp");
+            Console.WriteLine("You found a Treasury");
+            Console.WriteLine("Press 1 to take a few coins");
+            Console.WriteLine("");
+            Console.WriteLine("Press 2 to search for something useful \r\n(It'll cause a lot of noise)");
+            var numberStr = Console.ReadLine();
+            if (int.Parse(numberStr) == 1)
+            {
+                character.Coins = character.Coins + 5;
+            }
+            else if(int.Parse(numberStr) == 2)
+            {
+                /// <summary>
+                /// Absent due to lack of enemies and inventory.
+                /// </summary>
+            }
+            else {
+                Console.WriteLine("Not correct number");
+            }
         }
 
         public override bool TryStep(BaseCharacter character)

@@ -1,6 +1,7 @@
 ﻿using MazeConsole.Models;
 using MazeConsole.Models.Cells;
 using MazeConsole.Models.Cells.Character;
+using Microsoft.VisualBasic;
 
 namespace MazeConsole.Builders
 {
@@ -8,6 +9,8 @@ namespace MazeConsole.Builders
     {
         private Random _random = new();
         private Maze _maze;
+
+        public bool True { get; private set; }
 
         public Maze Build(int width, int height)
         {
@@ -19,7 +22,6 @@ namespace MazeConsole.Builders
 
             BuildWall();
             BuildGround();
-            BuildTreasury();
             BuildWater();
             BuildGhost();
             BuildSnake();
@@ -27,9 +29,10 @@ namespace MazeConsole.Builders
             BuildWindow();
             BuildCoin();
             BuildTeleport();
+            BuilPit();
+            BuildTreasury();
 
             BuildHero();
-            BuilPit();
             return _maze;
         }
 
@@ -228,22 +231,29 @@ namespace MazeConsole.Builders
         }
         public void BuildTreasury()
         {
-            var numberOfTreasuries = 0;
-            if (_maze.Width < _maze.Height)
-            {
-                numberOfTreasuries = _maze.Width / 5;
-            }
-            else
-            {
-                numberOfTreasuries = _maze.Height / 5;
-            }
-            for (var y = 0; y < numberOfTreasuries; y++)
-            {
-                var valueWidth = _random.Next(0, _maze.Width - 1);
-                var valueHeight = _random.Next(0, _maze.Height - 1);
-                _maze[valueWidth, valueHeight] = new Treasury(valueWidth, valueHeight, _maze);
+            int numberOfTreasuries = 0;
+            var grounds = _maze.Cells
+                .OfType<Ground>()
+                .ToList();
 
+            int treasuryX = 0;
+            int treasuryY = 0;
+            do
+            {
+                var randomGround = GetRandom(grounds);
+                treasuryX = randomGround.X;
+                treasuryY = randomGround.Y;
+                var treasury = new Treasury(treasuryX, treasuryY, _maze);
+                if ((_maze[treasuryX, treasuryY + 1]?.Symbol == '#' &&
+                    _maze[treasuryX, treasuryY - 1]?.Symbol == '#') ||
+                    (_maze[treasuryX + 1, treasuryY]?.Symbol == '#' &&
+                    _maze[treasuryX - 1, treasuryY]?.Symbol == '#'))
+                {
+                    _maze[treasury.X, treasury.Y] = treasury;
+                    numberOfTreasuries++;
+                }
             }
+            while (numberOfTreasuries < 1);
         }
 
         private void BuildTeleport()
