@@ -186,16 +186,15 @@ namespace MazeConsole.Builders
         }
         private void BuilPit()
         {
-            var count = 0;
-            for (int y = 0; y < _maze.Height; y++)
+
+            var groundCells = _maze.Cells.OfType<Ground>().ToList();
+
+            foreach (var groundCell in groundCells) 
             {
-                for (var x = 0; x < _maze.Width; x++)
+                var nearGrounds = GetNearCells<Ground>(groundCell);
+                if (nearGrounds.Count == 3)
                 {
-                    count++;
-                    if (count % 4 == 0)
-                    {
-                        _maze[x, y] = new Pit(x, y, _maze);
-                    }
+                    _maze[groundCell.X, groundCell.Y ] = new Pit(groundCell.X, groundCell.Y, _maze);
                 }
             }
         }

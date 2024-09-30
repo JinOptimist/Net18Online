@@ -1,4 +1,5 @@
 ﻿using MazeConsole.Builders;
+using MazeConsole.Models.Cells;
 
 namespace MazeConsole
 {
@@ -17,6 +18,13 @@ namespace MazeConsole
             {
                 var destinationX = maze.Hero.X;
                 var destinationY = maze.Hero.Y;
+
+                if (maze.Hero.IsTrappedInPit)
+                {
+                    var pit = maze[maze.Hero.X, maze.Hero.Y] as Pit; 
+                    pit?.InteractWithCell(maze.Hero);
+                    continue;
+                }
 
                 var key = Console.ReadKey();
                 switch (key.Key)
