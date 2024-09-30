@@ -2,17 +2,21 @@
 
 namespace MazeConsole.Models.Cells
 {
-    public class Ground : BaseCell
+    public class Snake : BaseCell
     {
-        public Ground(int x, int y, Maze maze) : base(x, y, maze)
+        private const int HEALTH = 20;
+
+        public int Damage => 1;
+
+        public Snake(int x, int y, Maze maze) : base(x, y, maze)
         {
         }
 
-        public override char Symbol => '.';
+        public override char Symbol => 's';
 
         public override void InteractWithCell(BaseCharacter character)
         {
-            Console.WriteLine("step setp");
+            Console.WriteLine("Fight");
         }
 
         public override bool TryStep(BaseCharacter character)

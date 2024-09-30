@@ -2,21 +2,23 @@
 
 namespace MazeConsole.Models.Cells
 {
-    public class Ground : BaseCell
+    public class Coin : BaseCell
     {
-        public Ground(int x, int y, Maze maze) : base(x, y, maze)
+        public Coin(int x, int y, Maze maze) : base(x, y, maze)
         {
         }
 
-        public override char Symbol => '.';
+        public override char Symbol => 'c';
 
         public override void InteractWithCell(BaseCharacter character)
         {
-            Console.WriteLine("step setp");
+            Console.WriteLine("Wow it's a coin");
         }
 
         public override bool TryStep(BaseCharacter character)
         {
+            character.Coins++;
+            Maze[X, Y] = new Ground(X, Y, Maze);
             return true;
         }
     }

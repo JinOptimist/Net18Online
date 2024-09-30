@@ -1,18 +1,20 @@
-﻿using MazeConsole.Models.Cells.Character;
+﻿using MazeConsole.Models.Cells;
+using MazeConsole.Models.Cells.Character;
 
 namespace MazeConsole.Models.Cells
 {
-    public class Ground : BaseCell
+
+    public class Ghost : BaseCell
     {
-        public Ground(int x, int y, Maze maze) : base(x, y, maze)
+        public Ghost(int x, int y, Maze maze) : base(x, y, maze)
         {
         }
 
-        public override char Symbol => '.';
+        public override char Symbol => '0';
 
         public override void InteractWithCell(BaseCharacter character)
         {
-            Console.WriteLine("step setp");
+            Console.WriteLine("BooOoo");
         }
 
         public override bool TryStep(BaseCharacter character)
@@ -21,3 +23,4 @@ namespace MazeConsole.Models.Cells
         }
     }
 }
+
