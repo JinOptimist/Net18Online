@@ -244,10 +244,10 @@ namespace MazeConsole.Builders
                 treasuryX = randomGround.X;
                 treasuryY = randomGround.Y;
                 var treasury = new Treasury(treasuryX, treasuryY, _maze);
-                if ((_maze[treasuryX, treasuryY + 1]?.Symbol == '#' &&
-                    _maze[treasuryX, treasuryY - 1]?.Symbol == '#') ||
-                    (_maze[treasuryX + 1, treasuryY]?.Symbol == '#' &&
-                    _maze[treasuryX - 1, treasuryY]?.Symbol == '#'))
+                if ((_maze[treasuryX, treasuryY + 1] is Wall &&
+                    _maze[treasuryX, treasuryY - 1] is Wall) ||
+                    (_maze[treasuryX + 1, treasuryY] is Wall &&
+                    _maze[treasuryX - 1, treasuryY] is Wall))
                 {
                     _maze[treasury.X, treasury.Y] = treasury;
                     numberOfTreasuries++;
