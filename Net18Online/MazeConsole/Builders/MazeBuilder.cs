@@ -26,6 +26,7 @@ namespace MazeConsole.Builders
             BuildDungeon();
             BuildWindow();
             BuildCoin();
+            BuildTeleport();
 
             BuildHero();
             BuilPit();
@@ -243,6 +244,15 @@ namespace MazeConsole.Builders
                 _maze[valueWidth, valueHeight] = new Treasury(valueWidth, valueHeight, _maze);
 
             }
+        }
+
+        private void BuildTeleport()
+        {
+            var portalInputCells = _maze.Cells.First(c => c.Symbol == '.');
+            var portalOutputCells = _maze.Cells.Last(c => c.Symbol == '.');
+
+            _maze[portalInputCells.X, portalInputCells.Y] = new Teleport(portalInputCells.X, portalInputCells.Y);
+            _maze[portalOutputCells.X, portalOutputCells.Y] = new Teleport(portalOutputCells.X, portalOutputCells.Y);
         }
     }
 }
