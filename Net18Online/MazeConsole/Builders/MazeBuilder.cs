@@ -201,24 +201,43 @@ namespace MazeConsole.Builders
         }
         public void BuildWindow()
         {
-            int windowCount = 0;
+            var windowCount = 0;
             for (int y = 0; y < _maze.Height; y++)
             {
                 for (var x = 0; x < _maze.Width; x++)
                 {
-                    switch (windowCount)
+                    if (windowCount <= 2 && _maze[x, y] is Wall && !IsWindowNearby(x, y))
                     {
-                        case < 2 when _maze[x, y] is Wall:
-                            _maze[x, y] = new Window(x, y, _maze);
-                            windowCount++;
-                            break;
-                        case 2:
-                            return;
+                        _maze[x, y] = new Window(x, y, _maze);
+                        windowCount++;
                     }
+                     if (windowCount > 2)
+                    {
+                        return;
+                     }
                 }
             }
         }
-
+        private bool IsWindowNearby(int x, int y)
+        {
+            var radius = 5;
+            for (int i = -radius; i <= radius; i++)
+            {
+                for (int j = -radius; j <= radius; j++)
+                {
+                    var newX = x + i;
+                    var newY = y + j;
+                    if (newX >= 0 && newX < _maze.Width && newY >= 0 && newY < _maze.Height)
+                    {
+                        if (_maze[newX, newY] is Window)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
         private T GetRandom<T>(List<T> cells)
         {
             var countOfCells = cells.Count();
