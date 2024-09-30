@@ -1,4 +1,4 @@
-﻿using MazeConsole.Models.Cells;
+﻿ using MazeConsole.Models.Cells;
 using MazeConsole.Models.Cells.Character;
 
 namespace MazeConsole.Models
