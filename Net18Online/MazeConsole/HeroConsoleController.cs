@@ -66,7 +66,8 @@ namespace MazeConsole
                     npc.Move();
                 }
 
-                mazeDrawer.Draw(maze);
+                //mazeDrawer.Draw(maze);
+                mazeDrawer.DrawMove(maze);
             }
         }
     }
