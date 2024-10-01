@@ -32,12 +32,25 @@ namespace MazeCore.Builders
 
             // Build Npc
             BuildGoblins();
-
+            BuildAlcoholic();
 
             // Build Hero
             BuildHero();
             
             return _maze;
+        }
+
+        private void BuildAlcoholic()
+        {
+            var grounds = _maze
+                .Cells
+                .OfType<Ground>()
+                .ToList();
+            var randomGround = GetRandom(grounds);
+
+            var alcoholic = new Alcoholic(randomGround.X, randomGround.Y, _maze);
+            _maze.Npcs.Add(alcoholic);
+            grounds.Remove(randomGround);
         }
 
         private void BuildGoblins(int goblinCount = 3)
