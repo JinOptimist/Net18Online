@@ -40,11 +40,11 @@ namespace MazeCore.Builders
             return _maze;
         }
 
-        private void StandartBuildNpc<T>(int Count, T npc)
+        private void StandartBuildNpc<T>(int countOfNpc, T npc)
             where T : BaseNpc
         {
             var grounds = _maze.Cells.OfType<Ground>().ToList();
-            for (int i = 0; i < Count; i++)
+            for (int i = 0; i < countOfNpc; i++)
             {
                 var ground = GetRandom(grounds);
                 npc.X = ground.X;
