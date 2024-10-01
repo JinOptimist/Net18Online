@@ -17,6 +17,13 @@ namespace MazeCore.Models.Cells
 
         public abstract char Symbol { get; }
 
+        public virtual void ChangeColor(ConsoleColor color)
+        {
+            char symbol = Symbol; 
+            Console.ForegroundColor = color;
+            color = ConsoleColor.White;
+            Console.ResetColor();
+        }
         public abstract bool TryStep(BaseCharacter character);
 
         public abstract void InteractWithCell(BaseCharacter character);

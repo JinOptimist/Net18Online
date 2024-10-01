@@ -32,6 +32,7 @@ namespace MazeCore.Builders
 
             // Build Npc
             BuildGoblins();
+            BuildCat();
 
 
             // Build Hero
@@ -51,6 +52,12 @@ namespace MazeCore.Builders
                 grounds.Remove(ground);
             }
         }
+         private void BuildCat()
+         {
+             var cat = _maze.Cells.OfType<Water>().ToList();
+             var CatInCenter = new Cat((int) _maze.Height/2, (int) _maze.Width/2, _maze);
+             _maze.Npcs.Add(CatInCenter);
+         }
 
         private void BuildHero()
         {
