@@ -15,7 +15,7 @@ namespace MazeCore.Models.Cells.Character
             color = ConsoleColor.Green;
         }
 
-        public override char Symbol => '{';
+        public override char Symbol => '?';
 
 
         public override void InteractWithCell(BaseCharacter character)
