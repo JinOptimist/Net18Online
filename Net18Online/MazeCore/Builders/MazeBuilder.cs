@@ -237,7 +237,6 @@ namespace MazeCore.Builders
         }
         private bool IsWindowNearby(int x, int y)
         {
-            var radius = 5;
             return _maze
                     .Cells
                     .OfType<Window>()
