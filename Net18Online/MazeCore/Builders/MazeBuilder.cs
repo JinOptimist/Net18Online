@@ -32,6 +32,7 @@ namespace MazeCore.Builders
 
             // Build Npc
             BuildGoblins();
+            BuildCat();
 
 
             // Build Hero
@@ -50,6 +51,13 @@ namespace MazeCore.Builders
                 _maze.Npcs.Add(goblin);
                 grounds.Remove(ground);
             }
+        }
+
+        private void BuildCat()
+        {
+            var cat = _maze.Cells.OfType<Water>().ToList();
+            var CatInCenter = new Cat((int) _maze.Height/2, (int) _maze.Width/2, _maze);
+            _maze.Npcs.Add(CatInCenter);
         }
 
         private void BuildHero()
@@ -230,22 +238,10 @@ namespace MazeCore.Builders
         private bool IsWindowNearby(int x, int y)
         {
             var radius = 5;
-            for (int i = -radius; i <= radius; i++)
-            {
-                for (int j = -radius; j <= radius; j++)
-                {
-                    var newX = x + i;
-                    var newY = y + j;
-                    if (newX >= 0 && newX < _maze.Width && newY >= 0 && newY < _maze.Height)
-                    {
-                        if (_maze[newX, newY] is Window)
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
-            return false;
+            return _maze
+                    .Cells
+                    .OfType<Window>()
+                    .Any(cell => Math. Sqrt (Math.Pow(cell. X - x, 2)+ Math. Pow(cell.Y - y, 2)) < 5);
         }
         private T GetRandom<T>(List<T> cells)
         {
