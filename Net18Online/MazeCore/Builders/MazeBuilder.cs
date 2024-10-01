@@ -31,27 +31,36 @@ namespace MazeCore.Builders
             BuilPit();
 
             // Build Npc
-            BuildGoblins();
-
+            BuildGoblins(3);
+            BuildSlime(2);
 
             // Build Hero
             BuildHero();
-            
+
             return _maze;
         }
 
-        private void BuildGoblins(int goblinCount = 3)
+        private void StandartBuildNpc<T>(int Count, T npc)
+            where T : BaseNpc
         {
             var grounds = _maze.Cells.OfType<Ground>().ToList();
-            for (int i = 0; i < goblinCount; i++)
+            for (int i = 0; i < Count; i++)
             {
                 var ground = GetRandom(grounds);
-                var goblin = new Goblin(ground.X, ground.Y, _maze);
-                _maze.Npcs.Add(goblin);
+                npc.X = ground.X;
+                npc.Y = ground.Y;
+                _maze.Npcs.Add(npc);
                 grounds.Remove(ground);
             }
         }
-
+        private void BuildGoblins(int goblinCount)
+        {
+            StandartBuildNpc(goblinCount, new Goblin(1, 1, _maze));
+        }
+        private void BuildSlime(int slimeCount)
+        {
+            StandartBuildNpc(slimeCount, new Slime(1, 1, _maze));
+        }
         private void BuildHero()
         {
             var grounds = _maze.Cells.OfType<Ground>().ToList();
@@ -185,12 +194,10 @@ namespace MazeCore.Builders
         {
             for (int y = 0; y < _maze.Height; y++)
             {
-                for (var x = 0; x < _maze.Width; x++)
+                var randomX = _maze.Random.Next(0, _maze.Width + 1);
+                if (_maze[randomX, y] is Ground)
                 {
-                    if (x % 3 == 0 && y % 2 == 0)
-                    {
-                        _maze[x, y] = new Water(x, y, _maze);
-                    }
+                    _maze[randomX, y] = new Water(randomX, y, _maze);
                 }
             }
         }

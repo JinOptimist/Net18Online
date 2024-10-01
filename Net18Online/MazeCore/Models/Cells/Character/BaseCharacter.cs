@@ -17,5 +17,14 @@ namespace MazeCore.Models.Cells.Character
         {
             return false;
         }
+
+        public bool IsDied()
+        {
+            if (Health > 0)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

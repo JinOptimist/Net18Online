@@ -18,18 +18,7 @@ namespace MazeCore.Models.Cells.Character
 
         public override void Move()
         {
-            var nearGrounds = MazeHelper.GetNearCells<BaseCell>(Maze, this);
-            if (!nearGrounds.Any())
-            {
-                return;
-            }
-
-            var destinationCell = MazeHelper.GetRandom(Maze, nearGrounds);
-            if (destinationCell.TryStep(this))
-            {
-                X = destinationCell.X;
-                Y = destinationCell.Y;
-            }
+            base.Move();
         }
     }
 }
