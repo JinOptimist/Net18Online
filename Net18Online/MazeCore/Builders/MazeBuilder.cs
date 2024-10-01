@@ -2,6 +2,7 @@
 using MazeCore.Models;
 using MazeCore.Models.Cells;
 using MazeCore.Models.Cells.Character;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MazeCore.Builders
 {
@@ -77,7 +78,7 @@ namespace MazeCore.Builders
         private void BuildSnake(int snakeCount = 1)
         {
             var listOfLandsThatHaveTwoWalls = GetSurroundedCells<Ground, Wall>(2);
-            var listOfCorners = GetCorners(listOfLandsThatHaveTwoWalls);
+            var listOfCorners = GetCorners<Ground, Wall>(listOfLandsThatHaveTwoWalls);
 
             for (int i = 0; i < snakeCount; i++)
             {
@@ -87,26 +88,27 @@ namespace MazeCore.Builders
                 listOfCorners.Remove(ground);
             }
         }
-        private List<ResultingCell> GetSurroundedCells<ResultingCell, SurroundingCell>(int NumberSurrounded)
+        private List<ResultingCell> GetSurroundedCells<ResultingCell, SurroundingCell>(int theNumberOfThoseWhoSurrounded)
             where ResultingCell : BaseCell
             where SurroundingCell : BaseCell
         {
             return _maze
                 .Cells
                 .OfType<ResultingCell>()
-                .Where(ground => MazeHelper.GetNearCells<SurroundingCell>(_maze, ground).Count == NumberSurrounded)
+                .Where(ground => MazeHelper.GetNearCells<SurroundingCell>(_maze, ground).Count == theNumberOfThoseWhoSurrounded)
                 .ToList();
         }
 
-        private List<CellType> GetCorners<CellType>(List<CellType> cells)
-            where CellType : BaseCell
+        private List<ResultingCell> GetCorners<ResultingCell, SurroundingCell>(List<ResultingCell> cells)
+            where ResultingCell : BaseCell
+            where SurroundingCell : BaseCell
         {
             return cells.
                 Where(cell =>
-                   _maze[cell.X, cell.Y + 1] is Wall && _maze[cell.X - 1, cell.Y] is Wall
-                || _maze[cell.X, cell.Y + 1] is Wall && _maze[cell.X + 1, cell.Y] is Wall
-                || _maze[cell.X, cell.Y - 1] is Wall && _maze[cell.X - 1, cell.Y] is Wall
-                || _maze[cell.X, cell.Y - 1] is Wall && _maze[cell.X + 1, cell.Y] is Wall)
+                   _maze[cell.X, cell.Y + 1] is SurroundingCell && _maze[cell.X - 1, cell.Y] is SurroundingCell
+                || _maze[cell.X, cell.Y + 1] is SurroundingCell && _maze[cell.X + 1, cell.Y] is SurroundingCell
+                || _maze[cell.X, cell.Y - 1] is SurroundingCell && _maze[cell.X - 1, cell.Y] is SurroundingCell
+                || _maze[cell.X, cell.Y - 1] is SurroundingCell && _maze[cell.X + 1, cell.Y] is SurroundingCell)
                 .ToList();
         }
         /// <summary>
