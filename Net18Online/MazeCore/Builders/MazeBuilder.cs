@@ -2,7 +2,6 @@
 using MazeCore.Models;
 using MazeCore.Models.Cells;
 using MazeCore.Models.Cells.Character;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MazeCore.Builders
 {
