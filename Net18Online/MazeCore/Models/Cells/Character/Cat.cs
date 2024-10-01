@@ -8,7 +8,7 @@ namespace MazeCore.Models.Cells.Character
         {
         }
 
-        public override char Symbol => 'C';
+        public override char Symbol => '?';
         
 
         public override void InteractWithCell(BaseCharacter character)
