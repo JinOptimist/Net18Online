@@ -54,19 +54,24 @@ namespace MazeConsole
                         return;
                 }
 
+                int oldx = maze.Hero.X;
+                int oldy = maze.Hero.Y;
+
                 var destinationCell = maze.GetTopLevelItem(destinationX, destinationY);
                 if (destinationCell?.TryStep(maze.Hero) ?? false)
                 {
                     maze.Hero.X = destinationX;
                     maze.Hero.Y = destinationY;
                 }
+                mazeDrawer.DrawHeroStep(maze, oldx, oldy);
 
-                foreach (var npc in maze.Npcs)
+
+                for (int i = 0; i < maze.Npcs.Count; i++)
                 {
-                    npc.Move();
+                    maze.Npcs[i].Move();
                 }
 
-                mazeDrawer.Draw(maze);
+                //mazeDrawer.Draw(maze);
             }
         }
     }
