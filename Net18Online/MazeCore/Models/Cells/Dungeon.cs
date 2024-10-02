@@ -12,7 +12,7 @@ namespace MazeCore.Models.Cells
 
         public override char Symbol => 'v';
 
-        public override void InteractWithCell(BaseCharacter character)
+        public override void InteractWithCell(IBaseCharacter character)
         {
             Maze[X, Y] = new Ground(X, Y, Maze);
             var maxValue = GetEnumMaxValue<Treasure>();
@@ -43,7 +43,7 @@ namespace MazeCore.Models.Cells
             }
         }
 
-        public override bool TryStep(BaseCharacter character)
+        public override bool TryStep(IBaseCharacter character)
         {
             AddEventInfo("Are you sure you want to go down to the dungeon?");
             return true;
@@ -74,7 +74,7 @@ namespace MazeCore.Models.Cells
             }
         }
 
-        private MonsterTreasure GetMonsterValue(BaseCharacter character)
+        private MonsterTreasure GetMonsterValue(IBaseCharacter character)
         {
             var procent = (double)character.Health / 100 * Maze.Random.Next(0, 51);
             character.Health -= (int)procent;

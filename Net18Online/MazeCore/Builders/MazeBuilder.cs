@@ -186,7 +186,7 @@ namespace MazeCore.Builders
 
         private void BuildGround()
         {
-            var wallReadyToDestroy = new List<BaseCell>();
+            var wallReadyToDestroy = new List<IBaseCell>();
             wallReadyToDestroy.Add(GetRandom(_maze.Cells));
 
             do
@@ -206,8 +206,8 @@ namespace MazeCore.Builders
             } while (wallReadyToDestroy.Any());
         }
 
-        private List<CellType> GetNearCells<CellType>(BaseCell miner)
-            where CellType : BaseCell
+        private List<CellType> GetNearCells<CellType>(IBaseCell miner)
+            where CellType : IBaseCell
         {
             return MazeHelper.GetNearCells<CellType>(_maze, miner);
         }

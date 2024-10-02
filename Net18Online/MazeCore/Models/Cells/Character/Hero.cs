@@ -14,7 +14,7 @@ namespace MazeCore.Models.Cells.Character
 
         public override char Symbol => '@';
 
-        public override void InteractWithCell(BaseCharacter character)
+        public override void InteractWithCell(IBaseCharacter character)
         {
             throw new NotImplementedException();
         }

@@ -11,12 +11,12 @@ namespace MazeCore.Models.Cells
 
         public override char Symbol => '◎';
 
-        public override void InteractWithCell(BaseCharacter character)
+        public override void InteractWithCell(IBaseCharacter character)
         {
             AddEventInfo("clap clap");
         }
 
-        public override bool TryStep(BaseCharacter character)
+        public override bool TryStep(IBaseCharacter character)
         {
 
             character.Health--;

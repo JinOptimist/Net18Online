@@ -12,7 +12,7 @@ namespace MazeCore.Models.Cells
 
 
 
-        public override void InteractWithCell(BaseCharacter character)
+        public override void InteractWithCell(IBaseCharacter character)
         {
             if (character is Hero hero)
             {
@@ -33,7 +33,7 @@ namespace MazeCore.Models.Cells
 
 
 
-        public override bool TryStep(BaseCharacter character)
+        public override bool TryStep(IBaseCharacter character)
         {
             if (character is Hero hero)
             {

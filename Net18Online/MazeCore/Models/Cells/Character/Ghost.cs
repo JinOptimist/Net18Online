@@ -12,13 +12,13 @@
         /// <summary>
         /// If we interact witn Ghost, we replaced it to new cell Coin
         /// </summary>
-        public override void InteractWithCell(BaseCharacter character)
+        public override void InteractWithCell(IBaseCharacter character)
         {
             AddEventInfo("BooOoo");
             Maze[X, Y] = new Coin(X, Y, Maze);
         }
 
-        public override bool TryStep(BaseCharacter character)
+        public override bool TryStep(IBaseCharacter character)
         {
             return true;
         }
