@@ -31,7 +31,7 @@ namespace MazeCore.Builders
 
             // Build Npc
             BuildGoblins();
-            BuildSlime(2);
+            BuildBunny(2);
             BuildAlcoholic();
             BuildSnake();
             BuildCat();
@@ -72,9 +72,9 @@ namespace MazeCore.Builders
         {
             StandartBuildNpc(goblinCount, new Goblin(1, 1, _maze));
         }
-        private void BuildSlime(int slimeCount)
+        private void BuildBunny(int bunnyCount)
         {
-            StandartBuildNpc(slimeCount, new Slime(1, 1, _maze));
+            StandartBuildNpc(bunnyCount, new Bunny(1, 1, _maze));
         }
 
         private void BuildCat()
