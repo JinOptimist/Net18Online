@@ -11,7 +11,7 @@ namespace MazeConsole
             var mazeDrawer = new MazeDrawer();
 
             var maze = mazeBuilder.Build(15, 12);
-            mazeDrawer.Draw(maze);
+            mazeDrawer.DrawMove(maze);
 
 
             while (true)

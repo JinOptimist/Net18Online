@@ -1,19 +1,15 @@
-﻿using MazeConsole.DrawingAssistant;
-using MazeCore.Models;
-using MazeCore.Models.Cells.Character;
+﻿using MazeCore.Models;
 
 namespace MazeConsole
 {
     public class MazeDrawer
     {
-        private DrawingPoints _startingPointsForDrawingAMaze = new();
+        public int ConsoleCursorDrawerTop { get; set; }
+        public int ConsoleCursorDrawerLeft { get; set; }
         public virtual void Draw(Maze maze)
         {
             Console.Clear();
             Console.WriteLine($"Maze has {maze.Cells.Count} cells");
-
-            _startingPointsForDrawingAMaze.ConsoleCursorDrawerLeft = Console.CursorLeft;
-            _startingPointsForDrawingAMaze.ConsoleCursorDrawerTop = Console.CursorTop;
 
             for (int y = 0; y < maze.Height; y++)
             {
@@ -40,10 +36,22 @@ namespace MazeConsole
         {
             var consoleCursorIsNow = Console.GetCursorPosition();
 
-            foreach(var cell in maze.Cells)
+            if (ConsoleCursorDrawerTop == consoleCursorIsNow.Top && ConsoleCursorDrawerLeft == consoleCursorIsNow.Left)
             {
-                Console.SetCursorPosition(_startingPointsForDrawingAMaze.ConsoleCursorDrawerLeft + cell.X, _startingPointsForDrawingAMaze.ConsoleCursorDrawerTop + cell.Y);
+                ConsoleCursorDrawerTop = Console.CursorTop;
+                ConsoleCursorDrawerLeft = Console.CursorLeft;
+            }
+
+            foreach (var cell in maze.Cells)
+            {
+                Console.SetCursorPosition(ConsoleCursorDrawerLeft + cell.X, ConsoleCursorDrawerTop + cell.Y);
                 Console.Write(maze.GetTopLevelItem(cell.X, cell.Y).Symbol);
+            }
+
+            if(ConsoleCursorDrawerTop == consoleCursorIsNow.Top && ConsoleCursorDrawerLeft == consoleCursorIsNow.Left)
+            {
+                Console.SetCursorPosition(0, maze.Height);
+                return;
             }
 
             Console.SetCursorPosition(consoleCursorIsNow.Left, consoleCursorIsNow.Top);
