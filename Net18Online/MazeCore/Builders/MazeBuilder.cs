@@ -9,8 +9,6 @@ namespace MazeCore.Builders
     {
         private Maze _maze;
 
-        public bool True { get; private set; }
-
         public Maze Build(int width, int height)
         {
             _maze = new Maze
@@ -38,7 +36,6 @@ namespace MazeCore.Builders
 
             // Build Hero
             BuildHero();
-            BuilPit();
             return _maze;
         }
 
