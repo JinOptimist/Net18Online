@@ -10,7 +10,7 @@ namespace MazeCore.Models.Cells.Character
 
         public override char Symbol => '0';
 
-        public int hitRate => Maze.Random.Next(0, 2);
+        private int hitRate => Maze.Random.Next(0, 2);
 
         /// <summary>
         /// If we interact witn Ghost, we replaced it to new cell Coin
@@ -23,6 +23,7 @@ namespace MazeCore.Models.Cells.Character
                 character.Health--;
             }
             Maze[X, Y] = new Coin(X, Y, Maze);
+            Maze.Npcs.Remove(this);
         }
 
         public override void Move()
