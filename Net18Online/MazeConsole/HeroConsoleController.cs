@@ -21,12 +21,7 @@ namespace MazeConsole
                 var destinationX = maze.Hero.X;
                 var destinationY = maze.Hero.Y;
 
-                if (maze.Hero.IsTrappedInPit)
-                {
-                    var pit = maze[maze.Hero.X, maze.Hero.Y] as Pit;
-                    pit?.InteractWithCell(maze.Hero);
-                    continue;
-                }
+
 
                 var key = Console.ReadKey();
                 switch (key.Key)
@@ -55,7 +50,11 @@ namespace MazeConsole
                     case ConsoleKey.Escape:
                         return;
                 }
-
+                if (maze.Hero.IsTrappedInPit)
+                {
+                    
+                    continue;
+                }
                 var destinationCell = maze.GetTopLevelItem(destinationX, destinationY);
                 if (destinationCell?.TryStep(maze.Hero) ?? false)
                 {

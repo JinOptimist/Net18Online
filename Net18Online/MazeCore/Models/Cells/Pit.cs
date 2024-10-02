@@ -14,41 +14,36 @@ namespace MazeCore.Models.Cells
 
         public override void InteractWithCell(BaseCharacter character)
         {
-            if (character is Hero hero)
+            if (character is not Hero hero)
             {
-                if (hero.IsTrappedInPit && !hero.HasLadder)
-                {
-                    AddEventInfo("You are trapped in the pit. Press L to buy a ladder.");
-                    var key = Console.ReadKey();
-                    if (key.Key == ConsoleKey.L)
-                    {
-                        hero.HasLadder = true;
-                        hero.IsTrappedInPit = false;
-                        AddEventInfo("You can now escape the pit.");
-                    }
-                }
-            };
+                return;
+            }
+            if (hero.IsTrappedInPit && !hero.HasLadder)
+            {
+                
+                character.Coins--;
+                hero.HasLadder = true;
+                hero.IsTrappedInPit = false;
+                AddEventInfo($"You bought a ladder and got out. Your Coin {character.Coins}");
 
+            }
         }
 
 
 
         public override bool TryStep(BaseCharacter character)
         {
-            if (character is Hero hero)
+            AddEventInfo("Let's go");
+            if (character is not Hero hero)
             {
-                if (!hero.HasLadder)
-                {
-
-                    hero.IsTrappedInPit = true;
-                    return true;
-                }
-                else
-                {
-                    return true;
-                }
+                return true;
             }
-
+            if (!hero.HasLadder)
+            {
+                hero.IsTrappedInPit = true;
+                AddEventInfo("Boom you're in a pit");
+            }
+            
             return true;
         }
     }
