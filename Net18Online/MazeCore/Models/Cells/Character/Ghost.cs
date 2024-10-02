@@ -10,7 +10,7 @@ namespace MazeCore.Models.Cells.Character
 
         public override char Symbol => '0';
 
-        private int hitRate => Maze.Random.Next(0, 2);
+        private int _hitRate => Maze.Random.Next(0, 2);
 
         /// <summary>
         /// If we interact witn Ghost, we replaced it to new cell Coin
@@ -18,7 +18,7 @@ namespace MazeCore.Models.Cells.Character
         public override void InteractWithCell(BaseCharacter character)
         {
             AddEventInfo("BooOoo");
-            if (hitRate == 0)
+            if (_hitRate == 1)
             {
                 character.Health--;
             }
