@@ -31,6 +31,10 @@ namespace MazeCore.Builders
 
             // Build Npc
             BuildGoblins();
+            BuildBunny(2);
+            BuildAlcoholic();
+            BuildSnake();
+            BuildCat();
             BuildWanderingMerchant();
             BuildAlcoholic();
             BuildSnake();
@@ -94,10 +98,21 @@ namespace MazeCore.Builders
                 grounds.Remove(ground);
             }
         }
+        private void BuildBunny(int bunnyCount)
+        {
+            var grounds = _maze.Cells.OfType<Ground>().ToList();
+            for (int i = 0; i < bunnyCount; i++)
+            {
+                var ground = GetRandom(grounds);
+                var bunny = new Bunny(ground.X, ground.Y, _maze);
+                _maze.Npcs.Add(bunny);
+                grounds.Remove(ground);
+            }
+        }
 
         private void BuildCat()
         {
-            var CatInCenter = new Cat((int) _maze.Height/2, (int) _maze.Width/2, _maze);
+            var CatInCenter = new Cat((int)_maze.Height / 2, (int)_maze.Width / 2, _maze);
             _maze.Npcs.Add(CatInCenter);
         }
 
@@ -180,7 +195,7 @@ namespace MazeCore.Builders
             var randomGround = GetRandom(grounds);
             var ghost = new Ghost(randomGround.X, randomGround.Y, _maze);
             _maze.Npcs.Add(ghost);
-            
+
         }
 
         /// <summary>
@@ -265,12 +280,10 @@ namespace MazeCore.Builders
         {
             for (int y = 0; y < _maze.Height; y++)
             {
-                for (var x = 0; x < _maze.Width; x++)
+                var randomX = _maze.Random.Next(0, _maze.Width + 1);
+                if (_maze[randomX, y] is Ground)
                 {
-                    if (x % 3 == 0 && y % 2 == 0)
-                    {
-                        _maze[x, y] = new Water(x, y, _maze);
-                    }
+                    _maze[randomX, y] = new Water(randomX, y, _maze);
                 }
             }
         }
@@ -312,7 +325,7 @@ namespace MazeCore.Builders
             return _maze
                     .Cells
                     .OfType<Window>()
-                    .Any(cell => Math. Sqrt (Math.Pow(cell. X - x, 2)+ Math. Pow(cell.Y - y, 2)) < 5);
+                    .Any(cell => Math.Sqrt(Math.Pow(cell.X - x, 2) + Math.Pow(cell.Y - y, 2)) < 5);
         }
         private T GetRandom<T>(List<T> cells)
         {
@@ -322,7 +335,7 @@ namespace MazeCore.Builders
         {
             var grounds = _maze.Cells
                 .OfType<Ground>()
-                .Where(ground => 
+                .Where(ground =>
                        _maze[ground.X - 1, ground.Y] is Wall && _maze[ground.X + 1, ground.Y] is Wall
                     || _maze[ground.X, ground.Y - 1] is Wall && _maze[ground.X, ground.Y + 1] is Wall
                 )
