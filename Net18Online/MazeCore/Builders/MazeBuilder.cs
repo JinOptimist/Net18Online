@@ -32,7 +32,7 @@ namespace MazeCore.Builders
 
             // Build Npc
             BuildGoblins();
-
+            BuildKing();
 
             // Build Hero
             BuildHero();
@@ -50,6 +50,15 @@ namespace MazeCore.Builders
                 _maze.Npcs.Add(goblin);
                 grounds.Remove(ground);
             }
+        }
+
+        private void BuildKing()
+        {
+            var walls = _maze.Cells.OfType<Wall>().ToList();
+            var wall = GetRandom(walls);
+            
+            var king = new King(wall.X, wall.Y, _maze);
+            _maze.Npcs.Add(king);
         }
 
         private void BuildHero()

@@ -1,5 +1,6 @@
 ﻿using MazeCore.Builders;
 using MazeCore.Models.Cells;
+using MazeCore.Models.Cells.Character;
 
 namespace MazeConsole
 {
@@ -55,6 +56,12 @@ namespace MazeConsole
                 }
 
                 var destinationCell = maze.GetTopLevelItem(destinationX, destinationY);
+
+                if (destinationCell is BaseNpc)
+                {
+                    destinationCell.InteractWithCell(maze.Hero);
+                }
+
                 if (destinationCell?.TryStep(maze.Hero) ?? false)
                 {
                     maze.Hero.X = destinationX;
