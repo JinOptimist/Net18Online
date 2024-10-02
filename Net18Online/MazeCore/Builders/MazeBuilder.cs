@@ -29,9 +29,11 @@ namespace MazeCore.Builders
             BuildCoin();
             BuildTeleport();
             BuilPit();
+            BuildChest();
 
             // Build Npc
             BuildGoblins();
+            BuildSlime();
 
 
             // Build Hero
@@ -50,6 +52,16 @@ namespace MazeCore.Builders
                 _maze.Npcs.Add(goblin);
                 grounds.Remove(ground);
             }
+        }
+
+        private void BuildSlime()
+        {
+            var grounds = _maze.Cells.OfType<Ground>().ToList();
+
+            var ground = GetRandom(grounds);
+            var Slime = new Slime(ground.X, ground.Y, _maze);
+            _maze.Npcs.Add(Slime);
+            grounds.Remove(ground);
         }
 
         private void BuildHero()
@@ -293,6 +305,22 @@ namespace MazeCore.Builders
                 _maze[randomCell.X, randomCell.Y] = new Teleport(randomCell.X, randomCell.Y, _maze);
 
                 groundCellsWithTwoWallNeighborhood.Remove(randomCell);
+            }
+        }
+
+        private void BuildChest()
+        {
+            var groundsWithThreeWalls = _maze
+                .Cells
+                .OfType<Ground>()
+                .Where(cell => 
+                GetNearCells<Wall>(cell).Count == 3)
+                .ToList();
+            
+            for (var i = 0; i < groundsWithThreeWalls.Count; i++)
+            {
+                var ground = groundsWithThreeWalls[i];
+                _maze[ground.X, ground.Y] = new Chest(ground.X, ground.Y, _maze);
             }
         }
 
