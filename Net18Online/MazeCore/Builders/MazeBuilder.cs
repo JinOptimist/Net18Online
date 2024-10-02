@@ -36,7 +36,6 @@ namespace MazeCore.Builders
 
             // Build Hero
             BuildHero();
-            
             return _maze;
         }
 
@@ -251,25 +250,20 @@ namespace MazeCore.Builders
         {
             return MazeHelper.GetRandom(_maze, cells);
         }
-
-        public void BuildTreasury()
+        private void BuildTreasury()
         {
-            var numberOfTreasuries = 0;
-            if (_maze.Width < _maze.Height)
-            {
-                numberOfTreasuries = _maze.Width / 5;
-            }
-            else
-            {
-                numberOfTreasuries = _maze.Height / 5;
-            }
-            for (var y = 0; y < numberOfTreasuries; y++)
-            {
-                var valueWidth = _maze.Random.Next(0, _maze.Width - 1);
-                var valueHeight = _maze.Random.Next(0, _maze.Height - 1);
-                _maze[valueWidth, valueHeight] = new Treasury(valueWidth, valueHeight, _maze);
+            var grounds = _maze.Cells
+                .OfType<Ground>()
+                .Where(ground => 
+                       _maze[ground.X - 1, ground.Y] is Wall && _maze[ground.X + 1, ground.Y] is Wall
+                    || _maze[ground.X, ground.Y - 1] is Wall && _maze[ground.X, ground.Y + 1] is Wall
+                )
+                .ToList();
 
-            }
+            var randomGround = GetRandom(grounds);
+            var treasuryX = randomGround.X;
+            var treasuryY = randomGround.Y;
+            var treasury = new Treasury(treasuryX, treasuryY, _maze);
         }
 
         private void BuildTeleport()
