@@ -15,10 +15,5 @@
         {
             return false;
         }
-
-        public bool IsDied()
-        {
-            return Health <= 0;
-        }
     }
 }

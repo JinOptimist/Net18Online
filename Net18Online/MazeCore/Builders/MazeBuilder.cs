@@ -85,31 +85,33 @@ namespace MazeCore.Builders
             var wolf = new Wolf(place.X, place.Y, _maze);
             _maze.Npcs.Add(wolf);
         }
-        private void StandartBuildNpc(int countOfNpc, BaseNpc npc)
+
+        private void BuildGoblins(int goblinCount = 3)
         {
             var grounds = _maze.Cells.OfType<Ground>().ToList();
-            for (int i = 0; i < countOfNpc; i++)
+            for (int i = 0; i < goblinCount; i++)
             {
                 var ground = GetRandom(grounds);
-                npc.X = ground.X;
-                npc.Y = ground.Y;
-                _maze.Npcs.Add(npc);
+                var goblin = new Goblin(ground.X, ground.Y, _maze);
+                _maze.Npcs.Add(goblin);
+                grounds.Remove(ground);
+            }
+        }
+        private void BuildBunny(int bunnyCount)
+        {
+            var grounds = _maze.Cells.OfType<Ground>().ToList();
+            for (int i = 0; i < bunnyCount; i++)
+            {
+                var ground = GetRandom(grounds);
+                var bunny = new Bunny(ground.X, ground.Y, _maze);
+                _maze.Npcs.Add(bunny);
                 grounds.Remove(ground);
             }
         }
 
-        private void BuildGoblins(int goblinCount = 3)
-        {
-            StandartBuildNpc(goblinCount, new Goblin(1, 1, _maze));
-        }
-        private void BuildBunny(int bunnyCount)
-        {
-            StandartBuildNpc(bunnyCount, new Bunny(1, 1, _maze));
-        }
-
         private void BuildCat()
         {
-            var CatInCenter = new Cat((int) _maze.Height/2, (int) _maze.Width/2, _maze);
+            var CatInCenter = new Cat((int)_maze.Height / 2, (int)_maze.Width / 2, _maze);
             _maze.Npcs.Add(CatInCenter);
         }
 
@@ -183,7 +185,7 @@ namespace MazeCore.Builders
             var randomGround = GetRandom(grounds);
             var ghost = new Ghost(randomGround.X, randomGround.Y, _maze);
             _maze.Npcs.Add(ghost);
-            
+
         }
 
         /// <summary>
@@ -313,7 +315,7 @@ namespace MazeCore.Builders
             return _maze
                     .Cells
                     .OfType<Window>()
-                    .Any(cell => Math. Sqrt (Math.Pow(cell. X - x, 2)+ Math. Pow(cell.Y - y, 2)) < 5);
+                    .Any(cell => Math.Sqrt(Math.Pow(cell.X - x, 2) + Math.Pow(cell.Y - y, 2)) < 5);
         }
         private T GetRandom<T>(List<T> cells)
         {
@@ -323,7 +325,7 @@ namespace MazeCore.Builders
         {
             var grounds = _maze.Cells
                 .OfType<Ground>()
-                .Where(ground => 
+                .Where(ground =>
                        _maze[ground.X - 1, ground.Y] is Wall && _maze[ground.X + 1, ground.Y] is Wall
                     || _maze[ground.X, ground.Y - 1] is Wall && _maze[ground.X, ground.Y + 1] is Wall
                 )
