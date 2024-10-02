@@ -2,13 +2,13 @@
 
 namespace MazeCore.Models.Cells.Character
 {
-    public class Slime : BaseNpc
+    public class Bunny : BaseNpc
     {
-        public Slime(int x, int y, Maze maze) : base(x, y, maze)
+        public Bunny(int x, int y, Maze maze) : base(x, y, maze)
         {
         }
 
-        public override char Symbol => '$';
+        public override char Symbol => '&';
 
         public override void InteractWithCell(BaseCharacter character)
         {
