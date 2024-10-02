@@ -20,11 +20,12 @@ namespace MazeCore.Models.Cells
             }
             if (hero.IsTrappedInPit && !hero.HasLadder)
             {
-
+                
                 character.Coins--;
                 hero.HasLadder = true;
                 hero.IsTrappedInPit = false;
                 AddEventInfo($"You bought a ladder and got out. Your Coin {character.Coins}");
+
             }
         }
 
