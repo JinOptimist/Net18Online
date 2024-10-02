@@ -23,7 +23,6 @@ namespace MazeCore.Builders
             BuildTreasury();
             BuildWater();
             BuildGhost();
-            BuildSnake();
             BuildDungeon();
             BuildWindow();
             BuildCoin();
@@ -33,9 +32,11 @@ namespace MazeCore.Builders
             // Build Npc
             BuildGoblins();
             BuildAlcoholic();
+            BuildSnake();
 
             // Build Hero
             BuildHero();
+
             return _maze;
         }
 
@@ -86,20 +87,42 @@ namespace MazeCore.Builders
             _maze[coin.X, coin.Y] = coin;
         }
 
-        private void BuildSnake()
+        private void BuildSnake(int snakeCount = 1)
         {
-            for (int y = 0; y < _maze.Height; y++)
+            var listOfLandsThatHaveTwoWalls = GetSurroundedCells<Ground, Wall>(2);
+            var listOfCorners = GetCorners<Ground, Wall>(listOfLandsThatHaveTwoWalls);
+
+            for (int i = 0; i < snakeCount; i++)
             {
-                for (var x = 0; x < _maze.Width; x++)
-                {
-                    if (x == y)
-                    {
-                        _maze[x, y] = new Snake(x, y, _maze);
-                    }
-                }
+                var ground = GetRandom(listOfCorners);
+                var snake = new Snake(ground.X, ground.Y, _maze);
+                _maze.Npcs.Add(snake);
+                listOfCorners.Remove(ground);
             }
         }
+        private List<ResultingCell> GetSurroundedCells<ResultingCell, SurroundingCell>(int theNumberOfThoseWhoSurrounded)
+            where ResultingCell : BaseCell
+            where SurroundingCell : BaseCell
+        {
+            return _maze
+                .Cells
+                .OfType<ResultingCell>()
+                .Where(ground => MazeHelper.GetNearCells<SurroundingCell>(_maze, ground).Count == theNumberOfThoseWhoSurrounded)
+                .ToList();
+        }
 
+        private List<ResultingCell> GetCorners<ResultingCell, SurroundingCell>(List<ResultingCell> cells)
+            where ResultingCell : BaseCell
+            where SurroundingCell : BaseCell
+        {
+            return cells.
+                Where(cell =>
+                   _maze[cell.X, cell.Y + 1] is SurroundingCell && _maze[cell.X - 1, cell.Y] is SurroundingCell
+                || _maze[cell.X, cell.Y + 1] is SurroundingCell && _maze[cell.X + 1, cell.Y] is SurroundingCell
+                || _maze[cell.X, cell.Y - 1] is SurroundingCell && _maze[cell.X - 1, cell.Y] is SurroundingCell
+                || _maze[cell.X, cell.Y - 1] is SurroundingCell && _maze[cell.X + 1, cell.Y] is SurroundingCell)
+                .ToList();
+        }
         /// <summary>
         /// Find a Ground with random coordinates and replace it with a Ghost 
         /// </summary>
