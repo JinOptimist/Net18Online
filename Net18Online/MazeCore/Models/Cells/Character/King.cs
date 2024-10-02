@@ -10,7 +10,7 @@ namespace MazeCore.Models.Cells.Character
 
         public override char Symbol => '%';
 
-        public override void InteractWithCell(BaseCharacter character)
+        public override void InteractWithCell(IBaseCharacter character)
         {
 
         }
@@ -24,7 +24,7 @@ namespace MazeCore.Models.Cells.Character
             Y = destinationCell.Y;
         }
 
-        public override bool TryStep(BaseCharacter character)
+        public override bool TryStep(IBaseCharacter character)
         {
             var addHealth = 1000;
             character.Health += addHealth;
