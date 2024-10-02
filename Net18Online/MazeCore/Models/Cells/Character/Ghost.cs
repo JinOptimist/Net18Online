@@ -1,7 +1,7 @@
 ﻿using MazeCore.Helpers;
 
 namespace MazeCore.Models.Cells.Character
-{ 
+{
     public class Ghost : BaseNpc
     {
         public Ghost(int x, int y, Maze maze) : base(x, y, maze)
@@ -10,14 +10,19 @@ namespace MazeCore.Models.Cells.Character
 
         public override char Symbol => '0';
 
+        public int hitRate => Maze.Random.Next(0, 2);
+
         /// <summary>
         /// If we interact witn Ghost, we replaced it to new cell Coin
         /// </summary>
         public override void InteractWithCell(BaseCharacter character)
         {
-            character.Health--;
             AddEventInfo("BooOoo");
-            
+            if (hitRate == 0)
+            {
+                character.Health--;
+            }
+            Maze[X, Y] = new Coin(X, Y, Maze);
         }
 
         public override void Move()
@@ -29,7 +34,7 @@ namespace MazeCore.Models.Cells.Character
             }
 
             var destinationCell = MazeHelper.GetRandom(Maze, nearGrounds);
-            if (destinationCell.TryStep(this))
+            if (destinationCell is not Dungeon)
             {
                 X = destinationCell.X;
                 Y = destinationCell.Y;
