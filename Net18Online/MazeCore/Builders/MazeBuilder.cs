@@ -22,7 +22,6 @@ namespace MazeCore.Builders
             BuildGround();
             BuildTreasury();
             BuildWater();
-            BuildGhost();
             BuildDungeon();
             BuildWindow();
             BuildCoin();
@@ -36,6 +35,7 @@ namespace MazeCore.Builders
             BuildAlcoholic();
             BuildSnake();
             BuildCat();
+            BuildGhost();
 
             // Build Hero
             BuildHero();
@@ -168,11 +168,9 @@ namespace MazeCore.Builders
                 .ToList();
 
             var randomGround = GetRandom(grounds);
-
-            var ghostX = randomGround.X;
-            var ghostY = randomGround.Y;
-            var ghost = new Ghost(ghostX, ghostY, _maze);
-            _maze[ghost.X, ghost.Y] = ghost;
+            var ghost = new Ghost(randomGround.X, randomGround.Y, _maze);
+            _maze.Npcs.Add(ghost);
+            
         }
 
         /// <summary>
