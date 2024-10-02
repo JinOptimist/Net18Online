@@ -30,6 +30,7 @@ namespace MazeCore.Builders
 
             // Build Npc
             BuildGoblins();
+            BuildWanderingMerchant();
             BuildAlcoholic();
             BuildSnake();
             BuildCat();
@@ -39,6 +40,22 @@ namespace MazeCore.Builders
             BuildHero();
 
             return _maze;
+        }
+
+        private void BuildWanderingMerchant()
+        {
+            var grounds = _maze.Cells.OfType<Ground>().ToList();
+            var merchantCount = Math.Max(1, _maze.Width * _maze.Height / 200); // To Ensure, that at least 1 Merchant present at Maze
+
+            for (int i = 0; i < merchantCount; i++)
+            {
+                var ground = GetRandom(grounds);
+
+                var merchant = new WanderingMerchant(ground.X, ground.Y, _maze);
+                _maze.Npcs.Add(merchant);
+
+                grounds.Remove(ground);
+            }
         }
 
         private void BuildAlcoholic()
