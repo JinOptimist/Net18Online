@@ -1,5 +1,7 @@
-﻿using MazeCore.Builders;
+﻿using MazeCore.Actions;
+using MazeCore.Builders;
 using MazeCore.Models.Cells;
+using MazeCore.Models.Enum;
 using MazeCore.Models.Interfaces;
 
 namespace MazeConsole
@@ -63,23 +65,57 @@ namespace MazeConsole
                 }
 
                 #region WanderingMerchantInteractions
-                ///<summary>
-                ///Check if the hero stepped on an NPC that can be interacted with
-                ///</summary>
-                if (destinationCell is IInteractable interactable && destinationCell is WanderingMerchant)
+                if (destinationCell is WanderingMerchant merchant)
                 {
-                    Console.WriteLine("You encountered a merchant. Do you want to interact?");
-                    Console.WriteLine("Press Spacebar to interact or Escape to continue.");
+                    var merchantActions = new WanderingMerchantActions(merchant);
+                    bool interacting = true;
 
-                    var interactionKey = Console.ReadKey(true).Key;
-                    if (interactionKey == ConsoleKey.Spacebar)
+                    while (interacting)
                     {
-                        interactable.Interact(maze.Hero);
-                    }
-                    else if (interactionKey == ConsoleKey.Escape)
-                    {
-                        // Player chose not to interact, hero stays in place
-                        continue;
+                        Console.Clear();
+                        Console.WriteLine("You encountered a merchant. What do you want to do?");
+                        Console.WriteLine("1. Buy Healing Salve (+5 Health) - 5 Coins");
+                        Console.WriteLine("2. Exit");
+
+                        var inputKey = Console.ReadKey(true).Key;
+                        WanderingMerchantOptions selectedOption;
+
+                        switch (inputKey)
+                        {
+                            case ConsoleKey.D1:
+                                selectedOption = WanderingMerchantOptions.BuyHealingSalve;
+                                break;
+                            case ConsoleKey.D2:
+                            case ConsoleKey.Escape:
+                                selectedOption = WanderingMerchantOptions.Exit;
+                                interacting = false;
+                                continue;
+                            default:
+                                continue; // Invalid input, repeat the loop
+                        }
+
+                        var result = merchantActions.PerformAction(maze.Hero, selectedOption);
+
+                        /// <summary>
+                        /// Handle feedback based on the result of the action
+                        /// </summary>
+                        switch (result)
+                        {
+                            case WanderingMerchantActionResult.Success:
+                                Console.Clear();
+                                Console.WriteLine("You bought a Healing Salve. +5 Health.");
+                                break;
+                            case WanderingMerchantActionResult.InsufficientFunds:
+                                Console.Clear();
+                                Console.WriteLine("You don't have enough coins to buy the Healing Salve.");
+                                break;
+                            case WanderingMerchantActionResult.Exit:
+                                interacting = false;
+                                continue;
+                        }
+
+                        Console.WriteLine("Press any key to return to the merchant menu...");
+                        Console.ReadKey(true);
                     }
                 }
                 #endregion

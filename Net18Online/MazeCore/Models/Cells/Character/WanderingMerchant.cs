@@ -1,9 +1,7 @@
-﻿using MazeCore.Models.Cells.Character;
+﻿using MazeCore.Actions;
+using MazeCore.Models.Cells.Character;
 using MazeCore.Models.Enum;
 using MazeCore.Models.Interfaces;
-using MazeCore.Controllers;
-using System;
-using System.Linq;
 
 namespace MazeCore.Models.Cells
 {
@@ -23,20 +21,18 @@ namespace MazeCore.Models.Cells
             MoveInDirection(direction);
         }
 
-
         private Direction GetRandomDirection()
         {
             var directions = Direction.GetValues(typeof(Direction)).Cast<Direction>().ToList();
             return directions[_random.Next(directions.Count)];
         }
 
-
         private void MoveInDirection(Direction direction)
         {
             int newX = X;
             int newY = Y;
 
-            //New coordinates based on the direction
+            // New coordinates based on the moving direction
             switch (direction)
             {
                 case Direction.Up:
@@ -53,9 +49,6 @@ namespace MazeCore.Models.Cells
                     break;
             }
 
-            ///<summary>
-            ///Ensure new coordinates are within bounds and navigable
-            ///</summary>
             if (newX >= 0 && newX < Maze.Width && newY >= 0 && newY < Maze.Height)
             {
                 var destinationCell = Maze[newX, newY];
@@ -67,10 +60,23 @@ namespace MazeCore.Models.Cells
             }
         }
 
+        /// <summary>
+        /// Method that passes interactions execution on UI level(to controller)
+        /// </summary>
         public void Interact(BaseCharacter character)
         {
-            var merchantController = new WanderingMerchantController(this);
-            merchantController.DisplayMenu(character);
+            var merchantActions = new WanderingMerchantActions(this);
+            var interactionResult = merchantActions.PerformAction(character, WanderingMerchantOptions.BuyHealingSalve);
+
+            HandleInteractionResult(interactionResult, character);
+        }
+
+        /// <summary>
+        /// Interaction result is handled at the UI layer(in Controller),
+        /// so this func is left empty as we using a strict UI-Business separation.
+        /// </summary>
+        private void HandleInteractionResult(WanderingMerchantActionResult result, BaseCharacter character)
+        {
         }
 
         public override bool TryStep(BaseCharacter character)
@@ -78,6 +84,9 @@ namespace MazeCore.Models.Cells
             return true;
         }
 
+        /// <summary>
+        /// Delegate interaction logic to the Interact method
+        /// </summary>
         public override void InteractWithCell(BaseCharacter character)
         {
             Interact(character);
