@@ -31,7 +31,7 @@ namespace MazeCore.Builders
             BuilPit();
 
             // Build Npc
-            BuildGoblins(3);
+            BuildGoblins();
             BuildSlime(2);
 
             // Build Hero
@@ -40,8 +40,7 @@ namespace MazeCore.Builders
             return _maze;
         }
 
-        private void StandartBuildNpc<T>(int countOfNpc, T npc)
-            where T : BaseNpc
+        private void StandartBuildNpc(int countOfNpc, BaseNpc npc)
         {
             var grounds = _maze.Cells.OfType<Ground>().ToList();
             for (int i = 0; i < countOfNpc; i++)
@@ -53,7 +52,7 @@ namespace MazeCore.Builders
                 grounds.Remove(ground);
             }
         }
-        private void BuildGoblins(int goblinCount)
+        private void BuildGoblins(int goblinCount = 3)
         {
             StandartBuildNpc(goblinCount, new Goblin(1, 1, _maze));
         }

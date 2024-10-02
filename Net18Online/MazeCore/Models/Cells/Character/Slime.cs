@@ -1,4 +1,6 @@
-﻿namespace MazeCore.Models.Cells.Character
+﻿using MazeCore.Helpers;
+
+namespace MazeCore.Models.Cells.Character
 {
     public class Slime : BaseNpc
     {
@@ -19,7 +21,18 @@
 
         public override void Move()
         {
-            base.Move();
+            var nearGrounds = MazeHelper.GetNearCells<BaseCell>(Maze, this);
+            if (!nearGrounds.Any())
+            {
+                return;
+            }
+
+            var destinationCell = MazeHelper.GetRandom(Maze, nearGrounds);
+            if (destinationCell.TryStep(this))
+            {
+                X = destinationCell.X;
+                Y = destinationCell.Y;
+            }
         }
     }
 }
