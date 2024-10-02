@@ -110,19 +110,21 @@ namespace MazeCore.Builders
         private void BuildDungeon()
         {
             var dungeonCount = AutoDungeonCount();
-            var x = 0;
-            var y = 0;
 
             for (var i = 0; i < dungeonCount; i++)
             {
-                do
-                {
-                    x = _maze.Random.Next(0, _maze.Width - 1);
-                    y = _maze.Random.Next(0, _maze.Height - 1);
-                }
-                while (_maze[x, y].Symbol == '#' || _maze[x, y] is Dungeon);
+                var grounds = _maze.Cells
+                .OfType<Ground>()
+                .ToList();
 
-                _maze[x, y] = new Dungeon(x, y, _maze);
+                var randomGround = GetRandom(grounds);
+
+                var dungeX = randomGround.X;
+                var dungeY = randomGround.Y;
+
+                var dunge = new Dungeon(dungeX, dungeY, _maze);
+
+                _maze[dunge.X, dunge.Y] = dunge;
             }
 
         }
