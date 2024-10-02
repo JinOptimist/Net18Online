@@ -2,7 +2,6 @@
 using MazeCore.Builders;
 using MazeCore.Models.Cells;
 using MazeCore.Models.Enum;
-using MazeCore.Models.Interfaces;
 
 namespace MazeConsole
 {
@@ -24,7 +23,7 @@ namespace MazeConsole
 
                 if (maze.Hero.IsTrappedInPit)
                 {
-                    var pit = maze[maze.Hero.X, maze.Hero.Y] as Pit; 
+                    var pit = maze[maze.Hero.X, maze.Hero.Y] as Pit;
                     pit?.InteractWithCell(maze.Hero);
                     continue;
                 }
@@ -56,7 +55,7 @@ namespace MazeConsole
                     case ConsoleKey.Escape:
                         return;
                 }
-                
+
                 var destinationCell = maze.GetTopLevelItem(destinationX, destinationY);
                 if (destinationCell?.TryStep(maze.Hero) ?? false)
                 {

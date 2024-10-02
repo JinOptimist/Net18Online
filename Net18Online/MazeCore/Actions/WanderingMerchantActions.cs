@@ -1,5 +1,5 @@
-﻿using MazeCore.Models.Cells.Character;
-using MazeCore.Models.Cells;
+﻿using MazeCore.Models.Cells;
+using MazeCore.Models.Cells.Character;
 using MazeCore.Models.Enum;
 
 namespace MazeCore.Actions
