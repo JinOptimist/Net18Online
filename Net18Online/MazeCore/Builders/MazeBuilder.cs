@@ -36,6 +36,7 @@ namespace MazeCore.Builders
             BuildSnake();
             BuildCat();
             BuildGhost();
+            BuildKing();
 
             // Build Hero
             BuildHero();
@@ -98,6 +99,15 @@ namespace MazeCore.Builders
         {
             var CatInCenter = new Cat((int) _maze.Height/2, (int) _maze.Width/2, _maze);
             _maze.Npcs.Add(CatInCenter);
+        }
+
+        private void BuildKing()
+        {
+            var walls = _maze.Cells.OfType<Wall>().ToList();
+            var wall = GetRandom(walls);
+            
+            var king = new King(wall.X, wall.Y, _maze);
+            _maze.Npcs.Add(king);
         }
 
         private void BuildHero()
