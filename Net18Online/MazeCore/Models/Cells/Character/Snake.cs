@@ -12,7 +12,7 @@ namespace MazeCore.Models.Cells.Character
 
         public override char Symbol => 's';
 
-        public override void InteractWithCell(BaseCharacter character)
+        public override void InteractWithCell(IBaseCharacter character)
         {
             AddEventInfo("You crushed a snake!");
             character.Coins += Coins;

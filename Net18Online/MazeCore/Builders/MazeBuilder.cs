@@ -22,12 +22,12 @@ namespace MazeCore.Builders
             BuildGround();
             BuildTreasury();
             BuildWater();
-            BuildGhost();
             BuildDungeon();
             BuildWindow();
             BuildCoin();
             BuildTeleport();
             BuilPit();
+            BuilWolfs();
 
             // Build Npc
             BuildGoblins();
@@ -35,11 +35,32 @@ namespace MazeCore.Builders
             BuildAlcoholic();
             BuildSnake();
             BuildCat();
+            BuildWanderingMerchant();
+            BuildAlcoholic();
+            BuildSnake();
+            BuildCat();
+            BuildGhost();
 
             // Build Hero
             BuildHero();
 
             return _maze;
+        }
+
+        private void BuildWanderingMerchant()
+        {
+            var grounds = _maze.Cells.OfType<Ground>().ToList();
+            var merchantCount = Math.Max(1, _maze.Width * _maze.Height / 200); // To Ensure, that at least 1 Merchant present at Maze
+
+            for (int i = 0; i < merchantCount; i++)
+            {
+                var ground = GetRandom(grounds);
+
+                var merchant = new WanderingMerchant(ground.X, ground.Y, _maze);
+                _maze.Npcs.Add(merchant);
+
+                grounds.Remove(ground);
+            }
         }
 
         private void BuildAlcoholic()
@@ -55,6 +76,15 @@ namespace MazeCore.Builders
             grounds.Remove(randomGround);
         }
 
+        private void BuilWolfs()
+        {
+            var places = _maze.Cells.OfType<BaseCell>()
+           .Where(cell => !(cell is Wall))
+           .ToList();
+            var place = GetRandom(places);
+            var wolf = new Wolf(place.X, place.Y, _maze);
+            _maze.Npcs.Add(wolf);
+        }
         private void StandartBuildNpc(int countOfNpc, BaseNpc npc)
         {
             var grounds = _maze.Cells.OfType<Ground>().ToList();
@@ -151,11 +181,9 @@ namespace MazeCore.Builders
                 .ToList();
 
             var randomGround = GetRandom(grounds);
-
-            var ghostX = randomGround.X;
-            var ghostY = randomGround.Y;
-            var ghost = new Ghost(ghostX, ghostY, _maze);
-            _maze[ghost.X, ghost.Y] = ghost;
+            var ghost = new Ghost(randomGround.X, randomGround.Y, _maze);
+            _maze.Npcs.Add(ghost);
+            
         }
 
         /// <summary>
@@ -196,7 +224,7 @@ namespace MazeCore.Builders
 
         private void BuildGround()
         {
-            var wallReadyToDestroy = new List<BaseCell>();
+            var wallReadyToDestroy = new List<IBaseCell>();
             wallReadyToDestroy.Add(GetRandom(_maze.Cells));
 
             do
@@ -216,8 +244,8 @@ namespace MazeCore.Builders
             } while (wallReadyToDestroy.Any());
         }
 
-        private List<CellType> GetNearCells<CellType>(BaseCell miner)
-            where CellType : BaseCell
+        private List<CellType> GetNearCells<CellType>(IBaseCell miner)
+            where CellType : IBaseCell
         {
             return MazeHelper.GetNearCells<CellType>(_maze, miner);
         }
@@ -255,7 +283,7 @@ namespace MazeCore.Builders
             foreach (var groundCell in groundCells)
             {
                 var nearGrounds = GetNearCells<Ground>(groundCell);
-                if (nearGrounds.Count == 3)
+                if (nearGrounds.Count >= 3)
                 {
                     _maze[groundCell.X, groundCell.Y] = new Pit(groundCell.X, groundCell.Y, _maze);
                 }

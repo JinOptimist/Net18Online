@@ -17,7 +17,7 @@ namespace MazeCore.Models.Cells
 
         public override char Symbol => 'B';
 
-        public override void InteractWithCell(BaseCharacter character)
+        public override void InteractWithCell(IBaseCharacter character)
         {
             AddEventInfo("Try to open");
 
@@ -48,7 +48,7 @@ namespace MazeCore.Models.Cells
             }
         }
 
-        public override bool TryStep(BaseCharacter character)
+        public override bool TryStep(IBaseCharacter character)
         {
             return true;
         }

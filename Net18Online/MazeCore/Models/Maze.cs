@@ -3,11 +3,11 @@ using MazeCore.Models.Cells.Character;
 
 namespace MazeCore.Models
 {
-    public class Maze
+    public class Maze : IMaze
     {
         public int Width { get; set; }
         public int Height { get; set; }
-        public List<BaseCell> Cells { get; set; } = new List<BaseCell>();
+        public List<IBaseCell> Cells { get; set; } = new List<IBaseCell>();
 
         /// <summary>
         /// NPC enemies and alias
@@ -20,7 +20,7 @@ namespace MazeCore.Models
 
         public List<string> HistoryOfEvents { get; set; } = new();
 
-        public BaseCell? this[int x, int y]
+        public IBaseCell? this[int x, int y]
         {
             get
             {
@@ -42,7 +42,7 @@ namespace MazeCore.Models
             }
         }
 
-        public BaseCell GetTopLevelItem(int x, int y)
+        public IBaseCell GetTopLevelItem(int x, int y)
         {
             if (Hero.X == x && Hero.Y == y)
             {
@@ -56,6 +56,13 @@ namespace MazeCore.Models
             }
 
             return this[x, y];
+        }
+    
+        public void ReplaceCellToGround(IBaseCell cell)
+        {
+            var ground = new Ground(cell.X, cell.Y, this);
+            Cells.Remove(cell);
+            Cells.Add(ground);
         }
     }
 }

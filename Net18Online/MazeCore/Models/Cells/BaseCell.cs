@@ -2,9 +2,9 @@
 
 namespace MazeCore.Models.Cells
 {
-    public abstract class BaseCell
+    public abstract class BaseCell : IBaseCell
     {
-        protected BaseCell(int x, int y, Maze maze)
+        protected BaseCell(int x, int y, IMaze maze)
         {
             X = x;
             Y = y;
@@ -13,13 +13,13 @@ namespace MazeCore.Models.Cells
 
         public int X { get; set; }
         public int Y { get; set; }
-        public Maze Maze { get; set; }
+        public IMaze Maze { get; set; }
 
         public abstract char Symbol { get; }
 
-        public abstract bool TryStep(BaseCharacter character);
+        public abstract bool TryStep(IBaseCharacter character);
 
-        public abstract void InteractWithCell(BaseCharacter character);
+        public abstract void InteractWithCell(IBaseCharacter character);
 
         public void AddEventInfo(string eventInfo)
         {

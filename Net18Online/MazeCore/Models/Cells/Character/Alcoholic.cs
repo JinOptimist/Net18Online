@@ -2,6 +2,9 @@
 
 namespace MazeCore.Models.Cells.Character
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Alcoholic : BaseNpc
     {
         public Alcoholic(int x, int y, Maze maze) : base(x, y, maze)
@@ -11,12 +14,12 @@ namespace MazeCore.Models.Cells.Character
 
         public override char Symbol => 'ъ';
 
-        public override bool TryStep(BaseCharacter character)
+        public override bool TryStep(IBaseCharacter character)
         {
             return true;
         }
 
-        public override void InteractWithCell(BaseCharacter character)
+        public override void InteractWithCell(IBaseCharacter character)
         {
             var heroImmunity = Maze.Random.Next(1, 3);
             var sideEffect = "";
