@@ -8,15 +8,11 @@ namespace MazeCore.Models.Cells.Character
         {
         }
 
-        public override char Symbol => '&';
+        public override char Symbol => '%';
 
         public override void InteractWithCell(BaseCharacter character)
         {
-            var addHealth = 1000;
-            character.Health += addHealth;
-            AddEventInfo($"The king gave {addHealth} health");
 
-            Maze.Npcs.Remove(this);
         }
 
         public override void Move()
@@ -26,6 +22,17 @@ namespace MazeCore.Models.Cells.Character
 
             X = destinationCell.X;
             Y = destinationCell.Y;
+        }
+
+        public override bool TryStep(BaseCharacter character)
+        {
+            var addHealth = 1000;
+            character.Health += addHealth;
+            AddEventInfo($"The king gave {addHealth} health");
+
+            Maze.Npcs.Remove(this);
+
+            return false;
         }
     }
 }
