@@ -22,7 +22,7 @@ namespace MazeCore.Builders
             BuildGround();
             BuildTreasury();
             BuildWater();
-            BuildGhost();
+            
             BuildSnake();
             BuildDungeon();
             BuildWindow();
@@ -32,7 +32,7 @@ namespace MazeCore.Builders
 
             // Build Npc
             BuildGoblins();
-
+            BuildGhost();
 
             // Build Hero
             BuildHero();
