@@ -24,12 +24,12 @@ namespace MazeCore.Models.Cells.Character
             {
                 var damage = 2;                
                 character.Health -= damage;
-                AddEventInfo($"Wolf attack with critical damage on {character}");
+                AddEventInfo($"Wolf attack with critical damage on {character.Health}");
             }
             else
             {
                 character.Health--;
-                AddEventInfo($"Wolf attack on {character}");
+                AddEventInfo($"Wolf attack on {character.Health}");
             }
             
         }

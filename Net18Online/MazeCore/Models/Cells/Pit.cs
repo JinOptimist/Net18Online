@@ -17,15 +17,14 @@ namespace MazeCore.Models.Cells
             if (character is not Hero hero)
             {
                 return;
-            };
+            }
             if (hero.IsTrappedInPit && !hero.HasLadder)
             {
-                
+
                 character.Coins--;
                 hero.HasLadder = true;
                 hero.IsTrappedInPit = false;
                 AddEventInfo($"You bought a ladder and got out. Your Coin {character.Coins}");
-
             }
         }
 
