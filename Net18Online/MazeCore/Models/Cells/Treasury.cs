@@ -18,7 +18,8 @@ namespace MazeCore.Models.Cells
 
         public override void InteractWithCell(BaseCharacter character)
         {
-            AddEventInfo("step setp");
+            AddEventInfo("You found a Treasury");
+                character.Coins = character.Coins + 5;
         }
 
         public override bool TryStep(BaseCharacter character)
