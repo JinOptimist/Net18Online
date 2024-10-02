@@ -29,6 +29,7 @@ namespace MazeCore.Builders
             BuildCoin();
             BuildTeleport();
             BuilPit();
+            BuilWolfs();
 
             // Build Npc
             BuildGoblins();
@@ -38,6 +39,16 @@ namespace MazeCore.Builders
             BuildHero();
             
             return _maze;
+        }
+
+        private void BuilWolfs()
+        {
+            var places = _maze.Cells.OfType<BaseCell>()
+           .Where(cell => !(cell is Wall))
+           .ToList();
+            var place = GetRandom(places);
+            var wolf = new Wolf(place.X, place.Y, _maze);
+            _maze.Npcs.Add(wolf);
         }
 
         private void BuildGoblins(int goblinCount = 3)
@@ -202,7 +213,7 @@ namespace MazeCore.Builders
             foreach (var groundCell in groundCells)
             {
                 var nearGrounds = GetNearCells<Ground>(groundCell);
-                if (nearGrounds.Count == 3)
+                if (nearGrounds.Count >= 3)
                 {
                     _maze[groundCell.X, groundCell.Y] = new Pit(groundCell.X, groundCell.Y, _maze);
                 }
