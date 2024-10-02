@@ -254,22 +254,16 @@ namespace MazeCore.Builders
         {
             var grounds = _maze.Cells
                 .OfType<Ground>()
+                .Where(ground => 
+                       _maze[ground.X - 1, ground.Y] is Wall && _maze[ground.X + 1, ground.Y] is Wall
+                    || _maze[ground.X, ground.Y - 1] is Wall && _maze[ground.X, ground.Y + 1] is Wall
+                )
                 .ToList();
-            foreach (var i in grounds)
-            {
-                var randomGround = GetRandom(grounds);
-                var treasuryX = randomGround.X;
-                var treasuryY = randomGround.Y;
-                var treasury = new Treasury(treasuryX, treasuryY, _maze);
-                if ((_maze[treasuryX, treasuryY + 1] is Wall &&
-                    _maze[treasuryX, treasuryY - 1] is Wall) ||
-                    (_maze[treasuryX + 1, treasuryY] is Wall &&
-                    _maze[treasuryX - 1, treasuryY] is Wall))
-                {
-                    _maze[treasury.X, treasury.Y] = treasury;
-                    break;
-                }
-            }
+
+            var randomGround = GetRandom(grounds);
+            var treasuryX = randomGround.X;
+            var treasuryY = randomGround.Y;
+            var treasury = new Treasury(treasuryX, treasuryY, _maze);
         }
 
         private void BuildTeleport()
