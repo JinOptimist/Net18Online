@@ -31,13 +31,26 @@ namespace MazeCore.Builders
 
             // Build Npc
             BuildGoblins();
+            BuildAlcoholic();
             BuildSnake();
-
 
             // Build Hero
             BuildHero();
 
             return _maze;
+        }
+
+        private void BuildAlcoholic()
+        {
+            var grounds = _maze
+                .Cells
+                .OfType<Ground>()
+                .ToList();
+            var randomGround = GetRandom(grounds);
+
+            var alcoholic = new Alcoholic(randomGround.X, randomGround.Y, _maze);
+            _maze.Npcs.Add(alcoholic);
+            grounds.Remove(randomGround);
         }
 
         private void BuildGoblins(int goblinCount = 3)
@@ -133,19 +146,21 @@ namespace MazeCore.Builders
         private void BuildDungeon()
         {
             var dungeonCount = AutoDungeonCount();
-            var x = 0;
-            var y = 0;
 
             for (var i = 0; i < dungeonCount; i++)
             {
-                do
-                {
-                    x = _maze.Random.Next(0, _maze.Width - 1);
-                    y = _maze.Random.Next(0, _maze.Height - 1);
-                }
-                while (_maze[x, y].Symbol == '#' || _maze[x, y] is Dungeon);
+                var grounds = _maze.Cells
+                .OfType<Ground>()
+                .ToList();
 
-                _maze[x, y] = new Dungeon(x, y, _maze);
+                var randomGround = GetRandom(grounds);
+
+                var dungeX = randomGround.X;
+                var dungeY = randomGround.Y;
+
+                var dunge = new Dungeon(dungeX, dungeY, _maze);
+
+                _maze[dunge.X, dunge.Y] = dunge;
             }
 
         }
@@ -273,25 +288,20 @@ namespace MazeCore.Builders
         {
             return MazeHelper.GetRandom(_maze, cells);
         }
-
-        public void BuildTreasury()
+        private void BuildTreasury()
         {
-            var numberOfTreasuries = 0;
-            if (_maze.Width < _maze.Height)
-            {
-                numberOfTreasuries = _maze.Width / 5;
-            }
-            else
-            {
-                numberOfTreasuries = _maze.Height / 5;
-            }
-            for (var y = 0; y < numberOfTreasuries; y++)
-            {
-                var valueWidth = _maze.Random.Next(0, _maze.Width - 1);
-                var valueHeight = _maze.Random.Next(0, _maze.Height - 1);
-                _maze[valueWidth, valueHeight] = new Treasury(valueWidth, valueHeight, _maze);
+            var grounds = _maze.Cells
+                .OfType<Ground>()
+                .Where(ground => 
+                       _maze[ground.X - 1, ground.Y] is Wall && _maze[ground.X + 1, ground.Y] is Wall
+                    || _maze[ground.X, ground.Y - 1] is Wall && _maze[ground.X, ground.Y + 1] is Wall
+                )
+                .ToList();
 
-            }
+            var randomGround = GetRandom(grounds);
+            var treasuryX = randomGround.X;
+            var treasuryY = randomGround.Y;
+            var treasury = new Treasury(treasuryX, treasuryY, _maze);
         }
 
         private void BuildTeleport()
