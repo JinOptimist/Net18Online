@@ -1,5 +1,4 @@
-﻿using MazeCore.Helpers;
-namespace MazeCore.Models.Cells.Character
+﻿namespace MazeCore.Models.Cells.Character
 {
     public abstract class BaseNpc : BaseCharacter
     {
