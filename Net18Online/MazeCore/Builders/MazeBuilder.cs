@@ -55,7 +55,6 @@ namespace MazeCore.Builders
 
         private void BuildCat()
         {
-            var cat = _maze.Cells.OfType<Water>().ToList();
             var CatInCenter = new Cat((int) _maze.Height/2, (int) _maze.Width/2, _maze);
             _maze.Npcs.Add(CatInCenter);
         }
