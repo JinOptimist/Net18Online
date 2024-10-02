@@ -1,4 +1,5 @@
-﻿using MazeConsole.Builders;
+﻿using MazeCore.Builders;
+using MazeCore.Models.Cells;
 
 namespace MazeConsole
 {
@@ -17,6 +18,13 @@ namespace MazeConsole
             {
                 var destinationX = maze.Hero.X;
                 var destinationY = maze.Hero.Y;
+
+                if (maze.Hero.IsTrappedInPit)
+                {
+                    var pit = maze[maze.Hero.X, maze.Hero.Y] as Pit; 
+                    pit?.InteractWithCell(maze.Hero);
+                    continue;
+                }
 
                 var key = Console.ReadKey();
                 switch (key.Key)
@@ -39,16 +47,23 @@ namespace MazeConsole
                         break;
                     case ConsoleKey.Spacebar:
                         maze[destinationX, destinationY].InteractWithCell(maze.Hero);
-                        continue;
+                        destinationX = maze.Hero.X;
+                        destinationY = maze.Hero.Y;
+                        break;
                     case ConsoleKey.Escape:
                         return;
                 }
 
-                var destinationCell = maze[destinationX, destinationY];
+                var destinationCell = maze.GetTopLevelItem(destinationX, destinationY);
                 if (destinationCell?.TryStep(maze.Hero) ?? false)
                 {
                     maze.Hero.X = destinationX;
                     maze.Hero.Y = destinationY;
+                }
+
+                foreach (var npc in maze.Npcs)
+                {
+                    npc.Move();
                 }
 
                 mazeDrawer.Draw(maze);

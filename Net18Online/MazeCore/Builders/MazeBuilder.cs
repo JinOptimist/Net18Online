@@ -1,13 +1,12 @@
-﻿using MazeConsole.Models;
-using MazeConsole.Models.Cells;
-using MazeConsole.Models.Cells.Character;
-using Microsoft.VisualBasic;
+﻿using MazeCore.Helpers;
+using MazeCore.Models;
+using MazeCore.Models.Cells;
+using MazeCore.Models.Cells.Character;
 
-namespace MazeConsole.Builders
+namespace MazeCore.Builders
 {
     public class MazeBuilder
     {
-        private Random _random = new();
         private Maze _maze;
 
         public bool True { get; private set; }
@@ -20,8 +19,10 @@ namespace MazeConsole.Builders
                 Height = height,
             };
 
+            // Build maze
             BuildWall();
             BuildGround();
+            BuildTreasury();
             BuildWater();
             BuildGhost();
             BuildSnake();
@@ -30,13 +31,28 @@ namespace MazeConsole.Builders
             BuildCoin();
             BuildTeleport();
             BuilPit();
-            BuildTreasury();
 
+            // Build Npc
+            BuildGoblins();
+
+
+            // Build Hero
             BuildHero();
+            BuilPit();
             return _maze;
         }
 
-
+        private void BuildGoblins(int goblinCount = 3)
+        {
+            var grounds = _maze.Cells.OfType<Ground>().ToList();
+            for (int i = 0; i < goblinCount; i++)
+            {
+                var ground = GetRandom(grounds);
+                var goblin = new Goblin(ground.X, ground.Y, _maze);
+                _maze.Npcs.Add(goblin);
+                grounds.Remove(ground);
+            }
+        }
 
         private void BuildHero()
         {
@@ -75,19 +91,20 @@ namespace MazeConsole.Builders
         }
 
         /// <summary>
-        /// Find a Wall with random coordinates and replace it with a Ghost 
+        /// Find a Ground with random coordinates and replace it with a Ghost 
         /// </summary>
         private void BuildGhost()
         {
-            var x = 0;
-            var y = 0;
-            do
-            {
-                x = _random.Next(0, _maze.Width - 1);
-                y = _random.Next(0, _maze.Height - 1);
-            }
-            while (_maze[x, y].Symbol == '.');
-            _maze[x, y] = new Ghost(x, y, _maze);
+            var grounds = _maze.Cells
+                .OfType<Ground>()
+                .ToList();
+
+            var randomGround = GetRandom(grounds);
+
+            var ghostX = randomGround.X;
+            var ghostY = randomGround.Y;
+            var ghost = new Ghost(ghostX, ghostY, _maze);
+            _maze[ghost.X, ghost.Y] = ghost;
         }
 
         /// <summary>
@@ -103,8 +120,8 @@ namespace MazeConsole.Builders
             {
                 do
                 {
-                    x = _random.Next(0, _maze.Width - 1);
-                    y = _random.Next(0, _maze.Height - 1);
+                    x = _maze.Random.Next(0, _maze.Width - 1);
+                    y = _maze.Random.Next(0, _maze.Height - 1);
                 }
                 while (_maze[x, y].Symbol == '#' || _maze[x, y] is Dungeon);
 
@@ -149,15 +166,7 @@ namespace MazeConsole.Builders
         private List<CellType> GetNearCells<CellType>(BaseCell miner)
             where CellType : BaseCell
         {
-            return _maze
-                .Cells
-                .OfType<CellType>()
-                .Where(cell =>
-                   cell.X == miner.X && cell.Y == miner.Y + 1
-                || cell.X == miner.X && cell.Y == miner.Y - 1
-                || cell.X == miner.X + 1 && cell.Y == miner.Y
-                || cell.X == miner.X - 1 && cell.Y == miner.Y)
-                .ToList();
+            return MazeHelper.GetNearCells<CellType>(_maze, miner);
         }
 
         public void BuildWall()
@@ -189,45 +198,60 @@ namespace MazeConsole.Builders
         }
         private void BuilPit()
         {
-            var count = 0;
-            for (int y = 0; y < _maze.Height; y++)
+
+            var groundCells = _maze.Cells.OfType<Ground>().ToList();
+
+            foreach (var groundCell in groundCells)
             {
-                for (var x = 0; x < _maze.Width; x++)
+                var nearGrounds = GetNearCells<Ground>(groundCell);
+                if (nearGrounds.Count == 3)
                 {
-                    count++;
-                    if (count % 4 == 0)
-                    {
-                        _maze[x, y] = new Pit(x, y, _maze);
-                    }
+                    _maze[groundCell.X, groundCell.Y] = new Pit(groundCell.X, groundCell.Y, _maze);
                 }
             }
         }
         public void BuildWindow()
         {
-            int windowCount = 0;
+            var windowCount = 0;
             for (int y = 0; y < _maze.Height; y++)
             {
                 for (var x = 0; x < _maze.Width; x++)
                 {
-                    switch (windowCount)
+                    if (windowCount <= 2 && _maze[x, y] is Wall && !IsWindowNearby(x, y))
                     {
-                        case < 2 when _maze[x, y] is Wall:
-                            _maze[x, y] = new Window(x, y, _maze);
-                            windowCount++;
-                            break;
-                        case 2:
-                            return;
+                        _maze[x, y] = new Window(x, y, _maze);
+                        windowCount++;
+                    }
+                    if (windowCount > 2)
+                    {
+                        return;
                     }
                 }
             }
         }
-
+        private bool IsWindowNearby(int x, int y)
+        {
+            var radius = 5;
+            for (int i = -radius; i <= radius; i++)
+            {
+                for (int j = -radius; j <= radius; j++)
+                {
+                    var newX = x + i;
+                    var newY = y + j;
+                    if (newX >= 0 && newX < _maze.Width && newY >= 0 && newY < _maze.Height)
+                    {
+                        if (_maze[newX, newY] is Window)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
         private T GetRandom<T>(List<T> cells)
         {
-            var countOfCells = cells.Count();
-            var randomIndex = _random.Next(0, countOfCells);
-            var randomCell = cells[randomIndex];
-            return randomCell;
+            return MazeHelper.GetRandom(_maze, cells);
         }
         private void BuildTreasury()
         {
@@ -253,11 +277,36 @@ namespace MazeConsole.Builders
 
         private void BuildTeleport()
         {
-            var portalInputCells = _maze.Cells.First(c => c.Symbol == '.');
-            var portalOutputCells = _maze.Cells.Last(c => c.Symbol == '.');
+            var numberTeleportCellsInMaze = 5;
 
-            _maze[portalInputCells.X, portalInputCells.Y] = new Teleport(portalInputCells.X, portalInputCells.Y, _maze);
-            _maze[portalOutputCells.X, portalOutputCells.Y] = new Teleport(portalOutputCells.X, portalOutputCells.Y, _maze);
+            var groundCellsWithTwoWallNeighborhood = _maze
+                .Cells
+                .OfType<Ground>()
+                .Where(cell => GetSimilarCellOnAxisX<Teleport>(cell).Count == 0)
+                .ToList();
+
+            var countIteration = groundCellsWithTwoWallNeighborhood.Count < numberTeleportCellsInMaze
+                ? groundCellsWithTwoWallNeighborhood.Count
+                : numberTeleportCellsInMaze;
+
+            for (var i = 1; i <= countIteration; i++)
+            {
+                var randomCell = GetRandom(groundCellsWithTwoWallNeighborhood);
+
+                _maze[randomCell.X, randomCell.Y] = new Teleport(randomCell.X, randomCell.Y, _maze);
+
+                groundCellsWithTwoWallNeighborhood.Remove(randomCell);
+            }
+        }
+
+        private List<T> GetSimilarCellOnAxisX<T>(BaseCell cell)
+            where T : BaseCell
+        {
+            return _maze
+                .Cells
+                .OfType<T>()
+                .Where(c => c.X == cell.X)
+                .ToList();
         }
     }
 }

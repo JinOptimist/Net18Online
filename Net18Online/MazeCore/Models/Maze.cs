@@ -1,7 +1,7 @@
-﻿using MazeConsole.Models.Cells;
-using MazeConsole.Models.Cells.Character;
+﻿using MazeCore.Models.Cells;
+using MazeCore.Models.Cells.Character;
 
-namespace MazeConsole.Models
+namespace MazeCore.Models
 {
     public class Maze
     {
@@ -9,7 +9,16 @@ namespace MazeConsole.Models
         public int Height { get; set; }
         public List<BaseCell> Cells { get; set; } = new List<BaseCell>();
 
+        /// <summary>
+        /// NPC enemies and alias
+        /// </summary>
+        public List<BaseNpc> Npcs { get; set; } = new List<BaseNpc>();
+
+        public Random Random { get; private set; } = new Random();
+
         public Hero Hero { get; set; }
+
+        public List<string> HistoryOfEvents { get; set; } = new();
 
         public BaseCell? this[int x, int y]
         {
@@ -38,6 +47,12 @@ namespace MazeConsole.Models
             if (Hero.X == x && Hero.Y == y)
             {
                 return Hero;
+            }
+
+            var enemyFromMaze = Npcs.FirstOrDefault(enemy => enemy.X == x && enemy.Y == y);
+            if (enemyFromMaze is not null)
+            {
+                return enemyFromMaze;
             }
 
             return this[x, y];

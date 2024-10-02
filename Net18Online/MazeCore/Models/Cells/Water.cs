@@ -1,6 +1,7 @@
-﻿using MazeConsole.Models.Cells.Character;
+﻿using MazeCore.Models;
+using MazeCore.Models.Cells.Character;
 
-namespace MazeConsole.Models.Cells
+namespace MazeCore.Models.Cells
 {
     public class Water : BaseCell
     {
@@ -17,7 +18,7 @@ namespace MazeConsole.Models.Cells
 
         public override void InteractWithCell(BaseCharacter character)
         {
-            Console.WriteLine("Glug glug");
+            AddEventInfo("Glug glug");
         }
     }
 }

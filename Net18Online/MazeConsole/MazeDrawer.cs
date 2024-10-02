@@ -1,4 +1,4 @@
-﻿using MazeConsole.Models;
+﻿using MazeCore.Models;
 
 namespace MazeConsole
 {
@@ -18,6 +18,15 @@ namespace MazeConsole
                 }
 
                 Console.WriteLine();
+            }
+
+            var copyOfHistory = maze.HistoryOfEvents.ToList();
+            copyOfHistory.Reverse();
+            var lastEvents = copyOfHistory.Take(5);
+
+            foreach (var eventInfo in lastEvents)
+            {
+                Console.WriteLine(eventInfo);
             }
         }
     }

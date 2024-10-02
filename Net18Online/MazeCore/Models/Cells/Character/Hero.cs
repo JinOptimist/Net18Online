@@ -1,4 +1,6 @@
-﻿namespace MazeConsole.Models.Cells.Character
+﻿using MazeCore.Models;
+
+namespace MazeCore.Models.Cells.Character
 {
     public class Hero : BaseCharacter
     {
@@ -7,8 +9,9 @@
         }
 
         public string Name { get; set; }
+        public bool HasLadder { get; set; } = false;
+        public bool IsTrappedInPit { get; set; } = false;
 
-      
         public override char Symbol => '@';
 
         public override void InteractWithCell(BaseCharacter character)

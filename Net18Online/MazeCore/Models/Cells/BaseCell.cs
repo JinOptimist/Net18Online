@@ -1,6 +1,6 @@
-﻿using MazeConsole.Models.Cells.Character;
+﻿using MazeCore.Models.Cells.Character;
 
-namespace MazeConsole.Models.Cells
+namespace MazeCore.Models.Cells
 {
     public abstract class BaseCell
     {
@@ -20,5 +20,10 @@ namespace MazeConsole.Models.Cells
         public abstract bool TryStep(BaseCharacter character);
 
         public abstract void InteractWithCell(BaseCharacter character);
+
+        public void AddEventInfo(string eventInfo)
+        {
+            Maze.HistoryOfEvents.Add(eventInfo);
+        }
     }
 }

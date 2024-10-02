@@ -1,10 +1,7 @@
-﻿using MazeConsole.Models.Cells;
-using MazeConsole.Models.Cells.Character;
-
-namespace MazeConsole.Models.Cells
+﻿namespace MazeCore.Models.Cells.Character
 {
 
-    public class Ghost : BaseCell
+    public class Ghost : BaseCharacter
     {
         public Ghost(int x, int y, Maze maze) : base(x, y, maze)
         {
@@ -12,9 +9,13 @@ namespace MazeConsole.Models.Cells
 
         public override char Symbol => '0';
 
+        /// <summary>
+        /// If we interact witn Ghost, we replaced it to new cell Coin
+        /// </summary>
         public override void InteractWithCell(BaseCharacter character)
         {
-            Console.WriteLine("BooOoo");
+            AddEventInfo("BooOoo");
+            Maze[X, Y] = new Coin(X, Y, Maze);
         }
 
         public override bool TryStep(BaseCharacter character)

@@ -1,7 +1,6 @@
-﻿
-using MazeConsole.Models.Cells.Character;
+﻿using MazeCore.Models.Cells.Character;
 
-namespace MazeConsole.Models.Cells
+namespace MazeCore.Models.Cells
 {
     public class Wall : BaseCell
     {
@@ -13,12 +12,12 @@ namespace MazeConsole.Models.Cells
 
         public override bool TryStep(BaseCharacter character)
         {
+            AddEventInfo("Boom boom");
             return false;
         }
 
         public override void InteractWithCell(BaseCharacter character)
         {
-            Console.WriteLine("Boom boom");
         }
     }
 }
