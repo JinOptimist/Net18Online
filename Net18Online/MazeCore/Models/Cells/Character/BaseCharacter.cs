@@ -1,6 +1,4 @@
-﻿using MazeCore.Models;
-
-namespace MazeCore.Models.Cells.Character
+﻿namespace MazeCore.Models.Cells.Character
 {
     public abstract class BaseCharacter : BaseCell
     {
