@@ -5,8 +5,8 @@ namespace MazeCore.Helpers
 {
     public class MazeHelper
     {
-        public static List<CellType> GetNearCells<CellType>(Maze maze, BaseCell miner)
-             where CellType : BaseCell
+        public static List<CellType> GetNearCells<CellType>(IMaze maze, IBaseCell miner)
+             where CellType : IBaseCell
         {
             return maze
                 .Cells
@@ -19,7 +19,7 @@ namespace MazeCore.Helpers
                 .ToList();
         }
 
-        public static T GetRandom<T>(Maze maze, List<T> cells)
+        public static T GetRandom<T>(IMaze maze, List<T> cells)
         {
             var countOfCells = cells.Count();
             var randomIndex = maze.Random.Next(0, countOfCells);
