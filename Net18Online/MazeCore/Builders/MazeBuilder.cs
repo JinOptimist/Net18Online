@@ -22,6 +22,7 @@ namespace MazeCore.Builders
             BuildGround();
             BuildTreasury();
             BuildWater();
+            
             BuildSnake();
             BuildDungeon();
             BuildWindow();
