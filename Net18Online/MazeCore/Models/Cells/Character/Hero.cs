@@ -6,6 +6,8 @@ namespace MazeCore.Models.Cells.Character
     {
         public Hero(int x, int y, Maze maze) : base(x, y, maze)
         {
+            Health = 100;
+            Coins = 10;
         }
 
         public string Name { get; set; }

@@ -88,7 +88,7 @@ namespace MazeCore.Models.Cells
 
             return (MonsterTreasure)treasureValue;
         }
-        public static int GetEnumMaxValue<T>() where T : Enum => Enum
+        public static int GetEnumMaxValue<T>() where T : System.Enum => System.Enum
                 .GetValues(typeof(T))
                 .Cast<int>()
                 .Max();
