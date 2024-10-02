@@ -1,4 +1,5 @@
 ﻿using MazeCore.Models;
+using MazeCore.Models.Cells;
 
 namespace MazeConsole
 {
@@ -19,7 +20,7 @@ namespace MazeConsole
 
                 Console.WriteLine();
             }
-
+            //добавить сюда BaseCell.ChangeColor(ConsoleColor);
             var copyOfHistory = maze.HistoryOfEvents.ToList();
             copyOfHistory.Reverse();
             var lastEvents = copyOfHistory.Take(5);
