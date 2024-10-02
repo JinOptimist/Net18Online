@@ -1,5 +1,6 @@
 ﻿using MazeCore.Builders;
 using MazeCore.Models.Cells;
+using MazeCore.Models.Interfaces;
 
 namespace MazeConsole
 {
@@ -53,13 +54,35 @@ namespace MazeConsole
                     case ConsoleKey.Escape:
                         return;
                 }
-
+                
                 var destinationCell = maze.GetTopLevelItem(destinationX, destinationY);
                 if (destinationCell?.TryStep(maze.Hero) ?? false)
                 {
                     maze.Hero.X = destinationX;
                     maze.Hero.Y = destinationY;
                 }
+
+                #region WanderingMerchantInteractions
+                ///<summary>
+                ///Check if the hero stepped on an NPC that can be interacted with
+                ///</summary>
+                if (destinationCell is IInteractable interactable && destinationCell is WanderingMerchant)
+                {
+                    Console.WriteLine("You encountered a merchant. Do you want to interact?");
+                    Console.WriteLine("Press Spacebar to interact or Escape to continue.");
+
+                    var interactionKey = Console.ReadKey(true).Key;
+                    if (interactionKey == ConsoleKey.Spacebar)
+                    {
+                        interactable.Interact(maze.Hero);
+                    }
+                    else if (interactionKey == ConsoleKey.Escape)
+                    {
+                        // Player chose not to interact, hero stays in place
+                        continue;
+                    }
+                }
+                #endregion
 
                 foreach (var npc in maze.Npcs)
                 {
