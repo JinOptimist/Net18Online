@@ -1,7 +1,8 @@
-﻿namespace MazeCore.Models.Cells.Character
-{
+﻿using MazeCore.Helpers;
 
-    public class Ghost : BaseCharacter
+namespace MazeCore.Models.Cells.Character
+{ 
+    public class Ghost : BaseNpc
     {
         public Ghost(int x, int y, Maze maze) : base(x, y, maze)
         {
@@ -14,13 +15,25 @@
         /// </summary>
         public override void InteractWithCell(BaseCharacter character)
         {
+            character.Health--;
             AddEventInfo("BooOoo");
-            Maze[X, Y] = new Coin(X, Y, Maze);
+            
         }
 
-        public override bool TryStep(BaseCharacter character)
+        public override void Move()
         {
-            return true;
+            var nearGrounds = MazeHelper.GetNearCells<BaseCell>(Maze, this);
+            if (!nearGrounds.Any())
+            {
+                return;
+            }
+
+            var destinationCell = MazeHelper.GetRandom(Maze, nearGrounds);
+            if (destinationCell.TryStep(this))
+            {
+                X = destinationCell.X;
+                Y = destinationCell.Y;
+            }
         }
     }
 }

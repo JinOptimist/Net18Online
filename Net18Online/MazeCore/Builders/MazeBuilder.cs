@@ -98,11 +98,10 @@ namespace MazeCore.Builders
                 .ToList();
 
             var randomGround = GetRandom(grounds);
-
-            var ghostX = randomGround.X;
-            var ghostY = randomGround.Y;
-            var ghost = new Ghost(ghostX, ghostY, _maze);
-            _maze[ghost.X, ghost.Y] = ghost;
+            var ghost = new Ghost(randomGround.X, randomGround.Y, _maze);
+            _maze.Npcs.Add(ghost);
+            grounds.Remove(randomGround);
+            
         }
 
         /// <summary>
