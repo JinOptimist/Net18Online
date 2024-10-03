@@ -26,7 +26,7 @@ namespace MazeConsole
                     continue;
                 }
 
-                var key = Console.ReadKey();
+                var key = Console.ReadKey(true);
                 switch (key.Key)
                 {
                     case ConsoleKey.D:

@@ -54,7 +54,16 @@ namespace MazeConsole
                 return;
             }
 
-            Console.SetCursorPosition(consoleCursorIsNow.Left, consoleCursorIsNow.Top);
+            Console.SetCursorPosition(0, ConsoleCursorDrawerTop + maze.Height);
+
+            var copyOfHistory = maze.HistoryOfEvents.ToList();
+            copyOfHistory.Reverse();
+            var lastEvents = copyOfHistory.Take(5);
+
+            foreach (var eventInfo in lastEvents)
+            {
+                Console.WriteLine($"{eventInfo}{new String(' ', Console.BufferWidth - eventInfo.Length)}");
+            }
         }
     }
 }
