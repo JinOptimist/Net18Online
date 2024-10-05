@@ -25,26 +25,38 @@ namespace MazeCore.Models.Cells
 
             var randomNumberToDetermineAnEvent = Random.Next(1, 100);
 
-            if (randomNumberToDetermineAnEvent <= 40)
+            if (IsChestOpen == false)
             {
-                Maze.Hero.Coins++;
-                AddEventInfo($"Your have {Maze.Hero.Coins} coins");
+
+                if (randomNumberToDetermineAnEvent <= 40)
+                {
+                    Maze.Hero.Coins++;
+                    AddEventInfo($"Your have {Maze.Hero.Coins} coins");
+                    IsChestOpen = true;
+                }
+                else if (randomNumberToDetermineAnEvent > 40 && randomNumberToDetermineAnEvent <= 70)
+                {
+                    AddEventInfo("Here is healing potion");
+                    Maze.Hero.Health++;
+                    AddEventInfo($"Your helth is {Maze.Hero.Health}");
+                    IsChestOpen = true;
+                }
+                else if (randomNumberToDetermineAnEvent > 70 && randomNumberToDetermineAnEvent <= 90)
+                {
+                    AddEventInfo("Here is nothing");
+                    IsChestOpen = true;
+                }
+                else if (randomNumberToDetermineAnEvent > 90)
+                {
+                    AddEventInfo("It's a trap");
+                    Maze.Hero.Health--;
+                    AddEventInfo($"Your helth is {Maze.Hero.Health}");
+                    IsChestOpen = true;
+                }
             }
-            else if (randomNumberToDetermineAnEvent > 40 && randomNumberToDetermineAnEvent <= 70)
+            else
             {
-                AddEventInfo("Here is healing potion");
-                Maze.Hero.Health++;
-                AddEventInfo($"Your helth is {Maze.Hero.Health}");
-            }
-            else if (randomNumberToDetermineAnEvent > 70 && randomNumberToDetermineAnEvent <= 90)
-            {
-                AddEventInfo("Here is nothing");
-            }
-            else if (randomNumberToDetermineAnEvent > 90)
-            {
-                AddEventInfo("It's a trap");
-                Maze.Hero.Health--;
-                AddEventInfo($"Your helth is {Maze.Hero.Health}");
+                AddEventInfo("The chest are empty already");
             }
         }
 
