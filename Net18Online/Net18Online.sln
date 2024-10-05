@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MazeConsole", "MazeConsole\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MazeCore", "MazeCore\MazeCore.csproj", "{27ECCC93-9846-4317-99E5-E367F3F13636}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MazeCoreTest", "MazeCoreTest\MazeCoreTest.csproj", "{1386F62D-1359-46B6-91B0-A3A492BBA07C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{27ECCC93-9846-4317-99E5-E367F3F13636}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27ECCC93-9846-4317-99E5-E367F3F13636}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27ECCC93-9846-4317-99E5-E367F3F13636}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1386F62D-1359-46B6-91B0-A3A492BBA07C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1386F62D-1359-46B6-91B0-A3A492BBA07C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1386F62D-1359-46B6-91B0-A3A492BBA07C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1386F62D-1359-46B6-91B0-A3A492BBA07C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

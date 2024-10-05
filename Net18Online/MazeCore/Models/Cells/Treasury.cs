@@ -16,12 +16,13 @@ namespace MazeCore.Models.Cells
 
         public override char Symbol => 'T';
 
-        public override void InteractWithCell(BaseCharacter character)
+        public override void InteractWithCell(IBaseCharacter character)
         {
-            AddEventInfo("step setp");
+            AddEventInfo("You found a Treasury");
+                character.Coins = character.Coins + 5;
         }
 
-        public override bool TryStep(BaseCharacter character)
+        public override bool TryStep(IBaseCharacter character)
         {
             return true;
         }

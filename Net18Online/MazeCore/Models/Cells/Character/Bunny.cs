@@ -2,18 +2,21 @@
 
 namespace MazeCore.Models.Cells.Character
 {
-    public class Goblin : BaseNpc
+    public class Bunny : BaseNpc
     {
-        public Goblin(int x, int y, Maze maze) : base(x, y, maze)
+        public Bunny(int x, int y, Maze maze) : base(x, y, maze)
         {
         }
 
-        public override char Symbol => 'g';
+        public override char Symbol => '&';
 
         public override void InteractWithCell(IBaseCharacter character)
         {
-            character.Health--;
-            AddEventInfo($"Goblin fight back to {character}");
+            if (character.Health <= 0)
+            {
+                return;
+            }
+            character.Health -= 3;
         }
 
         public override void Move()
