@@ -2,13 +2,13 @@
 
 namespace MazeConsole.Models.Cells
 {
-    public class CellSVET: BaseCell
+    public class Magic: BaseCell
     {
-        public CellSVET( int x, int y, Maze maze ) : base(x, y, maze)
+        public Magic( int x, int y, Maze maze ) : base(x, y, maze)
         {
         }
 
-        public override char Symbol => 'S';
+        public override char Symbol => 'm';
 
         public override void InteractWithCell( BaseCharacter character )
         {

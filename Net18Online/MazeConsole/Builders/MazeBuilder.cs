@@ -65,7 +65,7 @@ namespace MazeConsole.Builders
 
             var magicX = randomGround.X;
             var magicY = randomGround.Y;
-            var magic = new CellSVET(magicX, magicY, _maze);
+            var magic = new Magic(magicX, magicY, _maze);
             _maze[magic.X, magic.Y] = magic;
         }
 
