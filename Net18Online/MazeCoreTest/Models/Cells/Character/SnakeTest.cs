@@ -9,7 +9,7 @@ namespace MazeCoreTest.Models.Cells
 {
     public class SnakeTest
     {
-        private Mock<IMaze> _mazeMock;
+        private Mock<Maze> _mazeMock;
         private Mock<IBaseCharacter> _characterMock;
 
         private Snake _snake;
@@ -17,16 +17,18 @@ namespace MazeCoreTest.Models.Cells
         [SetUp]
         public void Setup()
         {
-            _mazeMock = new Mock<IMaze>(); //Fake
+            _mazeMock = new Mock<Maze>(); //Fake
             _characterMock = new Mock<IBaseCharacter>(); // Fake
             
             _snake = new Snake(5, 6, _mazeMock.Object); // Real
         }
 
         [Test]
-        [TestCase(2, 3)]
-        [TestCase(13, 14)]
-        [TestCase(24, 25)]
+        [TestCase(2, 4)]
+        [TestCase(3, 5)]
+        [TestCase(4, 6)]
+        [TestCase(13, 15)]
+        [TestCase(24, 26)]
         public void InteractWithCell_CharacterGetACoin(
             int countOfCoinsBefore,
             int countOfCoinsAfter)
