@@ -29,6 +29,7 @@ namespace MazeCore.Builders
             BuilPit();
             BuilWolfs();
             BuildChest();
+            BuildMagic();
 
             // Build Npc
             BuildGoblins();
@@ -381,6 +382,19 @@ namespace MazeCore.Builders
 
                 groundCellsWithTwoWallNeighborhood.Remove(randomCell);
             }
+        }
+        private void BuildMagic()
+        {
+            var magics = _maze.Cells
+                .OfType<Magic>()
+                .ToList();
+
+            var randomMagic = GetRandom(magics);
+
+            var magicX = randomMagic.X;
+            var magicY = randomMagic.Y;
+            var magic = new Magic(magicX, magicY, _maze);
+            _maze[magic.X, magic.Y] = magic;
         }
 
         private void BuildChest()
