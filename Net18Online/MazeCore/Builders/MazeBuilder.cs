@@ -43,6 +43,7 @@ namespace MazeCore.Builders
             BuildGhost();
             BuildKing();
             BuildSlime();
+            BuildOrc();
 
             // Build Hero
             BuildHero();
@@ -137,6 +138,25 @@ namespace MazeCore.Builders
             grounds.Remove(ground);
         }
 
+        private void BuildOrc(int orcCount = 2)
+        {
+
+            var grounds = _maze.Cells
+            .OfType<Ground>()
+            .Where(ground =>
+                   _maze[ground.X - 1, ground.Y] is Treasury && _maze[ground.X + 1, ground.Y] is Treasury
+                || _maze[ground.X, ground.Y - 1] is Treasury && _maze[ground.X, ground.Y + 1] is Treasury
+            )
+            .ToList();
+
+            for (int i = 0; i < orcCount; i++)
+            {
+                var ground = GetRandom(grounds);
+                var orc = new Orc(ground.X, ground.Y, _maze);
+                _maze.Npcs.Add(orc);
+                grounds.Remove(ground);
+            }
+        }
         private void BuildHero()
         {
             var grounds = _maze.Cells.OfType<Ground>().ToList();
