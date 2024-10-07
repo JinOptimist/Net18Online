@@ -13,6 +13,12 @@ namespace MazeCore.Models.Cells.Character
 
         public Wolf(int x, int y, Maze maze) : base(x, y, maze)
         {
+            _random = new Random();
+        }
+
+        public Wolf(int x, int y, Maze maze, Random random) : base(x, y, maze)
+        {
+            _random = random ?? new Random();
         }
 
         public override char Symbol => 'W';
