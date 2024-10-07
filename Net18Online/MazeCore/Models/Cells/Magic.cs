@@ -9,7 +9,7 @@ namespace MazeCore.Models.Cells
         {
         }
 
-        public override char Symbol => '.';
+        public override char Symbol => 'm';
 
         public override void InteractWithCell(IBaseCharacter character)
         {
