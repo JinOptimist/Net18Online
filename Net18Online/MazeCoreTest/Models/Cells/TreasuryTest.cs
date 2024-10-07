@@ -1,4 +1,5 @@
-﻿using MazeCore.Models.Cells.Character;
+﻿using Castle.DynamicProxy;
+using MazeCore.Models.Cells.Character;
 using MazeCore.Models.Cells;
 using MazeCore.Models;
 using Moq;
@@ -12,16 +13,15 @@ namespace MazeCoreTest.Models.Cells
         private Mock<IMaze> _mazeMock;
         private Mock<IBaseCharacter> _characterMock;
         private Treasury _treasury;
-        private Maze _maze; 
 
         [SetUp]
         public void Setup()
         {
-            _maze = new Maze(); 
+            _mazeMock = new Mock<IMaze>(); // Fake
 
             _characterMock = new Mock<IBaseCharacter>();
 
-            _treasury = new Treasury(1, 2, _maze);
+            _treasury = new Treasury(1, 2, _mazeMock.Object);
         }
 
         [Test]
@@ -31,31 +31,46 @@ namespace MazeCoreTest.Models.Cells
             var result = _treasury.TryStep(_characterMock.Object);
 
             // Assert
-            Assert.That(result, Is.True, "Character should be able to step into the Treasury");
+            Assert.That(
+                result, 
+                Is.True, 
+                "Character should be able to step into the Treasury");
         }
 
         [Test]
-        public void InteractWithCell_CheckTreasuryIncreasesCoins()
+        [TestCase(10,15)]
+        [TestCase(0, 5)]
+        [TestCase(26, 31)]  
+        public void InteractWithCell_CheckTreasuryIncreasesCoins(
+            int initialCoinsCount,
+            int resultCoinsCount
+            )
         {
             // Prepare
-            _characterMock.SetupProperty(c => c.Coins, 10); // Make character have 10 coins at start
+            _mazeMock.Setup(m => m.HistoryOfEvents).Returns(new List<string>());
+            _characterMock.SetupProperty(c => c.Coins, initialCoinsCount); // Make character have 10 coins at start
 
             // Act
             _treasury.InteractWithCell(_characterMock.Object);
 
             // Assert
-            Assert.That(_characterMock.Object.Coins, Is.EqualTo(15), "Treasury should give the character 5 coins.");
+            Assert.That(
+                _characterMock.Object.Coins, 
+                Is.EqualTo(resultCoinsCount), 
+                "Treasury should give the character 5 coins.");
         }
 
         [Test]
         public void InteractWithCell_LogsEventInMazeHistory()
         {
+            //Prepare
+            _mazeMock.Setup(m => m.HistoryOfEvents).Returns(new List<string>());
+
             // Act
             _treasury.InteractWithCell(_characterMock.Object);
 
             // Verify check event log
-            _maze.HistoryOfEvents.Add("You found a Treasury");
-            Assert.That(_maze.HistoryOfEvents, Contains.Item("You found a Treasury"));
+            Assert.That(_mazeMock.Object.HistoryOfEvents, Contains.Item("You found a Treasury"));
         }
     }
 }

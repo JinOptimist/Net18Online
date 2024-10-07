@@ -19,7 +19,7 @@ namespace MazeCore.Models.Cells
         public override void InteractWithCell(IBaseCharacter character)
         {
             AddEventInfo("You found a Treasury");
-                character.Coins = character.Coins + 5;
+            character.Coins = character.Coins + 5;
         }
 
         public override bool TryStep(IBaseCharacter character)
@@ -28,4 +28,3 @@ namespace MazeCore.Models.Cells
         }
     }
 }
-

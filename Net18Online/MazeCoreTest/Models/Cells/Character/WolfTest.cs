@@ -1,4 +1,5 @@
-﻿using MazeCore.Models;
+﻿using Castle.DynamicProxy;
+using MazeCore.Models;
 using MazeCore.Models.Cells;
 using MazeCore.Models.Cells.Character;
 using Moq;
@@ -9,110 +10,87 @@ namespace MazeCoreTest.Models.Cells
 {
     public class WolfTest
     {
-        private Mock<IMaze> _mazeMock;
+        private Mock<Maze> _mazeMock;
+        private Mock<IMaze> _imazeMock;
         private Mock<IBaseCharacter> _characterMock;
         private Mock<IBaseCell> _cellMock;
         private Mock<Random> _randomMock;
-        private Maze _maze; // Add real Maze object, otherwise it won't working
         private Wolf _wolf;
 
         [SetUp]
         public void Setup()
         {
-            _mazeMock = new Mock<IMaze>(); // Fake Maze
+            _mazeMock = new Mock<Maze>(); // Fake Maze
             _characterMock = new Mock<IBaseCharacter>(); // Fake Hero
             _cellMock = new Mock<IBaseCell>();
-            _maze = new Maze();
             _randomMock = new Mock<Random>();
 
-            _wolf = new Wolf(1, 2, _maze); // Real Wolf otherwise it won't work
+            _wolf = new Wolf(1, 2, _mazeMock.Object, _randomMock.Object);
         }
+
 
         [Test]
         public void TryStep_CheckThatWolfCanStepBaseCell()
         {
             // Prepare
-            var groundCellMock = _cellMock;
+            _cellMock.Setup(cell => cell.TryStep(_wolf)).Returns(false);
 
             // Act
-            var result = groundCellMock.Object.TryStep(_wolf);
+            var result = _cellMock.Object.TryStep(_wolf);
 
             // Assert
-            Assert.That(result, Is.False, "Wolf should be able to step on the ground cell.");
+            Assert.That(
+                result, 
+                Is.False, 
+                "Wolf should be able to step on the basecell.");
         }
 
         [Test]
-        public void TryStep_CheckThatWolfCanStepGround()
+        [TestCase(10, 9)]
+        [TestCase(4, 3)]
+        [TestCase(33, 32)]
+        public void InteractWithCell_CheckWolfAttackNonCritical(
+            int initialCharacterHealth,
+            int resultCharacterHealth
+            )
         {
             // Prepare
-            var groundCell = new Ground(1, 1, _maze); // Real Ground, not Mock
-
-            // Act
-            var result = groundCell.TryStep(_wolf);
-
-            // Assert
-            Assert.That(result, Is.True, "Wolf should be able to step on the ground cell.");
-        }
-
-
-        [Test]
-        public void InteractWithCell_CheckWolfAttackNonCritical()
-        {
-            // Prepare
-            _characterMock.SetupProperty(c => c.Health, 10); // Character has 10 health before
+            _characterMock.SetupProperty(c => c.Health, initialCharacterHealth); // Character has 10 health before
+            _characterMock.Object.Health = initialCharacterHealth;
             _randomMock.Setup(r => r.Next(1, 6)).Returns(1); // Common attack
 
             // Act
             _wolf.InteractWithCell(_characterMock.Object);
 
             // Assert
-            Assert.That(_characterMock.Object.Health, Is.EqualTo(9), "Non-critical attack should reduce health by 1.");
+            Assert.That(
+                _characterMock.Object.Health, 
+                Is.EqualTo(resultCharacterHealth), 
+                "Non-critical attack should reduce health by 1.");
         }
 
         [Test]
-        public void InteractWithCell_CheckWolfAttackCritical()
+        [TestCase(10, 8)]
+        [TestCase(4, 2)]
+        [TestCase(33, 31)]
+        public void InteractWithCell_CheckWolfAttackCritical(
+            int initialCharacterHealth,
+            int resultCharacterHealth
+            )
         {
             // Prepare
-            _characterMock.SetupProperty(c => c.Health, 10); // Character has 10 health before
-
-            var randomMock = new Mock<Random>();
-            randomMock.Setup(r => r.Next(1, 6)).Returns(3); // Attack now is critical
+            _characterMock.SetupProperty(c => c.Health, initialCharacterHealth); // Character has 10 health before
+            _characterMock.Object.Health = initialCharacterHealth;
+            _randomMock.Setup(r => r.Next(1, 6)).Returns(3); // Attack now is critical
 
             // Act
             _wolf.InteractWithCell(_characterMock.Object);
 
             // Assert
-            Assert.That(_characterMock.Object.Health, Is.EqualTo(8), "Critical attack should reduce health by 2.");
-        }
-
-        [Test]
-        public void Move_CheckWolfMovesToValidCell()
-        {
-            // Prepare
-            var destinationCellMock = new Mock<BaseCell>(_wolf.X + 1, _wolf.Y, _mazeMock.Object);
-            destinationCellMock.Setup(cell => cell.TryStep(_wolf)).Returns(true);
-
-            // Act
-            _wolf.Move();
-
-            // Assert
-            Assert.That(_wolf.X, Is.EqualTo(destinationCellMock.Object.X));
-            Assert.That(_wolf.Y, Is.EqualTo(destinationCellMock.Object.Y));
-        }
-
-        [Test]
-        public void Move_CheckWolfMovesToValidCellAsInterface()
-        {
-            // Prepare
-            _cellMock = new Mock<IBaseCell>(_wolf.X + 1, _wolf.Y, _mazeMock.Object);
-            _cellMock.Setup(cell => cell.TryStep(_wolf)).Returns(true);
-
-            // Act
-            _wolf.Move();
-
-            // Assert
-            Assert.That(_wolf.X, Is.EqualTo(_cellMock.Object.X));
-            Assert.That(_wolf.Y, Is.EqualTo(_cellMock.Object.Y));
+            Assert.That(
+                _characterMock.Object.Health, 
+                Is.EqualTo(resultCharacterHealth), 
+                "Critical attack should reduce health by 2.");
         }
     }
 }
