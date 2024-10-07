@@ -11,6 +11,8 @@ namespace MazeCoreTest.Models.Cells
     {
         private Mock<IMaze> _mazeMock;
         private Mock<IBaseCharacter> _characterMock;
+        private Mock<IBaseCell> _cellMock;
+        private Mock<Random> _randomMock;
         private Maze _maze; // Add real Maze object, otherwise it won't working
         private Wolf _wolf;
 
@@ -19,7 +21,9 @@ namespace MazeCoreTest.Models.Cells
         {
             _mazeMock = new Mock<IMaze>(); // Fake Maze
             _characterMock = new Mock<IBaseCharacter>(); // Fake Hero
+            _cellMock = new Mock<IBaseCell>();
             _maze = new Maze();
+            _randomMock = new Mock<Random>();
 
             _wolf = new Wolf(1, 2, _maze); // Real Wolf otherwise it won't work
         }
@@ -28,7 +32,7 @@ namespace MazeCoreTest.Models.Cells
         public void TryStep_CheckThatWolfCanStepBaseCell()
         {
             // Prepare
-            var groundCellMock = new Mock<IBaseCell>();
+            var groundCellMock = _cellMock;
 
             // Act
             var result = groundCellMock.Object.TryStep(_wolf);
@@ -56,9 +60,7 @@ namespace MazeCoreTest.Models.Cells
         {
             // Prepare
             _characterMock.SetupProperty(c => c.Health, 10); // Character has 10 health before
-
-            var randomMock = new Mock<Random>();
-            randomMock.Setup(r => r.Next(1, 6)).Returns(1); // Common attack
+            _randomMock.Setup(r => r.Next(1, 6)).Returns(1); // Common attack
 
             // Act
             _wolf.InteractWithCell(_characterMock.Object);
@@ -96,6 +98,21 @@ namespace MazeCoreTest.Models.Cells
             // Assert
             Assert.That(_wolf.X, Is.EqualTo(destinationCellMock.Object.X));
             Assert.That(_wolf.Y, Is.EqualTo(destinationCellMock.Object.Y));
+        }
+
+        [Test]
+        public void Move_CheckWolfMovesToValidCellAsInterface()
+        {
+            // Prepare
+            _cellMock = new Mock<IBaseCell>(_wolf.X + 1, _wolf.Y, _mazeMock.Object);
+            _cellMock.Setup(cell => cell.TryStep(_wolf)).Returns(true);
+
+            // Act
+            _wolf.Move();
+
+            // Assert
+            Assert.That(_wolf.X, Is.EqualTo(_cellMock.Object.X));
+            Assert.That(_wolf.Y, Is.EqualTo(_cellMock.Object.Y));
         }
     }
 }
