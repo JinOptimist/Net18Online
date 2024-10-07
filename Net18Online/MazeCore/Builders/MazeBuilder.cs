@@ -9,7 +9,7 @@ namespace MazeCore.Builders
     {
         private Maze _maze;
 
-        public Maze Build(int width, int height)
+        public Maze Build( int width, int height )
         {
             _maze = new Maze
             {
@@ -44,6 +44,7 @@ namespace MazeCore.Builders
             BuildGhost();
             BuildKing();
             BuildSlime();
+            BuildLamer();
 
             // Build Hero
             BuildHero();
@@ -56,7 +57,7 @@ namespace MazeCore.Builders
             var grounds = _maze.Cells.OfType<Ground>().ToList();
             var merchantCount = Math.Max(1, _maze.Width * _maze.Height / 200); // To Ensure, that at least 1 Merchant present at Maze
 
-            for (int i = 0; i < merchantCount; i++)
+            for( int i = 0 ; i < merchantCount ; i++ )
             {
                 var ground = GetRandom(grounds);
 
@@ -83,17 +84,17 @@ namespace MazeCore.Builders
         private void BuilWolfs()
         {
             var places = _maze.Cells.OfType<BaseCell>()
-           .Where(cell => !(cell is Wall))
+           .Where(cell => !( cell is Wall ))
            .ToList();
             var place = GetRandom(places);
             var wolf = new Wolf(place.X, place.Y, _maze);
             _maze.Npcs.Add(wolf);
         }
 
-        private void BuildGoblins(int goblinCount = 3)
+        private void BuildGoblins( int goblinCount = 3 )
         {
             var grounds = _maze.Cells.OfType<Ground>().ToList();
-            for (int i = 0; i < goblinCount; i++)
+            for( int i = 0 ; i < goblinCount ; i++ )
             {
                 var ground = GetRandom(grounds);
                 var goblin = new Goblin(ground.X, ground.Y, _maze);
@@ -101,10 +102,10 @@ namespace MazeCore.Builders
                 grounds.Remove(ground);
             }
         }
-        private void BuildBunny(int bunnyCount)
+        private void BuildBunny( int bunnyCount )
         {
             var grounds = _maze.Cells.OfType<Ground>().ToList();
-            for (int i = 0; i < bunnyCount; i++)
+            for( int i = 0 ; i < bunnyCount ; i++ )
             {
                 var ground = GetRandom(grounds);
                 var bunny = new Bunny(ground.X, ground.Y, _maze);
@@ -115,7 +116,7 @@ namespace MazeCore.Builders
 
         private void BuildCat()
         {
-            var CatInCenter = new Cat((int)_maze.Height / 2, (int)_maze.Width / 2, _maze);
+            var CatInCenter = new Cat(( int ) _maze.Height / 2, ( int ) _maze.Width / 2, _maze);
             _maze.Npcs.Add(CatInCenter);
         }
 
@@ -123,7 +124,7 @@ namespace MazeCore.Builders
         {
             var walls = _maze.Cells.OfType<Wall>().ToList();
             var wall = GetRandom(walls);
-            
+
             var king = new King(wall.X, wall.Y, _maze);
             _maze.Npcs.Add(king);
         }
@@ -160,12 +161,12 @@ namespace MazeCore.Builders
             _maze[coin.X, coin.Y] = coin;
         }
 
-        private void BuildSnake(int snakeCount = 1)
+        private void BuildSnake( int snakeCount = 1 )
         {
             var listOfLandsThatHaveTwoWalls = GetSurroundedCells<Ground, Wall>(2);
             var listOfCorners = GetCorners<Ground, Wall>(listOfLandsThatHaveTwoWalls);
 
-            for (int i = 0; i < snakeCount; i++)
+            for( int i = 0 ; i < snakeCount ; i++ )
             {
                 var ground = GetRandom(listOfCorners);
                 var snake = new Snake(ground.X, ground.Y, _maze);
@@ -173,7 +174,7 @@ namespace MazeCore.Builders
                 listOfCorners.Remove(ground);
             }
         }
-        private List<ResultingCell> GetSurroundedCells<ResultingCell, SurroundingCell>(int theNumberOfThoseWhoSurrounded)
+        private List<ResultingCell> GetSurroundedCells<ResultingCell, SurroundingCell>( int theNumberOfThoseWhoSurrounded )
             where ResultingCell : BaseCell
             where SurroundingCell : BaseCell
         {
@@ -184,7 +185,7 @@ namespace MazeCore.Builders
                 .ToList();
         }
 
-        private List<ResultingCell> GetCorners<ResultingCell, SurroundingCell>(List<ResultingCell> cells)
+        private List<ResultingCell> GetCorners<ResultingCell, SurroundingCell>( List<ResultingCell> cells )
             where ResultingCell : BaseCell
             where SurroundingCell : BaseCell
         {
@@ -218,7 +219,7 @@ namespace MazeCore.Builders
         {
             var dungeonCount = AutoDungeonCount();
 
-            for (var i = 0; i < dungeonCount; i++)
+            for( var i = 0 ; i < dungeonCount ; i++ )
             {
                 var grounds = _maze.Cells
                 .OfType<Ground>()
@@ -266,10 +267,10 @@ namespace MazeCore.Builders
                         GetNearCells<Ground>(wall).Count == 1)
                     .ToList();
 
-            } while (wallReadyToDestroy.Any());
+            } while( wallReadyToDestroy.Any() );
         }
 
-        private List<CellType> GetNearCells<CellType>(IBaseCell miner)
+        private List<CellType> GetNearCells<CellType>( IBaseCell miner )
             where CellType : IBaseCell
         {
             return MazeHelper.GetNearCells<CellType>(_maze, miner);
@@ -277,9 +278,9 @@ namespace MazeCore.Builders
 
         public void BuildWall()
         {
-            for (int y = 0; y < _maze.Height; y++)
+            for( int y = 0 ; y < _maze.Height ; y++ )
             {
-                for (var x = 0; x < _maze.Width; x++)
+                for( var x = 0 ; x < _maze.Width ; x++ )
                 {
                     _maze[x, y] = new Wall(x, y, _maze);
                 }
@@ -291,10 +292,10 @@ namespace MazeCore.Builders
         /// </summary>
         public void BuildWater()
         {
-            for (int y = 0; y < _maze.Height; y++)
+            for( int y = 0 ; y < _maze.Height ; y++ )
             {
                 var randomX = _maze.Random.Next(0, _maze.Width + 1);
-                if (_maze[randomX, y] is Ground)
+                if( _maze[randomX, y] is Ground )
                 {
                     _maze[randomX, y] = new Water(randomX, y, _maze);
                 }
@@ -305,10 +306,10 @@ namespace MazeCore.Builders
 
             var groundCells = _maze.Cells.OfType<Ground>().ToList();
 
-            foreach (var groundCell in groundCells)
+            foreach( var groundCell in groundCells )
             {
                 var nearGrounds = GetNearCells<Ground>(groundCell);
-                if (nearGrounds.Count >= 3)
+                if( nearGrounds.Count >= 3 )
                 {
                     _maze[groundCell.X, groundCell.Y] = new Pit(groundCell.X, groundCell.Y, _maze);
                 }
@@ -317,30 +318,30 @@ namespace MazeCore.Builders
         public void BuildWindow()
         {
             var windowCount = 0;
-            for (int y = 0; y < _maze.Height; y++)
+            for( int y = 0 ; y < _maze.Height ; y++ )
             {
-                for (var x = 0; x < _maze.Width; x++)
+                for( var x = 0 ; x < _maze.Width ; x++ )
                 {
-                    if (windowCount <= 2 && _maze[x, y] is Wall && !IsWindowNearby(x, y))
+                    if( windowCount <= 2 && _maze[x, y] is Wall && !IsWindowNearby(x, y) )
                     {
                         _maze[x, y] = new Window(x, y, _maze);
                         windowCount++;
                     }
-                    if (windowCount > 2)
+                    if( windowCount > 2 )
                     {
                         return;
                     }
                 }
             }
         }
-        private bool IsWindowNearby(int x, int y)
+        private bool IsWindowNearby( int x, int y )
         {
             return _maze
                     .Cells
                     .OfType<Window>()
                     .Any(cell => Math.Sqrt(Math.Pow(cell.X - x, 2) + Math.Pow(cell.Y - y, 2)) < 5);
         }
-        private T GetRandom<T>(List<T> cells)
+        private T GetRandom<T>( List<T> cells )
         {
             return MazeHelper.GetRandom(_maze, cells);
         }
@@ -374,7 +375,7 @@ namespace MazeCore.Builders
                 ? groundCellsWithTwoWallNeighborhood.Count
                 : numberTeleportCellsInMaze;
 
-            for (var i = 1; i <= countIteration; i++)
+            for( var i = 1 ; i <= countIteration ; i++ )
             {
                 var randomCell = GetRandom(groundCellsWithTwoWallNeighborhood);
 
@@ -396,24 +397,36 @@ namespace MazeCore.Builders
             var magic = new Magic(magicX, magicY, _maze);
             _maze[magic.X, magic.Y] = magic;
         }
+        private void BuildLamer( int lamerCount = 2 )
+        {
+            var grounds = _maze.Cells.OfType<Ground>().ToList();
+            for( int i = 0 ; i < lamerCount ; i++ )
+            {
+                var ground = GetRandom(grounds);
+                if( ground is null ) { break; }
+                var lamer = new Lamer(ground.X, ground.Y, _maze);
+                _maze.Npcs.Add(lamer);
+                grounds.Remove(ground);
+            }
+        }
 
         private void BuildChest()
         {
             var groundsWithThreeWalls = _maze
                 .Cells
                 .OfType<Ground>()
-                .Where(cell => 
+                .Where(cell =>
                 GetNearCells<Wall>(cell).Count == 3)
                 .ToList();
-            
-            for (var i = 0; i < groundsWithThreeWalls.Count; i++)
+
+            for( var i = 0 ; i < groundsWithThreeWalls.Count ; i++ )
             {
                 var ground = groundsWithThreeWalls[i];
                 _maze[ground.X, ground.Y] = new Chest(ground.X, ground.Y, _maze);
             }
         }
 
-        private List<T> GetSimilarCellOnAxisX<T>(BaseCell cell)
+        private List<T> GetSimilarCellOnAxisX<T>( BaseCell cell )
             where T : BaseCell
         {
             return _maze
