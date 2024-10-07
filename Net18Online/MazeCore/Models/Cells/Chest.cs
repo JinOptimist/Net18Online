@@ -1,11 +1,4 @@
-﻿using MazeCore.Models;
-using MazeCore.Models.Cells.Character;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Channels;
-using System.Threading.Tasks;
+﻿using MazeCore.Models.Cells.Character;
 
 namespace MazeCore.Models.Cells
 {
@@ -14,6 +7,8 @@ namespace MazeCore.Models.Cells
         public Chest(int x, int y, Maze maze) : base(x, y, maze)
         {
         }
+
+        private bool IsChestOpen = false;
 
         public override char Symbol => 'B';
 

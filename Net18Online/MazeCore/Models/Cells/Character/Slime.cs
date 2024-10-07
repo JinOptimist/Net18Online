@@ -1,9 +1,4 @@
 ﻿using MazeCore.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MazeCore.Models.Cells.Character
 {
@@ -15,7 +10,7 @@ namespace MazeCore.Models.Cells.Character
 
         public override char Symbol => '&';
 
-        public override void InteractWithCell(BaseCharacter character)
+        public override void InteractWithCell(IBaseCharacter character)
         {
             character.Health --;
             AddEventInfo($"The Slime burned you. You'r health is {character.Health}");
