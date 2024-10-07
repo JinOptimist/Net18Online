@@ -59,7 +59,7 @@ namespace MazeCoreTest.Models.Cells
 
             // Act
             _snake.Move();
-            Console.WriteLine($"Snake stop move at X: {_snake.X}, Y: {_snake.Y}");
+            
 
             // Assert
             Assert.That(
@@ -79,11 +79,11 @@ namespace MazeCoreTest.Models.Cells
             // Prepare
             var cellToStep = new Ground(_snake.X + 1, _snake.Y, _mazeMock.Object);
             _mazeMock.Object.Cells.Add(cellToStep);
-            Console.WriteLine($"Snake move start at X: {_snake.X}, Y: {_snake.Y}");
+            
 
             // Act
             _snake.Move();
-            Console.WriteLine($"Snake stop move at X: {_snake.X}, Y: {_snake.Y}");
+           
 
             // Assert
             Assert.That(
