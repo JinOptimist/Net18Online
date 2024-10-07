@@ -2,6 +2,7 @@
 using MazeCore.Models;
 using MazeCore.Models.Cells;
 using MazeCore.Models.Cells.Character;
+using System.Reflection;
 
 namespace MazeCore.Builders
 {
@@ -403,7 +404,12 @@ namespace MazeCore.Builders
             for( int i = 0 ; i < lamerCount ; i++ )
             {
                 var ground = GetRandom(grounds);
-                if( ground is null ) { break; }
+                if( ground is null )
+                {
+                    _maze.HistoryOfEvents.Add("No Grounds to build Lamer");
+                    break;
+                }
+
                 var lamer = new Lamer(ground.X, ground.Y, _maze);
                 _maze.Npcs.Add(lamer);
                 grounds.Remove(ground);
