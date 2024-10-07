@@ -25,9 +25,10 @@ namespace MazeCore.Models.Cells
 
             var randomNumberToDetermineAnEvent = Random.Next(1, 100);
 
+            bool IsChestOpen = false;
+
             if (IsChestOpen == false)
             {
-
                 if (randomNumberToDetermineAnEvent <= 40)
                 {
                     Maze.Hero.Coins++;

@@ -15,7 +15,7 @@ namespace MazeCore.Models.Cells.Character
 
         public override char Symbol => '&';
 
-        public override void InteractWithCell(BaseCharacter character)
+        public override void InteractWithCell(IBaseCharacter character)
         {
             character.Health --;
             AddEventInfo($"The Slime burned you. You'r health is {character.Health}");
