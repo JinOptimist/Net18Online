@@ -16,7 +16,7 @@ namespace SimulatorOfPrinting.Models
             StopTimer();
         }
 
-        public void BotPrintText();
+        private void BotPrintText();
         {
             var writeText = new TextProvider();
             writeText.GetText();
@@ -26,7 +26,7 @@ namespace SimulatorOfPrinting.Models
             Console.WriteLine("Typing text that your see:");
             Console.WriteLine(writeText);
         }
-        public void GamerEnterThisText()
+        private void GamerEnterThisText()
         {
             Console.CursorVisible = false;
             TypingIsCorrect;
