@@ -1,5 +1,4 @@
-
-namespace Net18Online.PrintSimulator.Models.Enum
+namespace SimulatorOfPrinting.Models.Enum
 {
     public enum PrintText
     {

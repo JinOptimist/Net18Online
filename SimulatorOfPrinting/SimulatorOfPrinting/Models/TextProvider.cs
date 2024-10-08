@@ -1,12 +1,13 @@
 using System;
+using System.Threading;
 
-using Net18Online.PrintSimulator.Models.Enum;
+using SimulatorOfPrinting.Models.Enum;
 
-namespace Net18Online.PrintSimulator.Models
+namespace SimulatorOfPrinting.Models
 {
-    public static class TextProvider()
+    public class TextProvider
     {
-        private static readonly Dictionary<PrintText, string> texts = new Dictionary<PrintText, string>
+        private readonly Dictionary<PrintText, string> texts = new Dictionary<PrintText, string>
         {
             { PrintText.Text1, "The quick brown fox jumps over the lazy dog." },
             { PrintText.Text2, "In a world where technology is constantly evolving, it's important to keep up with the latest trends." },
@@ -20,32 +21,32 @@ namespace Net18Online.PrintSimulator.Models
             { PrintText.Text10, "Traveling opens your mind to diverse cultures and experiences. Each destination has its own unique charm, from bustling cities to serene landscapes. Plan your next adventure and explore what the world has to offer." }
         };
 
-        public static string GetText(PrintText text)
+        public string GetText(PrintText text)
         {
             Random random = new Random();
-            int index = random.Next();
+            PrintText selectedText = (PrintText)random.Next(0, Enum.GetNames(typeof(PrintText)).Length);
             switch(index)
             {
                 case 0: Console.WriteLine(TextProvider.GetText(PrintText.Text1));
-                return texts[text]; break;
+                return texts[text]; 
                 case 1: Console.WriteLine(TextProvider.GetText(PrintText.Text2));
-                return texts[text]; break;
+                return texts[text]; 
                 case 2: Console.WriteLine(TextProvider.GetText(PrintText.Text3));
-                return texts[text]; break;
+                return texts[text]; 
                 case 3: Console.WriteLine(TextProvider.GetText(PrintText.Text4));
-                return texts[text]; break;
+                return texts[text]; 
                 case 4: Console.WriteLine(TextProvider.GetText(PrintText.Text5));
-                return texts[text]; break;
+                return texts[text]; 
                 case 5: Console.WriteLine(TextProvider.GetText(PrintText.Text6));
-                return texts[text]; break;
+                return texts[text]; 
                 case 6: Console.WriteLine(TextProvider.GetText(PrintText.Text7));
-                return texts[text]; break;
+                return texts[text]; 
                 case 7: Console.WriteLine(TextProvider.GetText(PrintText.Text8));
-                return texts[text]; break;
+                return texts[text]; 
                 case 8: Console.WriteLine(TextProvider.GetText(PrintText.Text9));
-                return texts[text]; break;
+                return texts[text]; 
                 case 9: Console.WriteLine(TextProvider.GetText(PrintText.Text10));
-                return texts[text]; break;
+                return texts[text]; 
                 default: return;
             }
         }
