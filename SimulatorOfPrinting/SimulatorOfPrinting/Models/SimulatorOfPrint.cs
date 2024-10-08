@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Diagnostics;
+using System.Timers;
 
 using SimulatorOfPrinting.Models;
 
@@ -16,7 +17,7 @@ namespace SimulatorOfPrinting.Models
             StopTimer();
         }
 
-        private void BotPrintText();
+        private void BotPrintText()
         {
             var writeText = new TextProvider();
             writeText.GetText();
@@ -26,15 +27,18 @@ namespace SimulatorOfPrinting.Models
             Console.WriteLine("Typing text that your see:");
             Console.WriteLine(writeText);
         }
+
         private void GamerEnterThisText()
         {
             Console.CursorVisible = false;
-            TypingIsCorrect;
+            TypingIsCorrect();
         }
 
         private void TypingIsCorrect()
         {
             var currentIndex = 0;
+            var writeText = new TextProvider().GetText();
+
             while (currentIndex < writeText.Length)
             {
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
@@ -51,6 +55,7 @@ namespace SimulatorOfPrinting.Models
                 }
             }
         }
+
         private void HighlightError(string writeText, int currentIndex)
         {
             Console.BackgroundColor = ConsoleColor.Red;
@@ -60,24 +65,22 @@ namespace SimulatorOfPrinting.Models
             Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
         }
 
-        private void ShowSpeed()
-        {
-            Console.WriteLine($"Timer finish and number of second: {stopwatch.Elapsed.TotalSeconds}");
-        }
-
         static Stopwatch stopwatch = new Stopwatch();
-        static Timer timer = new Timer(1000);
         static void StartTimer()
         {
             stopwatch.Start();
-            timer.Start();
         }
 
         static void StopTimer()
         {
             stopwatch.Stop();
-            timer.Stop();
             ShowSpeed();
+        }
+        
+        static void ShowSpeed()
+        {
+            TimeSpan elapsed = stopwatch.Elapsed;
+            Console.WriteLine($"Timer finish: {elapsed.TotalSeconds} seconds ");
         }
     }
 }
