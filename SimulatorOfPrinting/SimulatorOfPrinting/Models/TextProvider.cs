@@ -22,10 +22,10 @@ namespace SimulatorOfPrinting.Models
             "Plan your next adventure and explore what the world has to offer."
         };
 
-        public string GetText(PrintText text)
+        public string GetText()
         {
             Random random = new Random();
-            var randomIndex = random.Next(texts.Length);
+            var randomText = random.Next(texts.Length);
             return texts[randomText];
         }
     }
