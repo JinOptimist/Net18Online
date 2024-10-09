@@ -305,8 +305,8 @@
         }
 
         public int ReadNumber(string message)
-        {
-            int number;
+        {         
+            int number; // Required int !!!
             while (true)
             {
                 Console.WriteLine(message);
