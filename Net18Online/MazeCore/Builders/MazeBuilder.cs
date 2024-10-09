@@ -149,6 +149,11 @@ namespace MazeCore.Builders
             )
             .ToList();
 
+            if (!grounds.Any())
+            {
+                return;
+            }
+
             for (int i = 0; i < orcCount; i++)
             {
                 var ground = GetRandom(grounds);

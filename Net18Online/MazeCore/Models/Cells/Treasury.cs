@@ -10,7 +10,7 @@ namespace MazeCore.Models.Cells
 {
     public class Treasury : BaseCell
     {
-        public Treasury(int x, int y, Maze maze) : base(x, y, maze)
+        public Treasury(int x, int y, IMaze maze) : base(x, y, maze)
         {
         }
 
