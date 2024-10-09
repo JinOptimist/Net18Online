@@ -18,6 +18,7 @@ namespace SimulatorOfPrinting.Models
             StartTimer();
             GamerEnterThisText();
             StopTimer();
+            ShowSpeed();
         }
 
         private void BotPrintText()
@@ -79,7 +80,6 @@ namespace SimulatorOfPrinting.Models
         static void StopTimer()
         {
             stopwatch.Stop();
-            ShowSpeed();
         }
     }
 }
