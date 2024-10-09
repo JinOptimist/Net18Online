@@ -12,6 +12,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MazeCoreTest", "MazeCoreTest\MazeCoreTest.csproj", "{1386F62D-1359-46B6-91B0-A3A492BBA07C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuessTheNumberGame", "GuessTheNumberGame\GuessTheNumberGame.csproj", "{098D1705-6A64-4BA6-AA64-F999BEFE23D0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToe", "TicTacToe\TicTacToe.csproj", "{1257091A-569A-43A5-887D-E12368D19E2C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BullsAndCows", "BullsAndCows\BullsAndCows.csproj", "{D390A2CA-52CA-49B9-B3CD-4C548A499CCD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,14 @@ Global
 		{098D1705-6A64-4BA6-AA64-F999BEFE23D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{098D1705-6A64-4BA6-AA64-F999BEFE23D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{098D1705-6A64-4BA6-AA64-F999BEFE23D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1257091A-569A-43A5-887D-E12368D19E2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1257091A-569A-43A5-887D-E12368D19E2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1257091A-569A-43A5-887D-E12368D19E2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1257091A-569A-43A5-887D-E12368D19E2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D390A2CA-52CA-49B9-B3CD-4C548A499CCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D390A2CA-52CA-49B9-B3CD-4C548A499CCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D390A2CA-52CA-49B9-B3CD-4C548A499CCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D390A2CA-52CA-49B9-B3CD-4C548A499CCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
