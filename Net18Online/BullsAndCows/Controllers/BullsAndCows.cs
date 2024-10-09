@@ -141,7 +141,7 @@ namespace BullsAndCows.Controllers
 
         private string CountOfBullsAndCows(int attempt, int targetNumber)
         {
-            
+            Console.ForegroundColor = ConsoleColor.White;
             var attemptStr = attempt.ToString();
             var targetStr = targetNumber.ToString();
 
