@@ -9,8 +9,11 @@ namespace SimulatorOfPrinting.Models
 {
     public class SimulatorOfPrint
     {
+        private string _currentText;
         public void Start() 
         {
+            var textProvider = new TextProvider();
+            _currentText = textProvider.GetText();
             BotPrintText();
             StartTimer();
             GamerEnterThisText();
@@ -19,30 +22,25 @@ namespace SimulatorOfPrinting.Models
 
         private void BotPrintText()
         {
-            var writeText = new TextProvider();
-            writeText.GetText();
-
             Console.WriteLine("Typing Simulator ");
             Console.WriteLine("-------------------");
             Console.WriteLine("Typing text that your see:");
-            Console.WriteLine(writeText);
+            Console.WriteLine(_currentText);
         }
-
         private void GamerEnterThisText()
         {
-            Console.CursorVisible = false;
+            Console.CursorVisible = true;
             TypingIsCorrect();
         }
 
         private void TypingIsCorrect()
         {
             var currentIndex = 0;
-            var writeText = new TextProvider().GetText();
 
-            while (currentIndex < writeText.Length)
+            while (currentIndex < _currentText.Length)
             {
                 ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                if (keyInfo.KeyChar == writeText[currentIndex])
+                if (keyInfo.KeyChar == _currentText[currentIndex])
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.Write(keyInfo.KeyChar);
@@ -51,36 +49,37 @@ namespace SimulatorOfPrinting.Models
                 }
                 else
                 {
-                    HighlightError(writeText, currentIndex);
+                    HighlightError(currentIndex);
                 }
             }
         }
-
-        private void HighlightError(string writeText, int currentIndex)
+        private void HighlightError(int currentIndex)
         {
             Console.BackgroundColor = ConsoleColor.Red;
-            Console.Write(writeText[currentIndex]);
-            Thread.Sleep(500);
+            Console.Write(_currentText[currentIndex]);
+            Thread.Sleep(100);
             Console.ResetColor();
             Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
         }
 
+        static void ShowSpeed()
+        {
+            TimeSpan elapsed = stopwatch.Elapsed;
+            Console.WriteLine($"Timer finish: {elapsed.TotalSeconds} seconds ");
+        }
+
         static Stopwatch stopwatch = new Stopwatch();
+        
         static void StartTimer()
         {
             stopwatch.Start();
+
         }
 
         static void StopTimer()
         {
             stopwatch.Stop();
             ShowSpeed();
-        }
-        
-        static void ShowSpeed()
-        {
-            TimeSpan elapsed = stopwatch.Elapsed;
-            Console.WriteLine($"Timer finish: {elapsed.TotalSeconds} seconds ");
         }
     }
 }
