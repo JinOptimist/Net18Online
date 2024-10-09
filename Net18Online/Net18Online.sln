@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MazeCoreTest", "MazeCoreTes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BullsAndCows", "BullsAndCows\BullsAndCows.csproj", "{D390A2CA-52CA-49B9-B3CD-4C548A499CCD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeaBattle", "SeaBattle\SeaBattle.csproj", "{D6768987-DB6C-4A8F-BF92-7FC8FE1BDC19}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{D390A2CA-52CA-49B9-B3CD-4C548A499CCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D390A2CA-52CA-49B9-B3CD-4C548A499CCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D390A2CA-52CA-49B9-B3CD-4C548A499CCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6768987-DB6C-4A8F-BF92-7FC8FE1BDC19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6768987-DB6C-4A8F-BF92-7FC8FE1BDC19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6768987-DB6C-4A8F-BF92-7FC8FE1BDC19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6768987-DB6C-4A8F-BF92-7FC8FE1BDC19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
