@@ -8,7 +8,7 @@ namespace MazeCore.Models.Cells
         public override char Symbol => '^';
         private Random _random = new();
 
-        public Teleport(int x, int y, Maze maze) : base(x, y, maze)
+        public Teleport(int x, int y, IMaze maze) : base(x, y, maze)
         {
         }
 
