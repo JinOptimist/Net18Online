@@ -29,6 +29,7 @@ namespace MazeCore.Builders
             BuilPit();
             BuilWolfs();
             BuildChest();
+            BuildMagic();
 
             // Build Npc
             BuildGoblins();
@@ -44,6 +45,7 @@ namespace MazeCore.Builders
             BuildKing();
             BuildSlime();
             BuildOrc();
+            BuildLamer();
 
             // Build Hero
             BuildHero();
@@ -123,7 +125,7 @@ namespace MazeCore.Builders
         {
             var walls = _maze.Cells.OfType<Wall>().ToList();
             var wall = GetRandom(walls);
-            
+
             var king = new King(wall.X, wall.Y, _maze);
             _maze.Npcs.Add(king);
         }
@@ -408,15 +410,50 @@ namespace MazeCore.Builders
             }
         }
 
+        private void BuildMagic()
+        {
+            var magics = _maze.Cells
+                .OfType<Ground>()
+                .ToList();
+
+            var randomMagic = GetRandom(magics);
+
+            var magicX = randomMagic.X;
+            var magicY = randomMagic.Y;
+            var magic = new Magic(magicX, magicY, _maze);
+            _maze[magic.X, magic.Y] = magic;
+        }
+        private void BuildLamer(int lamerCount = 2)
+        {
+            var grounds = _maze
+                .Cells
+                .OfType<Ground>()
+                .ToList();
+
+            for (int i = 0; i < lamerCount; i++)
+            {
+                var ground = GetRandom(grounds);
+                if (ground is null)
+                {
+                    _maze.HistoryOfEvents.Add("No Grounds to build Lamer");
+                    break;
+                }
+
+                var lamer = new Lamer(ground.X, ground.Y, _maze);
+                _maze.Npcs.Add(lamer);
+                grounds.Remove(ground);
+            }
+        }
+
         private void BuildChest()
         {
             var groundsWithThreeWalls = _maze
                 .Cells
                 .OfType<Ground>()
-                .Where(cell => 
+                .Where(cell =>
                 GetNearCells<Wall>(cell).Count == 3)
                 .ToList();
-            
+
             for (var i = 0; i < groundsWithThreeWalls.Count; i++)
             {
                 var ground = groundsWithThreeWalls[i];
