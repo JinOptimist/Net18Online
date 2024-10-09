@@ -4,11 +4,11 @@ namespace SeaBattle.Model
 {
     public class Player
     {
-        public Battleground battlegroundPlayer { get; set; }
+        public Battleground BattlegroundPlayer { get; set; }
         private int _id;
         public Player(Battleground battleground, int id)
         {
-            battlegroundPlayer = battleground;
+            BattlegroundPlayer = battleground;
             _id = id;
         }
         public bool IsShooting(int whoShooting)
@@ -17,13 +17,13 @@ namespace SeaBattle.Model
         }
         public int Shoot(Player opponent, int x, int y)
         {
-            if (opponent.battlegroundPlayer[x, y] is Ship)
+            if (opponent.BattlegroundPlayer[x, y] is Ship)
             {
-                opponent.battlegroundPlayer[x, y] = new Hit(x, y, opponent.battlegroundPlayer);
+                opponent.BattlegroundPlayer[x, y] = new Hit(x, y, opponent.BattlegroundPlayer);
                 return _id;
             }
 
-            opponent.battlegroundPlayer[x, y] = new Miss(x, y, opponent.battlegroundPlayer);
+            opponent.BattlegroundPlayer[x, y] = new Miss(x, y, opponent.BattlegroundPlayer);
             return opponent._id;
         }
     }

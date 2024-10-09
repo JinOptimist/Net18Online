@@ -28,7 +28,7 @@ namespace SeaBattle
             _secondPlayer = new Player(_theLandOfTheSecondPlayer, (int)PlayerEnum.Second);
 
             Console.Clear();
-            _drawer.DrawBatlleground(_firstPlayer.battlegroundPlayer, _secondPlayer.battlegroundPlayer);
+            _drawer.DrawBatlleground(_firstPlayer.BattlegroundPlayer, _secondPlayer.BattlegroundPlayer);
             _nowShootingPlayer = _random.Next(1, 3);
 
             while (_theLandOfTheFirstPlayer.Cells.OfType<Ship>().Any()
@@ -45,7 +45,7 @@ namespace SeaBattle
 
                     _nowShootingPlayer = _firstPlayer.Shoot(_secondPlayer, _shootForX, _shootForY);
 
-                    _drawer.DrawBatlleground(_firstPlayer.battlegroundPlayer, _secondPlayer.battlegroundPlayer);
+                    _drawer.DrawBatlleground(_firstPlayer.BattlegroundPlayer, _secondPlayer.BattlegroundPlayer);
 
                     continue;
                 }
@@ -58,7 +58,7 @@ namespace SeaBattle
 
                 _nowShootingPlayer = _secondPlayer.Shoot(_firstPlayer, _shootForX, _shootForY);
 
-                _drawer.DrawBatlleground(_firstPlayer.battlegroundPlayer, _secondPlayer.battlegroundPlayer);
+                _drawer.DrawBatlleground(_firstPlayer.BattlegroundPlayer, _secondPlayer.BattlegroundPlayer);
             }
             Console.WriteLine($"Win {_nowShootingPlayer} player!");
         }
