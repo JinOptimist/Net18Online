@@ -13,7 +13,7 @@ namespace MazeCore.Models.Cells.Character
 
         public override void InteractWithCell(IBaseCharacter character)
         {
-            var ChanceForDifferentAttacksAtack = _randomAtack.Next(1, 3);
+            var ChanceForDifferentAttacksAtack = _randomAtack.Next(0, 4);
             if (ChanceForDifferentAttacksAtack == 1){
                 character.Health--;
                 AddEventInfo($"Orc fight back to {character.Health}");

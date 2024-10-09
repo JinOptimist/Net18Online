@@ -144,8 +144,8 @@ namespace MazeCore.Builders
             var grounds = _maze.Cells
             .OfType<Ground>()
             .Where(ground =>
-                   _maze[ground.X - 1, ground.Y] is Treasury && _maze[ground.X + 1, ground.Y] is Treasury
-                || _maze[ground.X, ground.Y - 1] is Treasury && _maze[ground.X, ground.Y + 1] is Treasury
+                   _maze[ground.X - 1, ground.Y] is Treasury || _maze[ground.X + 1, ground.Y] is Treasury
+                || _maze[ground.X, ground.Y - 1] is Treasury || _maze[ground.X, ground.Y + 1] is Treasury
             )
             .ToList();
 
