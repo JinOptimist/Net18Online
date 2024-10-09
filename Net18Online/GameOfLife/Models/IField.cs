@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GameOfLife.Models.Cells;
 
-namespace GameOfLife
+namespace GameOfLife.Models
 {
-    internal class IField
+    public interface IField
     {
+        List<BaseCell> Cells { get; set; }
+        int Width { get; set; }
+        int Height { get; set; }
     }
 }

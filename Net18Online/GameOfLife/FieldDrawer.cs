@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using GameOfLife.Models;
 namespace GameOfLife
 {
-    internal class FieldDrawer
+    public class FieldDrawer
     {
+        public void Draw(Field field)
+        {
+            Console.Clear();
+            Console.WriteLine($"Field has {field.Cells.Count} cells");
+        }
     }
 }

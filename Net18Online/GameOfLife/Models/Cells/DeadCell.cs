@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GameOfLife.Models.Cells
+﻿namespace GameOfLife.Models.Cells
 {
-    internal class DeadCell
+    public class DeadCell : BaseCell
     {
+        public DeadCell(int x, int y, IField field) : base(x, y, field)
+        {
+        }
+
+        public override char Symbol => 'O';
+        public override bool DeadOrAlive()
+        {
+            return false;
+        }
     }
 }

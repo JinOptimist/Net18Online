@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GameOfLife.Models.Cells;
 
 namespace GameOfLife.Models
 {
-    internal class GameField
+    public class Field
     {
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public List<BaseCell> Cells { get; set; } = new List<BaseCell>();
+        public Random Random { get; private set; } = new Random();
     }
 }

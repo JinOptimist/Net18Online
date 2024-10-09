@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GameOfLife.Models
+﻿namespace GameOfLife.Models.Cells
 {
-    internal class BaseCell
+    public abstract class BaseCell
     {
+        protected BaseCell(int x, int y, IField field)
+        {
+            X = x;
+            Y = y;
+            Field = field;
+        }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public abstract char Symbol { get; }
+        public abstract bool DeadOrAlive();
+
     }
 }

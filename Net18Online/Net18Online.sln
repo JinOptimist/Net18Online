@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Net18Online", "Net18Online\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MazeConsole", "MazeConsole\MazeConsole.csproj", "{4C9943FA-30D1-4324-B863-3A80BBDA449C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MazeCore", "MazeCore\MazeCore.csproj", "{27ECCC93-9846-4317-99E5-E367F3F13636}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MazeCore", "MazeCore\MazeCore.csproj", "{27ECCC93-9846-4317-99E5-E367F3F13636}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MazeCoreTest", "MazeCoreTest\MazeCoreTest.csproj", "{1386F62D-1359-46B6-91B0-A3A492BBA07C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MazeCoreTest", "MazeCoreTest\MazeCoreTest.csproj", "{1386F62D-1359-46B6-91B0-A3A492BBA07C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameOfLife", "GameOfLife\GameOfLife.csproj", "{3017216A-FBDC-4D61-8886-9E3DE8DA15A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{1386F62D-1359-46B6-91B0-A3A492BBA07C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1386F62D-1359-46B6-91B0-A3A492BBA07C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1386F62D-1359-46B6-91B0-A3A492BBA07C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3017216A-FBDC-4D61-8886-9E3DE8DA15A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3017216A-FBDC-4D61-8886-9E3DE8DA15A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3017216A-FBDC-4D61-8886-9E3DE8DA15A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3017216A-FBDC-4D61-8886-9E3DE8DA15A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
