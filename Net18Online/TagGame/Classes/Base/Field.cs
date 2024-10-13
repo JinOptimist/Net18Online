@@ -49,11 +49,11 @@
                 }
             }
         }
+
         public int[,] GetTags()
         {
             return _tags;
         }
-
 
         public void ChangePositions(int newPositionX, int newPositionY)
         {

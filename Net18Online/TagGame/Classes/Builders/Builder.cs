@@ -15,7 +15,7 @@ namespace TagGame.Classes.Builders
 
         public void FieldBuild()
         {
-            _field = new Field(4);
+            _field = new Field(3);
         }
 
         public void FieldUpdate()

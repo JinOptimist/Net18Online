@@ -102,9 +102,7 @@ namespace TagGame.Classes.ConsoleDrawer
                     Console.WriteLine("Congrats");
                     return;
                 }
-
             }
-
         }
 
         public bool CanGo(int positionX, int positionY)
