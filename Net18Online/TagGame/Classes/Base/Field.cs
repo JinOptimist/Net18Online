@@ -93,8 +93,8 @@
 
         public bool IsSolvable(int[,] tags)
         {
-            int[] flatTags = tags.Cast<int>().ToArray();
-            int inversionCount = 0;
+            var flatTags = tags.Cast<int>().ToArray();
+            var inversionCount = 0;
 
             for (int i = 0; i < flatTags.Length; i++)
             {

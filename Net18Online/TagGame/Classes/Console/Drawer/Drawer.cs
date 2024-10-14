@@ -11,7 +11,7 @@ namespace TagGame.Classes.ConsoleDrawer
             {
                 for (var masY = 0; masY < field.GetTags().GetLength(1); masY++)
                 {
-                    if (Convert.ToInt32(field.GetTags()[masX, masY]) != 0)
+                    if (field.GetTags()[masX, masY] != 0)
                     {
                         Console.Write(field.GetTags()[masX, masY] + " ", 2);
                         continue;
