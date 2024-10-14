@@ -1,7 +1,5 @@
 ﻿using GameOfLife;
-using GameOfLife.Builder;
+using GameOfLife.Models;
 
-var fieldBuilder = new FieldBuilder();
-var fieldDrawer = new FieldDrawer();
-
-var field = fieldBuilder.Build(20, 20);
+var start = new Field();
+start.StartGame(80, 80);
