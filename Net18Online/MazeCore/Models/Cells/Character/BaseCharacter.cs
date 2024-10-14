@@ -10,6 +10,7 @@
 
         public int Coins { get; set; }
 
+        public int Magic { get; set; }
 
         public override bool TryStep(IBaseCharacter character)
         {
