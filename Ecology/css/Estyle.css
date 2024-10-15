@@ -1,0 +1,47 @@
+body{
+	background-image: url("images/background.jpg");
+	/*filter: blur(5px);*/
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+header.head-page {
+	display: flex;
+	justify-content: space-between;
+    background-color: rgb(224, 245, 171) !important;
+	height: 80px;
+	align-items: center;
+	font-size: 25px;
+	border-bottom: 3px #05511e solid;
+}
+
+.blurred{
+	filter: blur(5px);
+}
+
+header .logotip {
+	display: flex;
+	align-items: center;
+}
+header .logotip img {
+	margin-left: 10px;
+	max-height: 50px;
+    border-radius: 50px;
+	border: 2px solid rgb(168, 225, 81);
+}
+
+.block-of-profile {
+	align-items: center;
+	margin-right: 5px;
+}
+
+.block-of-profile .defaltavatar {
+	margin-left: 10px;
+	max-height: 50px;
+    border-radius: 50px;
+}
+.block-of-profile .log-sing {
+	margin-left: 20px;
+	display: block;
+	height: 20px;
+	width: 30px;
+}
