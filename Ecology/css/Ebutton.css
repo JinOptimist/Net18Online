@@ -1,47 +1,61 @@
 .map-button {
 	box-shadow: inset 0px 1px 3px 0px #91b8b3;
-	background: linear-gradient(to bottom, #e5c214 5%, #f1ad0d 100%);
-	background-color: #768d87;
+	/*background: linear-gradient(to bottom, #e5c214 5%, #f1ad0d 100%);
+	background-color: #768d87;*/
 	border-radius: 13px;
 	border: 1px solid #695e56;
 	display: inline-block;
 	cursor: pointer;
 	color: #ffffff;
 	font-family: Arial;
-	padding: 10px 13px;
+	padding: 14px 18px;
 	text-decoration: none;
 	text-shadow: 0px -1px 0px #19a63d;
 }
 .map-button:hover {
-	background: linear-gradient(to bottom, #eef917 5%, #fad91e 100%);
+	background: linear-gradient(to bottom,#efc8f8 5%, #f7d0ec 100%);
 	background-color: #fdf632;
+}
+.map-button:hover::after{
+	content: "map";
+	display: flex;
+	align-items: center;
+	color: rgb(193, 44, 44);
 }
 .map-button:active {
 	position: relative;
 	top: 2px;
 }
+
 .chat-button {
 	box-shadow: inset 0px 1px 3px 0px #91b8b3;
-	background: linear-gradient(to bottom, #62f445 5%, #74d459 100%);
-	background-color: #768d87;
+	/*background: linear-gradient(to bottom, #62f445 5%, #74d459 100%);
+	background-color: #768d87;*/
 	border-radius: 13px;
 	border: 1px solid #566963;
 	display: inline-block;
 	cursor: pointer;
 	color: #ffffff;
 	font-family: Arial;
-	padding: 10px 13px;
+	padding: 14px 18px;
 	text-decoration: none;
 	text-shadow: 0px -1px 0px #2b665e;
 }
 .chat-button:hover {
-	background: linear-gradient(to bottom, #55ff00 5%, #00ff15 100%);
-	background-color: #6c7c7c;
+	background: linear-gradient(to bottom,#efc8f8 5%, #f7d0ec 100%);
+	background-color: #fdf632;
+}
+.chat-button:hover::after{
+	content: "chat";
+	display: flex;
+	align-items: center;
+	color: rgb(193, 44, 44);
 }
 .chat-button:active {
 	position: relative;
 	top: 2px;
 }
+
 .calculator-button {
 	box-shadow: inset 0px 1px 3px 0px #91b8b3;
 	/*background-image: scr="Ecology/images/calc.JPG";
@@ -52,9 +66,9 @@
 	cursor: pointer;
 	color: #ffffff;
 	font-family: Arial;
-	width: 58px;
-	height: 38px;
-	padding: 10px 13px;
+	/*width: 58px;
+	height: 38px;*/
+	padding: 14px 18px;
 	text-decoration: none;
 	text-shadow: 0px -1px 0px #19a63d;
 }
