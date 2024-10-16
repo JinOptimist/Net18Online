@@ -99,7 +99,7 @@ section {
     margin: 10px 0; 
 }
 
-.news-item img, .service-type-item img {
+.news-item img {
     width: 150px; 
     height: 150px;
     object-fit: cover; 
@@ -139,14 +139,31 @@ footer {
     padding: 15px; 
     border-radius: 8px; 
     text-align: center; 
-    margin: 10px; /* Отступы для предотвращения наложения */
-    width: 180px; 
-    height: 220px; 
+    margin: 10px; 
+    width: 220px;
+    height: 260px; 
     display: flex; /* Flexbox для центрирования содержимого */
     flex-direction: column; 
     align-items: center; 
     justify-content: center; 
     overflow: hidden; /* Скрыть выходящие за границы элементы */
+}
+
+.service-content img {
+    width: 150px; 
+    height: 150px;
+    object-fit: cover; 
+    border-radius: 8px; 
+}
+
+.service-type-item h3 {
+    font-size: 1.2em; 
+    font-weight: bold; 
+}
+
+.service-type-item p {
+    font-size: 0.9em; /* Установите размер шрифта для абзаца чуть меньше, чем для заголовка */
+    margin-top: 5px; 
 }
 
 .section-title {
