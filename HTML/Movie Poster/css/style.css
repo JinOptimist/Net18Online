@@ -1,0 +1,105 @@
+header.page-header {
+	display: flex;
+	justify-content: space-between;
+	padding: 0 16px;
+	height: 50px;
+	align-items: center;
+	font-size: 25px;
+	border-bottom: 1px #000000 solid;
+}
+
+header .logo {
+	display: flex;
+	align-items: center;
+}
+
+header .logo img {
+	max-height: 50px;
+}
+
+header .name {
+	text-transform: uppercase;
+}
+
+.menu-plus-content {
+	display: flex;
+}
+
+.profile-block {
+	display: flex;
+	align-items: center;
+	margin-right: 5px;
+}
+
+.profile-block .logout {
+	height: 40px;
+	width: 50px;
+}
+
+.menu {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	border-bottom: 1px #000000 solid;
+}
+
+.kinds-of-films {
+	display: flex;
+	align-items: center;
+	width: auto !important;
+}
+
+.menu a {
+	margin: 5px;
+	height: 30px;
+	width: 90px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.movies {
+	display: flex;
+	gap: 20px;
+	padding: 0 16px;
+	height: 300px;
+}
+
+.movie {
+	margin: 10px;
+	height: 250px;
+	width: 150px;
+}
+
+.movie .name {
+	height: 40px;
+	display: flex;
+	justify-content: left;
+}
+
+.movie .image-container {
+	height: auto;
+	display: flex;
+	align-items: flex-end;
+}
+
+.movie .image-container img {
+	margin: auto;
+	width: 150px;
+
+}
+
+.movie .additional-info {
+	margin-top: 10px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.movie .additional-info .tag {
+	border: 3px #290c73 solid;
+	display: inline-block;
+	border-radius: 5px;
+	margin: 3px;
+	padding: 3px;
+}
