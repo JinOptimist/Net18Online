@@ -1,0 +1,43 @@
+/* From Uiverse.io by yaasiinaxmed */
+.product-button {
+  --color: #ff7300;
+  font-family: inherit;
+  display: inline-block;
+  width: 6em;
+  height: 2.6em;
+  line-height: 2.5em;
+  overflow: hidden;
+  cursor: pointer;
+  margin-left: 16%;
+  font-size: 17px;
+  z-index: 1;
+  color: var(--color);
+  border: 2px solid var(--color);
+  border-radius: 6px;
+  position: relative;
+}
+
+.product-button::before {
+  position: absolute;
+  content: "";
+  background: var(--color);
+  width: 150px;
+  height: 200px;
+  z-index: -1;
+  border-radius: 50%;
+}
+
+.product-button:hover {
+  color: white;
+}
+
+.product-button:before {
+  top: 100%;
+  left: 100%;
+  transition: 0.3s all;
+}
+
+.product-button:hover::before {
+  top: -30px;
+  left: -30px;
+}

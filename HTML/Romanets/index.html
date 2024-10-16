@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MaxWell Coffe</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/button.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <div class="logo">
+        <img src="images/coffeLogo.jpg" alt="logo" />
+      </div>
+      <div class="wraper">
+        <ul class="header-menu">
+          <li><a href="#">Каталог</a></li>
+          <li><a href="#">Кофе</a></li>
+          <li><a href="#">Пирожные</a></li>
+          <li><a href="#">Оборудование</a></li>
+          <li><a href="#">Отзывы</a></li>
+        </ul>
+      </div>
+      <div class="header-actions">
+        <div class="header-sign-up">
+          <a href="#">Sign Up</a>
+        </div>
+        <div class="header-search">
+          <div class="search-panel">
+            <input type="search" />
+          </div>
+          <div class="search-button">
+            <button><img src="images/search.png" alt="button" /></button>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="content">
+      <div class="catalog-filter">
+        <div class="menu">
+          <span class="catalog">Фильтры</span>
+          <div class="catalog-filter-item">
+            <span class="catalog-filter-subtitle"> Тип кофе </span>
+            <div class="catalog-filter-block">
+                <ul class="tags">
+                    <li>
+                      <input type="radio" id="latte" name="coffee-type" class="filter-radio" />
+                      <label for="latte">Latte</label>
+                    </li>
+                    <li>
+                      <input type="radio" id="americano" name="coffee-type" class="filter-radio" />
+                      <label for="americano">Americano</label>
+                    </li>
+                    <li>
+                      <input type="radio" id="raf" name="coffee-type" class="filter-radio" />
+                      <label for="raf">Raf</label>
+                    </li>
+                  </ul>
+            </div>
+          </div>
+          <div class="catalog-filter-item">
+            <span class="catalog-filter-subtitle"> Бренд </span>
+            <div class="catalog-filter-block">
+                <ul class="tags">
+                    <li>
+                      <input type="radio" id="breda" name="brend-type" class="filter-radio" />
+                      <label for="breda">Breda</label>
+                    </li>
+                    <li>
+                      <input type="radio" id="danesi" name="brend-type" class="filter-radio" />
+                      <label for="danesi">Danesi</label>
+                    </li>
+                    <li>
+                      <input type="radio" id="costadoro" name="brend-type" class="filter-radio" />
+                      <label for="costadoro">Costadoro</label>
+                    </li>
+                  </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="main-content">
+        <div class="product">
+          <div class="product-wrap">
+            <div class="product-img">
+              <a href="#"><img src="images/Americano.jpeg" alt="coffe" /></a>
+            </div>
+            <div class="product-content">
+              <span class="product-name"> Americano </span>
+              <span class="product-price"> 1,5 $</span>
+            </div>
+              <div class="product-bottom">
+                <button class="product-button">
+                  Купить
+                </button>
+              </div>
+          </div>
+        </div>
+        <div class="product">
+          <div class="product-wrap">
+            <div class="product-img">
+              <a href="#"><img src="images/raf.jpg" alt="coffe" /></a>
+            </div>
+            <div class="product-content">
+              <span class="product-name"> Raf </span>
+              <span class="product-price"> 2.5$</span>
+            </div>
+              <div class="product-bottom">
+                <button class="product-button">
+                  Купить
+                </button>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
