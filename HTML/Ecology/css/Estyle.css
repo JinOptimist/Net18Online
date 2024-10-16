@@ -1,3 +1,21 @@
+body{
+	background-image: url("../images/background.JPG");
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.map-button{
+  background-image: url(../images/map.jpg);
+  background-size: cover;
+}
+.chat-button{
+  background-image: url(../images/chat.jpg);
+  background-size: cover;
+}
+.calculator-button{
+  background-image: url(../images/calc.JPG);
+  background-size: cover;
+}
+
 header.head-page {
 	display: flex;
 	justify-content: space-between;
@@ -7,7 +25,6 @@ header.head-page {
 	font-size: 25px;
 	border-bottom: 3px #083503 solid;
 }
-
 
 header .logotip {
 	display: flex;
