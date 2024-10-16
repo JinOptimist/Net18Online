@@ -8,9 +8,6 @@ header.head-page {
 	border-bottom: 3px #083503 solid;
 }
 
-.blurred{
-	filter: blur(5px);
-}
 
 header .logotip {
 	display: flex;
