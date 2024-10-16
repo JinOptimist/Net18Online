@@ -1,3 +1,23 @@
-﻿<div class="text-center">
-    тут будут все девочки
+﻿@using WebPortalEverthing.Models.AnimeGirl
+@model List<GirlViewModel>
+@{
+    Layout = "~/Views/Shared/_LayoutAnime.cshtml";
+}
+
+<div class="girls">
+    @foreach (var girl in Model)
+    {
+        <div class="girl">
+            <div class="name">@girl.Name</div>
+            <div class="image-container">
+                <img src="@girl.ImageSrc" alt="girl" />
+            </div>
+            <div class="additional-info">
+                @foreach (var tag in girl.Tags)
+                {
+                    <span class="tag">@tag</span>
+                }
+            </div>
+        </div>
+    }
 </div>

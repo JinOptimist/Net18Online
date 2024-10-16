@@ -1,3 +1,22 @@
-﻿<div class="text-center">
-    Тут будет общая инфа про этот блок
+﻿@model WebPortalEverthing.Models.AnimeGirl.AnimeGirlIndexViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutAnime.cshtml";
+}
+
+<div class="main-info">
+    <div>
+        Привет @Model.Name @Model.Age
+        По минскому времени @Model.Hours часов @Model.Minutes минут @Model.Seconds секунд
+    </div>
+    <div>
+        Здесь много всего про аниме.
+        Например, вот <a href="/AnimeGirl/AllGirls">4 аниме девочки </a>
+    </div>
+    <div>
+        <a href="/AnimeGirl/AllGirls?count=10">10 аниме девочки </a>
+        <a href="/AnimeGirl/AllGirls?count=20">20 аниме девочки </a>
+        <a href="/AnimeGirl/AllGirls?count=50">50 аниме девочки </a>
+        <a href="/AnimeGirl/AllGirls?count=100">100 аниме девочки </a>
+    </div>
 </div>

@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Anime girl</title>
+    <link href="~/css/AnimeGirl/reset.css" rel="stylesheet" />
+    <link href="~/css/AnimeGirl/style.css" rel="stylesheet" />
+    <link href="~/css/AnimeGirl/button.css" rel="stylesheet" />
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo">
+            <img src="~/images/AnimeGirl/logo.jpg" alt="logo" />
+        </div>
+        <div class="name">anime girl</div>
+        <div class="profile-block">
+            <img src="~/images/AnimeGirl/avatar-default.webp" alt="" class="avatar" />
+            <button class="logout">L</button>
+        </div>
+    </header>
+    <div class="menu-plus-content">
+        <div class="menu custom-list smile">
+            <ul>
+                <li><a class="smile-button" href="/">Главная страница сайта</a></li>
+                <li><a class="smile-button" href="/AnimeGirl">Начальная страница аниме</a></li>
+                <li><a class="smile-button" href="/AnimeGirl/AllGirls">Все девочки</a></li>
+                <li><a class="smile-button" href="/AnimeGirl/Create">Создать</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            @RenderBody()
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+﻿@model WebPortalEverthing.Models.AnimeGirl.GirlCreationViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutAnime.cshtml";
+}
+
+<form method="post">
+    <div>
+        @Html.TextBoxFor(x => x.Name, new { placeholder = "Введи имя" })
+    </div>
+    <div>
+        @Html.TextBoxFor(x => x.Url, new { placeholder = "Введи путь к картинке" })
+    </div>
+    <button type="submit">Создать</button>
+</form>
