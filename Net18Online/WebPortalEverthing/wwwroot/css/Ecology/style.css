@@ -1,31 +1,18 @@
 body{
-	background-image: url("../images/background.JPG");
+	background-image: url("../../images/Ecology/background.JPG");
 	background-size: cover;
 	background-repeat: no-repeat;
 }
-.map-button{
-  background-image: url(../images/map.jpg);
-  background-size: cover;
-}
-.chat-button{
-  background-image: url(../images/chat.jpg);
-  background-size: cover;
-}
-.calculator-button{
-  background-image: url(../images/calc.JPG);
-  background-size: cover;
-}
+
 header.head-page {
 	display: flex;
 	justify-content: space-between;
-	background-color:rgb(220, 244, 187)!important;
+	background-color: rgb(231, 245, 210) !important;
 	height: 80px;
 	align-items: center;
 	font-size: 25px;
 	border-bottom: 3px #083503 solid;
 }
-
-
 header .logotip {
 	display: flex;
 	align-items: center;
@@ -41,7 +28,6 @@ header .logotip img {
 	align-items: center;
 	margin-right: 5px;
 }
-
 .block-of-profile .defaltavatar {
 	margin-left: 10px;
 	max-height: 50px;
