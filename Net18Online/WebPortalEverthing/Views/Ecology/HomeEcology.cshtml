@@ -1,0 +1,22 @@
+@using WebPortalEverthing.Models.Ecology
+
+@{
+    Layout ="~/Views/Shared/_LayoutEcology.cshtml";
+}
+
+<div class="advices">
+    @foreach (var advice in Model)
+    {
+        <div class="advice">
+            <div class="advice-image">
+                <img src="@advice.ImageSrc" alt="advice" />
+            </div>
+            <div class="advice-info">
+                @foreach (var text in advice.Texts)
+                {
+                    <span class="texts">@text</span>
+                }
+            </div>
+        </div>
+    }
+</div>
