@@ -5,11 +5,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using WebPortalEverthing.Models.Ecology;
 
 namespace WebPortalEverthing.Controllers
 {
     public class EcologyController : Controller
     {
+        // BAD. DO NOT USE THIS ON PROD
+        private static List<EcologyViewModel> ecologylViewModels = new List<EcologyViewModel>();
+
         /*private readonly ILogger<EcologyController> _logger;
 
         public EcologyController(ILogger<EcologyController> logger)
@@ -19,13 +23,28 @@ namespace WebPortalEverthing.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var model = new EcologyViewModel();
+            return View(model);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpGet]
+        public PartialViewResult LoadImages(int? count)
         {
-            return View("Error!");
+            ViewBag.Count = count;
+            return PartialView("_ImagesPartical");
+        }
+
+        [HttpPost]
+        public IActionResult Create(PostCreationViewModel viewModel)
+        {
+            var ecology = new EcologyViewModel
+            {
+                ImageSrc = viewModel.Url,
+                Texts = new List<string>(),
+            };
+            ecologylViewModels.Add(ecology);
+
+            return RedirectToAction("Ecology Edvices");
         }
     }
 }
