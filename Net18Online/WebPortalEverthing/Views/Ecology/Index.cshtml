@@ -1,26 +1,8 @@
+@model WebPortalEverthing.Models.Ecology.EcologyViewModel
 @{
-    ViewData["Title"] = "Home page";
+    Layout ="~/Views/Shared/_LayoutEcology.cshtml";
 }
 
 <div>
-    <label for="count">Enter the numer of block of advice</label>
-    <input type="number" id="count" name="count" value="1">
-    <a href="#" id="loadImages">Show advice</a>
+    <a href="/Ecology/HomeEcology">Advice</a>
 </div>
-
-<div id="ImagesCounter"></div>
-
-@section Scripts {
-    <script scr="~/images?Ecology/"></script>
-    <script type="text">
-        $(document).ready(function()){
-            $("#loadImages").click(function(e)){
-                e.preventDefalt();
-                var count= $("#count").val();
-                $get("@Url.Action("LoadImage", "Home")",{ count: count}, function(data){
-                    $("#ImagesCounter").html(data);
-                });
-            });
-        });
-    </script>
-}
