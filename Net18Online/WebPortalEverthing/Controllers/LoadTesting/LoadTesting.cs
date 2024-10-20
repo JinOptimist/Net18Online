@@ -4,7 +4,7 @@ namespace WebPortalEverthing.Controllers.LoadTesting
 {
     public class LoadTesting : Controller
     {
-        public IActionResult Index()
+        public IActionResult contentView1()
         {
             return View();
         }

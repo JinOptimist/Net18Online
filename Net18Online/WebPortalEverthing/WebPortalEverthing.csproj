@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\LoadTesting\index.cshtml" />
+    <None Include="Views\LoadTesting\Index.cshtml" />
   </ItemGroup>
 
 </Project>
