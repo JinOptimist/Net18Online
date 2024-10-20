@@ -5,7 +5,7 @@ namespace WebPortalEverthing.Controllers
 {
     public class AnimeCatalogueController : Controller
     {
-        public IActionResult Index(string name, int age)
+        public IActionResult Index()
         {
             return View();
         }
