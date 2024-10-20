@@ -14,4 +14,8 @@
     <None Include="Views\LoadTesting\Index.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\LoadTesting\" />
+  </ItemGroup>
+
 </Project>
