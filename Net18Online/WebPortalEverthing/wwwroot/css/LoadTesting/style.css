@@ -4,12 +4,12 @@
   box-sizing: border-box;
 } /* Стили для body */
 body {
-  background-image: url("../images/7.png");
-  background-size: cover; /* Изменено на cover для лучшего отображения */
-  background-repeat: no-repeat;
-  background-color: rgb(35, 38, 39);
-  margin: 0;
-  background-position: center 250px;
+    background-image: url("./images/LoadTesting/7.png");
+    background-size: cover; /* Изменено на cover для лучшего отображения */
+    background-repeat: no-repeat;
+    background-color: rgb(35, 38, 39);
+    margin: 0;
+    background-position: center 250px;
 }
 
 .header {
@@ -26,11 +26,15 @@ body {
   border-radius: 70px;
 }
 
-img[src="./images/logo.jpg"] {
-  max-height: 250px;
-  border-radius: 70px;
-  margin-right: 200px;
-}
+    .logo-header img {
+        width: 150px; /* Задаём желаемую ширину */
+        height: auto; /* Высота будет пропорциональна ширине */
+        max-width: 100%; /* Для адаптивности, чтобы не превышать размер родителя */
+        margin-right: 200px; /* Отступ справа */
+        box-shadow: 0 36px 12px rgba(0, 0, 0, 0.4),
+        /* Увеличение тени при наведении */ inset 0 -2px 8px rgba(255, 165, 0, 0.8); /* Подсветка при наведении */
+        border-radius: 50%; /* Закругление углов для круглой формы */
+    }
 
 .name {
   font-size: 100px;
