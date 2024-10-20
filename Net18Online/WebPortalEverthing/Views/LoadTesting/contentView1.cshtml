@@ -8,7 +8,8 @@
 <div class="content">
     <div class="discription-tipes">
         <div class="discription-type">
-            <div class="type-name">LoadType1</div>
+            <div class="type-name">@Model.Metrics[0].Name</div>
+            <div class="type-guid">GUID : @Model.Metrics[0].GUID</div>
             <div class="type-container">
                 <img src="~/images/LoadTesting/photo_2024-07-15_09-13-16.jpg" alt="type1" />
             </div>
@@ -20,27 +21,29 @@
                 {
                     <span class="tag">Данные отсутствуют</span>
                 }
-                <span class="tag">Average (среднее время отклика)</span>
+                <span class="tag">среднее время отклика (Average): @Model.Metrics[0].Average</span>
             </div>
         </div>
         <div class="discription-type">
-            <div class="type-name">LoadType2</div>
+            <div class="type-name">@Model.Metrics[1].Name</div>
+            <div class="type-guid">GUID : @Model.Metrics[1].GUID</div>
             <div class="type-container">
                 <img src="~/images/LoadTesting/photo_2024-10-18_22-57-53.jpg" alt="type2" />
             </div>
             <div class="additional-info">
-                <span class="tag">скорость обработки (Throughput)</span>
-                <span class="tag">Average (среднее время отклика)</span>
+                <span class="tag">скорость обработки (Throughput): @Model.Metrics[1].Throughput</span>
+                <span class="tag">среднее время отклика (Average): @Model.Metrics[1].Average</span>
             </div>
         </div>
         <div class="discription-type">
-            <div class="type-name">LoadType3</div>
+            <div class="type-name">@Model.Metrics[2].Name</div>
+            <div class="type-guid">GUID : @Model.Metrics[2].GUID</div>
             <div class="type-container">
                 <img src="~/images/LoadTesting/photo_2024-10-18_22-58-01.jpg" alt="type3" />
             </div>
             <div class="additional-info">
-                <span class="tag">скорость обработки (Throughput)</span>
-                <span class="tag">Average (среднее время отклика)</span>
+                <span class="tag">скорость обработки (Throughput): @Model.Metrics[2].Throughput</span>
+                <span class="tag">среднее время отклика (Average): @Model.Metrics[2].Average</span>
             </div>
         </div>
     </div>
