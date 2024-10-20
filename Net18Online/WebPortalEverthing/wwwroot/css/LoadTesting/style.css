@@ -1,0 +1,61 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} /* Стили для body */
+body {
+  background-image: url("../images/7.png");
+  background-size: cover; /* Изменено на cover для лучшего отображения */
+  background-repeat: no-repeat;
+  background-color: rgb(35, 38, 39);
+  margin: 0;
+  background-position: center 250px;
+}
+
+.header {
+  max-height: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 10px solid transparent;
+  animation: flame 1.5s infinite alternate;
+}
+
+.logo-header {
+  max-height: 250px;
+  border-radius: 70px;
+}
+
+img[src="./images/logo.jpg"] {
+  max-height: 250px;
+  border-radius: 70px;
+  margin-right: 200px;
+}
+
+.name {
+  font-size: 100px;
+  color: darkviolet;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes flame {
+  0% {
+    border-top-color: rgb(100, 14, 14);
+    box-shadow: 0px -5px 10px rgb(75, 2, 2), 0px -10px 15px orange;
+  }
+  50% {
+    border-top-color: rgb(180, 90, 6);
+    box-shadow: 0px -5px 15px orange, 0px -10px 15px rgb(219, 152, 6);
+  }
+  100% {
+    border-top-color: rgb(247, 163, 9);
+    box-shadow: 0px 15px 30px rgb(245, 154, 119),
+      0px -10px 15px rgb(192, 243, 7);
+  }
+}
+.buttona-and-content {
+  display: flex;
+  position: relative;
+}
