@@ -7,10 +7,11 @@ namespace WebPortalEverthing.Controllers.LoadTesting
     {
         public IActionResult contentView1(
             decimal Throughput,
-            decimal Average)//входные параметры приходят снаружи от пользователя страницы
+            decimal Average,
+            int CountMetrics)//входные параметры приходят снаружи от пользователя страницы
         {
             // Инициализация модели
-            var model = new LoadTestingContentViewModel1();
+            var model = new LoadTestingContentViewModel1(CountMetrics);
             model.Metrics[0].Throughput = Throughput;
             model.Metrics[0].Average = Average;
 

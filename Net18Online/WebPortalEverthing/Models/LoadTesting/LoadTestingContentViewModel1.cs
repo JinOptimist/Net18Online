@@ -4,11 +4,11 @@
     {
         public List<Metric> Metrics { get; set; }
 
-        public LoadTestingContentViewModel1()
+        public LoadTestingContentViewModel1(int countMetrics)
         {
             Metrics = new List<Metric>(); // Инициализация списка
 
-            for (int i = 1; i <= 10; i++)
+            for (int i = 1; i <= countMetrics; i++)
             {
                 Metrics.Add(new Metric
                 {
