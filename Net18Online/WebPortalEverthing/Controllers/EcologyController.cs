@@ -39,7 +39,7 @@ namespace WebPortalEverthing.Controllers
             var ecology = new EcologyViewModel
             {
                 ImageSrc = viewModel.Url,
-                Texts = new List<string>(),
+                Texts = new List<string>{viewModel.Text},
             };
             ecologylViewModels.Add(ecology);
 

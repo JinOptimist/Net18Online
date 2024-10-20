@@ -1,15 +1,29 @@
-@model WebPortalEverthing.Models.Ecology.PostCreationViewModel
+@using WebPortalEverthing.Models.Ecology
+@model List<EcologyViewModel>
 
 @{
     Layout = "~/Views/Shared/_LayoutEcology.cshtml";
 }
 
-<form method="post">
-    <div>
-        @Html.TextBoxFor(x => x.PostText, new { placeholder = "Enter text of post" })
-    </div>
-    <div>
-        @Html.TextBoxFor(x => x.Url, new { placeholder = "Enter roud of picture" })
-    </div>
-    <button type="submit">Create</button>
+<form method="post" action="/Ecology/EcologyChat">
+    <label for="imageUrl">Entet image URL:</label>
+    <input type="text" id="imageUrl" name="Url" />
+    <br />
+    <label for="imageText">Enter text:</label>
+    <input type="text" id="imageText" name="Text" />
+    <br />
+    <button type="submit">Submit</button>
 </form>
+
+@if (Model != null && Model.Count > 0)
+{
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li>
+                <img src="@item.ImageSrc" style="max-width: 300px; max-height: 300px;" alt="Picture" />
+                <p>@item.Texts.FirstOrDefault()</p>
+            </li>
+        }
+    </ul>
+}
