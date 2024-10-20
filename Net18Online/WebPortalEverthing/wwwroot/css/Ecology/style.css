@@ -65,14 +65,20 @@ header .logotip img {
 	display: flex;
 }
 .menu {
+	gap: 50px;
 	width: 100px;
 }
 .menu a {
 	margin: 3px;
 	display: block;
 }
+.menu.custom-list {
+	display: inline-block;
+	width: 40px;
+}
 
 .advices {
+	padding-left: 60px;
 	display: flex;
 	flex-wrap: wrap;
 }

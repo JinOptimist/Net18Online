@@ -8,17 +8,21 @@
 	cursor: pointer;
 	color: #ffffff;
 	font-family: Arial;
-	padding: 14px 18px;
+	width: 23px;
+	height: 20px;
 	text-decoration: none;
 	text-shadow: 0px -1px 0px #19a63d;
 }
 .home-button:hover {
 	background: linear-gradient(to bottom,#efc8f8 5%, #f7d0ec 100%);
 	background-color: #fdf632;
+	width: 33px;
+	height: 20px;
 }
 .home-button:hover::after{
-	content: "home page";
+	content: "home";
 	display: flex;
+	width: 40px;
 	align-items: center;
 	color: rgb(193, 44, 44);
 }
@@ -37,17 +41,21 @@
 	cursor: pointer;
 	color: #ffffff;
 	font-family: Arial;
-	padding: 14px 18px;
+	width: 23px;
+	height: 20px;
 	text-decoration: none;
 	text-shadow: 0px -1px 0px #19a63d;
 }
 .map-button:hover {
 	background: linear-gradient(to bottom,#efc8f8 5%, #f7d0ec 100%);
 	background-color: #fdf632;
+	width: 33px;
+	height: 20px;
 }
 .map-button:hover::after{
 	content: "map";
 	display: flex;
+	width: 33px;
 	align-items: center;
 	color: rgb(193, 44, 44);
 }
@@ -66,17 +74,21 @@
 	cursor: pointer;
 	color: #ffffff;
 	font-family: Arial;
-	padding: 14px 18px;
+	width: 23px;
+	height: 20px;
 	text-decoration: none;
 	text-shadow: 0px -1px 0px #19a63d;
 }
 .chat-button:hover {
 	background: linear-gradient(to bottom,#efc8f8 5%, #f7d0ec 100%);
 	background-color: #fdf632;
+	width: 33px;
+	height: 20px;
 }
 .chat-button:hover::after{
 	content: "chat";
 	display: flex;
+	width: 33px;
 	align-items: center;
 	color: rgb(193, 44, 44);
 }
@@ -95,17 +107,21 @@
 	cursor: pointer;
 	color: #ffffff;
 	font-family: Arial;
-	padding: 14px 18px;
+	width: 23px;
+	height: 20px;
 	text-decoration: none;
 	text-shadow: 0px -1px 0px #19a63d;
 }
 .calculator-button:hover {
 	background: linear-gradient(to bottom, #efc8f8 5%, #f7d0ec 100%);
 	background-color: #fdf632;
+	width: 33px;
+	height: 20px;
 }
 .calculator-button:hover::after{
 	content: "calculator";
 	display: flex;
+	width: 33px;
 	align-items: center;
 	color: rgb(193, 44, 44);
 }

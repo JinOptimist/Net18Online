@@ -27,15 +27,8 @@ namespace WebPortalEverthing.Controllers
             return View(model);
         }
 
-        [HttpGet]
-        public PartialViewResult LoadImages(int? count)
-        {
-            ViewBag.Count = count;
-            return PartialView("_ImagesPartical");
-        }
-
         [HttpPost]
-        public IActionResult Create(PostCreationViewModel viewModel)
+        public IActionResult EcologyChat(PostCreationViewModel viewModel)
         {
             var ecology = new EcologyViewModel
             {
