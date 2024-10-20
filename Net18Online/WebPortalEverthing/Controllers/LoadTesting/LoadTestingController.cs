@@ -8,7 +8,7 @@ namespace WebPortalEverthing.Controllers.LoadTesting
         public IActionResult contentView1()
         {
             // Инициализация модели
-            var model = new LoadTestingContentView1();
+            var model = new LoadTestingContentViewModel1();
 
             // Передаем модель в представление
             return View(model);
