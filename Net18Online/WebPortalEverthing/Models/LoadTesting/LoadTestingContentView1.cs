@@ -4,10 +4,9 @@
     {
         public List<Metric> Metrics { get; set; }
 
-        // Конструктор класса, инициализирующий список метрик
         public LoadTestingContentView1()
         {
-            Metrics = new List<Metric>();
+            Metrics = new List<Metric>(); // Инициализация списка
 
             for (int i = 1; i <= 10; i++)
             {
@@ -15,11 +14,10 @@
                 {
                     GUID = Guid.NewGuid(),
                     Name = $"Metric {i}",
-                    Throughput = i * 10.5m, // Пример значений, изменяемых в зависимости от итерации
+                    Throughput = i * 10.5m,
                     Average = i * 5.0m
                 });
             }
         }
-
     }
 }

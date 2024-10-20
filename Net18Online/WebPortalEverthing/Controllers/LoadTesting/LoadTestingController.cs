@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebPortalEverthing.Models.LoadTesting;
 
 namespace WebPortalEverthing.Controllers.LoadTesting
 {
@@ -6,7 +7,11 @@ namespace WebPortalEverthing.Controllers.LoadTesting
     {
         public IActionResult contentView1()
         {
-            return View();
+            // Инициализация модели
+            var model = new LoadTestingContentView1();
+
+            // Передаем модель в представление
+            return View(model);
         }
     }
 }
