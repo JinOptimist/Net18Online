@@ -2,7 +2,7 @@
 
 namespace WebPortalEverthing.Controllers.LoadTesting
 {
-    public class LoadTesting : Controller
+    public class LoadTestingController : Controller
     {
         public IActionResult contentView1()
         {
