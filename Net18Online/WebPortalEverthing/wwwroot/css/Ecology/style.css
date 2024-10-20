@@ -60,3 +60,47 @@ header .logotip img {
 	position: relative;
 	top: 2px;
 }
+
+.menu-content {
+	display: flex;
+}
+.menu {
+	width: 100px;
+}
+.menu a {
+	margin: 3px;
+	display: block;
+}
+
+.advices {
+	display: flex;
+	flex-wrap: wrap;
+}
+.advice {
+	margin: 10px;
+	width: 200px;
+}
+.advice .advice-image {
+	height: 200px;
+	display: flex;
+	align-items: center;
+}
+
+.advice .advice-image img {
+	max-width: 200px;
+	max-height: 200px;
+	align-items: center;
+}
+.advice .advice-info {
+	border-top: 1px #a5f986 solid;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.advice .advice-info .text {
+	border: 2px #56d86c solid;
+	display: inline-block;
+	border-radius: 5px;
+	margin: 3px;
+	padding: 3px;
+}
