@@ -1,0 +1,95 @@
+@using WebPortalEverthing.Models.LoadTesting
+@{
+    Layout = "~/Views/Shared/LoadTesting/_LayoutLoadTesting.cshtml";
+}
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Load Testing</title>
+    <link href="css/reset.css" rel="stylesheet" />
+    <link href="css/fire-fon.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/button-list.css" rel="stylesheet" />
+    <link href="css/avatar.css" rel="stylesheet" />
+    <link href="css/discription-tipes.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="header">
+      <div class="logo-header">
+        <img src="./images/logo.jpg" alt="logo-header" />
+      </div>
+      <div class="name">LOAD TESTING</div>
+      <div class="profile-blok">
+        <div class="avatar">
+          <img src="images/avatar.jpg" alt="avatar" class="avatar-image" />
+        </div>
+        <a href="https://example.com/login" class="login-button">Логин</a>
+      </div>
+    </div>
+
+    <!-- Прозрачный фон под списком кнопок с переливающимся фоном -->
+    <div class="fire-fon"></div>
+
+    <div class="buttona-and-content">
+      <div class="button-list">
+        <ul>
+          <li>
+            <a href="https://example.com" class="button"
+              ><span>Кнопка 1</span></a
+            >
+          </li>
+          <li>
+            <a href="https://example.com" class="button"
+              ><span>Кнопка 2</span></a
+            >
+          </li>
+          <li>
+            <a href="https://example.com" class="button"
+              ><span>Кнопка 3</span></a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <div class="content">
+        <div class="discription-tipes">
+          <div class="discription-type">
+            <div class="type-name">LoadType1</div>
+            <div class="type-container">
+              <img src="images/photo_2024-07-15_09-13-16.jpg" alt="type1" />
+            </div>
+            <div class="additional-info">
+              <span class="tag">скорость обработки (Throughput)</span>
+              <span class="tag">Average (среднее время отклика)</span>
+            </div>
+          </div>
+          <div class="discription-type">
+            <div class="type-name">LoadType2</div>
+            <div class="type-container">
+              <img src="images/photo_2024-10-18_22-57-53.jpg" alt="type2" />
+            </div>
+            <div class="additional-info">
+              <span class="tag">скорость обработки (Throughput)</span>
+              <span class="tag">Average (среднее время отклика)</span>
+            </div>
+          </div>
+          <div class="discription-type">
+            <div class="type-name">LoadType3</div>
+            <div class="type-container">
+              <img src="images/photo_2024-10-18_22-58-01.jpg" alt="type3" />
+            </div>
+            <div class="additional-info">
+              <span class="tag">скорость обработки (Throughput)</span>
+              <span class="tag">Average (среднее время отклика)</span>
+            </div>
+          </div>
+        </div>
+        <!-- Закрытие блока .discription-tipes -->
+      </div>
+      <!-- Закрытие блока .content -->
+    </div>
+    <!-- Закрытие блока .buttona-and-content -->
+  </body>
+</html>
