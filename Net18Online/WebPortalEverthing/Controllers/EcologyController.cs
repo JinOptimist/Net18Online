@@ -27,6 +27,12 @@ namespace WebPortalEverthing.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public IActionResult EcologyChat()
+        {
+            return View();
+        }
+
         [HttpPost]
         public IActionResult EcologyChat(PostCreationViewModel viewModel)
         {
@@ -37,7 +43,7 @@ namespace WebPortalEverthing.Controllers
             };
             ecologylViewModels.Add(ecology);
 
-            return RedirectToAction("Ecology Edvices");
+            return View(ecologylViewModels);
         }
     }
 }
