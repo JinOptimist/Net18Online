@@ -31,7 +31,8 @@ namespace WebPortalEverthing.Controllers
                         Url = $"/images/CoffeShop/Americano.jpeg",
                         Cost = 1.5f
                     };
-                    coffeViewModels.Add(viewModel1);
+                    coffeViewModels
+                        .Add(viewModel1);
 
                     var viewModel2 = new CoffeViewModel
                     {
@@ -70,15 +71,18 @@ namespace WebPortalEverthing.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpDelete]
+        [HttpPost]
         public IActionResult Delete(int id)
         {
-            var coffeObject = coffeViewModels
-                .FirstOrDefault(x => x.Id == id);
-            coffeViewModels
-                .Remove(coffeObject);
+            var coffeItem = coffeViewModels
+                .FirstOrDefault(c => c.Id == id);
 
-            return RedirectToAction("Coffe");
+            if (coffeItem != null)
+            {
+                coffeViewModels.Remove(coffeItem);
+            }
+
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -90,12 +94,15 @@ namespace WebPortalEverthing.Controllers
         [HttpPost]
         public IActionResult Update(CoffeUpdateViewModel viewModel)
         {
-            var coffeObject = coffeViewModels
-                .FirstOrDefault(x => x.Id == viewModel.Id);
+            var coffeItem = coffeViewModels
+                .FirstOrDefault(c => c.Id == viewModel.Id);
 
-            coffeObject.Coffe = viewModel.Coffe;
-            coffeObject.Url = viewModel.Url;
-            coffeObject.Cost = viewModel.Cost;
+            if (coffeItem != null)
+            {
+                coffeItem.Url = viewModel.Url;
+                coffeItem.Coffe = viewModel.Coffe;
+                coffeItem.Cost = viewModel.Cost;
+            }
 
             return RedirectToAction("Index");
         }

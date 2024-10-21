@@ -4,6 +4,7 @@
 }
 
 <form method="post">
+    @Html.HiddenFor(x => x.Id)
     <div>
         @Html.TextBoxFor(x => x.Coffe, new { placeholder = "Кофе" })
     </div>
@@ -13,5 +14,5 @@
     <div>
         @Html.TextBoxFor(x => x.Cost, new { placeholder = "Стоимость кофе" })
     </div>
-    <button type="submit"> создать </button>
+    <button type="submit">Обновить</button>
 </form>
