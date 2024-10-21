@@ -1,0 +1,46 @@
+﻿@using WebPortalEverthing.Models.CoffeShop;
+@model List<CoffeViewModel>
+@{
+    Layout = "~/Views/Shared/CoffeLayout/_LayoutCoffe.cshtml";
+}
+
+<div class="main-page">
+    <h1>
+        Admin panel
+    </h1>
+
+    <div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Сoffe</th>
+                    <th scope="col">Cost</th>
+                    <th scope="col">
+                        Brand <a class="btn btn-outline-primary" href="/CoffeShop/Create">
+                            C
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var coffe in Model)
+                {
+                    <tr>
+                        <th scope="row">
+                            <a class="btn btn-outline-success" href="/CoffeShop/Update">
+                                U
+                            </a>
+                            <a class="btn btn-outline-danger" asp-controller="CoffeShop" asp-action="Delete" asp-route-id="">
+                                D
+                            </a> 1
+                        </th>
+                        <td>@coffe.Id</td>
+                        <td>@coffe.Coffe</td>
+                        <td>@coffe.Cost $</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>     
