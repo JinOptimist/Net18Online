@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Anime Catalogue</title>
+    <link href="~/css/AnimeCatalogue/reset.css" rel="stylesheet" />
+    <link href="~/css/AnimeCatalogue/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <header class="page-header">
+        <div class="logo">
+            <img src="~/images/AnimeCatalogue/logo.png" alt="logo" />
+        </div>
+        <div class="name">Anime Catalogue</div>
+        <div class="profile-block">
+            <img src="~/images/AnimeCatalogue/person.webp" alt="" class="avatar" />
+        </div>
+    </header>
+    <div class="menu-plus-content">
+        <div class="menu custom-list">
+            <ul>
+                <li><label><input type="radio" name="Anime"> Isekai</label></li>
+                <li><label><input type="radio" name="Anime"> Fighting</label></li>
+                <li><label><input type="radio" name="Anime"> Novel</label></li>
+            </ul>
+        </div>
+        <div class="content">
+            @RenderBody()
+        </div>
+    </div>
+</body>
+
+</html>

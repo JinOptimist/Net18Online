@@ -1,0 +1,18 @@
+﻿@model WebPortalEverthing.Models.Cake.CakeCreationViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutCake.cshtml";
+}
+
+<form method="post">
+    <div>
+        @Html.TextBoxFor(x => x.Url, new { placeholder = "Введи путь к картинке" })
+    </div>
+    <div>
+        @Html.TextBoxFor(x => x.Description, new { placeholder = "Введи описание" })
+    </div>
+    <div>
+        @Html.TextBoxFor(x => x.Price, new { placeholder = "Введи цену" })
+    </div>
+    <button type="submit">Создать</button>
+</form>

@@ -1,0 +1,86 @@
+header.page-header {
+	display: flex;
+	justify-content: space-between;
+	height: 85px;
+	align-items: center;
+	font-size: 25px;
+	border-bottom: 1px #2c7bc0 solid;
+	background-image: url('../images/background.webp');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 100% 70%;
+}
+
+header .logo {
+	display: flex;
+	align-items: center;
+}
+
+header .logo img {
+	border-radius: 50px;
+	max-height: 75px;
+	margin-left: 10px;
+}
+
+header .name {
+	text-transform: uppercase;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-style: oblique;
+	font-size: 125%;
+}
+
+.menu-plus-content {
+	display: flex;
+}
+
+.profile-block {
+	display: flex;
+	align-items: center;
+	margin-right: 10px;
+}
+
+.profile-block .avatar {
+	max-height: 50px;
+	border-radius: 50px;
+}
+
+
+.menu {
+	width: 200px;
+	border-right: 1px #2c7bc0 solid;
+}
+
+.menu li {
+	margin: 10px;
+	display: block;
+}
+
+.animes {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.anime {
+	margin: 10px;
+	width: 250px;
+}
+
+.anime .name {
+	display: flex;
+	flex-wrap: wrap;
+	align-content: space-around;
+	justify-content: space-around;
+	min-height: 20%;
+}
+
+.anime .image-container {
+	display: flex;
+	height: 80%;
+	justify-content: center;
+}
+
+.anime .image-container img {
+	display: flex;
+	max-width: 100%;
+	justify-content: center;
+}

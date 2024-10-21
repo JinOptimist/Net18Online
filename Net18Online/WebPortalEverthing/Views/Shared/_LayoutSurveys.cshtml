@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SURVEYS - сервис опросов и тестов</title>
+    <link rel="icon" href="~/images/Surveys/letter-s.png">
+    <link href="~/css/Surveys/reset.css" rel="stylesheet" />
+    <link href="~/css/Surveys/style.css" rel="stylesheet" />
+    <link href="~/css/Surveys/form.css" rel="stylesheet" />
+</head>
+<body>
+    <header class="page-header">
+        <div class="logo-and-title">
+            <div class="logo">
+                <img src="~/images/Surveys/letter-s.png" alt="logo" />
+            </div>
+            <div class="site-title">
+                <div class="site-title-link">
+                    surveys
+                </div>
+                <div class="site-title-name">
+                    сервис опросов и тестов
+                </div>
+            </div>
+        </div>
+        <div class="profile-block">
+            <img class="profile-image" src="~/images/Surveys/avatar-default.jpg" alt="" />
+        </div>
+    </header>
+    <div class="menu-and-content">
+        <div class="menu-left">
+            <ul>
+                <li><a class="button" href="#">Группы вопросов</a></li>
+                <li><a class="button" href="/Surveys/SurveysAll">Опросы</a></li>
+                <li><a class="button" href="#">Тесты</a></li>
+                <li><a class="button" href="#">Статистика</a></li>
+            </ul>
+        </div>
+        <div class="main-content">
+            @RenderBody()
+        </div>
+    </div>
+</body>
+</html>
