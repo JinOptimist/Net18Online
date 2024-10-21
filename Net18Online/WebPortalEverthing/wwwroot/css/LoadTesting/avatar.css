@@ -1,0 +1,126 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.profile-blok {
+  display: flex; /* Добавлено для горизонтального расположения */
+  align-items: center; /* Центрируем аватар и кнопку по вертикали */
+  margin-left: 20px; /* Добавлено для отступа */
+}
+
+.login-button {
+  position: relative;
+  display: inline-block;
+  padding: 15px 30px; /* Отступы внутри кнопки */
+  margin-left: 20px; /* Отступ слева */
+  font-size: 36px; /* Размер шрифта */
+  color: rgb(141, 240, 11); /* Цвет текста */
+  background-color: #0b8a0b; /* Фоновый цвет кнопки */
+  text-decoration: none; /* Убираем подчеркивание */
+  border: none; /* Убираем границу */
+  border-radius: 20px; /* Закругление углов */
+  overflow: hidden; /* Прячем лишние элементы */
+  cursor: pointer; /* Курсор при наведении */
+  transition: background-color 0.3s ease, opacity 0.3s ease; /* Плавный переход для прозрачности */
+  width: 300px; /* Фиксированная ширина кнопки */
+  margin: 10px 0; /* Отступы 50px сверху и снизу между кнопками */
+  opacity: 0.5; /* Прозрачность кнопки на 50% */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3),
+    inset 0 -2px 8px rgba(255, 165, 0, 0.6); /* Эффект выпуклости и подсветки */
+}
+
+.login-button:hover {
+  background-color: #0a6a0a; /* Цвет кнопки при наведении */
+  opacity: 1; /* Полная непрозрачность при наведении */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4),
+    /* Увеличение тени при наведении */ inset 0 -2px 8px rgba(255, 165, 0, 0.8); /* Подсветка при наведении */
+}
+
+/* Имитируем риски, которые уменьшаются к концу */
+.login-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%; /* Начало анимации слева за пределами кнопки */
+  width: 100%;
+  height: 30%;
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgb(4, 252, 4) 20%,
+    rgba(36, 243, 9, 0.8) 40%,
+    transparent 60%
+  );
+  background-size: 30px 60%; /* Увеличиваем ширину рисок и расстояние между ними */
+  transition: left 0.5s ease;
+}
+
+/* Запускаем анимацию при наведении */
+.login-button:hover::before {
+  left: 0; /* Ограничиваем движение анимации длиной кнопки */
+}
+
+/* Стили для текста внутри кнопки */
+.login-button span {
+  position: relative;
+  z-index: 2;
+  font-weight: bold; /* Жирный текст для лучшей четкости */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Тень для контраста */
+}
+
+/* Изменение цвета фона кнопки при наведении */
+.login-button:hover {
+  background-color: #555; /* Темный фон при наведении для контраста */
+}
+
+.avatar {
+  display: flex;
+  width: 150px; /* Фиксированная ширина для аватара */
+  height: 150px; /* Фиксированная высота для аватара */
+  border-radius: 50%; /* Закругление углов для круглой формы */
+  overflow: hidden; /* Скрыть лишние элементы */
+  margin-left: 200px; /* Отступ слева */
+  margin-right: 20px; /* Отступ слева */
+  background-color: #ccc; /* Цвет фона, если изображение не загружено */
+  justify-content: center; /* Центрируем содержимое по горизонтали */
+  align-items: center; /* Центрируем содержимое по вертикали */
+  position: relative; /* Устанавливаем относительное позиционирование для самой аватарки */
+}
+
+/* Стили для изображения внутри аватара */
+.avatar img {
+  width: 100%; /* Ширина изображения на 100% */
+  height: 100%; /* Высота изображения на 100% */
+  object-fit: cover; /* Обрезка изображения, чтобы оно заполнило аватар */
+}
+
+/* Псевдоэлемент для огненной рамки */
+.avatar::after {
+  content: ""; /* Пустой контент для псевдоэлемента */
+  position: absolute; /* Абсолютное позиционирование */
+  top: -8px; /* Отступ сверху */
+  left: -8px; /* Отступ слева */
+  right: -8px; /* Отступ справа */
+  bottom: -8px; /* Отступ снизу */
+  border-radius: 50%; /* Круглая форма для рамки */
+  background: radial-gradient(
+    circle,
+    rgba(255, 165, 0, 0.8) 0%,
+    rgba(255, 0, 0, 0.8) 30%,
+    rgba(255, 0, 0, 0) 70%
+  ); /* Градиент для рамки */
+  z-index: -1; /* Устанавливаем позади аватара */
+  box-shadow: 0 0 10px rgba(255, 165, 0, 0.8); /* Эффект свечения для рамки */
+  animation: flameAnimation 1.5s infinite alternate; /* Анимация */
+}
+
+/* Анимация для огненной рамки */
+@keyframes flameAnimation {
+  0% {
+    transform: scale(1); /* Исходный размер */
+  }
+  100% {
+    transform: scale(1.05); /* Увеличиваем размер */
+  }
+}
