@@ -10,7 +10,7 @@
             DateTime today = DateTime.Now;
 
             // Дата наступления Нового Года
-            DateTime newYear = new DateTime(today.Year + 1, 1, 1);
+            DateTime newYear = new DateTime(today.Year, 12, 31);
 
             // Количество пятниц до Нового Года
             FridaysRemaining = 0;
