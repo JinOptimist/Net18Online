@@ -15,35 +15,36 @@ namespace WebPortalEverthing.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(coffeViewModels);
         }
 
         public IActionResult Coffe(int? count)
         {
-            if (!coffeViewModels.Any())
+            if (coffeViewModels.Any())
             {
-                for (int i = 0; i < (count ?? 1); i++)
+                return View(coffeViewModels);
+            }
+            for (int i = 0; i < (count ?? 1); i++)
+            {
+                var AmericanoViewModel = new CoffeViewModel
                 {
-                    var viewModel1 = new CoffeViewModel
-                    {
-                        Id = i + 1,
-                        Coffe = "Americano",
-                        Url = $"/images/CoffeShop/Americano.jpeg",
-                        Cost = 1.5f
-                    };
-                    coffeViewModels
-                        .Add(viewModel1);
+                    Id = i + 1,
+                    Coffe = "Americano",
+                    Url = $"/images/CoffeShop/Americano.jpeg",
+                    Cost = 1.5f
+                };
+                coffeViewModels
+                    .Add(AmericanoViewModel);
 
-                    var viewModel2 = new CoffeViewModel
-                    {
-                        Id = i + 2,
-                        Coffe = "Raf",
-                        Url = $"/images/CoffeShop/raf.jpg",
-                        Cost = 2.0f
-                    };
-                    coffeViewModels
-                        .Add(viewModel2);
-                }
+                var RafViewModel = new CoffeViewModel
+                {
+                    Id = i + 2,
+                    Coffe = "Raf",
+                    Url = $"/images/CoffeShop/raf.jpg",
+                    Cost = 2.0f
+                };
+                coffeViewModels
+                    .Add(RafViewModel);
             }
             return View(coffeViewModels);
         }
@@ -57,9 +58,10 @@ namespace WebPortalEverthing.Controllers
         [HttpPost]
         public IActionResult Create(CoffeCreateViewModel viewModel)
         {
+            var constId = 3;
             var coffe = new CoffeViewModel
             {
-                Id = 3,
+                Id = constId,
                 Coffe = viewModel.Coffe,
                 Url = viewModel.Url,
                 Cost = viewModel.Cost
@@ -106,8 +108,5 @@ namespace WebPortalEverthing.Controllers
 
             return RedirectToAction("Index");
         }
-
-
-
     }
 }
