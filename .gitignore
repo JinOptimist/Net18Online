@@ -398,3 +398,5 @@ FodyWeavers.xsd
 *.sln.iml
 /.editorconfig
 /Net18Online/.editorconfig
+
+/.DS_Store
