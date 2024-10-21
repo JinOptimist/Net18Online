@@ -3,7 +3,7 @@ using WebPortalEverthing.Models;
 
 namespace WebPortalEverthing.Controllers
 {
-    public class AnimeCatalogueController : Controller
+    public class AnimeCatalogController : Controller
     {
         public IActionResult Index()
         {

@@ -5,7 +5,7 @@ header.page-header {
 	align-items: center;
 	font-size: 25px;
 	border-bottom: 1px #2c7bc0 solid;
-	background-image: url('../../images/AnimeCatalogue/background.webp');
+	background-image: url('/images/AnimeCatalog/background.webp');
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-size: 100% 70%;
