@@ -1,0 +1,24 @@
+﻿@using WebPortalEverthing.Models.DND
+@model List<ClassViewModel>
+
+@{
+    Layout = "~/Views/Shared/_LayoutDND.cshtml";
+}
+
+<div class="DNDClass">
+    @foreach (var DNDClass in Model)
+    {
+        <div class="DNDClass">
+            <div class="name">@DNDClass.Name</div>
+            <div class="image-container">
+                <img src="@DNDClass.ImageSrc" alt="DNDClass" />
+            </div>
+            <div class="additional-info">
+                @foreach (var tag in DNDClass.Tags)
+                {
+                    <span class="tag">@tag</span>
+                }
+            </div>
+        </div>
+    }
+</div>

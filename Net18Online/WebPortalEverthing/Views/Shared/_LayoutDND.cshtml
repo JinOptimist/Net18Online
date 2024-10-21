@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>DungeonsNoDragons</title>
+    <link href="~/css/DND/reset.css" rel="stylesheet" />
+    <link href="~/css/DND/style.css" rel="stylesheet" />
+</head>
+<body>
+    <header class="header" role="banner">
+        <a href="/DND" class='logo'>DungeonsNoDragons</a>
+        <nav>
+            <ul>
+                <li>
+                    <a href='#'>Коллекция &bigtriangledown;</a>
+                    <ul>
+                        <li><a href='#'>Your games</a></li>
+                        <li><a href='#'>Your characters</a></li>
+                        <li><a href='#'>Your homebrew collection</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href='#'>D&Dпедия &bigtriangledown;</a>
+                    <ul>
+                        <li><a href="/DND/AllClasses">Classes</a></li>
+                        <li><a href="/DND/Create">Свои классы</a></li>
+                        <li><a href='#'>List of spells</a></li>
+                        <li><a href='#'>List of enemies</a></li>
+                    </ul>
+                </li>
+                <li><a href="/">Главная страница</li>
+            </ul>
+        </nav>
+        <div class="profile-block">
+            <button class="logout">Login</button>
+        </div>
+    </header>
+    <div class='newsLine'>
+        <div class="article">
+            <h2>Всем привет</h2>
+            <p>Абзац 1</p>
+            <p>Абзац 2</p>
+            <a href="#">Читать статью</a>
+        </div>
+        <div class="article">
+            <h2>Снова привет</h2>
+            <p>Абзац 1</p>
+            <p>Абзац 2</p>
+            <a href="#">Читать статью</a>
+        </div>
+    </div>
+    <div class="content">
+        @RenderBody()
+    </div>
+    <footer class="footer">
+        <div class="footer-terms">
+            <a href="#" target="_blank">DungeonsNoDragons</a>
+            <div class="socials">
+                <a href="#" target="_blank">Почта</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
