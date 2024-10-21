@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Movie Poster</title>
+    <link href="~/css/MoviePoster/reset.css" rel="stylesheet" />
+    <link href="~/css/MoviePoster/style.css" rel="stylesheet" />
+    <link href="~/css/MoviePoster/button.css" rel="stylesheet" />
+</head>
+
+<body>
+    <header class="page-header">
+        <div class="logo">
+            <img src="~/images/MoviePoster/logo.webp" alt="logo" />
+        </div>
+        <div class="name">Movie Poster</div>
+        <div class="profile-block">
+            <button class="logout">Login</button>
+        </div>
+    </header>
+    <div class="menu">
+        <ul class="kinds-of-films">
+            <li><a class="smile-button" href="#">Вся афиша</a></li>
+            <li><a class="smile-button" href="#">Романтическая комедия</a></li>
+            <li><a class="smile-button" href="#">Научная фантастика</a></li>
+            <li><a class="smile-button" href="#">Ужасы</a></li>
+            <li><a class="smile-button" href="#">Документальный</a></li>
+            <li><a class="smile-button" href="#">Анимационный</a></li>
+            <li><a class="smile-button" href="#">Триллер</a></li>
+            <li><a class="smile-button" href="#">Драма</a></li>
+            <li><a class="smile-button" href="#">Комедия</a></li>
+            <li><a class="smile-button" href="#">Приключения</a></li>
+        </ul>
+    </div>
+    <div class="navigation-menu">
+        <ul class="navigation">
+            <li><a class="menu-button" href="/">Главная страница сайта</a></li>
+            <li><a class="menu-button" href="/MoviePoster">Начальная страница афиши</a></li>
+            <li><a class="menu-button" href="/MoviePoster/AllPosters">Все фильмы</a></li>
+            <li><a class="menu-button" href="/MoviePoster/CreatePoster">Создать</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        @RenderBody()
+    </div>
+</body>
+
+</html>

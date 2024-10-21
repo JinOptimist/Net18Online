@@ -1,0 +1,23 @@
+﻿@using WebPortalEverthing.Models.MoviePoster
+
+@model List<PosterViewModel>
+@{
+    Layout = "~/Views/Shared/_LayoutMoviePoster.cshtml";
+}
+<div class="movies">
+    @foreach (var poster in Model)
+    {
+        <div class="movie">
+            <div class="name">@poster.Name</div>
+            <div class="image-container">
+                <img src="@poster.ImageSrc" alt="movie" />
+            </div>
+            <div class="additional-info">
+                @foreach (var tag in poster.Tags)
+                {
+                    <span class="tag">@tag</span>
+                }
+            </div>
+        </div>
+    }
+</div>

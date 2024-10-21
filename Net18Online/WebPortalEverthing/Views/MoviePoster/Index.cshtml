@@ -1,0 +1,21 @@
+﻿@model WebPortalEverthing.Models.MoviePoster.MoviePosterIndexViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutMoviePoster.cshtml";
+}
+
+<div class="main-info">
+    <div>
+        Афиша была обновлена в @Model.Hours часов @Model.Minutes минут @Model.Seconds секунд
+    </div>
+    <div>
+        Здесь много всего про фильмы.
+        Например, вот <a href="/MoviePoster/AllPosters">пару фильмов </a>
+    </div>
+    <div>
+        <a href="/MoviePoster/AllPosters?count=10">10 фильмов </a>
+        <a href="/MoviePoster/AllPosters?count=20">20 фильмов </a>
+        <a href="/MoviePoster/AllPosters?count=50">50 фильмов </a>
+        <a href="/MoviePoster/AllPosters?count=100">100 фильмов </a>
+    </div>
+</div>
