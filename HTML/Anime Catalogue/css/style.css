@@ -57,6 +57,7 @@ header .name {
 
 .animes {
 	display: flex;
+	flex-wrap: wrap;
 }
 
 .anime {
