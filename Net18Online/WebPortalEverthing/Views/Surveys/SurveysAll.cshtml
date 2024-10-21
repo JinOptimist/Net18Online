@@ -1,0 +1,51 @@
+﻿@using WebPortalEverthing.Models.Surveys
+
+@model List<SurveyGroupViewModel>
+
+@{
+    Layout = "~/Views/Shared/_LayoutSurveys.cshtml";
+}
+
+<div class="main-content-title">
+    <span>Шаблоны опросов</span>
+</div>
+@foreach (var surveyGroup in Model)
+{
+    <div class="survey-groups">
+        <div class="survey-group">
+            <div class="title-and-actions">
+                <div class="title">
+                    <span>@surveyGroup.Title</span>
+                    <span class="count">@surveyGroup.Surveys.Count</span>
+                </div>
+                <div class="actions">
+                    <a href="Create">Создать новый опрос</a>
+                </div>
+            </div>
+            <div class="survey-group-content">
+                @foreach (var survey in surveyGroup.Surveys)
+                {
+                    <div class="survey-content">
+                        <div class="survey-status-and-title">
+                            <div class="survey-status">
+                                @if (survey.Status is not null)
+                                {
+                                    <img class="profile-image" src="@survey.Status.ImagesSrc" title="@survey.Status.Title" alt="@survey.Status.Title" />
+                                }
+                            </div>
+                            <div class="survey-title">
+                                @survey.Title
+                            </div>
+                        </div>
+                        <div class="survey-actions">
+                            @if (survey.Action is not null)
+                            {
+                                <button class="action-take">@survey.Action.Title</button>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
