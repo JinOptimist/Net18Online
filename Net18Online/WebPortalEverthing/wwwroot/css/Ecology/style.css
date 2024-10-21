@@ -110,3 +110,9 @@ header .logotip img {
 	margin: 3px;
 	padding: 3px;
 }
+
+.content.image-in-poster {
+
+    max-width: 300px !important;
+    max-height: 300px !important;
+}
