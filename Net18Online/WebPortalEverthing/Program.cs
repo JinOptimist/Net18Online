@@ -11,7 +11,7 @@ builder.Services.AddControllersWithViews();
 // Register in DI container our services/repository
 builder.Services.AddSingleton<IAnimeGirlRepository, AnimeGirlRepository>();
 
-
+builder.Services.AddSingleton<IEcologyRepository, EcologyRepository>();
 
 var app = builder.Build();
 

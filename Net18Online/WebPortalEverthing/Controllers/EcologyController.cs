@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Everything.Data.Fake.Models;
+using Everything.Data.Interface.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebPortalEverthing.Models.Ecology;
@@ -11,15 +13,12 @@ namespace WebPortalEverthing.Controllers
 {
     public class EcologyController : Controller
     {
-        // BAD. DO NOT USE THIS ON PROD
-        private static List<EcologyViewModel> ecologylViewModels = new List<EcologyViewModel>();
+        private IEcologyRepository _ecologyRepository;
 
-        /*private readonly ILogger<EcologyController> _logger;
-
-        public EcologyController(ILogger<EcologyController> logger)
+        public EcologyController(IEcologyRepository ecologyRepository)
         {
-            _logger = logger;
-        }*/
+            _ecologyRepository = ecologyRepository;
+        }
 
         public IActionResult Index()
         {
@@ -36,14 +35,14 @@ namespace WebPortalEverthing.Controllers
         [HttpPost]
         public IActionResult EcologyChat(PostCreationViewModel viewModel)
         {
-            var ecology = new EcologyViewModel
+            var ecology = new EcologyData
             {
                 ImageSrc = viewModel.Url,
-                Texts = new List<string>{viewModel.Text},
+                Text = new List<string>{viewModel.Text},
             };
-            ecologylViewModels.Add(ecology);
+            _ecologyRepository.Add(ecology);
 
-            return View(ecologylViewModels);
+            return View(ecology);
         }
     }
 }
