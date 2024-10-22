@@ -1,6 +1,8 @@
-﻿namespace WebPortalEverthing.Models.CoffeShop
+﻿using Everything.Data.Interface.Models;
+
+namespace Everything.Data.Fake.Models
 {
-    public class CoffeCreateViewModel
+    public class CoffeData : ICoffeData
     {
         public int Id { get; set; }
 
