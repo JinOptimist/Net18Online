@@ -13,6 +13,7 @@
     <link href="~/css/LoadTesting/button-list.css" rel="stylesheet" />
     <link href="~/css/LoadTesting/avatar.css" rel="stylesheet" />
     <link href="~/css/LoadTesting/discription-tipes.css" rel="stylesheet" />
+    <link href="~/css/LoadTesting/create-metric-form.css" rel="stylesheet" />
 
 </head>
 <body>
@@ -45,9 +46,17 @@
                     <a href="https://example.com" class="button"><span>Кнопка 2</span></a>
                 </li>
                 <li>
-                    <a href="https://example.com" class="button"><span>Кнопка 3</span></a>
+                    <a href="/loadtesting/CreateProfile" class="button"><span>CreateProfile</span></a>
                 </li>
             </ul>
+            <div class="oval-form">
+                <div class="input-container">
+                    <div class="title">Введите данные профайла</div>
+                    <input type="text" name="Throughput" placeholder="Throughput" required />
+                    <input type="text" name="Average" placeholder="Average" required />
+                    <button type="submit">Создать</button>
+                </div>
+            </div>
         </div>
 
         <div class="content">
@@ -55,6 +64,7 @@
         </div><!-- Закрытие блока .content -->
 
     </div>  <!-- Закрытие блока .buttona-and-content -->
+
 </body>
 </html>
 <script>

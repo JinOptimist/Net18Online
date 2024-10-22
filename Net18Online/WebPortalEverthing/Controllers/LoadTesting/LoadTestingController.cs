@@ -18,5 +18,10 @@ namespace WebPortalEverthing.Controllers.LoadTesting
             // Передаем модель в представление
             return View(model); //model выдаст данные наружу, на страницу
         }
+
+        public IActionResult CreateProfile()
+        {
+            return View();
+        }
     }
 }
