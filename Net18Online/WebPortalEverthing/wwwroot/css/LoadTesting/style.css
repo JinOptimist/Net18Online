@@ -37,11 +37,20 @@ body {
     }
 
 .name {
-  font-size: 100px;
-  color: darkviolet;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    font-size: 70px;
+    color: darkviolet;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 10px;
+    /* Свечение и черный контур вокруг текста */
+    text-shadow: -1px -1px 0 rgba(75, 0, 130, 1), /* Контур слева сверху (тёмно-фиолетовый) */
+    1px -1px 0 rgba(75, 0, 130, 1), /* Контур справа сверху (тёмно-фиолетовый) */
+    -1px 1px 0 rgba(75, 0, 130, 1), /* Контур слева снизу (тёмно-фиолетовый) */
+    1px 1px 0 rgba(75, 0, 130, 1), /* Контур справа снизу (тёмно-фиолетовый) */
+    0px 15px 30px rgb(245, 154, 119), /* Свечение снизу */
+    0px -10px 15px rgb(192, 243, 7); /* Свечение сверху */
 }
 
 @keyframes flame {
@@ -62,4 +71,12 @@ body {
 .buttona-and-content {
   display: flex;
   position: relative;
+}
+
+.fridaysRemaining {
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    margin-top: 10px;
+    text-shadow: 0px 15px 30px rgb(245, 154, 119), 0px -10px 15px rgb(192, 243, 7);
 }
