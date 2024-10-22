@@ -42,7 +42,19 @@ namespace WebPortalEverthing.Controllers
             };
             _ecologyRepository.Add(ecology);
 
-            return View(ecology);
+            var ecologyFromDb = _ecologyRepository.GetAll();
+
+            var ecologyViewModels = ecologyFromDb
+                .Select(dbEcology =>
+                    new EcologyViewModel
+                    {
+                        ImageSrc = dbEcology.ImageSrc,
+                        Texts = dbEcology.Text
+                    }
+                )
+                .ToList();
+
+            return View(ecologyViewModels);
         }
     }
 }
