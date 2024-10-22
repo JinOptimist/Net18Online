@@ -1,11 +1,11 @@
 ﻿namespace WebPortalEverthing.Models.LoadTesting
 {
-    public class LoadTestingContentViewModel1
+    public class LoadTestingContentMetricsListViewModel
     {
         public List<Metric> Metrics { get; set; }
         public int FridaysRemaining { get; set; }
 
-        public LoadTestingContentViewModel1(int countMetrics)
+        public LoadTestingContentMetricsListViewModel(int countMetrics)
         {
             Metrics = new List<Metric>(); // Инициализация списка
 
