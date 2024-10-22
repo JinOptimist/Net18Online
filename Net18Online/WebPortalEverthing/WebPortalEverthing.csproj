@@ -6,12 +6,4 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Remove="Views\LoadTesting\index.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Views\LoadTesting\Index.cshtml" />
-  </ItemGroup>
-
 </Project>
