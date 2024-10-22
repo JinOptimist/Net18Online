@@ -1,0 +1,19 @@
+﻿@using WebPortalEverthing.Models.Surveys
+
+@model SurveyCreateViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutSurveys.cshtml";
+}
+
+<div class="main-content-title">
+    <span>Создание нового опроса</span>
+</div>
+<form class="new-survey" method="post">
+    <div>
+        @Html.TextBoxFor(x => x.Title, new { placeholder = "Введите название опроса" })
+    </div>
+    <div class="actions">
+        <button class="save-button" type="submit">Сохранить</button>
+    </div>
+</form>

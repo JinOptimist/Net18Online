@@ -1,0 +1,169 @@
+html {
+    font-family: Georgia, Arial, sans-serif;
+}
+
+header.page-header {
+	display: flex;
+	justify-content: space-between;
+	height: 50px;
+	align-items: center;
+	font-size: 25px;
+	background-color: #ffe0a1;
+    border-bottom: 2px solid;
+    border-color: #2CC5E0;
+}
+
+header .logo-and-title {
+    display: flex;
+    align-items: center;
+}
+
+header .logo-and-title .site-title {
+    font-size: 18px;
+    padding: 3px;
+}
+
+.profile-block {
+	display: flex;
+	align-items: center;
+	margin-right: 3px;
+}
+
+.profile-block .profile-image {
+	max-height: 44px;
+    margin: 3px;
+    border-radius: 25px;
+}
+
+header .logo {
+	/* display: flex; */
+	align-items: center;
+    margin: 0px 5px;
+}
+
+header .logo img {
+    display: flex;
+    align-items: center;
+	max-height: 44px;
+}
+
+.site-title .site-title-link {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.menu-and-content {
+    display: flex;
+}
+
+.menu-left {
+    margin: 10px;
+    width: 200px;
+}
+
+    .menu-left li {
+        padding: 2px;
+        margin: 3px;
+    }
+
+    .menu-left a {
+        text-decoration: none;
+    }
+
+        .menu-left a:hover {
+            color: #007bff;
+            text-decoration: none;
+            background-color: transparent;
+        }
+
+.main-content {
+    display: block;
+    margin: 10px;
+    width: 100%;
+}
+
+.main-content-title {
+    margin: 3px;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.survey-groups {
+    border: 1px #ccc solid;
+    margin: 10px 0px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #e3f6ff;
+}
+
+.survey-group .title-and-actions {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px #ccc solid;
+}
+
+.survey-group .title {
+    padding: 5px;
+    font-weight: bold;
+}
+
+    .survey-group .title .count {
+        background-color: #0275d8;
+        padding: 3px;
+        border-radius: 5px;
+        color: #ffffff;
+        font-weight: bold;
+        margin-left: 3px;
+    }
+
+.title-and-actions .actions {
+    display: flex;
+    align-items: center;
+}
+
+.survey-group-content {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.survey-content {
+    display: flex;
+    justify-content: space-between;
+    border: 1px #ccc solid;
+    margin-top: 5px;
+    padding: 3px 5px;
+    border-radius: 5px;
+    background-color: #ffffff;
+}
+    .survey-content .survey-status-and-title {
+        display: flex;
+    }
+
+    .survey-content .survey-status {
+        display: flex;
+        align-items: center;
+        max-width: 26px;
+    }
+
+    .survey-content .survey-status img {
+        max-width: 22px;
+    }
+
+    .survey-content .survey-title {
+        display: flex;
+        align-items: center;
+        margin: 0px 8px;
+    }
+
+    .survey-content .survey-actions {
+        display: flex;
+        align-items: center;
+    }
+
+    .survey-actions button {
+        background-color: #5cb85c;
+        color: #fff;
+        border: 1px #137e13 solid;
+        border-radius: 5px;
+        font-weight: bold;
+    }

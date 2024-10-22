@@ -1,0 +1,33 @@
+﻿@using WebPortalEverthing.Models.Cake
+@model List<CakeViewModel>
+@{
+    Layout = "~/Views/Shared/_LayoutCake.cshtml";
+}
+
+<div class="menu">
+    <ul class="filter">
+        <li><button class="products">Products</button></li>
+        <li><button class="price">Price</button></li>
+        <li><button class="weight">Weight</button></li>
+        <li><button class="size">Size</button></li>
+        <li><button class="rating">Rating</button></li>
+    </ul>
+</div>
+<div class="cakes">
+    @foreach (var cake in Model)
+    {
+        <div class="cake">
+            <div class="image-cake">
+                <img src="@cake.ImageSrc" alt="cake" />
+            </div>
+            <div class="description">@cake.Description</div>
+            <div class="price-rating">
+                <div class="rating">@cake.Reiting/5</div>
+                <div class="price">@cake.Price BYN</div>
+            </div>
+        </div>
+    }
+    <div class="create">
+        <a href="/Cake/Create">create</a>
+    </div>
+</div>
