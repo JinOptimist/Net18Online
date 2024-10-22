@@ -5,7 +5,7 @@ namespace WebPortalEverthing.Controllers.LoadTesting
 {
     public class LoadTestingController : Controller
     {
-        public IActionResult contentView1(
+        public IActionResult ContenMetricsListView(
             decimal Throughput,
             decimal Average,
             int CountMetrics)//входные параметры приходят снаружи от пользователя страницы

@@ -13,7 +13,7 @@
             {
                 Metrics.Add(new Metric
                 {
-                    GUID = Guid.NewGuid(),
+                    Guid = Guid.NewGuid(),
                     Name = $"Metric {i}",
                     Throughput = i * 10.5m,
                     Average = i * 5.0m

@@ -13,10 +13,10 @@ body {
 /* Прозрачный фон с огненным эффектом */
 .fire-fon {
   position: absolute;
-  top: 260px; /* Начало после header (высоту header можно изменить) */
+  top: 170px; /* Начало после header (высоту header можно изменить) */
   left: 0;
   right: 0;
-  height: calc(100% - 260px); /* Высота оставшейся части экрана */
+  height: 100%; /* Высота оставшейся части экрана */
   z-index: 0; /* Фон под кнопками */
   background: linear-gradient(
     45deg,
