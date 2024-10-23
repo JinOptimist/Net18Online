@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Cakes</title>
+    <link rel="stylesheet" href="~/css/Cake/reset.css" />
+    <link rel="stylesheet" href="~/css/Cake/style.css" />
+    <link rel="stylesheet" href="~/css/Cake/buttons.css" />
+</head>
+
+<body>
+    <header class="upper-header">
+        <div class="logo">
+            <img src="~/images/Cake/Logo.png" alt="logo" />
+        </div>
+        <div class="search">
+            <input type="text" placeholder="Search" />
+        </div>
+        <div class="course-profile">
+            <div class="course">
+                <button class="button-course">BYN</button>
+            </div>
+            <div class="profile">
+                <img src="~/images/Cake/Profile.jpg" alt="profile" />
+            </div>
+        </div>
+    </header>
+    <div class="content">
+        @RenderBody()
+    </div>
+</body>
+
+</html>

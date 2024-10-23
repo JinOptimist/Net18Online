@@ -1,0 +1,97 @@
+header.upper-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px #010101 solid;
+}
+
+header .logo {
+    height: 100px;
+    margin-left: 50px;
+}
+
+header .logo img {
+    max-height: 100px;
+    max-width: 100px;
+}
+
+header .search input {
+    font-size: 30px;
+    padding: 10px 7px;
+    width: 100%;
+    outline: none;
+    background: #FFFFFF;
+    color: #505050;
+    border: 1px solid #C4D1EB;
+    border-radius: 5px;
+}
+
+header .course-profile .course {
+    margin-right: 50px;
+}
+
+header .course-profile {
+    display: flex;
+    align-items: center;
+}
+
+header .course-profile .profile {
+    height: 100px;
+    margin-right: 50px;
+}
+
+header .course-profile .profile img {
+    max-height: 100px;
+    max-width: 100px;
+}
+
+div.menu ul.filter {
+    display: flex;
+    justify-content: space-between;
+    width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.menu ul.filter li {
+    display: inline;
+    margin: 15px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+}
+
+.cakes {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.cake {
+    margin: 10px;
+    width: 100px;
+}
+
+.cake .image-cake {
+	
+	height: 150px;
+	display: flex;
+	align-items: center;
+}
+
+.cake .image-cake img {
+	max-width: 100px;
+	max-height: 150px;
+}
+
+.cake .description {
+    border: 1px #a8a8a8 solid;
+}
+
+.cake .price-rating{
+    display: flex;
+    justify-content: space-between;
+    width: 100px;
+}
