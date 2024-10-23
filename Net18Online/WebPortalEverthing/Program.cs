@@ -13,9 +13,15 @@ builder.Services.AddSingleton<ICakeRepository, CakeRepository>();
 builder.Services.AddSingleton<IEcologyRepository, EcologyRepository>();
 builder.Services.AddSingleton<ICoffeShopRepository, CoffeShopRepository>();
 
+
+// Register in DI container services/repository for MoviePosterRepository
+builder.Services.AddSingleton<IMoviePosterRepository, MoviePosterRepository>();
+
+
 builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
 
 builder.Services.AddScoped<MazeBuilder>();
+
 
 var app = builder.Build();
 
