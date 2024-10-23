@@ -1,12 +1,18 @@
-﻿@{
+﻿@using WebPortalEverthing.Models.LoadTesting
+@model LoadTestingContentMetricsListViewModel
+
+@{
     Layout = "~/Views/Shared/LoadTesting/_LayoutLoadTesting.cshtml";
 }
-<div class="create-profile-form">
-    <div class="title">Введите данные профайла</div>
-    <div class="input-container">
-        <input type="text" name="name" placeholder="Name" required />
-        <input type="text" name="throughput" placeholder="Throughput" required />
-        <input type="text" name="average" placeholder="Average" required />
-        <button type="submit">Создать</button>
+
+<form method="post">
+    <div class="create-profile-form">
+        <div class="title">Введите данные профайла</div>
+        <div class="input-container">
+            <input type="text" name="name" placeholder="Name" required />
+            <input type="text" name="throughput" placeholder="Throughput" required />
+            <input type="text" name="average" placeholder="Average" required />
+            <button type="submit">Создать</button>
+        </div>
     </div>
-</div>
+</form>

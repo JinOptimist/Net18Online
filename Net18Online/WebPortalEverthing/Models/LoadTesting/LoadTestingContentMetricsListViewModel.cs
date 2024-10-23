@@ -5,22 +5,11 @@
         public List<Metric> Metrics { get; set; }
         public int FridaysRemaining { get; set; }
 
-        public LoadTestingContentMetricsListViewModel(int countMetrics)
+        public LoadTestingContentMetricsListViewModel()
         {
             Metrics = new List<Metric>(); // Инициализация списка
 
-            for (int i = 1; i <= countMetrics; i++)
-            {
-                Metrics.Add(new Metric
-                {
-                    Guid = Guid.NewGuid(),
-                    Name = $"Metric {i}",
-                    Throughput = i * 10.5m,
-                    Average = i * 5.0m
-                });
-            }
-
-
+            
             // Текущая дата
             DateTime today = DateTime.Now;
 
