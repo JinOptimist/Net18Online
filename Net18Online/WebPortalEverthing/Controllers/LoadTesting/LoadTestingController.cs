@@ -34,7 +34,7 @@ namespace WebPortalEverthing.Controllers.LoadTesting
         }
 
         [HttpGet]
-        public IActionResult CreateProfile()
+        public IActionResult CreateProfileView()
         {
             Guid guid;
             string name;
@@ -45,7 +45,7 @@ namespace WebPortalEverthing.Controllers.LoadTesting
         }
 
         [HttpPost]
-        public IActionResult CreateProfile
+        public IActionResult CreateProfileView
             (string name,
             decimal throughput,
             decimal average)

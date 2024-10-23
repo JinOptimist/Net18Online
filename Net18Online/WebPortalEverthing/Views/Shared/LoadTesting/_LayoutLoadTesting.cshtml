@@ -47,18 +47,31 @@
                     <a href="https://example.com" class="button"><span>Кнопка 2</span></a>
                 </li>
                 <li>
-                    <a href="/loadtesting/CreateProfile" class="button"><span>CreateProfile</span></a>
+                    <a href="/loadtesting/CreateProfileView" class="button"><span>CreateProfile</span></a>
                 </li>
             </ul>
-            <div class="oval-form">
-                <div class="input-container">
-                    <div class="title">Закажи себе нагрузку на Новый год:</div>
-                    <input type="text" name="Throughput" placeholder="Throughput" required />
-                    <input type="text" name="Average" placeholder="Average" required />
-                    <button type="submit">Создать</button>
+
+
+
+            <form method="post">
+                <div class="oval-form">
+                    <div class="input-container">
+                        <div class="title">Закажи себе нагрузку на Новый год:</div>
+                        <input type="text" name="name" placeholder="Name" value="NewYearLoad" required />
+                        <input type="text" name="throughput" placeholder="Throughput" required />
+                        <input type="text" name="average" placeholder="Average" required />
+                        <button type="submit">Создать</button>
+                    </div>
                 </div>
-            </div>
+            </form>
+
+               
+
+
         </div>
+
+
+
 
         <div class="content">
             @RenderBody();
