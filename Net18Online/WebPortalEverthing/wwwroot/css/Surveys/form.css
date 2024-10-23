@@ -1,0 +1,17 @@
+﻿form.new-survey {
+    margin: 10px;
+}
+
+input {
+    margin: 3px;
+    border-color: #6d797678;
+    border-radius: 5px;
+}
+
+.actions .save-button {
+    border: 0;
+    background: #7dbf26;
+    color: #fff;
+    padding: 7px;
+    border-radius: 5px;
+}

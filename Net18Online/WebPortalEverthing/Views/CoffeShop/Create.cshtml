@@ -1,0 +1,18 @@
+﻿@model WebPortalEverthing.Models.CoffeShop.CoffeCreateViewModel
+@{
+    Layout = "~/Views/Shared/CoffeLayout/_LayoutCoffe.cshtml";
+}
+
+
+<form method="post">
+    <div>
+        @Html.TextBoxFor(x => x.Coffe, new { placeholder = "Кофе" })
+    </div>
+    <div>
+        @Html.TextBoxFor(x => x.Url, new { placeholder = "Ссылка на картинку" })
+    </div>
+    <div>
+        @Html.TextBoxFor(x => x.Cost, new { placeholder = "Стоимость кофе" })
+    </div>
+    <button type="submit"> создать </button>
+</form>

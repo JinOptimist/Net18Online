@@ -1,7 +1,17 @@
+using Everything.Data.Fake.Repositories;
+using Everything.Data.Interface.Repositories;
+using Microsoft.Extensions.DependencyInjection;
+using WebPortalEverthing.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Register in DI container our services/repository
+builder.Services.AddSingleton<IAnimeGirlRepository, AnimeGirlRepository>();
+
+
 
 var app = builder.Build();
 

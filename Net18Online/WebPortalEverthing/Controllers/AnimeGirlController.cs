@@ -1,13 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WebPortalEverthing.Models;
+﻿using Everything.Data.Fake.Models;
+using Everything.Data.Fake.Repositories;
+using Everything.Data.Interface.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.AnimeGirl;
 
 namespace WebPortalEverthing.Controllers
 {
     public class AnimeGirlController : Controller
     {
-        // BAD. DO NOT USE THIS ON PROD
-        private static List<GirlViewModel> girlViewModels = new List<GirlViewModel>();
+        private IAnimeGirlRepository _animeGirlRepository;
+
+        public AnimeGirlController(IAnimeGirlRepository animeGirlRepository)
+        {
+            _animeGirlRepository = animeGirlRepository;
+        }
 
         public IActionResult Index(string name, int age)
         {
@@ -22,23 +28,42 @@ namespace WebPortalEverthing.Controllers
 
         public IActionResult AllGirls(int? count)
         {
-            if (!girlViewModels.Any())
+            if (!_animeGirlRepository.Any())
             {
-                for (int i = 0; i < (count ?? 4); i++)
-                {
-                    var girlNumber = (i % 4) + 1;
-                    var viewModel = new GirlViewModel
-                    {
-                        Name = $"Girl {girlNumber}",
-                        ImageSrc = $"/images/AnimeGirl/Girl{girlNumber}.jpg",
-                        Tags = new List<string> { "4 size", "red" }
-                    };
-                    girlViewModels.Add(viewModel);
-                }
+                GenerateDefaultAnimeGirl(count);
             }
 
+            var girlsFromDb = _animeGirlRepository.GetAll();
 
-            return View(girlViewModels);
+            var girlsViewModels = girlsFromDb
+                .Select(dbGirl =>
+                    new GirlViewModel
+                    {
+                        Id = dbGirl.Id,
+                        Name = dbGirl.Name,
+                        ImageSrc = dbGirl.ImageSrc,
+                        Tags = dbGirl.Tags
+                    }
+                )
+                .ToList();
+
+            return View(girlsViewModels);
+        }
+
+        private void GenerateDefaultAnimeGirl(int? count)
+        {
+            for (int i = 0; i < (count ?? 4); i++)
+            {
+                var girlNumber = (i % 4) + 1;
+                var dataModel = new GirlData
+                {
+                    Name = $"Girl {girlNumber}",
+                    ImageSrc = $"/images/AnimeGirl/Girl{girlNumber}.jpg",
+                    Tags = new List<string> { "4 size", "red" }
+                };
+
+                _animeGirlRepository.Add(dataModel);
+            }
         }
 
         [HttpGet]
@@ -50,14 +75,14 @@ namespace WebPortalEverthing.Controllers
         [HttpPost]
         public IActionResult Create(GirlCreationViewModel viewModel)
         {
-            var girl = new GirlViewModel
+            var dataGirl = new GirlData
             {
                 Name = viewModel.Name,
                 ImageSrc = viewModel.Url,
-                Tags = new List<string>()
+                Tags = new()
             };
 
-            girlViewModels.Add(girl);
+            _animeGirlRepository.Add(dataGirl);
 
             return RedirectToAction("AllGirls");
         }
