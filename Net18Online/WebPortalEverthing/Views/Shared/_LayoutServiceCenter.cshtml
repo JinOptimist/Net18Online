@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Сервисный центр</title>
+    <link rel="stylesheet" href="~/css/ServiceCenter/styles.css">
+    <link rel="stylesheet" href="~/css/ServiceCenter/button.css">
+    <link rel="stylesheet" href="~/css/ServiceCenter/footer.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header-logo">
+            <img src="~/images/ServiceCenter/logo.png" alt="Логотип Сервисного центра" />
+        </div>
+
+        <header>
+            <h1>Сервисный центр</h1>
+            <nav>
+                <ul class="menu">
+                    <li><a href="~/">Главная</a></li>
+                    <li><a href="~/#news">Новости</a></li>
+                    <li><a href="~/#catalog">Каталог</a></li>
+                    <li><a href="~/#profile">Личный кабинет</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button class="register">Регистрация</button>
+                <button class="login">Войти</button>
+            </div>
+        </header>
+
+        @RenderBody()
+
+        <footer class="footer text-center">
+            <div class="container-fluid p-0 d-flex flex-column overflow-hidden">
+                <section class="social-icons text-center py-2" style="background-color: rgba(0, 0, 0, 0.05);">
+                    <a href="#"><img src="~/images/ServiceCenter/icons/google.svg" alt="Google" class="icon" /></a>
+                    <a href="#"><img src="~/images/ServiceCenter/icons/github.svg" alt="GitHub" class="icon" /></a>
+                </section>
+
+                <section class="logo my-2">
+                    <img id="svg-logo" src="~/images/ServiceCenter/logo.svg" alt="Логотип SerWise" width="100" height="100" />
+                </section>
+
+                <section class="contact-info text-center px-5">
+                    <p>SerWise - сервис по ремонту компьютерной техники. Техподдержка 24/7.</p>
+                </section>
+
+                <section class="contacts">
+                    <h3 class="text-uppercase fw-bold">Контакты</h3>
+                    <p><img src="~/images/ServiceCenter/icons/earth.svg" alt="Местоположение" class="icon" /> Минск, Беларусь</p>
+                    <p><img src="~/images/ServiceCenter/icons/email.svg" alt="Электронная почта" class="icon" /> ricoysir1@gmail.com</p>
+                    <p><img src="~/images/ServiceCenter/icons/phone.svg" alt="Телефон" class="icon" /> +8 800 555 35 555</p>
+                </section>
+
+                <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+                    ©2024 <a href="https://github.com/LexRicord" class="text-reset fw-bold">LexRicord</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
