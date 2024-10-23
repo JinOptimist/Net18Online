@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System.IO;
+using System.Text.Json;
 using WebPortalEverything.Models.ServiceCenter;
 
 namespace WebPortalEverthing.Controllers
@@ -20,7 +20,7 @@ namespace WebPortalEverthing.Controllers
             }
 
             var jsonData = System.IO.File.ReadAllText(_jsonFilePath);
-            return JsonConvert.DeserializeObject<List<TypeOfApplianceViewModel>>(jsonData) ?? new List<TypeOfApplianceViewModel>();
+            return JsonSerializer.Deserialize<List<TypeOfApplianceViewModel>>(jsonData) ?? new List<TypeOfApplianceViewModel>();
         }
 
         /// <summary>
@@ -28,10 +28,8 @@ namespace WebPortalEverthing.Controllers
         /// </summary>
         private void SaveTypeOfAppliancesToJson(List<TypeOfApplianceViewModel> appliances)
         {
-            var jsonData = JsonConvert.SerializeObject(appliances, Formatting.Indented);
+            var jsonData = JsonSerializer.Serialize(appliances);
             System.IO.File.WriteAllText(_jsonFilePath, jsonData);
-
-            Console.WriteLine($"Saved appliances to JSON: {jsonData}");
         }
 
 
