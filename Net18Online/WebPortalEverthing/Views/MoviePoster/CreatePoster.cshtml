@@ -1,0 +1,18 @@
+﻿@model WebPortalEverthing.Models.MoviePoster.PosterCreationViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutMoviePoster.cshtml";
+}
+
+<form method="post">
+    <div>
+        @Html.TextBoxFor(x => x.Name, new { placeholder = "Введи имя" })
+    </div>
+    <div>
+        @Html.TextBoxFor(x => x.Url, new { placeholder = "Введи путь к картинке" })
+    </div>
+    <div>
+        @Html.TextBoxFor(x => x.Tags, new { placeholder = "Введи тэг" })
+    </div>
+    <button type="submit">Создать</button>
+</form>

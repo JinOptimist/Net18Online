@@ -13,6 +13,7 @@ builder.Services.AddSingleton<IAnimeGirlRepository, AnimeGirlRepository>();
 
 builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
 
+builder.Services.AddSingleton<IEcologyRepository, EcologyRepository>();
 
 
 var app = builder.Build();
