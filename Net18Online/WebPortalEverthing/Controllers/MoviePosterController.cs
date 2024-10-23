@@ -22,17 +22,19 @@ namespace WebPortalEverthing.Controllers
             model.Seconds = DateTime.Now.Second;
             return View(model);
         }
-
+        
         public IActionResult AllPosters(int? count)
         {
-            if (!_moviePosterRepository.Any())
+            var countElementInDb = _moviePosterRepository.GetAll();
+            if (!_moviePosterRepository.Any() || countElementInDb.Count < count)
             {
-                GenerateDefaultAnimeGirl(count);
+                GenerateDefaultMoviePoster(count - countElementInDb.Count);
             }
-            
-            var moviesFromDb = _moviePosterRepository.GetAll();
+
+            var moviesFromDb = _moviePosterRepository.GetAllInCount(count ?? countElementInDb.Count);
 
             var movieViewModels = moviesFromDb
+                .Take(count ?? countElementInDb.Count)
                 .Select(dbMovie =>
                     new MovieViewModel
                     {
@@ -43,10 +45,11 @@ namespace WebPortalEverthing.Controllers
                     }
                 )
                 .ToList();
+
             return View(movieViewModels);
         }
 
-        private void GenerateDefaultAnimeGirl(int? count)
+        private void GenerateDefaultMoviePoster(int? count)
         {
             for (int i = 0; i < (count ?? 4); i++)
             {

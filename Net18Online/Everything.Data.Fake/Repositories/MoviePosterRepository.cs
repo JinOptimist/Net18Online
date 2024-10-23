@@ -1,4 +1,5 @@
-﻿using Everything.Data.Interface.Models;
+﻿using Everything.Data.Fake.Models;
+using Everything.Data.Interface.Models;
 using Everything.Data.Interface.Repositories;
 
 namespace Everything.Data.Fake.Repositories
@@ -19,6 +20,12 @@ namespace Everything.Data.Fake.Repositories
         public void Delete(IMovieData data)
         {
             movies.Remove(data);
+        }
+
+        public List<IMovieData> GetAllInCount(int count)
+        {
+            movies.Take(count).ToList();
+            return movies;
         }
 
         public List<IMovieData> GetAll()

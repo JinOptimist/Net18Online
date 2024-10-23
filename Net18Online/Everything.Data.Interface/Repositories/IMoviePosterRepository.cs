@@ -8,6 +8,8 @@ namespace Everything.Data.Interface.Repositories
 
         void Delete(IMovieData data);
 
+        List<IMovieData> GetAllInCount(int count);
+
         List<IMovieData> GetAll();
 
         IMovieData? Get(int id); 
