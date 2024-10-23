@@ -1,0 +1,17 @@
+﻿@using WebPortalEverything.Models.ServiceCenter
+@model TypeOfApplianceCreationViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutServiceCenter.cshtml";
+}
+
+<form method="post" enctype="multipart/form-data">
+    <div>
+        @Html.TextBoxFor(x => x.Name, new { placeholder = "Введите имя" })
+    </div>
+    <div>
+        <label for="imageFile">Выберите изображение:</label>
+        <input type="file" name="imageFile" id="imageFile" accept="image/*" />
+    </div>
+    <button type="submit">Создать</button>
+</form>

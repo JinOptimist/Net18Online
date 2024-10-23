@@ -1,0 +1,32 @@
+footer {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer .social-icons img {
+    width: 30px;
+    margin: 0 10px;
+}
+
+.footer .contact-info {
+    margin: 20px 0;
+}
+
+.contacts img {
+    width: 20px;
+    margin-right: 10px;
+}
+
+.footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    vertical-align: middle;
+}

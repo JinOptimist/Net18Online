@@ -1,0 +1,29 @@
+button {
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button.register {
+    background-color: #1e90ff;
+}
+
+button.register:hover {
+    background-color: #1c86ee;
+}
+
+button.login {
+    background-color: #87cefa;
+}
+
+button.login:hover {
+    background-color: #00bfff;
+}
