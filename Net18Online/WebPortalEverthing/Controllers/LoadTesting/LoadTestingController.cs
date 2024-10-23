@@ -50,8 +50,22 @@ namespace WebPortalEverthing.Controllers.LoadTesting
             decimal throughput,
             decimal average)
         {
-            Guid guid;
+            model.Metrics.Add(new Metric
+            {
+                Guid = Guid.NewGuid(),
+                Name = name,
+                Throughput = throughput * 1.0m,
+                Average = average * 1.0m
+            });
+            return Redirect("/LoadTesting/ContenMetricsListView");
+        }
 
+        [HttpPost]
+        public IActionResult _LayoutLoadTesting
+            (string name,
+            decimal throughput,
+            decimal average)
+        {
             model.Metrics.Add(new Metric
             {
                 Guid = Guid.NewGuid(),
