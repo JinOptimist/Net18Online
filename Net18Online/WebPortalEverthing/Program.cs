@@ -10,6 +10,7 @@ builder.Services.AddControllersWithViews();
 
 // Register in DI container our services/repository
 builder.Services.AddSingleton<IAnimeGirlRepository, AnimeGirlRepository>();
+builder.Services.AddSingleton<ISurveysRepository, SurveysRepository>();
 
 
 
