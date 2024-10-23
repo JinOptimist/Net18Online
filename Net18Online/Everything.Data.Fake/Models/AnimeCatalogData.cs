@@ -2,9 +2,8 @@
 
 namespace Everything.Data.Fake.Models
 {
-    public class AnimeCatalogData : IAnimeCatalogData
+    public class AnimeCatalogData : BaseModel, IAnimeCatalogData
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string ImageSrc { get; set; }
     }

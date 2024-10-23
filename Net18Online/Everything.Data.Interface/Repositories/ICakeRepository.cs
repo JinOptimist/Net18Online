@@ -2,16 +2,7 @@
 
 namespace Everything.Data.Interface.Repositories
 {
-    public interface ICakeRepository
+    public interface ICakeRepository : IBaseRepository<ICakeData>
     {
-        void Add(ICakeData data);
-
-        void Delete(ICakeData data);
-
-        List<ICakeData> GetAll();
-
-        ICakeData? Get(int id);
-
-        bool Any();
     }
 }

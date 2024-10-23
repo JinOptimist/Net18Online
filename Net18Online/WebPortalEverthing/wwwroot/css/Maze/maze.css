@@ -1,0 +1,10 @@
+.cell{
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+}
+
+.cell img {
+    max-width: 30px;
+    max-height: 30px;
+}

@@ -2,16 +2,7 @@
 
 namespace Everything.Data.Interface.Repositories
 {
-    public interface IAnimeCatalogRepository
+    public interface IAnimeCatalogRepository : IBaseRepository<IAnimeCatalogData>
     {
-        void Add(IAnimeCatalogData data);
-
-        void Delete(IAnimeCatalogData data);
-
-        List<IAnimeCatalogData> GetAll();
-
-        IAnimeCatalogData? Get(int id);
-
-        bool Any();
     }
 }

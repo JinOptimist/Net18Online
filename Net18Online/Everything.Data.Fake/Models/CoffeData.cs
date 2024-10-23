@@ -2,10 +2,8 @@
 
 namespace Everything.Data.Fake.Models
 {
-    public class CoffeData : ICoffeData
+    public class CoffeData : BaseModel, ICoffeData
     {
-        public int Id { get; set; }
-
         public string Brand { get; set; }
 
         public string Url { get; set; }

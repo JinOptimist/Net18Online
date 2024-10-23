@@ -2,16 +2,8 @@
 
 namespace Everything.Data.Interface.Repositories
 {
-    public interface IAnimeGirlRepository
+    public interface IAnimeGirlRepository : IBaseRepository<IGirlData>
     {
-        void Add(IGirlData data);
-
-        void Delete(IGirlData data);
-
-        List<IGirlData> GetAll();
-
-        IGirlData? Get(int id);
-
-        bool Any();
+        IEnumerable<IGirlData> GetMostPopular();
     }
 }

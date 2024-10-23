@@ -9,6 +9,21 @@ namespace MazeCore.Builders
     {
         private Maze _maze;
 
+        public Maze BuildEmptyMaze(int width = 10, int height = 10)
+        {
+            _maze = new Maze
+            {
+                Width = width,
+                Height = height,
+            };
+
+            // Build maze
+            BuildWall();
+            BuildGround();
+
+            return _maze;
+        }
+
         public Maze Build(int width, int height)
         {
             _maze = new Maze
