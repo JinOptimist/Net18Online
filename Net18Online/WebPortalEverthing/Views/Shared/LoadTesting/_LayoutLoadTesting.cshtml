@@ -1,0 +1,96 @@
+﻿@using WebPortalEverthing.Models.LoadTesting
+@model LoadTestingContentMetricsListViewModel
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Load Testing</title>
+    <link href="~/css/LoadTesting/reset.css" rel="stylesheet" />
+    <link href="~/css/LoadTesting/fire-fon.css" rel="stylesheet" />
+    <link href="~/css/LoadTesting/style.css" rel="stylesheet" />
+    <link href="~/css/LoadTesting/button-list.css" rel="stylesheet" />
+    <link href="~/css/LoadTesting/avatar.css" rel="stylesheet" />
+    <link href="~/css/LoadTesting/discription-tipes.css" rel="stylesheet" />
+    <link href="~/css/LoadTesting/create-metric-form.css" rel="stylesheet" />
+    <link href="~/css/LoadTesting/create-profile-form.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="header">
+        <div class="logo-header">
+            <img src="~/images/LoadTesting/logo.jpg" alt="logo-header" />
+        </div>
+        <div class="name">LOAD TESTING</div>
+        <div class="profile-blok">
+            <div class="avatar">
+                <img src="~/images/LoadTesting/avatar.jpg" alt="avatar" class="avatar-image" />
+            </div>
+            <a href="https://example.com/login" class="login-button">Логин</a>
+        </div>
+    </div>
+
+    <!-- Прозрачный фон под списком кнопок с переливающимся фоном -->
+    <div class="fire-fon"></div>
+
+    <div class="buttona-and-content">
+        <div class="button-list">
+            <div class="fridaysRemaining">
+                До нового года осталось <span id="fridaysCount">0</span> пятниццц !
+            </div>
+            <ul>
+                <li>
+                    <a href="https://example.com" class="button"><span>Кнопка 1</span></a>
+                </li>
+                <li>
+                    <a href="https://example.com" class="button"><span>Кнопка 2</span></a>
+                </li>
+                <li>
+                    <a href="/loadtesting/CreateProfile" class="button"><span>CreateProfile</span></a>
+                </li>
+            </ul>
+            <div class="oval-form">
+                <div class="input-container">
+                    <div class="title">Закажи себе нагрузку на Новый год:</div>
+                    <input type="text" name="Throughput" placeholder="Throughput" required />
+                    <input type="text" name="Average" placeholder="Average" required />
+                    <button type="submit">Создать</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            @RenderBody();
+        </div><!-- Закрытие блока .content -->
+
+    </div>  <!-- Закрытие блока .buttona-and-content -->
+
+</body>
+</html>
+<script>
+    function countFridaysUntilNewYear() {
+        // Текущая дата
+        let today = new Date();
+
+        // Дата наступления Нового Года (31 декабря текущего года)
+        let newYear = new Date(today.getFullYear(), 11, 31); // Месяцы в JavaScript начинаются с 0, поэтому 11 - это декабрь
+
+        // Количество пятниц
+        let fridaysRemaining = 0;
+
+        // Проход по дням до Нового Года
+        while (today <= newYear) {
+            if (today.getDay() === 5) { // Пятница - это день недели 5
+                fridaysRemaining++;
+            }
+            today.setDate(today.getDate() + 1); // Переходим на следующий день
+        }
+
+        // Выводим результат на страницу
+        document.getElementById("fridaysCount").innerText = fridaysRemaining;
+    }
+
+    // Запускаем функцию после загрузки страницы
+    window.onload = countFridaysUntilNewYear;
+</script>
