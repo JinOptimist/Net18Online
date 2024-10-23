@@ -21,7 +21,7 @@ namespace WebPortalEverthing.Controllers.LoadTesting
                 {
                     model.Metrics.Add(new Metric
                     {
-                     //   Guid = Guid.NewGuid(),
+                        //   Guid = Guid.NewGuid(),
                         Name = $"Metric {i}",
                         Throughput = i * 10.5m,
                         Average = i * 5.0m
@@ -45,16 +45,13 @@ namespace WebPortalEverthing.Controllers.LoadTesting
         }
 
         [HttpPost]
-        public IActionResult CreateProfileView
-            (string name,
-            decimal throughput,
-            decimal average)
+        public IActionResult CreateProfileView(Metric metric)
         {
             model.Metrics.Add(new Metric
             {
-                Name = name,
-                Throughput = throughput * 1.0m,
-                Average = average * 1.0m
+                Name = metric.Name,
+                Throughput = metric.Throughput * 1.0m,
+                Average = metric.Average * 1.0m
             });
             return Redirect("/LoadTesting/ContenMetricsListView");
         }
