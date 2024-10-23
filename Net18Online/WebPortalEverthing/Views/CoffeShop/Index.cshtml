@@ -31,13 +31,13 @@
                             <a class="btn btn-outline-success" href="/CoffeShop/Update">
                                 U
                             </a>
-                            <a class="btn btn-outline-danger" asp-controller="CoffeShop" asp-action="Delete" asp-route-id="">
+                            <a class="btn btn-outline-danger" asp-controller="CoffeShop" asp-action="Delete" asp-route-id="@coffe.Id">
                                 D
-                            </a> 1
+                            </a> @coffe.Id
                         </th>
-                        <td>@coffe.Id</td>
                         <td>@coffe.Coffe</td>
                         <td>@coffe.Cost $</td>
+                        <td>#</td>
                     </tr>
                 }
             </tbody>

@@ -16,8 +16,27 @@ namespace WebPortalEverthing.Controllers
 
         public IActionResult Index()
         {
-            var viewModels = new List<CoffeViewModel>();
+            var viewModels = CoffeView();
+
             return View(viewModels);
+        }
+
+        public List<CoffeViewModel> CoffeView()
+        {
+            var valuesCoffeFromDb = _coffeShopRepository.GetAll();
+
+            var viewModels = valuesCoffeFromDb
+                .Select(coffeFromDb =>
+                    new CoffeViewModel
+                    {
+                        Id = coffeFromDb.Id,
+                        Coffe = coffeFromDb.Coffe,
+                        Url = coffeFromDb.Url,
+                        Cost = coffeFromDb.Cost,
+                    }
+                ).ToList();
+
+            return viewModels;
         }
 
         public IActionResult Coffe()
@@ -27,20 +46,9 @@ namespace WebPortalEverthing.Controllers
                 DefaultCoffeViewValue();
             }
 
-            var valuesCoffeFromDb = _coffeShopRepository.GetAll();
+            var viewModels = CoffeView();
 
-            var coffeViewModel = valuesCoffeFromDb
-                .Select(coffeFromDb =>
-                    new CoffeViewModel
-                    {
-                        Coffe = coffeFromDb.Coffe,
-                        Url = coffeFromDb.Url,
-                        Cost = coffeFromDb.Cost,
-                    }
-                )
-                .ToList();
-
-            return View(coffeViewModel);
+            return View(viewModels);
         }
 
         public void DefaultCoffeViewValue()
