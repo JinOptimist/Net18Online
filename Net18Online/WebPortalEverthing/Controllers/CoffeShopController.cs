@@ -1,52 +1,78 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
+﻿using Everything.Data.Fake.Models;
+using Everything.Data.Interface.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.CoffeShop;
 
 namespace WebPortalEverthing.Controllers
 {
     public class CoffeShopController : Controller
     {
+        private ICoffeShopRepository _coffeShopRepository;
 
-        /// <summary>
-        /// worst idea
-        /// </summary>
-        private static List<CoffeViewModel> coffeViewModels = new List<CoffeViewModel>();
-
+        public CoffeShopController(ICoffeShopRepository coffeShopRepository)
+        {
+            _coffeShopRepository = coffeShopRepository;
+        }
 
         public IActionResult Index()
         {
-            return View(coffeViewModels);
+            var viewModels = CoffeView();
+
+            return View(viewModels);
         }
 
-        public IActionResult Coffe(int? count)
+        public List<CoffeViewModel> CoffeView()
         {
-            if (coffeViewModels.Any())
-            {
-                return View(coffeViewModels);
-            }
-            for (int i = 0; i < (count ?? 1); i++)
-            {
-                var AmericanoViewModel = new CoffeViewModel
-                {
-                    Id = i + 1,
-                    Coffe = "Americano",
-                    Url = $"/images/CoffeShop/Americano.jpeg",
-                    Cost = 1.5f
-                };
-                coffeViewModels
-                    .Add(AmericanoViewModel);
+            var valuesCoffeFromDb = _coffeShopRepository.GetAll();
 
-                var RafViewModel = new CoffeViewModel
-                {
-                    Id = i + 2,
-                    Coffe = "Raf",
-                    Url = $"/images/CoffeShop/raf.jpg",
-                    Cost = 2.0f
-                };
-                coffeViewModels
-                    .Add(RafViewModel);
+            var viewModels = valuesCoffeFromDb
+                .Select(coffeFromDb =>
+                    new CoffeViewModel
+                    {
+                        Id = coffeFromDb.Id,
+                        Coffe = coffeFromDb.Coffe,
+                        Url = coffeFromDb.Url,
+                        Cost = coffeFromDb.Cost,
+                    }
+                ).ToList();
+
+            return viewModels;
+        }
+
+        public IActionResult Coffe()
+        {
+            if (!_coffeShopRepository.Any())
+            {
+                DefaultCoffeViewValue();
             }
-            return View(coffeViewModels);
+
+            var viewModels = CoffeView();
+
+            return View(viewModels);
+        }
+
+        public void DefaultCoffeViewValue()
+        {
+            var costOfAmericano = 1.0f;
+            var AmericanoViewModel = new CoffeData
+            {
+                Coffe = "Americano",
+                Url = $"/images/CoffeShop/Americano.jpeg",
+                Cost = costOfAmericano,
+            };
+
+            _coffeShopRepository
+                .Add(AmericanoViewModel);
+
+            var costOfRaf = 2.0f;
+            var RafViewModel = new CoffeData
+            {
+                Coffe = "Raf",
+                Url = $"/images/CoffeShop/raf.jpg",
+                Cost = costOfRaf,
+            };
+            _coffeShopRepository
+                .Add(RafViewModel);
         }
 
         [HttpGet]
@@ -58,16 +84,14 @@ namespace WebPortalEverthing.Controllers
         [HttpPost]
         public IActionResult Create(CoffeCreateViewModel viewModel)
         {
-            var constId = 3;
-            var coffe = new CoffeViewModel
+            var coffe = new CoffeData
             {
-                Id = constId,
                 Coffe = viewModel.Coffe,
                 Url = viewModel.Url,
                 Cost = viewModel.Cost
             };
 
-            coffeViewModels
+            _coffeShopRepository
                 .Add(coffe);
 
             return RedirectToAction("Index");
@@ -76,12 +100,11 @@ namespace WebPortalEverthing.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var coffeItem = coffeViewModels
-                .FirstOrDefault(c => c.Id == id);
+            var coffeItem = _coffeShopRepository.Get(id);
 
             if (coffeItem != null)
             {
-                coffeViewModels.Remove(coffeItem);
+                _coffeShopRepository.Delete(coffeItem);
             }
 
             return RedirectToAction("Index");
@@ -96,8 +119,7 @@ namespace WebPortalEverthing.Controllers
         [HttpPost]
         public IActionResult Update(CoffeUpdateViewModel viewModel)
         {
-            var coffeItem = coffeViewModels
-                .FirstOrDefault(c => c.Id == viewModel.Id);
+            var coffeItem = _coffeShopRepository.Get(viewModel.Id);
 
             if (coffeItem != null)
             {
