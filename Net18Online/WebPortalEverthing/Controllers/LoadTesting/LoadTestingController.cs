@@ -21,7 +21,7 @@ namespace WebPortalEverthing.Controllers.LoadTesting
                 {
                     model.Metrics.Add(new Metric
                     {
-                        Guid = Guid.NewGuid(),
+                     //   Guid = Guid.NewGuid(),
                         Name = $"Metric {i}",
                         Throughput = i * 10.5m,
                         Average = i * 5.0m
@@ -52,7 +52,6 @@ namespace WebPortalEverthing.Controllers.LoadTesting
         {
             model.Metrics.Add(new Metric
             {
-                Guid = Guid.NewGuid(),
                 Name = name,
                 Throughput = throughput * 1.0m,
                 Average = average * 1.0m
@@ -68,7 +67,6 @@ namespace WebPortalEverthing.Controllers.LoadTesting
         {
             model.Metrics.Add(new Metric
             {
-                Guid = Guid.NewGuid(),
                 Name = name,
                 Throughput = throughput * 1.0m,
                 Average = average * 1.0m
