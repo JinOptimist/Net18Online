@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Everything.Data.Fake.Models;
+using Everything.Data.Interface.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.AnimeGirl;
 using WebPortalEverthing.Models.Cake;
 
@@ -6,24 +8,47 @@ namespace WebPortalEverthing.Controllers
 {
     public class CakeController : Controller
     {
-        private static List<CakeViewModel> _listCakes = new();
+        private ICakeRepository _cakeRepository;
+
+        public CakeController(ICakeRepository cakeRepository) 
+        { 
+            _cakeRepository = cakeRepository;
+        }
         public IActionResult Index()
         {
-            if (!_listCakes.Any())
+            if (!_cakeRepository.Any())
             {
-                for (int i = 0; i < 4; i++)
-                {
-                    var cake = new CakeViewModel()
-                    {
-                        ImageSrc = $"/images/Cake/Cake{i + 1}.jpg",
-                        Description = "Cake yami",
-                        Reiting = 5,
-                        Price = 12.45f,
-                    };
-                    _listCakes.Add(cake);
-                }
+                GenerateDefaultCake();
             }
-            return View(_listCakes);
+
+            var cakesFromDb = _cakeRepository.GetAll();
+
+            var cakesViewModel = cakesFromDb
+                .Select(dbCake => new CakeViewModel
+                {
+                    Id = dbCake.Id,
+                    ImageSrc = dbCake.ImageSrc,
+                    Description = dbCake.Description,
+                    Rating = dbCake.Rating,
+                    Price = dbCake.Price
+                }).ToList();
+
+            return View(cakesViewModel);
+        }
+
+        private void GenerateDefaultCake()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                var cake = new CakeData()
+                {
+                    ImageSrc = $"/images/Cake/Cake{i + 1}.jpg",
+                    Description = "Cake yami",
+                    Rating = 5,
+                    Price = 12.45m,
+                };
+                _cakeRepository.Add(cake);
+            }
         }
 
         [HttpGet]
@@ -35,15 +60,15 @@ namespace WebPortalEverthing.Controllers
         [HttpPost]
         public IActionResult Create(CakeCreationViewModel viewModel)
         {
-            var cake = new CakeViewModel
+            var cake = new CakeData
             {
                 ImageSrc = viewModel.Url,
                 Description = viewModel.Description,
                 Price = viewModel.Price,
-                Reiting = 0,
+                Rating = 0,
             };
 
-            _listCakes.Add(cake);
+            _cakeRepository.Add(cake);
 
             return RedirectToAction("Index");
         }

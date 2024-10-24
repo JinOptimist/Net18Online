@@ -2,9 +2,8 @@
 
 namespace Everything.Data.Fake.Models
 {
-    public class GirlData : IGirlData
+    public class GirlData : BaseModel, IGirlData
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string ImageSrc { get; set; }
         public List<string> Tags { get; set; }

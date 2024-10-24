@@ -1,8 +1,7 @@
 ﻿namespace Everything.Data.Interface.Models
 {
-    public interface IGirlData
+    public interface IGirlData : IBaseModel
     {
-        int Id { get; set; }
         string Name { get; set; }
         string ImageSrc { get; set; }
         List<string> Tags { get; set; }

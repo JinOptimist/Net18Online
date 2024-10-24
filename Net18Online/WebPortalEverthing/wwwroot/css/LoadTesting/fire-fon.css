@@ -1,0 +1,44 @@
+* {
+  margin: 0;
+  padding: 0;
+  /* box-sizing: border-box;*/
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+/* Прозрачный фон с огненным эффектом */
+.fire-fon {
+  position: absolute;
+  top: 170px; /* Начало после header (высоту header можно изменить) */
+  left: 0;
+  right: 0;
+  height: 100%; /* Высота оставшейся части экрана */
+  z-index: 0; /* Фон под кнопками */
+  background: linear-gradient(
+    45deg,
+    rgba(255, 69, 0, 0.4),
+    rgba(255, 140, 0, 0.4),
+    rgba(255, 215, 0, 0.4),
+    rgba(255, 69, 0, 0.4)
+  );
+  background-size: 300% 300%; /* Увеличиваем размер для эффекта перелива */
+  animation: fireGlow 4s ease infinite; /* Анимация для перелива */
+  opacity: 0.3; /* Немного прозрачный фон */
+}
+
+/* Анимация для переливающегося фона */
+@keyframes fireGlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

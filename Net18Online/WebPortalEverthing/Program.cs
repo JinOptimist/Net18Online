@@ -1,7 +1,6 @@
 using Everything.Data.Fake.Repositories;
 using Everything.Data.Interface.Repositories;
-using Microsoft.Extensions.DependencyInjection;
-using WebPortalEverthing.Services;
+using MazeCore.Builders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +9,19 @@ builder.Services.AddControllersWithViews();
 
 // Register in DI container our services/repository
 builder.Services.AddSingleton<IAnimeGirlRepository, AnimeGirlRepository>();
+builder.Services.AddSingleton<ICakeRepository, CakeRepository>();
+builder.Services.AddSingleton<IEcologyRepository, EcologyRepository>();
+builder.Services.AddSingleton<ICoffeShopRepository, CoffeShopRepository>();
 builder.Services.AddSingleton<ISurveysRepository, SurveysRepository>();
 
+
+// Register in DI container services/repository for MoviePosterRepository
+builder.Services.AddSingleton<IMoviePosterRepository, MoviePosterRepository>();
+
+
+builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
+
+builder.Services.AddScoped<MazeBuilder>();
 
 
 var app = builder.Build();

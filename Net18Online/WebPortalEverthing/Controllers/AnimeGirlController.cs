@@ -1,5 +1,4 @@
 ﻿using Everything.Data.Fake.Models;
-using Everything.Data.Fake.Repositories;
 using Everything.Data.Interface.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.AnimeGirl;
@@ -8,6 +7,7 @@ namespace WebPortalEverthing.Controllers
 {
     public class AnimeGirlController : Controller
     {
+        private int DEFAULT_GIRL_COUNT = 4;
         private IAnimeGirlRepository _animeGirlRepository;
 
         public AnimeGirlController(IAnimeGirlRepository animeGirlRepository)
@@ -26,14 +26,14 @@ namespace WebPortalEverthing.Controllers
             return View(model);
         }
 
-        public IActionResult AllGirls(int? count)
+        public IActionResult AllGirls()
         {
             if (!_animeGirlRepository.Any())
             {
-                GenerateDefaultAnimeGirl(count);
+                GenerateDefaultAnimeGirl();
             }
 
-            var girlsFromDb = _animeGirlRepository.GetAll();
+            var girlsFromDb = _animeGirlRepository.GetMostPopular();
 
             var girlsViewModels = girlsFromDb
                 .Select(dbGirl =>
@@ -50,9 +50,9 @@ namespace WebPortalEverthing.Controllers
             return View(girlsViewModels);
         }
 
-        private void GenerateDefaultAnimeGirl(int? count)
+        private void GenerateDefaultAnimeGirl()
         {
-            for (int i = 0; i < (count ?? 4); i++)
+            for (int i = 0; i < DEFAULT_GIRL_COUNT; i++)
             {
                 var girlNumber = (i % 4) + 1;
                 var dataModel = new GirlData
@@ -79,7 +79,7 @@ namespace WebPortalEverthing.Controllers
             {
                 Name = viewModel.Name,
                 ImageSrc = viewModel.Url,
-                Tags = new()
+                Tags = new List<string>() { "Cool" }
             };
 
             _animeGirlRepository.Add(dataGirl);
