@@ -1,7 +1,5 @@
 using Everything.Data.Fake.Repositories;
 using Everything.Data.Interface.Repositories;
-using Microsoft.Extensions.DependencyInjection;
-using WebPortalEverthing.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +8,12 @@ builder.Services.AddControllersWithViews();
 
 // Register in DI container our services/repository
 builder.Services.AddSingleton<IAnimeGirlRepository, AnimeGirlRepository>();
+builder.Services.AddSingleton<ICakeRepository, CakeRepository>();
 
+builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
+
+builder.Services.AddSingleton<IEcologyRepository, EcologyRepository>();
+builder.Services.AddSingleton<ICoffeShopRepository, CoffeShopRepository>();
 
 
 var app = builder.Build();

@@ -5,13 +5,15 @@
     Layout = "~/Views/Shared/_LayoutEcology.cshtml";
 }
 
+<link rel="stylesheet" type="text/css" href="~/css/Ecology/style.css">
+
 <form method="post" action="/Ecology/EcologyChat">
     <label for="imageUrl">Entet image URL:</label>
     <input type="text" id="imageUrl" name="Url" />
-    <br />
+    <div>
     <label for="imageText">Enter text:</label>
     <input type="text" id="imageText" name="Text" />
-    <br />
+    </div>
     <button type="submit">Submit</button>
 </form>
 
@@ -21,7 +23,7 @@
         @foreach (var item in Model)
         {
             <li>
-                <img src="@item.ImageSrc" style="max-width: 300px; max-height: 300px;" alt="Picture" />
+                <img src="@item.ImageSrc" class="post" alt="Picture" />
                 <p>@item.Texts.FirstOrDefault()</p>
             </li>
         }
