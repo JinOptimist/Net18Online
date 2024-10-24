@@ -1,12 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Everything.Data.Interface.Repositories;
+using Everything.Data.Fake.Models.Surveys;
+using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.Surveys;
+using Everything.Data.Interface.Models.Surveys;
 
 namespace WebPortalEverthing.Controllers
 {
     public class SurveysController : Controller
     {
-        // BAD. DO NOT USE THIS ON PROD
-        private static List<SurveyGroupViewModel> SurveyGroups = new();
+        private ISurveysRepository _surveysRepository;
+
+        public SurveysController(ISurveysRepository surveysRepository)
+        {
+            _surveysRepository = surveysRepository;
+        }
 
         public ActionResult Index()
         {
@@ -15,141 +22,234 @@ namespace WebPortalEverthing.Controllers
 
         public ActionResult SurveysAll()
         {
-            if (!SurveyGroups.Any())
+            if (!_surveysRepository.AnySurveyGroups())
             {
-                var statusNew = new SurveyStatusViewModel()
-                {
-                    Title = "Новый опрос",
-                    ImagesSrc = "/images/Surveys/status/new-48.png",
-                };
-
-                var statusCompleted = new SurveyStatusViewModel()
-                {
-                    Title = "Опрос пройден",
-                    ImagesSrc = "/images/Surveys/status/status-50.png",
-                };
-
-                var buttonTakeSurvey = new SurveyActionViewModel()
-                {
-                    Title = "Пройти"
-                };
-
-                var group1 = new List<SurveyViewModel>
-                {
-                    new SurveyViewModel()
-                    {
-                        Status = statusCompleted,
-                        Title = "Самооценка сотрудника"
-                    },
-                    new SurveyViewModel()
-                    {
-                        Status = statusCompleted,
-                        Title = "Карьерные ожидания сотрудников"
-                    },
-                    new SurveyViewModel()
-                    {
-                        Status = statusNew,
-                        Title = "Диагностики синдрома выгорания",
-                        Action = buttonTakeSurvey
-                    }
-                };
-
-                SurveyGroups.Add(new()
-                {
-                    Title = "Оценка / самооценка",
-                    Surveys = group1
-                });
-
-                var group2 = new List<SurveyViewModel>
-                {
-                    new SurveyViewModel()
-                    {
-                        Status = statusCompleted,
-                        Title = "Анкета удовлетворенности сотрудников"
-                    },
-                    new SurveyViewModel()
-                    {
-                        Status = statusCompleted,
-                        Title = "Удовлетворенность работой и вознаграждениями"
-                    },
-                    new SurveyViewModel()
-                    {
-                        Status = statusCompleted,
-                        Title = "Удовлетворенность условиями труда с оценкой важности"
-                    },
-                    new SurveyViewModel()
-                    {
-                        Status = statusNew,
-                        Title = "Название опроса 6",
-                        Action = buttonTakeSurvey
-                    },
-                    new SurveyViewModel()
-                    {
-                        Status = statusNew,
-                        Title = "Название опроса 7",
-                        Action = buttonTakeSurvey
-                    },
-                    new SurveyViewModel()
-                    {
-                        Status = statusNew,
-                        Title = "Название опроса 8",
-                        Action = buttonTakeSurvey
-                    },
-                    new SurveyViewModel()
-                    {
-                        Status = statusNew,
-                        Title = "Название опроса 9",
-                        Action = buttonTakeSurvey
-                    },
-                    new SurveyViewModel()
-                    {
-                        Status = statusNew,
-                        Title = "Название опроса 10",
-                        Action = buttonTakeSurvey
-                    },
-                    new SurveyViewModel()
-                    {
-                        Status = statusNew,
-                        Title = "Название опроса 11",
-                        Action = buttonTakeSurvey
-                    },
-                    new SurveyViewModel()
-                    {
-                        Status = statusNew,
-                        Title = "Название опроса 12",
-                        Action = buttonTakeSurvey
-                    }
-                };
-
-                SurveyGroups.Add(new()
-                {
-                    Title = "Удовлетворенность",
-                    Surveys = group2
-                });
-
-                var group3 = new List<SurveyViewModel>
-                {
-                    new SurveyViewModel()
-                    {
-                        Status = statusNew,
-                        Title = "Корпоративная культура",
-                        Action = buttonTakeSurvey
-                    },
-                    new SurveyViewModel()
-                    {
-                        Status = statusCompleted,
-                        Title = "Диагностика аврала"
-                    }
-                };
-
-                SurveyGroups.Add(new()
-                {
-                    Title = "Прочее",
-                    Surveys = group3
-                });
+                GenerateDefaultStatuses();
+                GenerateDefaultGroups();
+                GenerateDefaultSurveysInGroups();
             }
 
-            return View(SurveyGroups);
+            var groupsFromDb = _surveysRepository.GetAllSurveyGroups();
+            var surveysFromDb = _surveysRepository.GetAllSurveys();
+
+            var surveyGroupsViewModels = groupsFromDb
+                .Select(dbGroup =>
+                    new SurveyGroupViewModel
+                    {
+                        Id = dbGroup.Id,
+                        Title = dbGroup.Title,
+                        Surveys = surveysFromDb
+                            .Where(survey => survey.IdGroup == dbGroup.Id)
+                            .Select(dbSurvey => GetSurveyViewModelFromData(dbSurvey))
+                            .ToList(),
+                    }
+                )
+                .ToList();
+
+            return View(surveyGroupsViewModels);
+        }
+
+        private SurveyViewModel GetSurveyViewModelFromData(ISurvey survey)
+        {
+            return new SurveyViewModel
+            {
+                Id = survey.Id,
+                Status = GetSurveyStatusViewModelFromData(survey),
+                Title = survey.Title,
+                Action = GetSurveyActionModelFromData(survey)
+            };
+        }
+
+        private SurveyStatusViewModel GetSurveyStatusViewModelFromData(ISurvey survey)
+        {
+            var statusesFromDb = _surveysRepository.GetAllStatuses();
+            var statusFromDb = statusesFromDb
+                .Where(i => i.Id == survey.IdStatus)
+                .FirstOrDefault();
+
+            return new SurveyStatusViewModel()
+            {
+                Title = statusFromDb.Title,
+                ImagesSrc = statusFromDb.ImagesSrc
+            };
+        }
+
+        private SurveyActionViewModel? GetSurveyActionModelFromData(ISurvey survey)
+        {
+            // Пока что придумана одна кнопка, в будующем будет несколько
+            var buttonTakeSurvey = new SurveyActionViewModel()
+            {
+                Title = "Пройти"
+            };
+
+            return survey.IdStatus switch
+            {
+                0 => buttonTakeSurvey,
+                _ => null
+            };
+        }
+
+        private void GenerateDefaultStatuses()
+        {
+            var statusNew = new StatusData()
+            {
+                Id = 0,
+                Title = "Новый опрос",
+                ImagesSrc = "/images/Surveys/status/new-48.png",
+            };
+            _surveysRepository.AddStatus(statusNew);
+
+            var statusCompleted = new StatusData()
+            {
+                Id = 1,
+                Title = "Опрос пройден",
+                ImagesSrc = "/images/Surveys/status/status-50.png",
+            };
+            _surveysRepository.AddStatus(statusCompleted);
+        }
+
+        private void GenerateDefaultGroups()
+        {
+            var group = new SurveyGroupData()
+            {
+                Title = "Оценка / самооценка"
+            };
+            _surveysRepository.AddSurveyGroup(group);
+
+            group = new SurveyGroupData()
+            {
+                Title = "Удовлетворенность"
+            };
+            _surveysRepository.AddSurveyGroup(group);
+
+            group = new SurveyGroupData()
+            {
+                Title = "Прочее"
+            };
+            _surveysRepository.AddSurveyGroup(group);
+        }
+
+        private void GenerateDefaultSurveysInGroups()
+        {
+            var survey = new SurveyData()
+            {
+                IdGroup = 1,
+                IdStatus = 1,
+                Title = "Самооценка сотрудника"
+            };
+            _surveysRepository.AddSurvey(survey);
+
+            survey = new SurveyData()
+            {
+                IdGroup = 1,
+                IdStatus = 1,
+                Title = "Карьерные ожидания сотрудников"
+            };
+            _surveysRepository.AddSurvey(survey);
+
+            survey = new SurveyData()
+            {
+                IdGroup = 1,
+                IdStatus = 1,
+                Title = "Диагностики синдрома выгорания"
+            };
+            _surveysRepository.AddSurvey(survey);
+
+            survey = new SurveyData()
+            {
+                IdGroup = 2,
+                IdStatus = 1,
+                Title = "Анкета удовлетворенности сотрудников"
+            };
+            _surveysRepository.AddSurvey(survey);
+
+            survey = new SurveyData()
+            {
+                IdGroup = 2,
+                IdStatus = 1,
+                Title = "Удовлетворенность работой и вознаграждениями"
+            };
+            _surveysRepository.AddSurvey(survey);
+
+            survey = new SurveyData()
+            {
+                IdGroup = 2,
+                IdStatus = 1,
+                Title = "Удовлетворенность условиями труда с оценкой важности"
+            };
+            _surveysRepository.AddSurvey(survey);
+
+            survey = new SurveyData()
+            {
+                IdGroup = 2,
+                IdStatus = 0,
+                Title = "Название опроса 6"
+            };
+            _surveysRepository.AddSurvey(survey);
+
+            survey = new SurveyData()
+            {
+                IdGroup = 2,
+                IdStatus = 0,
+                Title = "Название опроса 7"
+            };
+            _surveysRepository.AddSurvey(survey);
+
+            survey = new SurveyData()
+            {
+                IdGroup = 2,
+                IdStatus = 0,
+                Title = "Название опроса 8"
+            };
+            _surveysRepository.AddSurvey(survey);
+
+            survey = new SurveyData()
+            {
+                IdGroup = 2,
+                IdStatus = 0,
+                Title = "Название опроса 9"
+            };
+            _surveysRepository.AddSurvey(survey);
+
+            survey = new SurveyData()
+            {
+                IdGroup = 2,
+                IdStatus = 0,
+                Title = "Название опроса 10"
+            };
+            _surveysRepository.AddSurvey(survey);
+
+            survey = new SurveyData()
+            {
+                IdGroup = 2,
+                IdStatus = 0,
+                Title = "Название опроса 11"
+            };
+            _surveysRepository.AddSurvey(survey);
+
+            survey = new SurveyData()
+            {
+                IdGroup = 2,
+                IdStatus = 0,
+                Title = "Название опроса 12"
+            };
+            _surveysRepository.AddSurvey(survey);
+
+            survey = new SurveyData()
+            {
+                IdGroup = 3,
+                IdStatus = 0,
+                Title = "Корпоративная культура"
+            };
+            _surveysRepository.AddSurvey(survey);
+
+            survey = new SurveyData()
+            {
+                IdGroup = 3,
+                IdStatus = 1,
+                Title = "Диагностика аврала"
+            };
+            _surveysRepository.AddSurvey(survey);
         }
 
         [HttpGet]
@@ -161,25 +261,13 @@ namespace WebPortalEverthing.Controllers
         [HttpPost]
         public ActionResult Create(SurveyCreateViewModel surveyCreate)
         {
-            var statusNew = new SurveyStatusViewModel()
+            var survey = new SurveyData()
             {
-                Title = "Новый опрос",
-                ImagesSrc = "/images/Surveys/status/new-48.png",
+                IdGroup = 1, // Пока что харкод, пока не умеем пробрасывать
+                IdStatus = 0,
+                Title = surveyCreate.Title
             };
-
-            var buttonTakeSurvey = new SurveyActionViewModel()
-            {
-                Title = "Пройти"
-            };
-
-            var firstGroup = SurveyGroups.First();
-
-            firstGroup.Surveys.Add(new()
-            {
-                Status = statusNew,
-                Title = surveyCreate.Title,
-                Action = buttonTakeSurvey
-            });
+            _surveysRepository.AddSurvey(survey);
 
             return RedirectToAction(nameof(SurveysAll));
         }
