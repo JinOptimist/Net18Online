@@ -21,6 +21,7 @@ builder.Services.AddSingleton<IMoviePosterRepository, MoviePosterRepository>();
 
 builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
 
+builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();
 
 
