@@ -2,9 +2,8 @@
 
 namespace Everything.Data.Fake.Models.Surveys
 {
-    public class SurveyGroupData : ISurveyGroup
+    public class SurveyGroupData : BaseModel, ISurveyGroupData
     {
-        public int Id { get; set; }
         public string Title { get; set; }
     }
 }
