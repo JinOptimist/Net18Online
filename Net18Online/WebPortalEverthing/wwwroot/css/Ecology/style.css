@@ -111,20 +111,8 @@ header .logotip img {
 	padding: 3px;
 }
 
-.post.ul.custom-list {
-    list-style-type: none;
-    padding: 0;
-}
-
-.post.ul.custom-list li {
-    margin-bottom: 20px;
-}
-
-.post.ul.custom-list img {
+.newpost img{
     max-width: 200px;
     max-height: 200px;
-}
-
-.post.ul.custom-list p {
-    margin: 0;
+	padding-top: 10px;
 }
