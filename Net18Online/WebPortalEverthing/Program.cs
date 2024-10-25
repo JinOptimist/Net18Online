@@ -10,7 +10,6 @@ builder.Services.AddControllersWithViews();
 // Register in DI container our services/repository
 builder.Services.AddSingleton<IAnimeGirlRepository, AnimeGirlRepository>();
 builder.Services.AddSingleton<ICakeRepository, CakeRepository>();
-builder.Services.AddSingleton<IEcologyRepository, EcologyRepository>();
 builder.Services.AddSingleton<ICoffeShopRepository, CoffeShopRepository>();
 builder.Services.AddSingleton<ISurveysRepository, SurveysRepository>();
 
@@ -20,6 +19,7 @@ builder.Services.AddSingleton<IMoviePosterRepository, MoviePosterRepository>();
 
 
 builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
+builder.Services.AddScoped<IEcologyRepository, EcologyRepository>();
 
 builder.Services.AddScoped<MazeBuilder>();
 
