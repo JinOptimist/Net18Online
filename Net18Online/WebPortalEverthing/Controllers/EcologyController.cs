@@ -42,6 +42,7 @@ namespace WebPortalEverthing.Controllers
             };
             _ecologyRepository.Add(ecology);
 
+            // on the page where user adds there show
             var ecologyFromDb = _ecologyRepository.GetAll();
 
             var ecologyViewModels = ecologyFromDb

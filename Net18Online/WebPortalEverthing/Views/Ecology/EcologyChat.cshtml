@@ -8,13 +8,17 @@
 <link rel="stylesheet" type="text/css" href="~/css/Ecology/style.css">
 
 <form method="post" action="/Ecology/EcologyChat">
-    <label for="imageUrl">Entet image URL:</label>
-    <input type="text" id="imageUrl" name="Url" />
-    <div>
-    <label for="imageText">Enter text:</label>
-    <input type="text" id="imageText" name="Text" />
+    <div class="url">
+        <label for="imageUrl">Entet image URL:</label>
+        <input type="text" id="imageUrl" name="Url" />
     </div>
-    <button type="submit">Submit</button>
+    <div class="text">
+        <label for="imageText">Enter text:</label>
+        <input type="text" id="imageText" name="Text" />
+    </div>
+    <div class="submit">
+        <button type="submit">Submit</button>
+    </div>
 </form>
 
 @if (Model != null && Model.Count > 0)
