@@ -15,6 +15,7 @@ builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
 builder.Services.AddSingleton<IEcologyRepository, EcologyRepository>();
 builder.Services.AddSingleton<ICoffeShopRepository, CoffeShopRepository>();
 
+builder.Services.AddSingleton<ILoadTestingRepository, LoadTestingRepository>();
 
 var app = builder.Build();
 

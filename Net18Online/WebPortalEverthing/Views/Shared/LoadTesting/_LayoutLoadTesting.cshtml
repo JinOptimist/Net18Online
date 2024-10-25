@@ -1,5 +1,5 @@
 ﻿@using WebPortalEverthing.Models.LoadTesting
-@model LoadTestingContentMetricsListViewModel
+@model List<Metric>
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -37,7 +37,7 @@
     <div class="buttona-and-content">
         <div class="button-list">
             <div class="fridaysRemaining">
-                До нового года осталось <span id="fridaysCount">0</span> пятниццц !
+                До нового года осталось <span id="fridaysCount">0</span> пятниц_ц_ц !
             </div>
             <ul>
                 <li>
@@ -66,9 +66,8 @@
             </form>
 
         </div>
-            @RenderBody();
-        </div><!-- Закрытие блока .content -->
-
+        @RenderBody();
+    </div><!-- Закрытие блока .content -->
     </div>  <!-- Закрытие блока .buttona-and-content -->
 
 </body>
