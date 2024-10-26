@@ -8,6 +8,7 @@ namespace WebPortalEverthing.Controllers.LoadTesting
     public class LoadTestingController : Controller
     {
         private ILoadTestingRepository _loadTestingRepository;
+        protected const int DEFAULT_METRICS_COUNT = 6;
 
         public LoadTestingController(ILoadTestingRepository loadTestingRepository)
         {
@@ -28,7 +29,7 @@ namespace WebPortalEverthing.Controllers.LoadTesting
 
             if (metricsFromDB.Count == 0)
             {
-                for (int i = 1; i <= 6; i++)
+                for (int i = 1; i <= DEFAULT_METRICS_COUNT; i++)
                 {
                     var metricViewModel = new MetricData
                     {
