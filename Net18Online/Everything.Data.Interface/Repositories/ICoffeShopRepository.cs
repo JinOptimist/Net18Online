@@ -2,17 +2,7 @@
 
 namespace Everything.Data.Interface.Repositories
 {
-    public interface ICoffeShopRepository
+    public interface ICoffeShopRepository : IBaseRepository<ICoffeData>
     {
-        void Add(ICoffeData data);
-
-        void Delete(ICoffeData data);
-
-        List<ICoffeData> GetAll();
-
-        ICoffeData? Get(int id);
-
-        bool Any();
-        
     }
 }

@@ -1,8 +1,7 @@
 ﻿namespace Everything.Data.Interface.Models
 {
-    public interface IAnimeCatalogData
+    public interface IAnimeCatalogData : IBaseModel
     {
-        int Id { get; set; }
         string Name { get; set; }
         string ImageSrc { get; set; }
     }

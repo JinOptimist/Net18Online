@@ -1,9 +1,7 @@
 ﻿namespace Everything.Data.Interface.Models
 {
-    public interface ICoffeData
+    public interface ICoffeData : IBaseModel
     {
-        int Id { get; set; }
-
         string Brand { get; set; }
 
         string Url { get; set; }

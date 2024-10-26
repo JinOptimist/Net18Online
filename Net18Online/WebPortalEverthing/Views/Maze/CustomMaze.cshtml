@@ -1,0 +1,31 @@
+@using WebPortalEverthing.Models.Maze
+@model MazeViewModel
+
+@section Styles {
+    <link href="~/css/maze/maze.css" rel="stylesheet" />
+}
+
+<div>
+    <form method="post">
+        <input name="width" type="number" placeholder="ширина" />
+        <input name="height" type="number" placeholder="высота" />
+        <button type="submit">Сгенерировать лабиринт</button>
+    </form>
+</div>
+@if (Model != null)
+{
+    <div>
+        Я лабиринт
+        <div class="maze">
+            @foreach (var row in Model.Rows)
+            {
+                <div class="row">
+                    @foreach (var cellUrl in row.CellsUrls)
+                    {
+                        <span class="cell"><img src="@cellUrl" alt="cell" /></span>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+}

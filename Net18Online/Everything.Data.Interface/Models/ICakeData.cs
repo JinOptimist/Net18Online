@@ -1,8 +1,7 @@
 ﻿namespace Everything.Data.Interface.Models
 {
-    public interface ICakeData
+    public interface ICakeData : IBaseModel
     {
-        int Id { get; set; }
         int Rating { get; set; }
         string ImageSrc { get; set; }
         string Description { get; set; }

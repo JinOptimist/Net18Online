@@ -1,14 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WebPortalEverthing.Models;
+﻿using Everything.Data.Fake.Models;
+using Everything.Data.Interface.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.MoviePoster;
 
 namespace WebPortalEverthing.Controllers
 {
     public class MoviePosterController : Controller
     {
-        // BAD. DO NOT USE THIS ON PROD
-        public static List<PosterViewModel> posterViewModels = new List<PosterViewModel>();
-        public static List<PosterViewModel> newPosterInListOfPostersViewModels = new List<PosterViewModel>();
+        private IMoviePosterRepository _moviePosterRepository;
+
+        public MoviePosterController(IMoviePosterRepository moviePosterRepository)
+        {
+            _moviePosterRepository = moviePosterRepository;
+        }
 
         public IActionResult Index(string name, int age)
         {
@@ -18,26 +22,46 @@ namespace WebPortalEverthing.Controllers
             model.Seconds = DateTime.Now.Second;
             return View(model);
         }
-
+        
         public IActionResult AllPosters(int? count)
         {
-            posterViewModels.Clear();
-            if (!posterViewModels.Any())
+            var countElementInDb = _moviePosterRepository.GetAll();
+            if (!_moviePosterRepository.Any() || countElementInDb.Count < count)
             {
-                for (int i = 0; i < (count ?? 4); i++)
-                {
-                    var posterNumber = (i % 4) + 1;
-                    var viewModel = new PosterViewModel
-                    {
-                        Name = $"Poster {posterNumber}",
-                        ImageSrc = $"/images/MoviePoster/Poster{posterNumber}.jpg",
-                        Tags = new List<string> { "action", "drama" }
-                    };
-                    posterViewModels.Add(viewModel);
-                }
+                GenerateDefaultMoviePoster(count - countElementInDb.Count);
             }
-            posterViewModels.AddRange(newPosterInListOfPostersViewModels);
-            return View(posterViewModels);
+
+            var moviesFromDb = _moviePosterRepository.GetAllInCount(count ?? countElementInDb.Count);
+
+            var movieViewModels = moviesFromDb
+                .Take(count ?? countElementInDb.Count)
+                .Select(dbMovie =>
+                    new MovieViewModel
+                    {
+                        Id = dbMovie.Id,
+                        Name = dbMovie.Name,
+                        ImageSrc = dbMovie.ImageSrc,
+                        Tags = dbMovie.Tags
+                    }
+                )
+                .ToList();
+
+            return View(movieViewModels);
+        }
+
+        private void GenerateDefaultMoviePoster(int? count)
+        {
+            for (int i = 0; i < (count ?? 4); i++)
+            {
+                var movieNumber = (i % 4) + 1;
+                var dataModel = new MovieData
+                {
+                    Name = $"Poster {movieNumber}",
+                    ImageSrc = $"/images/MoviePoster/Poster{movieNumber}.jpg",
+                    Tags = new List<string> { "action", "drama" }
+                };
+                _moviePosterRepository.Add(dataModel);
+            }
         }
 
         [HttpGet]
@@ -47,15 +71,15 @@ namespace WebPortalEverthing.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreatePoster(PosterCreationViewModel viewModel)
+        public IActionResult CreatePoster(MovieCreationViewModel viewModel)
         {
-            var poster = new PosterViewModel
+            var dataMovie = new MovieData
             {
                 Name = viewModel.Name,
                 ImageSrc = viewModel.Url,
                 Tags = viewModel.Tags,
             };
-            newPosterInListOfPostersViewModels.Add(poster);
+            _moviePosterRepository.Add(dataMovie);
 
             return RedirectToAction("AllPosters");
         }
