@@ -1,8 +1,9 @@
-﻿using Everything.Data.Interface.Models;
+﻿using Everything.Data.Fake.Models;
+using Everything.Data.Interface.Models;
 
 namespace WebPortalEverthing.Models.LoadTesting
 {
-    public class MetricData : IMetricData
+    public class MetricData : BaseModel, IMetricData
     {
         public Guid Guid { get; set; }
         public string Name { get; set; }
