@@ -1,28 +1,44 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.LoadTesting.GameLife;
-using WebPortalEverthing.Services;
+using Everything.Data.Interface.Repositories;
 
 namespace WebPortalEverthing.Controllers.GameLife
 {
     public class GameLifeController : Controller
     {
-         int defWidth = 3;
-         int defHigth = 3;
+        private IGameLifeRepository _gameLifeRepository;
 
+        static int defWidth = 3;
+        static int defHigth = 3;
+        Field field = new Field(defWidth, defHigth);
+
+        public GameLifeController(IGameLifeRepository gameLifeRepository)
+        {
+            _gameLifeRepository = gameLifeRepository;
+        }
 
         public IActionResult GameLifeDefault()
         {
 
-            Field field = new Field(defWidth, defHigth);
             field.Randomize();
             return View(field);
         }
 
-        [HttpPost]
-        public IActionResult GameLifeOwnSize(Field field)
+        [HttpGet]
+        public IActionResult GameLifeOwnSize()
         {
-            //   if (width != defWidth || higth != defHigth) { field = new Field(width, higth); }
-            return Redirect("GameLifeDefault");
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult GameLifeOwnSize(int width, int height)
+        {
+            if (width != defWidth || height != defHigth)
+            {
+                field = new Field(width, height);
+                field.Randomize();
+            }
+            return View(field);
         }
     }
 }
