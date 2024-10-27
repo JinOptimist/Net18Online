@@ -23,8 +23,8 @@ namespace WebPortalEverthing.Controllers.LoadTesting
             /*       model.Metrics[0].Throughput = throughput;
                     model.Metrics[0].Average = average; */
 
-            // Передаем модель в представление
-            // Это datamodel(модель БД), На View можно отдавать только viewmodel(данные для пользователя не все или из др. датамоделей), нельзя datamodel
+            /* Передаем модель в представление
+             Это datamodel(модель БД), На View можно отдавать только viewmodel(данные для пользователя не все или из др. датамоделей), нельзя datamodel */
             var metricsFromDB = _loadTestingRepository.GetAll();
 
             if (metricsFromDB.Count == 0)
@@ -81,21 +81,23 @@ namespace WebPortalEverthing.Controllers.LoadTesting
             return Redirect("/LoadTesting/ContenMetricsListView");
         }
 
-        [HttpPost]
-        public IActionResult _LayoutLoadTesting
-            (string name,
-            decimal throughput,
-            decimal average)
-        {
-            var metricData = new MetricData
-            {
-                Name = name,
-                Throughput = throughput * 1.0m,
-                Average = average * 1.0m
-            };
-            _loadTestingRepository.Add(metricData);
+        /*   [HttpPost]
+           public IActionResult _LayoutLoadTesting
+               (string name,
+               decimal throughput,
+               decimal average)
+           {
+               var metricData = new MetricData
+               {
+                   Name = name,
+                   Throughput = throughput * 1.0m,
+                   Average = average * 1.0m
+               };
+               _loadTestingRepository.Add(metricData);
 
-            return Redirect("/LoadTesting/ContenMetricsListView");
-        }
+               return Redirect("/LoadTesting/ContenMetricsListView");
+           }*/
+
+
     }
 }

@@ -1,0 +1,23 @@
+﻿@using WebPortalEverthing.Models.LoadTesting
+@model WebPortalEverthing.Models.LoadTesting.GameLife.Field
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<body>
+   
+
+
+    <form method="post">
+        <div class="create-field-form">
+            <div class="create-field-form-title"> Введите размер поля (max 20) </div>
+            <div class="input-container">
+                @Html.TextBoxFor(m => m.Rows, new { placeholder = "Rows" })
+                @Html.TextBoxFor(m => m.Cols, new { placeholder = "Cols" })
+                <button type="submit">Создать</button>
+            </div>
+        </div>
+    </form>
+   
+</body>
+</html>
