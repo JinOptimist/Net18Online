@@ -13,6 +13,7 @@ builder.Services.AddSingleton<ICakeRepository, CakeRepository>();
 builder.Services.AddSingleton<IEcologyRepository, EcologyRepository>();
 builder.Services.AddSingleton<ICoffeShopRepository, CoffeShopRepository>();
 builder.Services.AddSingleton<ISurveysRepository, SurveysRepository>();
+builder.Services.AddSingleton<IGameStoreRepository, GameStoreRepository>();
 
 
 // Register in DI container services/repository for MoviePosterRepository
