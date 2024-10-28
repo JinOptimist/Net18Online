@@ -6,5 +6,6 @@ namespace WebPortalEverything.Models.ServiceCenter
     {
         [Required(ErrorMessage = "Имя обязательно.")]
         public string Name { get; set; }
+        public IFormFile ImageFile { get; set; } // Property to hold the uploaded image file
     }
 }

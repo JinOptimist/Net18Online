@@ -5,14 +5,23 @@
     Layout = "~/Views/Shared/_LayoutServiceCenter.cshtml";
 }
 
-<div class="appliances">
-    @foreach (var appliance in Model)
-    {
-        <div class="appliance">
-            <div class="name">@appliance.Name</div>
-            <div class="image-container service-content">
-                <img src="@appliance.ImageSrc.TrimStart('~')" alt="@appliance.Name" class="service-content" />
+@if (Model != null && Model.Any())
+{
+    <div class="appliances">
+        @foreach (var appliance in Model)
+        {
+            <div class="appliance">
+                <div class="name">@appliance.Name</div>
+                <div class="image-container service-content">
+                    <img src="@Url.Content(appliance.ImageSrc)" alt="@appliance.Name" class="service-content" />
+                </div>
             </div>
-        </div>
-    }
-</div>
+        }
+    </div>
+}
+else
+{
+    <div>No appliances available.</div>
+}
+
+
