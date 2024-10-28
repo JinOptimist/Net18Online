@@ -1,0 +1,21 @@
+﻿@using WebPortalEverthing.Models.BullsAndCows
+@model BullsAndCowsViewModel
+
+<h2>Игра "Быки и Коровы": Задайте свои числа</h2>
+
+@if (Model.Turn == "First")
+{
+    <form asp-action="SetNumberForFirstGamer" method="post">
+        <label>Первый игрок, введите секретное число:</label>
+        <input type="password" name="number" />
+        <button type="submit">Задать число</button>
+    </form>
+}
+else
+{
+    <form asp-action="SetNumberForSecondGamer" method="post">
+        <label>Второй игрок, введите секретное число:</label>
+        <input type="password" name="number" />
+        <button type="submit">Задать число</button>
+    </form>
+}
