@@ -1,11 +1,15 @@
+using Everything.Data;
 using Everything.Data.Fake.Repositories;
 using Everything.Data.Interface.Repositories;
 using MazeCore.Builders;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(WebDbContext.CONNECTION_STRING));
 
 // Register in DI container our services/repository
 builder.Services.AddSingleton<IAnimeGirlRepository, AnimeGirlRepository>();

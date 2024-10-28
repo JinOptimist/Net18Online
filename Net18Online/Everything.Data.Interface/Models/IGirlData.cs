@@ -4,6 +4,6 @@
     {
         string Name { get; set; }
         string ImageSrc { get; set; }
-        List<string> Tags { get; set; }
+        // List<string> Tags { get; set; }
     }
 }

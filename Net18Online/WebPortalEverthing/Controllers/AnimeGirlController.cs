@@ -1,5 +1,6 @@
-﻿using Everything.Data.Fake.Models;
+﻿using Everything.Data;
 using Everything.Data.Interface.Repositories;
+using Everything.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.AnimeGirl;
 
@@ -9,10 +10,11 @@ namespace WebPortalEverthing.Controllers
     {
         private int DEFAULT_GIRL_COUNT = 4;
         private IAnimeGirlRepository _animeGirlRepository;
-
-        public AnimeGirlController(IAnimeGirlRepository animeGirlRepository)
+        private WebDbContext _webDbContext;
+        public AnimeGirlController(IAnimeGirlRepository animeGirlRepository, WebDbContext webDbContext)
         {
             _animeGirlRepository = animeGirlRepository;
+            _webDbContext = webDbContext;
         }
 
         public IActionResult Index(string name, int age)
@@ -28,21 +30,29 @@ namespace WebPortalEverthing.Controllers
 
         public IActionResult AllGirls()
         {
-            if (!_animeGirlRepository.Any())
-            {
-                GenerateDefaultAnimeGirl();
-            }
+            //if (!_animeGirlRepository.Any())
+            //{
+            //    GenerateDefaultAnimeGirl();
+            //}
 
-            var girlsFromDb = _animeGirlRepository.GetMostPopular();
+            //var girlsFromDb = _animeGirlRepository.GetMostPopular();
 
-            var girlsViewModels = girlsFromDb
+
+            // TODO Use repository
+            var girlsFromRealDb = _webDbContext
+                .Girls
+                .Where(x => x.Id > 3)
+                .ToList();
+
+
+            var girlsViewModels = girlsFromRealDb
                 .Select(dbGirl =>
                     new GirlViewModel
                     {
                         Id = dbGirl.Id,
                         Name = dbGirl.Name,
                         ImageSrc = dbGirl.ImageSrc,
-                        Tags = dbGirl.Tags
+                        Tags = new List<string>() //dbGirl.Tags
                     }
                 )
                 .ToList();
@@ -59,7 +69,7 @@ namespace WebPortalEverthing.Controllers
                 {
                     Name = $"Girl {girlNumber}",
                     ImageSrc = $"/images/AnimeGirl/Girl{girlNumber}.jpg",
-                    Tags = new List<string> { "4 size", "red" }
+                    // Tags = new List<string> { "4 size", "red" }
                 };
 
                 _animeGirlRepository.Add(dataModel);
@@ -79,10 +89,14 @@ namespace WebPortalEverthing.Controllers
             {
                 Name = viewModel.Name,
                 ImageSrc = viewModel.Url,
-                Tags = new List<string>() { "Cool" }
             };
 
-            _animeGirlRepository.Add(dataGirl);
+            _webDbContext.Girls.Add(dataGirl);
+            _webDbContext.Girls.Add(dataGirl);
+            _webDbContext.Girls.Add(dataGirl);
+            _webDbContext.SaveChanges();
+
+            //_animeGirlRepository.Add(dataGirl);
 
             return RedirectToAction("AllGirls");
         }

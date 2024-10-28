@@ -21,9 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuessTheNumberGame", "Guess
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebPortalEverthing", "WebPortalEverthing\WebPortalEverthing.csproj", "{398492F1-00A1-4F82-BAC6-C75C1F1DAC70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Everything.Data.Fake", "Everything.Data.Fake\Everything.Data.Fake.csproj", "{8CED9124-5DB6-4CC7-BE5D-AD13BFBDE338}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Everything.Data.Fake", "Everything.Data.Fake\Everything.Data.Fake.csproj", "{8CED9124-5DB6-4CC7-BE5D-AD13BFBDE338}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Everything.Data.Interface", "Everything.Data.Interface\Everything.Data.Interface.csproj", "{5495057C-F0A2-43B8-8DE3-902D77D3B25F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Everything.Data.Interface", "Everything.Data.Interface\Everything.Data.Interface.csproj", "{5495057C-F0A2-43B8-8DE3-902D77D3B25F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Everything.Data", "Everything.Data\Everything.Data.csproj", "{CBFC210A-4BB5-4DC7-B68B-3F2741D2D8DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{5495057C-F0A2-43B8-8DE3-902D77D3B25F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5495057C-F0A2-43B8-8DE3-902D77D3B25F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5495057C-F0A2-43B8-8DE3-902D77D3B25F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBFC210A-4BB5-4DC7-B68B-3F2741D2D8DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBFC210A-4BB5-4DC7-B68B-3F2741D2D8DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBFC210A-4BB5-4DC7-B68B-3F2741D2D8DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBFC210A-4BB5-4DC7-B68B-3F2741D2D8DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
