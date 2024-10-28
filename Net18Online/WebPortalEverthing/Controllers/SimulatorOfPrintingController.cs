@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using SimulatorOfPrinting.Models.TextProvider;
+using WebPortalEverthing.Models.SimulatorOfPrinting.TextProvider;
 using WebPortalEverthing.Models.SimulatorOfPrinting;
 
 namespace WebPortalEverthing.Controllers
