@@ -1,41 +1,30 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.IO;
-using System.Text.Json;
+﻿using Everything.Data.Fake.Models;
+using Everything.Data.Interface.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using WebPortalEverything.Models.ServiceCenter;
 
-namespace WebPortalEverthing.Controllers
+namespace WebPortalEverything.Controllers
 {
     public class TypeOfApplianceController : Controller
     {
-        private readonly string _jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Data/ServiceCenter/typeOfAppliance.json");
+        private readonly ITypeOfApplianceRepository _typeOfApplianceRepository;
 
-        /// <summary>
-        /// Method to read appliances from the JSON file
-        /// </summary>
-        private List<TypeOfApplianceViewModel> ReadTypeOfAppliancesFromJson()
+        public TypeOfApplianceController(ITypeOfApplianceRepository typeOfApplianceRepository)
         {
-            if (!System.IO.File.Exists(_jsonFilePath))
-            {
-                return new List<TypeOfApplianceViewModel>(); // Return an empty list if file doesn't exist
-            }
-
-            var jsonData = System.IO.File.ReadAllText(_jsonFilePath);
-            return JsonSerializer.Deserialize<List<TypeOfApplianceViewModel>>(jsonData) ?? new List<TypeOfApplianceViewModel>();
+            _typeOfApplianceRepository = typeOfApplianceRepository;
         }
-
-        /// <summary>
-        /// Method to save appliances to the JSON file
-        /// </summary>
-        private void SaveTypeOfAppliancesToJson(List<TypeOfApplianceViewModel> appliances)
-        {
-            var jsonData = JsonSerializer.Serialize(appliances);
-            System.IO.File.WriteAllText(_jsonFilePath, jsonData);
-        }
-
 
         public IActionResult AllTypeOfAppliances()
         {
-            var appliances = ReadTypeOfAppliancesFromJson();
+            var appliances = _typeOfApplianceRepository.GetAll()
+                .Select(appliance => new TypeOfApplianceViewModel
+                {
+                    Id = appliance.Id,
+                    Name = appliance.Name,
+                    ImageSrc = appliance.ImageSrc
+                })
+                .ToList();
+
             return View(appliances);
         }
 
@@ -46,36 +35,45 @@ namespace WebPortalEverthing.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateTypeOfAppliance(TypeOfApplianceCreationViewModel viewModel, IFormFile imageFile)
+        public async Task<IActionResult> CreateTypeOfAppliance(TypeOfApplianceCreationViewModel viewModel)
         {
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
-                if (imageFile != null && imageFile.Length > 0) 
+                if (viewModel.ImageFile != null && viewModel.ImageFile.Length > 0)
                 {
-                    var filePath = Path.Combine("wwwroot/images/ServiceCenter/TypeOfAppliances", imageFile.FileName);
+                    var directoryPath = Path.Combine("wwwroot/images/ServiceCenter/TypeOfAppliances");
+
+                    // Ensure the directory exists
+                    if (!Directory.Exists(directoryPath))
+                    {
+                        Directory.CreateDirectory(directoryPath);
+                    }
+
+                    var filePath = Path.Combine(directoryPath, viewModel.ImageFile.FileName);
 
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                        imageFile.CopyTo(stream);
+                        await viewModel.ImageFile.CopyToAsync(stream);
                     }
 
-                    var appliances = ReadTypeOfAppliancesFromJson();
-                    var newAppliance = new TypeOfApplianceViewModel
+                    var appliance = new TypeOfApplianceData
                     {
-                        Id = appliances.Any() ? appliances.Max(a => a.Id) + 1 : 1, 
                         Name = viewModel.Name,
-                        ImageSrc = $"/images/ServiceCenter/TypeOfAppliances/{imageFile.FileName}" 
+                        ImageSrc = $"/images/ServiceCenter/TypeOfAppliances/{viewModel.ImageFile.FileName}"
                     };
 
-                    appliances.Add(newAppliance);
-                    SaveTypeOfAppliancesToJson(appliances); 
+                    _typeOfApplianceRepository.Add(appliance);
 
-                    return RedirectToAction("AllTypeOfAppliances"); 
+                    // Save to JSON file
+                    string jsonFilePath = Path.Combine("Data", "ServiceCenter", "typeOfAppliance.json");
+                    _typeOfApplianceRepository.SaveDataToJson(jsonFilePath);
                 }
-
-                ModelState.AddModelError("", "Пожалуйста, выберите файл изображения.");
+                else
+                {
+                    ModelState.AddModelError("ImageFile", "Please upload an image.");
+                }
             }
-            return View(viewModel); 
+            return View(viewModel);
         }
     }
 }
