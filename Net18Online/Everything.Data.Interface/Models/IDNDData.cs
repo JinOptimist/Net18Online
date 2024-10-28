@@ -1,6 +1,6 @@
 ﻿namespace Everything.Data.Interface.Models
 {
-    public interface IMovieData : IBaseModel
+    public interface IDNDData : IBaseModel
     {
         string Name { get; set; }
         string ImageSrc { get; set; }
