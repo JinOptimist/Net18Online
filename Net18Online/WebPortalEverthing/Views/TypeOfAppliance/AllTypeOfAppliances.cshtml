@@ -1,0 +1,18 @@
+﻿@using WebPortalEverything.Models.ServiceCenter
+@model List<TypeOfApplianceViewModel>
+
+@{
+    Layout = "~/Views/Shared/_LayoutServiceCenter.cshtml";
+}
+
+<div class="appliances">
+    @foreach (var appliance in Model)
+    {
+        <div class="appliance">
+            <div class="name">@appliance.Name</div>
+            <div class="image-container service-content">
+                <img src="@appliance.ImageSrc.TrimStart('~')" alt="@appliance.Name" class="service-content" />
+            </div>
+        </div>
+    }
+</div>

@@ -15,4 +15,10 @@
   </ItemGroup>
 
 
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\ServiceCenter\" />
+  </ItemGroup>
+
+
 </Project>
