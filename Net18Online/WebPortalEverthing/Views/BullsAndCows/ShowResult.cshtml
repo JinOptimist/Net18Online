@@ -1,0 +1,25 @@
+﻿@using WebPortalEverthing.Models.BullsAndCows
+@model BullsAndCowsViewModel
+
+@section Styles {
+    <link href="~/css/BullsAndCows/pictures.css" rel="stylesheet" />
+}
+
+<h2>Результат игры</h2>
+<p>@ViewBag.ResultMessage</p>
+
+@foreach (var attempt in Model.Attempts.TakeLast(5))
+{
+    <div>
+        @Html.Raw(attempt)
+    </div>
+}
+<div>
+    First player number: 
+    @Model.NumberOfTheFirstGamer
+</div>
+<div>
+    Second player number:
+    @Model.NumberOfTheSecondGamer
+</div>
+<a asp-action="Index">Начать новую игру</a>
