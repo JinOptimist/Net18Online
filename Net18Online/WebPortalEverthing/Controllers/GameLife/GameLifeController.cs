@@ -18,6 +18,12 @@ namespace WebPortalEverthing.Controllers.GameLife
             return View(field);
         }
 
+        [HttpGet]
+        public IActionResult GameLifeOwnSize()
+        {
+            return View();
+        }
+
         [HttpPost]
         public IActionResult GameLifeOwnSize(Field field)
         {
