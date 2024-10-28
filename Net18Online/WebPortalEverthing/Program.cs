@@ -16,12 +16,11 @@ builder.Services.AddSingleton<ISurveysRepository, SurveysRepository>();
 // Register in DI container services/repository for ServiceCenter
 builder.Services.AddSingleton<ITypeOfApplianceRepository, TypeOfApplianceRepository>();
 
+builder.Services.AddSingleton<IGameStoreRepository, GameStoreRepository>();
 builder.Services.AddSingleton<IDNDRepository, DNDRepository>();
-
 
 // Register in DI container services/repository for MoviePosterRepository
 builder.Services.AddSingleton<IMoviePosterRepository, MoviePosterRepository>();
-
 
 builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
 
