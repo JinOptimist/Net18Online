@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using WebPortalEverthing.Models.SimulatorOfPrinting.TextProvider;
+using SimulatorOfPrinting.Models;
+using System.Diagnostics;
 using WebPortalEverthing.Models.SimulatorOfPrinting;
 
 namespace WebPortalEverthing.Controllers
@@ -24,7 +20,7 @@ namespace WebPortalEverthing.Controllers
         {
             var model = new TypingViewModel
             {
-                CurrentText = textProvider.GetText(),
+                CurrentText = _textProvider.GetText(),
                 UserInput = string.Empty,
                 Result = string.Empty
             };

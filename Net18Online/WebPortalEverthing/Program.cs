@@ -1,6 +1,7 @@
 using Everything.Data.Fake.Repositories;
 using Everything.Data.Interface.Repositories;
 using MazeCore.Builders;
+using SimulatorOfPrinting.Models;
 using WebPortalEverthing.Models.SimulatorOfPrinting;
 
 var builder = WebApplication.CreateBuilder(args);

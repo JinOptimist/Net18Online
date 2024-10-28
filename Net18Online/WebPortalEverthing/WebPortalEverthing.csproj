@@ -12,7 +12,7 @@
     <ProjectReference Include="..\Everything.Data.Fake\Everything.Data.Fake.csproj" />
     <ProjectReference Include="..\Everything.Data.Interface\Everything.Data.Interface.csproj" />
     <ProjectReference Include="..\MazeCore\MazeCore.csproj" />
-    <ProjectReference Include="..\SimulatorOfPrinting\SimulatorOfPrinting.csproj" />
+    <ProjectReference Include="..\SimulatorOfPrinting\SimulatorOfPrinting\SimulatorOfPrinting.csproj" />
   </ItemGroup>
 
 
