@@ -28,7 +28,7 @@
                 {
                     <tr>
                         <th scope="row">
-                            <a class="btn btn-outline-success" href="/CoffeShop/Update">
+                            <a class="btn btn-outline-success" asp-controller="CoffeShop" asp-action="Update" asp-route-id="@coffe.Id">
                                 U
                             </a>
                             <a class="btn btn-outline-danger" asp-controller="CoffeShop" asp-action="Delete" asp-route-id="@coffe.Id">
@@ -37,7 +37,7 @@
                         </th>
                         <td>@coffe.Coffe</td>
                         <td>@coffe.Cost $</td>
-                        <td>#</td>
+                        <td>@coffe.Brand</td>
                     </tr>
                 }
             </tbody>

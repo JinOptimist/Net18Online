@@ -1,9 +1,9 @@
-﻿namespace WebPortalEverthing.Models.CoffeShop
-{
-    public class CoffeCreateViewModel
-    {
-        public int Id { get; set; }
+﻿using Everything.Data.Interface.Models;
 
+namespace Everything.Data.Models
+{
+    public class CoffeData : BaseModel, ICoffeData
+    {
         public string Brand { get; set; }
 
         public string Url { get; set; }

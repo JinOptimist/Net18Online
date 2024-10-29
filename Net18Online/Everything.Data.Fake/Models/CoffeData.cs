@@ -10,6 +10,6 @@ namespace Everything.Data.Fake.Models
 
         public string Coffe { get; set; }
 
-        public float Cost { get; set; }
+        public decimal Cost { get; set; }
     }
 }
