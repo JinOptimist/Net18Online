@@ -11,6 +11,8 @@ namespace Everything.Data
 
         public DbSet<UserData> Users { get; set; }
 
+        public DbSet<EcologyData> Ecology { get; set; }
+
         public WebDbContext() { }
 
         public WebDbContext(DbContextOptions<WebDbContext> contextOptions) 

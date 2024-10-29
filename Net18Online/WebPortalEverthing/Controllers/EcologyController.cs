@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Everything.Data.Fake.Models;
+using Everything.Data;
 using Everything.Data.Interface.Repositories;
+using Everything.Data.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using WebPortalEverthing.Models.Ecology;
 
 namespace WebPortalEverthing.Controllers
@@ -14,10 +9,12 @@ namespace WebPortalEverthing.Controllers
     public class EcologyController : Controller
     {
         private IEcologyRepository _ecologyRepository;
+        private WebDbContext _webDbContext;
 
-        public EcologyController(IEcologyRepository ecologyRepository)
+        public EcologyController(IEcologyRepository ecologyRepository,  WebDbContext webDbContext)
         {
             _ecologyRepository = ecologyRepository;
+            _webDbContext = webDbContext;
         }
 
         public IActionResult Index()
@@ -35,21 +32,22 @@ namespace WebPortalEverthing.Controllers
         [HttpPost]
         public IActionResult EcologyChat(PostCreationViewModel viewModel)
         {
-            var ecology = new EcologyData
+            var dataEcology = new EcologyData
             {
                 ImageSrc = viewModel.Url,
-                Text = new List<string>{viewModel.Text},
+                //Text = new List<string>{viewModel.Text},
             };
-            _ecologyRepository.Add(ecology);
+            _webDbContext.Ecology.Add(dataEcology);
+            _webDbContext.SaveChanges();
 
-            var ecologyFromDb = _ecologyRepository.GetAll();
+            var ecologyFromRealDb = _ecologyRepository.GetAll();
 
-            var ecologyViewModels = ecologyFromDb
+            var ecologyViewModels = ecologyFromRealDb
                 .Select(dbEcology =>
                     new EcologyViewModel
                     {
                         ImageSrc = dbEcology.ImageSrc,
-                        Texts = dbEcology.Text
+                        //Texts = dbEcology.Text
                     }
                 )
                 .ToList();
