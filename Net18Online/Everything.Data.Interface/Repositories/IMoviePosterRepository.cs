@@ -2,18 +2,8 @@
 
 namespace Everything.Data.Interface.Repositories
 {
-    public interface IMoviePosterRepository
+    public interface IMoviePosterRepository : IBaseRepository<IMovieData>
     {
-        void Add(IMovieData data);
-
-        void Delete(IMovieData data);
-
         List<IMovieData> GetAllInCount(int count);
-
-        List<IMovieData> GetAll();
-
-        IMovieData? Get(int id); 
-
-        bool Any();
     }
 }

@@ -1,0 +1,19 @@
+﻿@using WebPortalEverthing.Models.GameStore
+
+@model AddGameViewModel
+
+
+@{
+    Layout = "~/Views/Shared/_LayoutGameStore.cshtml";
+}
+
+<form method="post">  
+    <div>        
+        @Html.TextBoxFor(x => x.Name, new {placeholder = "Name"})
+    </div>
+    <div>
+        @Html.TextBoxFor(x => x.Url, new { placeholder = "Path for Game" })
+    </div>
+    
+    <button type="submit">Add</button>
+</form>

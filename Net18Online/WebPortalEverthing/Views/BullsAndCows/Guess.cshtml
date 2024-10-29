@@ -1,0 +1,36 @@
+﻿@using WebPortalEverthing.Models.BullsAndCows
+@model BullsAndCowsViewModel
+
+@section Styles {
+    <link href="~/css/BullsAndCows/pictures.css" rel="stylesheet" />
+}
+
+<h2>Попытки угадывания чисел</h2>
+@foreach (var attempt in Model.Attempts.TakeLast(5))
+{
+    <div>
+        @Html.Raw(attempt)
+    </div>
+}
+@if (Model.Turn == "First")
+{
+    <div>
+        <form asp-action="MakeAttempt" method="post">
+            <label>Попытка первого игрока:</label>
+            <input type="number" name="attempt" />
+            <input type="hidden" name="player" value="first" />
+            <button type="submit">Попробовать угадать</button>
+        </form>
+    </div>
+}
+else
+{
+    <div>
+        <form asp-action="MakeAttempt" method="post">
+            <label>Попытка второго игрока:</label>
+            <input type="number" name="attempt" />
+            <input type="hidden" name="player" value="second" />
+            <button type="submit">Попробовать угадать</button>
+        </form>
+    </div>
+}

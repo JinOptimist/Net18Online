@@ -1,0 +1,80 @@
+.menu-plus-content{
+    display: flex;
+
+}
+.page-header{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 50px;
+    font-size: 25px;
+}
+header .logo img{
+    max-height: 70px;
+}
+header .logo{
+    font-size: 0;
+}
+body{
+    background: #25132b;
+    color: white;
+}
+header .navigation ul{
+    display: ruby;
+    
+}
+.navigation li{
+    margin: 10px;
+}
+.navigation a{
+    text-decoration: none;
+    color: white;
+}
+.menu-plus-content .menu{
+    width: 200px;
+    padding: 10px;
+    border-right: 1px white solid;
+    border-radius: 10px;
+}
+.menu a{
+    margin: 5px;
+    padding: 5px;
+    display: block;
+    text-decoration: none;
+    color: white;
+    
+}
+.Featured-Recommended{
+    display: flex; 
+    width: 100%; 
+    justify-content: space-around; 
+}
+.game-block .image-container{
+    width: 100px;
+    height: 200px;
+    align-items: center;
+    display: flex;
+}
+.game-block .image-container img{
+    max-width: 100px;
+    max-width: 200px;
+}
+.game-block{
+    margin: 100px;
+}
+.game-block .name{
+    display: flex;
+    justify-content: center;
+}
+.content .title{
+    margin: 10px;
+}
+.Special-Offers{
+    display: flex; 
+    width: 100%; 
+    justify-content: space-around; 
+}
+.content{
+    display:flex;
+    flex-wrap: wrap;
+}

@@ -6,13 +6,25 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-
-
   <ItemGroup>
     <ProjectReference Include="..\Everything.Data.Fake\Everything.Data.Fake.csproj" />
     <ProjectReference Include="..\Everything.Data.Interface\Everything.Data.Interface.csproj" />
+    <ProjectReference Include="..\Everything.Data\Everything.Data.csproj" />
     <ProjectReference Include="..\LifeGame\LifeGame.csproj" />
     <ProjectReference Include="..\MazeCore\MazeCore.csproj" />
+  </ItemGroup>
+
+
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\ServiceCenter\" />
+  </ItemGroup>
+
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
   </ItemGroup>
 
 

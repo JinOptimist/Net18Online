@@ -1,0 +1,27 @@
+﻿@using WebPortalEverything.Models.ServiceCenter
+@model List<TypeOfApplianceViewModel>
+
+@{
+    Layout = "~/Views/Shared/_LayoutServiceCenter.cshtml";
+}
+
+@if (Model != null && Model.Any())
+{
+    <div class="appliances">
+        @foreach (var appliance in Model)
+        {
+            <div class="appliance">
+                <div class="name">@appliance.Name</div>
+                <div class="image-container service-content">
+                    <img src="@Url.Content(appliance.ImageSrc)" alt="@appliance.Name" class="service-content" />
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div>No appliances available.</div>
+}
+
+

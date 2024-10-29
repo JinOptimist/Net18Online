@@ -8,7 +8,7 @@ namespace Everything.Data.Fake.Repositories
         public IEnumerable<IGirlData> GetMostPopular()
         {
             return _entyties
-                .OrderByDescending(x => x.Tags.Contains("Cool") ? 1 : -1)
+                // .OrderByDescending(x => x.Tags.Contains("Cool") ? 1 : -1)
                 .Take(5)
                 .ToList();
         }
