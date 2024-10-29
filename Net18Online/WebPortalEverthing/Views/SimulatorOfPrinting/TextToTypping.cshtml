@@ -7,14 +7,14 @@
 <h1>Typing Simulator</h1>
 <div id="displayText">@Html.Raw(Model.CurrentText)</div>
 
-<form asp-action="Index" method="post">
+<form asp-action="Index" method="post" id="typingForm">
     <input type="hidden" asp-for="CurrentText" />
     <textarea id="userInput" asp-for="UserInput" oninput="checkInput()"></textarea>
     <button type="submit">Submit</button>
 </form>
 
 <p>@Model.Result</p>
-<p>Time Elapsed: @Model.ElapsedTime.TotalSeconds seconds</p>
+<p id="timer">Time Elapsed: @Model.ElapsedTime.TotalSeconds seconds</p>
 
 <script>
     const text = "@Model.CurrentText";
@@ -26,8 +26,11 @@
         startTimer();
     });
 
-    document.querySelector('form').addEventListener('submit', function() {
-        fetch('/Typing/StopTimer', { method: 'POST' });
+    document.getElementById("typingForm").addEventListener('submit', function(event) {
+        event.preventDefault(); 
+        fetch('/Typing/StopTimer', { method: 'POST' }).then(() => {
+            stopTimer();
+        });
     });
 
     function startTimer() {
