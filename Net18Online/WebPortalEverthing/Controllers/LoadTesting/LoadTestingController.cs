@@ -56,17 +56,14 @@ namespace WebPortalEverthing.Controllers.LoadTesting
             return View(metricsViewModel); //model выдаст данные наружу, на страницу
         }
 
+        /*   [HttpGet]  нужен, чтобы отобразить страницу создания профайла перед заполнением полей */
         [HttpGet]
         public IActionResult CreateProfileView()
         {
-            Guid guid;
-            string name;
-            decimal throughput;
-            decimal average;
-
             return View();
         }
 
+        /* HttpPost  нужен, чтобы послать данные заполненные пользователем в экшен т.е. метрику (metric)  */
         [HttpPost]
         public IActionResult CreateProfileView(Metric metric)
         {

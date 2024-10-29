@@ -8,9 +8,9 @@ namespace WebPortalEverthing.Controllers.GameLife
     {
         private IGameLifeRepository _gameLifeRepository;
 
-        static int defWidth = 3;
-        static int defHigth = 3;
-        Field field = new Field(defWidth, defHigth);
+        static int defWidth = 6;
+        static int defHigth = 7;
+        FieldViewModel field = new FieldViewModel(defWidth, defHigth);
 
         public GameLifeController(IGameLifeRepository gameLifeRepository)
         {
@@ -35,7 +35,7 @@ namespace WebPortalEverthing.Controllers.GameLife
         {
             if (width != defWidth || height != defHigth)
             {
-                field = new Field(width, height);
+                field = new FieldViewModel(width, height);
                 field.Randomize();
             }
             return View(field);
