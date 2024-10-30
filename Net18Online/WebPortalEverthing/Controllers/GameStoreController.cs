@@ -1,18 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.GameStore;
 using WebPortalEverthing.Models;
+using Everything.Data.Models;
 using Everything.Data.Interface.Repositories;
-using Everything.Data.Fake.Models;
+//using Everything.Data.Fake.Models;
+using Everything.Data;
 
 namespace WebPortalEverthing.Controllers
 {
     public class GameStoreController : Controller
     {
         private IGameStoreRepository _gameStoreRepository;
-
-        public GameStoreController(IGameStoreRepository gameStoreRepository)
+        private WebDbContext _webDbContext;
+        public GameStoreController(IGameStoreRepository gameStoreRepository, WebDbContext webDbContext)
         {
             _gameStoreRepository = gameStoreRepository;
+            _webDbContext = webDbContext;
         }
         public IActionResult Index()
         {
@@ -30,8 +33,8 @@ namespace WebPortalEverthing.Controllers
         }
         public IActionResult Library()
         {
-            var gameFromDb = _gameStoreRepository.GetAll();
-
+            //var gameFromDb = _gameStoreRepository.GetAll();
+            var gameFromDb = _webDbContext.Games.ToList();
             if (!_gameStoreRepository.Any())
             {
                 GenerateDefaultGame();
@@ -42,7 +45,7 @@ namespace WebPortalEverthing.Controllers
             {
                 NameGame = dbGame.NameGame,
                 ImageSrc = dbGame.ImageSrc,
-                Tags = dbGame.Tags,
+                Tags = new(),
             }
             ).ToList();
             return View(gameViewModels);
@@ -59,7 +62,7 @@ namespace WebPortalEverthing.Controllers
                 {
                     NameGame = $"Game {gameNumber}",
                     ImageSrc = $"/images/GameStore/Game{gameNumber}.jpg",
-                    Tags = new List<string> { "Added", "Installed" }
+                    //Tags = new List<string> { "Added", "Installed" }
                 };
                 _gameStoreRepository.Add(dataModel);
             }
@@ -77,10 +80,13 @@ namespace WebPortalEverthing.Controllers
             {
                 NameGame = viewModel.Name,
                 ImageSrc = viewModel.Url,
-                Tags = new()
+                //Tags = new()
             };
             
-            _gameStoreRepository.Add(dataGame);
+            _webDbContext.Games.Add(dataGame);
+            _webDbContext.SaveChanges();
+
+            //_gameStoreRepository.Add(dataGame);
 
             return RedirectToAction("Library");
         }

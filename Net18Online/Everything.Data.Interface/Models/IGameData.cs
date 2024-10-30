@@ -10,6 +10,6 @@ namespace Everything.Data.Interface.Models
     {
         string NameGame { get; set; }
         string ImageSrc { get; set; }
-        List<string> Tags { get; set; }
+        //List<string> Tags { get; set; }
     }
 }
