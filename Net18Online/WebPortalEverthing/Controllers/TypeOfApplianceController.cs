@@ -1,17 +1,23 @@
-﻿using Everything.Data.Fake.Models;
+﻿using Everything.Data;
 using Everything.Data.Interface.Repositories;
+using Everything.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverything.Models.ServiceCenter;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace WebPortalEverything.Controllers
 {
     public class TypeOfApplianceController : Controller
     {
         private readonly ITypeOfApplianceRepository _typeOfApplianceRepository;
+        private readonly WebDbContext _webDbContext;
 
-        public TypeOfApplianceController(ITypeOfApplianceRepository typeOfApplianceRepository)
+        public TypeOfApplianceController(ITypeOfApplianceRepository typeOfApplianceRepository, WebDbContext webDbContext)
         {
             _typeOfApplianceRepository = typeOfApplianceRepository;
+            _webDbContext = webDbContext;
         }
 
         public IActionResult AllTypeOfAppliances()
@@ -43,7 +49,6 @@ namespace WebPortalEverything.Controllers
                 {
                     var directoryPath = Path.Combine("wwwroot/images/ServiceCenter/TypeOfAppliances");
 
-                    // Ensure the directory exists
                     if (!Directory.Exists(directoryPath))
                     {
                         Directory.CreateDirectory(directoryPath);
@@ -62,17 +67,15 @@ namespace WebPortalEverything.Controllers
                         ImageSrc = $"/images/ServiceCenter/TypeOfAppliances/{viewModel.ImageFile.FileName}"
                     };
 
-                    _typeOfApplianceRepository.Add(appliance);
-
-                    // Save to JSON file
-                    string jsonFilePath = Path.Combine("Data", "ServiceCenter", "typeOfAppliance.json");
-                    _typeOfApplianceRepository.SaveDataToJson(jsonFilePath);
+                    await _webDbContext.TypeOfAppliances.AddAsync(appliance);
+                    await _webDbContext.SaveChangesAsync();
                 }
                 else
                 {
                     ModelState.AddModelError("ImageFile", "Please upload an image.");
                 }
             }
+
             return View(viewModel);
         }
     }
