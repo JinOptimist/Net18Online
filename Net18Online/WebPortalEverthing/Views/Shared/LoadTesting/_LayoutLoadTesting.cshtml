@@ -1,5 +1,4 @@
 ﻿@using WebPortalEverthing.Models.LoadTesting
-@model LoadTestingContentMetricsListViewModel
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -15,6 +14,7 @@
     <link href="~/css/LoadTesting/discription-tipes.css" rel="stylesheet" />
     <link href="~/css/LoadTesting/create-metric-form.css" rel="stylesheet" />
     <link href="~/css/LoadTesting/create-profile-form.css" rel="stylesheet" />
+    <link href="~/css/LoadTesting/GameLife/game-life.css" rel="stylesheet" />
 
 </head>
 <body>
@@ -37,33 +37,39 @@
     <div class="buttona-and-content">
         <div class="button-list">
             <div class="fridaysRemaining">
-                До нового года осталось <span id="fridaysCount">0</span> пятниццц !
+                До нового года осталось <span id="fridaysCount">0</span> пятниц_ц_ц !
             </div>
             <ul>
                 <li>
-                    <a href="https://example.com" class="button"><span>Кнопка 1</span></a>
+                    <a href="/loadtesting/ContenMetricsListView" class="button"><span>All metrics</span></a>
+                </li>
+                <li>
+                    <a href="/loadtesting/CreateProfileView" class="button"><span>CreateProfile</span></a>
                 </li>
                 <li>
                     <a href="https://example.com" class="button"><span>Кнопка 2</span></a>
                 </li>
-                <li>
-                    <a href="/loadtesting/CreateProfile" class="button"><span>CreateProfile</span></a>
-                </li>
             </ul>
-            <div class="oval-form">
-                <div class="input-container">
-                    <div class="title">Закажи себе нагрузку на Новый год:</div>
-                    <input type="text" name="Throughput" placeholder="Throughput" required />
-                    <input type="text" name="Average" placeholder="Average" required />
-                    <button type="submit">Создать</button>
+
+
+
+            <form method="post">
+                <div class="oval-form">
+                    <div class="input-container">
+                        <div class="title">Закажи себе нагрузку на Новый год:</div>
+                        <input type="text" name="name" placeholder="Name" value="NewYearLoad" required />
+                        <input type="text" name="throughput" placeholder="Throughput" required />
+                        <input type="text" name="average" placeholder="Average" required />
+                        <button type="submit">Создать</button>
+                    </div>
                 </div>
-            </div>
+            </form>
+
         </div>
-
-        <div class="content">
-            @RenderBody();
-        </div><!-- Закрытие блока .content -->
-
+        @RenderBody();
+        <!-- Добавьте этот блок для рендеринга секции Scripts из \LoadTesting\GameLife\GameLifeDefault.cshtml -->
+        @RenderSection("Scripts", required: false)
+    </div><!-- Закрытие блока .content -->
     </div>  <!-- Закрытие блока .buttona-and-content -->
 
 </body>

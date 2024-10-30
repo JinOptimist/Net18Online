@@ -1,5 +1,5 @@
 @using WebPortalEverthing.Models.LoadTesting
-@model LoadTestingContentMetricsListViewModel
+@model List<Metric>
 
 @{
     Layout = "~/Views/Shared/LoadTesting/_LayoutLoadTesting.cshtml";
@@ -7,7 +7,7 @@
 
 <div class="content">
     <div class="discription-tipes">
-        @foreach( var metric in Model.Metrics )
+        @foreach( var metric in Model )
         {
             <div class="discription-type">
                 <div class="type-name">@metric.Name</div>
@@ -16,7 +16,7 @@
                     <img src="~/images/LoadTesting/photo_2024-07-15_09-13-16.jpg" alt="type1" />
                 </div>
                 <div class="additional-info">
-                    @if( Model.Metrics != null && Model.Metrics.Count > 0 )
+                    @if( Model != null && Model.Count > 0 )
                     {
                         <span class="tag">скорость обработки (Throughput): @metric.Throughput </span>
                     } else

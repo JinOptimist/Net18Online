@@ -1,0 +1,66 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebPortalEverthing.Models.SimulatorOfPrinting.TypingViewModel
+@{
+    ViewData["Title"] = "Typing Simulator";
+}
+
+<h1>Typing Simulator</h1>
+<div id="displayText">@Html.Raw(Model.CurrentText)</div>
+
+<form asp-action="Index" method="post" id="typingForm">
+    <input type="hidden" asp-for="CurrentText" />
+    <textarea id="userInput" asp-for="UserInput" oninput="checkInput()"></textarea>
+    <button type="submit">Submit</button>
+</form>
+
+<p>@Model.Result</p>
+<p id="timer">Time Elapsed: @Model.ElapsedTime.TotalSeconds seconds</p>
+
+<script>
+    const text = "@Model.CurrentText";
+    let startTime;
+
+    document.addEventListener("DOMContentLoaded", function() {
+        fetch('/Typing/StartTimer', { method: 'POST' });
+        document.getElementById("displayText").innerHTML = generateHighlightedText(text, "");
+        startTimer();
+    });
+
+    document.getElementById("typingForm").addEventListener('submit', function(event) {
+        event.preventDefault(); 
+        fetch('/Typing/StopTimer', { method: 'POST' }).then(() => {
+            stopTimer();
+        });
+    });
+
+    function startTimer() {
+        startTime = new Date();
+    }
+
+    function stopTimer() {
+        const endTime = new Date();
+        const elapsedSeconds = ((endTime - startTime) / 1000).toFixed(2);
+        document.getElementById("timer").textContent = `Time Elapsed: ${elapsedSeconds} seconds`;
+    }
+
+    function checkInput() {
+        const userInput = document.getElementById("userInput").value;
+        document.getElementById("displayText").innerHTML = generateHighlightedText(text, userInput);
+    }
+
+    function generateHighlightedText(originalText, typedText) {
+        let result = "";
+        for (let i = 0; i < originalText.length; i++) {
+            if (i < typedText.length) {
+                if (originalText[i] === typedText[i]) {
+                    result += `<span style="color: green;">${originalText[i]}</span>`;
+                } else {
+                    result += `<span style="color: red;">${originalText[i]}</span>`;
+                }
+            } else {
+                result += originalText[i];
+            }
+        }
+        return result;
+    }
+</script>

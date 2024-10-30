@@ -5,7 +5,7 @@ namespace SimulatorOfPrinting.Models
 {
     public class TextProvider
     {
-        private readonly string[] texts = new string[]
+        private readonly List<string> texts = new List<string>
         {
             "The quick brown fox jumps over the lazy dog.",
             "In a world where technology is constantly evolving, it's important to keep up with the latest trends.",
@@ -25,7 +25,7 @@ namespace SimulatorOfPrinting.Models
         public string GetText()
         {
             Random random = new Random();
-            var randomText = random.Next(texts.Length);
+            var randomText = random.Next(texts.Count);
             return texts[randomText];
         }
     }
