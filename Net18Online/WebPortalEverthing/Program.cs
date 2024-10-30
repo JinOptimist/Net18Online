@@ -2,7 +2,10 @@ using Everything.Data;
 using Everything.Data.Fake.Repositories;
 using Everything.Data.Interface.Repositories;
 using MazeCore.Builders;
+using SimulatorOfPrinting.Models;
+using WebPortalEverthing.Models.SimulatorOfPrinting;
 using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +33,7 @@ builder.Services.AddSingleton<IMoviePosterRepository, MoviePosterRepository>();
 
 builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
 
+builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();
 
 builder.Services.AddSingleton<ILoadTestingRepository, LoadTestingRepository>();
