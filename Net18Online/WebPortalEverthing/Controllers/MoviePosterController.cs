@@ -1,4 +1,5 @@
-﻿using Everything.Data.Fake.Models;
+﻿using Everything.Data;
+using Everything.Data.Models;
 using Everything.Data.Interface.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.MoviePoster;
@@ -8,10 +9,11 @@ namespace WebPortalEverthing.Controllers
     public class MoviePosterController : Controller
     {
         private IMoviePosterRepository _moviePosterRepository;
-
-        public MoviePosterController(IMoviePosterRepository moviePosterRepository)
+        private WebDbContext _webDbContext;
+        public MoviePosterController(IMoviePosterRepository moviePosterRepository, WebDbContext webDbContext)
         {
             _moviePosterRepository = moviePosterRepository;
+            _webDbContext = webDbContext;
         }
 
         public IActionResult Index(string name, int age)
@@ -25,23 +27,28 @@ namespace WebPortalEverthing.Controllers
         
         public IActionResult AllPosters(int? count)
         {
-            var countElementInDb = _moviePosterRepository.GetAll();
-            if (!_moviePosterRepository.Any() || countElementInDb.Count < count)
-            {
-                GenerateDefaultMoviePoster(count - countElementInDb.Count);
-            }
+            //var countElementInDb = _moviePosterRepository.GetAll();
+            //if (!_moviePosterRepository.Any() || countElementInDb.Count < count)
+            //{
+            //    GenerateDefaultMoviePoster(count - countElementInDb.Count);
+            //}
 
-            var moviesFromDb = _moviePosterRepository.GetAllInCount(count ?? countElementInDb.Count);
+            //var moviesFromDb = _moviePosterRepository.GetAllInCount(count ?? countElementInDb.Count);
 
-            var movieViewModels = moviesFromDb
-                .Take(count ?? countElementInDb.Count)
+            var moviesFromRealDb = _webDbContext
+                .Movies
+                .Where(x => x.Id > 0)
+                .ToList();
+
+            var movieViewModels = moviesFromRealDb
+                //.Take(count ?? countElementInDb.Count)
                 .Select(dbMovie =>
                     new MovieViewModel
                     {
                         Id = dbMovie.Id,
                         Name = dbMovie.Name,
                         ImageSrc = dbMovie.ImageSrc,
-                        Tags = dbMovie.Tags
+                        Tags = new List<string>() //dbMovie.Tags
                     }
                 )
                 .ToList();
@@ -58,8 +65,9 @@ namespace WebPortalEverthing.Controllers
                 {
                     Name = $"Poster {movieNumber}",
                     ImageSrc = $"/images/MoviePoster/Poster{movieNumber}.jpg",
-                    Tags = new List<string> { "action", "drama" }
+                    // Tags = new List<string> { "action", "drama" }
                 };
+
                 _moviePosterRepository.Add(dataModel);
             }
         }
@@ -77,9 +85,13 @@ namespace WebPortalEverthing.Controllers
             {
                 Name = viewModel.Name,
                 ImageSrc = viewModel.Url,
-                Tags = viewModel.Tags,
+                // Tags = viewModel.Tags,
             };
-            _moviePosterRepository.Add(dataMovie);
+
+            //_moviePosterRepository.Add(dataMovie);
+
+            _webDbContext.Movies.Add(dataMovie);
+            _webDbContext.SaveChanges();
 
             return RedirectToAction("AllPosters");
         }
