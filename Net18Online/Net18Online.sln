@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Everything.Data.Interface",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LifeGame", "LifeGame\LifeGame.csproj", "{15C29ED9-32ED-49E6-B2EB-BE93A2FABA7A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Everything.Data", "Everything.Data\Everything.Data.csproj", "{C327C45D-54CA-457B-8D72-C8B83E7CCD54}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{15C29ED9-32ED-49E6-B2EB-BE93A2FABA7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15C29ED9-32ED-49E6-B2EB-BE93A2FABA7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15C29ED9-32ED-49E6-B2EB-BE93A2FABA7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C327C45D-54CA-457B-8D72-C8B83E7CCD54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C327C45D-54CA-457B-8D72-C8B83E7CCD54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C327C45D-54CA-457B-8D72-C8B83E7CCD54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C327C45D-54CA-457B-8D72-C8B83E7CCD54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
