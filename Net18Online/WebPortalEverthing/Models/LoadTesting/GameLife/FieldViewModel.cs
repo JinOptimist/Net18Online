@@ -7,12 +7,8 @@ namespace WebPortalEverthing.Models.LoadTesting.GameLife
 
     public class FieldViewModel
     {
-        private int _rows;
-        private int _cols;
-        private CellViewModel[,] _cells; // 2D-массив клеток
-
-        public int Rows { get => _rows; set => _rows = value; }
-        public int Cols { get => _cols; set => _cols = value; }
-        public CellViewModel[,] Cells { get => _cells; set => _cells = value; }
+        public int Rows { get; set; }
+        public int Cols { get; set; }
+        public CellViewModel[,]? Cells { get; set; }
     }
 }

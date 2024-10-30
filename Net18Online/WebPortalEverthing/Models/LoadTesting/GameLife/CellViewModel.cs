@@ -6,6 +6,6 @@
     public class CellViewModel
     {
         /* представляет клетку и её состояние. */
-        public bool IsAlive { get; private set; }
+        public bool IsAlive { get; set; }
     }
 }

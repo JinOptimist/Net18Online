@@ -12,18 +12,22 @@ namespace LifeGame.Model
         private int _cols;
         private Cell[,] _cells;
 
+        public int Rows { get; set; }
+        public int Cols { get; set; }
+        public Cell[,] Cells { get; set; }
+
         public Field(int rows, int cols)
         {
-            _rows = rows;
-            _cols = cols;
-            _cells = new Cell[rows, cols];
+            Rows = rows;
+            Cols = cols;
+            Cells = new Cell[rows, cols];
 
             // Инициализация клеток
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < cols; j++)
                 {
-                    _cells[i, j] = new Cell();
+                    Cells[i, j] = new Cell();
                 }
             }
         }
@@ -36,11 +40,11 @@ namespace LifeGame.Model
         public void Randomize()
         {
             Random random = new Random();
-            for (int i = 0; i < _rows; i++)
+            for (int i = 0; i < Rows; i++)
             {
-                for (int j = 0; j < _cols; j++)
+                for (int j = 0; j < Cols; j++)
                 {
-                    _cells[i, j].SetAlive(random.Next(2) == 0);
+                    Cells[i, j].SetAlive(random.Next(2) == 0);
                 }
             }
         }
@@ -59,9 +63,9 @@ namespace LifeGame.Model
                     int neighborRow = row + i;
                     int neighborCol = col + j;
 
-                    if (neighborRow >= 0 && neighborRow < _rows &&
-                        neighborCol >= 0 && neighborCol < _cols &&
-                        _cells[neighborRow, neighborCol].IsAlive)
+                    if (neighborRow >= 0 && neighborRow < Rows &&
+                        neighborCol >= 0 && neighborCol < Cols &&
+                        Cells[neighborRow, neighborCol].IsAlive)
                     {
                         aliveNeighbors++;
                     }
@@ -74,14 +78,14 @@ namespace LifeGame.Model
         // Обновление поля по правилам игры "Жизнь"
         public void UpdateField()
         {
-            Cell[,] newField = new Cell[_rows, _cols];
+            Cell[,] newField = new Cell[Rows, Cols];
 
-            for (int i = 0; i < _rows; i++)
+            for (int i = 0; i < Rows; i++)
             {
-                for (int j = 0; j < _cols; j++)
+                for (int j = 0; j < Cols; j++)
                 {
                     int aliveNeighbors = GetAliveNeighbors(i, j);
-                    bool isAlive = _cells[i, j].IsAlive;
+                    bool isAlive = Cells[i, j].IsAlive;
 
                     // Применяем правила
                     if (isAlive && (aliveNeighbors < 2 || aliveNeighbors > 3))
@@ -97,18 +101,18 @@ namespace LifeGame.Model
                 }
             }
 
-            _cells = newField;
+            Cells = newField;
         }
 
         // Вывод поля на экран
         public void Display()
         {
             Console.Clear();
-            for (int i = 0; i < _rows; i++)
+            for (int i = 0; i < Rows; i++)
             {
-                for (int j = 0; j < _cols; j++)
+                for (int j = 0; j < Cols; j++)
                 {
-                    Console.Write(_cells[i, j].IsAlive ? "O" : ".");
+                    Console.Write(Cells[i, j].IsAlive ? "O" : ".");
                 }
                 Console.WriteLine();
             }
