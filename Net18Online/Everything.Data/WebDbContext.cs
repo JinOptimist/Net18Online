@@ -6,7 +6,7 @@ namespace Everything.Data
     public class WebDbContext : DbContext
     {
         public const string CONNECTION_STRING = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=\"Net18Online\";Integrated Security=True;";
-
+        public const string CONNECTION_STRING_SERVICE_CENTER = "Server=localhost,1433;Database=TMS;User Id=TMS_user;Password=tms_pass;TrustServerCertificate=True;";
         public DbSet<GirlData> Girls { get; set; }
 
         public DbSet<UserData> Users { get; set; }
@@ -47,7 +47,7 @@ namespace Everything.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(CONNECTION_STRING);
+            optionsBuilder.UseSqlServer(CONNECTION_STRING_SERVICE_CENTER);
             // base.OnConfiguring(optionsBuilder);
         }
     }

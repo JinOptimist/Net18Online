@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Everything.Data.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    [Migration("20241030155554_AddServiceCenterTables")]
+    [Migration("20241030164504_AddServiceCenterTables")]
     partial class AddServiceCenterTables
     {
         /// <inheritdoc />
@@ -104,7 +104,7 @@ namespace Everything.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Model")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

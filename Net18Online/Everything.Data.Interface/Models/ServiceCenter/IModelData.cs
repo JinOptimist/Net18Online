@@ -2,7 +2,7 @@
 {
     public interface IModelData : IBaseModel
     {
-        string Model { get; set; }
+        string Name { get; set; }
         int ProducerId { get; set; }
         int TypeId { get; set; }
     }
