@@ -1,11 +1,11 @@
 using Everything.Data;
+using Everything.Data.Repositories;
 using Everything.Data.Fake.Repositories;
 using Everything.Data.Interface.Repositories;
 using MazeCore.Builders;
 using SimulatorOfPrinting.Models;
-using WebPortalEverthing.Models.SimulatorOfPrinting;
 using Microsoft.EntityFrameworkCore;
-
+using AnimeGirlRepository = Everything.Data.Repositories.AnimeGirlRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +15,6 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(WebDbContext.CONNECTION_STRING));
 
 // Register in DI container our services/repository
-builder.Services.AddSingleton<IAnimeGirlRepository, AnimeGirlRepository>();
 builder.Services.AddSingleton<ICakeRepository, CakeRepository>();
 builder.Services.AddSingleton<IEcologyRepository, EcologyRepository>();
 builder.Services.AddSingleton<ICoffeShopRepository, CoffeShopRepository>();
@@ -32,6 +31,8 @@ builder.Services.AddSingleton<IDNDRepository, DNDRepository>();
 builder.Services.AddSingleton<IMoviePosterRepository, MoviePosterRepository>();
 
 builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
+
+builder.Services.AddScoped<IAnimeGirlRepositoryReal, AnimeGirlRepository>();
 
 builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();

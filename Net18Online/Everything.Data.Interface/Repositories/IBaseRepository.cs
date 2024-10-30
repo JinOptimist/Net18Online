@@ -7,7 +7,7 @@
 
     public interface IBaseQueryRepository<T>
     {
-        List<T> GetAll();
+        IEnumerable<T> GetAll();
 
         T? Get(int id);
 
@@ -19,5 +19,7 @@
         void Add(T data);
 
         void Delete(T data);
+
+        void Delete(int id);
     }
 }
