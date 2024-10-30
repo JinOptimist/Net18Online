@@ -30,6 +30,8 @@ builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
 
 builder.Services.AddScoped<MazeBuilder>();
 
+builder.Services.AddSingleton<ILoadTestingRepository, LoadTestingRepository>();
+builder.Services.AddSingleton<IGameLifeRepository, GameLifeRepository>();
 
 var app = builder.Build();
 // Load data into repository from JSON file
