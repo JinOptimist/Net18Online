@@ -1,0 +1,27 @@
+﻿@model WebPortalEverthing.Models.LoadTesting.GameLife.FieldViewModel
+
+@{
+    Layout = "~/Views/Shared/LoadTesting/_LayoutLoadTesting.cshtml";
+}
+
+<div class="game-life-own-size">
+    <!-- Ссылка для перехода к основному представлению -->
+    Create our own size life field  >>> <a href="/GameLife/GameLifeOwnSize">  v v v  here </a>
+</div>
+
+<div class="game-life">
+    <div class="game-life-title">Game "Life"</div>
+    <div id="game-life-field" class="game-life-field">
+        @for( int i = 0 ; i < Model.Rows ; i++ )
+        {
+            <div class="row">
+                @for( int j = 0 ; j < Model.Cols ; j++ )
+                {
+                    <span class="cell @(Model.Cells[i, j].IsAlive ? "alive" : "")">
+                        @(Model.Cells[i, j].IsAlive ? "+" : "-")
+                    </span>
+                }
+            </div>
+        }
+    </div>
+</div>
