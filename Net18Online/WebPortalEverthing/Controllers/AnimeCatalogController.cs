@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.AnimeCatalog;
 using TagGame.Classes.Builders;
 using WebPortalEverthing.Models.TagGame;
+using WebPortalEverthing.Services;
 
 namespace WebPortalEverthing.Controllers
 {
@@ -11,9 +12,12 @@ namespace WebPortalEverthing.Controllers
     {
         private IAnimeCatalogRepository _animeCatalogRepository;
 
-        public AnimeCatalogController(IAnimeCatalogRepository animeCatalogRepository)
+        private TagGameBuilder _tagGameBuilder;
+
+        public AnimeCatalogController(IAnimeCatalogRepository animeCatalogRepository, TagGameBuilder tagGameBuilder)
         {
             _animeCatalogRepository = animeCatalogRepository;
+            _tagGameBuilder = tagGameBuilder;
         }
 
         public IActionResult Index(int? count)
@@ -56,9 +60,10 @@ namespace WebPortalEverthing.Controllers
 
         public IActionResult TagGame()
         {
-            Builder builder = new Builder();
 
-            builder.Build();
+            _tagGameBuilder.Create();
+
+            var builder = _tagGameBuilder.GetBuilder();
 
             var tagsLength = builder.GetField().GetTags().GetLength(0);
 
@@ -68,6 +73,20 @@ namespace WebPortalEverthing.Controllers
             };
 
             return View(viewModel);
+        }
+
+        public IActionResult MoveTile(int x, int y)
+        {
+            var builder = _tagGameBuilder.GetBuilder();
+            var field = builder.GetField();
+            field.ChangePositions(x, y);
+
+            var viewModel = new TagGameViewModel
+            {
+                Tags = field.GetStringTags()
+            };
+
+            return View("TagGame", viewModel);
         }
     }
 }

@@ -3,6 +3,8 @@ using Everything.Data.Fake.Repositories;
 using Everything.Data.Interface.Repositories;
 using MazeCore.Builders;
 using Microsoft.EntityFrameworkCore;
+using TagGame.Classes.Builders;
+using WebPortalEverthing.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,10 @@ builder.Services.AddSingleton<IDNDRepository, DNDRepository>();
 
 // Register in DI container services/repository for MoviePosterRepository
 builder.Services.AddSingleton<IMoviePosterRepository, MoviePosterRepository>();
+
+// Register in DI container services for TagGame
+builder.Services.AddSingleton<Builder>();
+builder.Services.AddSingleton<TagGameBuilder>();
 
 builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
 
