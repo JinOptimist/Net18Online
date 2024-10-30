@@ -3,9 +3,6 @@ using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverything.Models.ServiceCenter;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WebPortalEverything.Controllers
 {
