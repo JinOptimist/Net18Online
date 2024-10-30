@@ -1,0 +1,25 @@
+﻿@using WebPortalEverthing.Models.TagGame
+@model TagGameViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutAnimeCatalog.cshtml";
+}
+
+@section TagSection
+{
+    <link href="~/css/AnimeCatalog/tags.css" rel="stylesheet" />
+}
+
+<div>
+    <div class="tags">
+        @for (var i = 0; i < Model.Tags.GetLength(0); i++)
+        {
+            <div class="row">
+                @for (var j = 0; j < Model.Tags.GetLength(1); j++)
+                {
+                    <button class="cell">@Model.Tags[i, j]</button>
+                }
+            </div>
+        }
+    </div>
+</div>

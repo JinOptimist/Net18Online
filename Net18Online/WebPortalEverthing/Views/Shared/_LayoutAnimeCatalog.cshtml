@@ -5,6 +5,7 @@
     <title>Anime Catalogue</title>
     <link href="~/css/AnimeCatalog/reset.css" rel="stylesheet" />
     <link href="~/css/AnimeCatalog/style.css" rel="stylesheet" />
+    @RenderSection("TagSection", false)
 </head>
 
 <body>
@@ -23,6 +24,7 @@
                 <li><label><input type="radio" name="Anime"> Isekai</label></li>
                 <li><label><input type="radio" name="Anime"> Fighting</label></li>
                 <li><label><input type="radio" name="Anime"> Novel</label></li>
+                <li><a class="" href="/AnimeCatalog/TagGame">TagGame</a></li>
             </ul>
         </div>
         <div class="content">

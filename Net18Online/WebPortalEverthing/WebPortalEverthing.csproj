@@ -11,6 +11,7 @@
     <ProjectReference Include="..\Everything.Data.Interface\Everything.Data.Interface.csproj" />
     <ProjectReference Include="..\Everything.Data\Everything.Data.csproj" />
     <ProjectReference Include="..\MazeCore\MazeCore.csproj" />
+    <ProjectReference Include="..\TagGame\TagGame.csproj" />
   </ItemGroup>
 
 

@@ -2,6 +2,8 @@
 using Everything.Data.Interface.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.AnimeCatalog;
+using TagGame.Classes.Builders;
+using WebPortalEverthing.Models.TagGame;
 
 namespace WebPortalEverthing.Controllers
 {
@@ -50,6 +52,22 @@ namespace WebPortalEverthing.Controllers
 
                 _animeCatalogRepository.Add(dataModel);
             }
+        }
+
+        public IActionResult TagGame()
+        {
+            Builder builder = new Builder();
+
+            builder.Build();
+
+            var tagsLength = builder.GetField().GetTags().GetLength(0);
+
+            var viewModel = new TagGameViewModel
+            {
+                Tags = builder.GetField().GetStringTags()
+            };
+
+            return View(viewModel);
         }
     }
 }

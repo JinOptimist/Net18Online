@@ -55,6 +55,26 @@
             return _tags;
         }
 
+        public string[,] GetStringTags()
+        {
+            var stringTags = new string[_tags.GetLength(0), _tags.GetLength(1)];
+
+            for (int i = 0; i < _tags.GetLength(0); i++)
+            {
+                for (int j = 0; j < _tags.GetLength(1); j++)
+                {
+                    if (_tags[i,j] == 0)
+                    {
+                        stringTags[i, j] = "";
+                        continue;
+                    }
+                    stringTags[i, j] = _tags[i, j].ToString();
+                }
+            }
+
+            return stringTags;
+        }
+
         public void ChangePositions(int newPositionX, int newPositionY)
         {
             var oldPositionX = 0;
