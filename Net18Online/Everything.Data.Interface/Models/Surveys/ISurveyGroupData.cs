@@ -1,8 +1,7 @@
 ﻿namespace Everything.Data.Interface.Models.Surveys
 {
-    public interface ISurveyGroup
+    public interface ISurveyGroupData : IBaseModel
     {
-        int Id { get; set; }
         string Title { get; set; }
     }
 }
