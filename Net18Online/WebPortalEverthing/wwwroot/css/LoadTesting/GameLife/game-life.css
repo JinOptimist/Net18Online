@@ -1,0 +1,102 @@
+﻿* {
+    margin: 30;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.game-life-own-size {
+    font-size: 30px;
+    color: darkviolet;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 30px;
+    margin-left: 20px;
+    margin-block-end: 10px;
+    width: 200px; /* Устанавливает ширину блока */
+    word-wrap: break-word; /* Переносит слова, если они превышают ширину блока */
+    /* Свечение и темный контур вокруг текста */
+    text-shadow: -1px -1px 0 rgba(50, 0, 90, 1), /* Контур слева сверху (еще темнее фиолетовый) */
+    1px -1px 0 rgba(50, 0, 90, 1), /* Контур справа сверху (еще темнее фиолетовый) */
+    -1px 1px 0 rgba(50, 0, 90, 1), /* Контур слева снизу (еще темнее фиолетовый) */
+    1px 1px 0 rgba(50, 0, 90, 1), /* Контур справа снизу (еще темнее фиолетовый) */
+    0px 5px 20px rgba(200, 120, 80, 0.6), /* Свечение снизу (темнее) */
+    0px -1px 10px rgba(160, 200, 5, 0.5); /* Свечение сверху (темнее) */
+}
+
+.game-life-title {
+    font-size: 30px;
+    color: darkviolet;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 30px;
+    margin-block-end: 10px
+    /* Свечение и черный контур вокруг текста */
+    text-shadow: -1px -1px 0 rgba(75, 0, 130, 1), /* Контур слева сверху (тёмно-фиолетовый) */
+    1px -1px 0 rgba(75, 0, 130, 1), /* Контур справа сверху (тёмно-фиолетовый) */
+    -1px 1px 0 rgba(75, 0, 130, 1), /* Контур слева снизу (тёмно-фиолетовый) */
+    1px 1px 0 rgba(75, 0, 130, 1), /* Контур справа снизу (тёмно-фиолетовый) */
+    0px 5px 30px rgb(245, 154, 119), /* Свечение снизу */
+    0px -1px 15px rgb(192, 243, 7); /* Свечение сверху */
+}
+
+.game-life-field {
+    margin-top: 30px;
+    position: relative;
+    display: block;
+    flex-direction: column; /* Располагаем  вертикально */
+    align-items: flex-start; /* Выравниваем  по левому краю */
+    position: relative;
+    border-top-width: 10px;
+    border-top-style: none;
+    /*  border-right: 1px #ccc solid;*/
+
+    padding-right: 10px; /* Чтобы текст не пересекался с линиями */
+}
+
+.row {
+    display: flex;
+}
+
+.cell {
+    width: 5mm;
+    height: 5mm;
+    border-radius: 50%;
+    background-color: transparent;
+    margin: 2px; /* Расстояние между клетками */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 12px; /* Размер символа */
+    color: black; /* Цвет символа */
+    transition: background-color 0.5s ease, opacity 0.5s ease;
+}
+
+    /* Стили для живых клеток */
+    .cell.alive {
+        background: radial-gradient(circle, #00008b, #000066, #000033); /* Темно-синий градиент */
+        color: white; /* Цвет символа "живой" клетки */
+        animation: pulsate 2s infinite;
+    }
+
+/* Анимация для переливающегося эффекта */
+@keyframes pulsate {
+    0% {
+        opacity: 0.7;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+
+    100% {
+        opacity: 0.7;
+        transform: scale(1);
+    }
+}

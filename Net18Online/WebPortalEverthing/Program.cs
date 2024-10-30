@@ -19,6 +19,8 @@ builder.Services.AddSingleton<IAnimeGirlRepository, AnimeGirlRepository>();
 builder.Services.AddSingleton<ICakeRepository, CakeRepository>();
 builder.Services.AddSingleton<IEcologyRepository, EcologyRepository>();
 builder.Services.AddSingleton<ICoffeShopRepository, CoffeShopRepository>();
+builder.Services.AddSingleton<ISurveyGroupRepository, SurveyGroupRepository>();
+builder.Services.AddSingleton<IStatusRepository, StatusRepository>();
 builder.Services.AddSingleton<ISurveysRepository, SurveysRepository>();
 // Register in DI container services/repository for ServiceCenter
 builder.Services.AddSingleton<ITypeOfApplianceRepository, TypeOfApplianceRepository>();
@@ -34,6 +36,8 @@ builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
 builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();
 
+builder.Services.AddSingleton<ILoadTestingRepository, LoadTestingRepository>();
+builder.Services.AddSingleton<IGameLifeRepository, GameLifeRepository>();
 
 var app = builder.Build();
 // Load data into repository from JSON file
