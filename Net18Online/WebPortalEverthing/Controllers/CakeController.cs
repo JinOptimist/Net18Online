@@ -1,27 +1,26 @@
-﻿using Everything.Data.Fake.Models;
+﻿using Everything.Data.Models;
 using Everything.Data.Interface.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using WebPortalEverthing.Models.AnimeGirl;
 using WebPortalEverthing.Models.Cake;
+using Everything.Data;
 
 namespace WebPortalEverthing.Controllers
 {
     public class CakeController : Controller
     {
         private ICakeRepository _cakeRepository;
+        private WebDbContext _webDbContext;
 
-        public CakeController(ICakeRepository cakeRepository) 
-        { 
+        public CakeController(ICakeRepository cakeRepository, WebDbContext webDbContext)
+        {
             _cakeRepository = cakeRepository;
+            _webDbContext = webDbContext;
         }
         public IActionResult Index()
         {
-            if (!_cakeRepository.Any())
-            {
-                GenerateDefaultCake();
-            }
-
-            var cakesFromDb = _cakeRepository.GetAll();
+            var cakesFromDb = _webDbContext
+                .Cakes
+                .ToList();
 
             var cakesViewModel = cakesFromDb
                 .Select(dbCake => new CakeViewModel
@@ -68,7 +67,10 @@ namespace WebPortalEverthing.Controllers
                 Rating = 0,
             };
 
-            _cakeRepository.Add(cake);
+            _webDbContext.Cakes.Add(cake);
+            _webDbContext.SaveChanges();
+
+            //_cakeRepository.Add(cake);
 
             return RedirectToAction("Index");
         }
