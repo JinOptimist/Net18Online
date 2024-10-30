@@ -61,12 +61,6 @@ namespace WebPortalEverthing.Controllers.GameLife
             return View(emptyModel);
         }
 
-        [HttpGet]
-        public IActionResult GameLifeOwnSize()
-        {
-            return View();
-        }
-
         [HttpPost]
         public IActionResult GameLifeOwnSize(int width, int height)
         {
