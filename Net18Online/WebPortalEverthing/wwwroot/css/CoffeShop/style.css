@@ -108,6 +108,12 @@ input {
     gap: 20px;
 }
 
+img.admin-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
 .product {
     display: flex;
     height: auto;
