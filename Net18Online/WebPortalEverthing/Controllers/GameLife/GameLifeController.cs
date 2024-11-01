@@ -1,21 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.LoadTesting.GameLife;
 using Everything.Data.Interface.Repositories;
+using Everything.Data.Interface.Models;
 using LifeGame.Model;
+using WebPortalEverthing.Models.LoadTesting;
 
 namespace WebPortalEverthing.Controllers.GameLife
 {
     public class GameLifeController : Controller
     {
         private IGameLifeRepository _gameLifeRepository;
-
         static int defWidth = 6;
         static int defHigth = 7;
-        Field field = new Field(defWidth, defHigth);
+        IFieldData field = new FieldData(defWidth, defHigth);
 
         public GameLifeController(IGameLifeRepository gameLifeRepository)
         {
             _gameLifeRepository = gameLifeRepository;
+            field = new FieldData(defWidth, defHigth);
+            _gameLifeRepository.Add(field);
         }
 
         public IActionResult GameLifeDefault()
@@ -65,7 +68,7 @@ namespace WebPortalEverthing.Controllers.GameLife
         public IActionResult GameLifeOwnSize(int width, int height)
         {
             // Создаем новое поле с заданными размерами
-            field = new Field(width, height);
+            field = new FieldData(width, height);
             field.Randomize();
 
             var rows = field.Rows;
@@ -94,7 +97,7 @@ namespace WebPortalEverthing.Controllers.GameLife
 
             fieldViewModel.Cells = cellViewModels;
 
-            return View("GameLifeDefault", fieldViewModel); // Возвращаем представление с моделью
+            return View(fieldViewModel); // Возвращаем представление с моделью
         }
     }
 }

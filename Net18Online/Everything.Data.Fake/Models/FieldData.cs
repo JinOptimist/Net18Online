@@ -5,21 +5,16 @@ namespace WebPortalEverthing.Models.LoadTesting
 {
     public class FieldData : BaseModel, IFieldData
     {
-
-        private int _rows;
-        private int _cols;
-        private CellData[,] _cells; // 2D-массив клеток
-
-        public int Rows { get => _rows; set => _rows = value; }
-        public int Cols { get => _cols; set => _cols = value; }
-        public CellData[,] Cells { get => _cells; set => _cells = value; }
-        ICellData[,] IFieldData.Cells { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int Rows { get; set; }
+        public int Cols { get; set; }
+        public ICellData[,] Cells { get; set; }
+        
 
         public FieldData(int rows, int cols)
         {
             this.Rows = rows;
             this.Cols = cols;
-            Cells = new CellData[rows, cols];
+            Cells = new ICellData[rows, cols];
 
             // Инициализация клеток
             for (int i = 0; i < rows; i++)
