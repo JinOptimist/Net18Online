@@ -52,7 +52,7 @@ namespace WebPortalEverthing.Models.LoadTesting
             {
                 for (int j = -1; j <= 1; j++)
                 {
-                    if (i == 0 && j == 0) continue;
+                    if (i == 0 && j == 0) { continue; }
 
                     int neighborRow = row + i;
                     int neighborCol = col + j;
@@ -81,15 +81,9 @@ namespace WebPortalEverthing.Models.LoadTesting
                     int aliveNeighbors = GetAliveNeighbors(i, j);
                     bool isAlive = Cells[i, j].IsAlive;
 
-                    // Применяем правила
-                    if (isAlive && (aliveNeighbors < 2 || aliveNeighbors > 3))
-                    {
-                        isAlive = false;
-                    }
-                    else if (!isAlive && aliveNeighbors == 3)
-                    {
-                        isAlive = true;
-                    }
+                    var liveIsCreatedByNeighbors = aliveNeighbors == 3;
+                    var stillLiveGoodEnv = isAlive && aliveNeighbors >= 2 && aliveNeighbors <= 3;
+                    isAlive = liveIsCreatedByNeighbors || stillLiveGoodEnv;
 
                     newField[i, j] = new CellData(isAlive);
                 }

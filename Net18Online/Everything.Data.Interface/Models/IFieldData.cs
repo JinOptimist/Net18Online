@@ -45,7 +45,7 @@
             {
                 for (int j = -1; j <= 1; j++)
                 {
-                    if (i == 0 && j == 0) continue;
+                    if (i == 0 && j == 0) { continue; } 
 
                     int neighborRow = row + i;
                     int neighborCol = col + j;
