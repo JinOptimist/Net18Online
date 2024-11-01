@@ -8,6 +8,7 @@ namespace LifeGame.Model
 {
     public class Field
     {
+        Random random = new Random();
         private int _rows;
         private int _cols;
         private Cell[,] _cells;
@@ -39,7 +40,6 @@ namespace LifeGame.Model
 
         public void Randomize()
         {
-            Random random = new Random();
             for (int i = 0; i < Rows; i++)
             {
                 for (int j = 0; j < Cols; j++)

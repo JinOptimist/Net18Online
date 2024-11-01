@@ -8,7 +8,8 @@ namespace WebPortalEverthing.Models.LoadTesting
         public int Rows { get; set; }
         public int Cols { get; set; }
         public ICellData[,] Cells { get; set; }
-        
+        Random random = new Random();
+
 
         public FieldData(int rows, int cols)
         {
@@ -33,7 +34,6 @@ namespace WebPortalEverthing.Models.LoadTesting
 
         public void Randomize()
         {
-            Random random = new Random();
             for (int i = 0; i < Rows; i++)
             {
                 for (int j = 0; j < Cols; j++)
