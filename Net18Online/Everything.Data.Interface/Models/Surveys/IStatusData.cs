@@ -1,8 +1,7 @@
 ﻿namespace Everything.Data.Interface.Models.Surveys
 {
-    public interface IStatus
+    public interface IStatusData : IBaseModel
     {
-        int Id { get; set; }
         string Title { get; set; }
         string ImagesSrc { get; set; }
     }

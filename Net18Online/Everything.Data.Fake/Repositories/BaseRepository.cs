@@ -22,7 +22,13 @@ namespace Everything.Data.Fake.Repositories
             _entyties.Remove(data);
         }
 
-        public List<T> GetAll()
+        public void Delete(int id)
+        {
+            var data = Get(id);
+            Delete(data);
+        }
+
+        public IEnumerable<T> GetAll()
         {
             return _entyties;
         }
@@ -36,5 +42,7 @@ namespace Everything.Data.Fake.Repositories
         {
             return _entyties.Any();
         }
+
+       
     }
 }

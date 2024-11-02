@@ -8,15 +8,27 @@
     @foreach (var girl in Model)
     {
         <div class="girl">
-            <div class="name">@girl.Name</div>
+            <div class="name">
+                <form method="post" action="/AnimeGirl/UpdateName">
+                    <input name="id" value="@girl.Id" type="hidden" />
+                    <input name="newName" value="@girl.Name" />
+                    <button type="submit">upd</button>
+                </form>
+            </div>
             <div class="image-container">
                 <img src="@girl.ImageSrc" alt="girl" />
             </div>
             <div class="additional-info">
+                <form method="post" action="/AnimeGirl/UpdateImage">
+                    <input name="id" value="@girl.Id" type="hidden" />
+                    <input name="url" />
+                    <button type="submit">new image</button>
+                </form>
                 @foreach (var tag in girl.Tags)
                 {
                     <span class="tag">@tag</span>
                 }
+                <a href="/AnimeGirl/Remove?id=@girl.Id">Delete</a>
             </div>
         </div>
     }

@@ -25,7 +25,7 @@ namespace WebPortalEverthing.Controllers
         
         public IActionResult AllPosters(int? count)
         {
-            var countElementInDb = _moviePosterRepository.GetAll();
+            var countElementInDb = _moviePosterRepository.GetAll().ToList();
             if (!_moviePosterRepository.Any() || countElementInDb.Count < count)
             {
                 GenerateDefaultMoviePoster(count - countElementInDb.Count);

@@ -1,12 +1,13 @@
 ﻿using Everything.Data.Interface.Repositories;
+using Everything.Data.Repositories;
 
 namespace WebPortalEverthing.Services
 {
     public class GeneratorAnimeGirls
     {
-        private IAnimeGirlRepository _animeGirlRepository;
+        private IAnimeGirlRepositoryReal _animeGirlRepository;
 
-        public GeneratorAnimeGirls(IAnimeGirlRepository animeGirlRepository)
+        public GeneratorAnimeGirls(IAnimeGirlRepositoryReal animeGirlRepository)
         {
             _animeGirlRepository = animeGirlRepository;
         }

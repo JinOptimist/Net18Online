@@ -8,10 +8,14 @@ namespace WebPortalEverthing.Controllers
 {
     public class SurveysController : Controller
     {
+        private ISurveyGroupRepository _surveyGroupRepository;
+        private IStatusRepository _statusRepository;
         private ISurveysRepository _surveysRepository;
 
-        public SurveysController(ISurveysRepository surveysRepository)
+        public SurveysController(ISurveyGroupRepository surveyGroupRepository, IStatusRepository statusRepository, ISurveysRepository surveysRepository)
         {
+            _statusRepository = statusRepository;
+            _surveyGroupRepository = surveyGroupRepository;
             _surveysRepository = surveysRepository;
         }
 
@@ -22,34 +26,46 @@ namespace WebPortalEverthing.Controllers
 
         public ActionResult SurveysAll()
         {
-            if (!_surveysRepository.AnySurveyGroups())
+            if (!_statusRepository.Any())
             {
                 GenerateDefaultStatuses();
+            }
+
+            if (!_surveyGroupRepository.Any())
+            {
                 GenerateDefaultGroups();
+            }
+
+            if (!_surveysRepository.Any())
+            {
                 GenerateDefaultSurveysInGroups();
             }
 
-            var groupsFromDb = _surveysRepository.GetAllSurveyGroups();
-            var surveysFromDb = _surveysRepository.GetAllSurveys();
+            var groupsFromDb = _surveyGroupRepository.GetAll();
 
             var surveyGroupsViewModels = groupsFromDb
-                .Select(dbGroup =>
-                    new SurveyGroupViewModel
-                    {
-                        Id = dbGroup.Id,
-                        Title = dbGroup.Title,
-                        Surveys = surveysFromDb
-                            .Where(survey => survey.IdGroup == dbGroup.Id)
-                            .Select(dbSurvey => GetSurveyViewModelFromData(dbSurvey))
-                            .ToList(),
-                    }
-                )
+                .Select(GetSurveyGroupViewModelFromData)
                 .ToList();
 
             return View(surveyGroupsViewModels);
         }
 
-        private SurveyViewModel GetSurveyViewModelFromData(ISurvey survey)
+        private SurveyGroupViewModel GetSurveyGroupViewModelFromData(ISurveyGroupData surveyGroup)
+        {
+            var surveysFromDb = _surveysRepository.GetAll();
+
+            return new SurveyGroupViewModel
+            {
+                Id = surveyGroup.Id,
+                Title = surveyGroup.Title,
+                Surveys = surveysFromDb
+                            .Where(survey => survey.IdGroup == surveyGroup.Id)
+                            .Select(GetSurveyViewModelFromData)
+                            .ToList(),
+            };
+        }
+
+        private SurveyViewModel GetSurveyViewModelFromData(ISurveyData survey)
         {
             return new SurveyViewModel
             {
@@ -60,9 +76,9 @@ namespace WebPortalEverthing.Controllers
             };
         }
 
-        private SurveyStatusViewModel GetSurveyStatusViewModelFromData(ISurvey survey)
+        private SurveyStatusViewModel GetSurveyStatusViewModelFromData(ISurveyData survey)
         {
-            var statusesFromDb = _surveysRepository.GetAllStatuses();
+            var statusesFromDb = _statusRepository.GetAll();
             var statusFromDb = statusesFromDb
                 .Where(i => i.Id == survey.IdStatus)
                 .FirstOrDefault();
@@ -74,7 +90,7 @@ namespace WebPortalEverthing.Controllers
             };
         }
 
-        private SurveyActionViewModel? GetSurveyActionModelFromData(ISurvey survey)
+        private SurveyActionViewModel? GetSurveyActionModelFromData(ISurveyData survey)
         {
             // Пока что придумана одна кнопка, в будующем будет несколько
             var buttonTakeSurvey = new SurveyActionViewModel()
@@ -93,19 +109,17 @@ namespace WebPortalEverthing.Controllers
         {
             var statusNew = new StatusData()
             {
-                Id = 0,
                 Title = "Новый опрос",
                 ImagesSrc = "/images/Surveys/status/new-48.png",
             };
-            _surveysRepository.AddStatus(statusNew);
+            _statusRepository.Add(statusNew);
 
             var statusCompleted = new StatusData()
             {
-                Id = 1,
                 Title = "Опрос пройден",
                 ImagesSrc = "/images/Surveys/status/status-50.png",
             };
-            _surveysRepository.AddStatus(statusCompleted);
+            _statusRepository.Add(statusCompleted);
         }
 
         private void GenerateDefaultGroups()
@@ -114,19 +128,19 @@ namespace WebPortalEverthing.Controllers
             {
                 Title = "Оценка / самооценка"
             };
-            _surveysRepository.AddSurveyGroup(group);
+            _surveyGroupRepository.Add(group);
 
             group = new SurveyGroupData()
             {
                 Title = "Удовлетворенность"
             };
-            _surveysRepository.AddSurveyGroup(group);
+            _surveyGroupRepository.Add(group);
 
             group = new SurveyGroupData()
             {
                 Title = "Прочее"
             };
-            _surveysRepository.AddSurveyGroup(group);
+            _surveyGroupRepository.Add(group);
         }
 
         private void GenerateDefaultSurveysInGroups()
@@ -134,122 +148,122 @@ namespace WebPortalEverthing.Controllers
             var survey = new SurveyData()
             {
                 IdGroup = 1,
-                IdStatus = 1,
+                IdStatus = 2,
                 Title = "Самооценка сотрудника"
             };
-            _surveysRepository.AddSurvey(survey);
+            _surveysRepository.Add(survey);
 
             survey = new SurveyData()
             {
                 IdGroup = 1,
-                IdStatus = 1,
+                IdStatus = 2,
                 Title = "Карьерные ожидания сотрудников"
             };
-            _surveysRepository.AddSurvey(survey);
+            _surveysRepository.Add(survey);
 
             survey = new SurveyData()
             {
                 IdGroup = 1,
-                IdStatus = 1,
+                IdStatus = 2,
                 Title = "Диагностики синдрома выгорания"
             };
-            _surveysRepository.AddSurvey(survey);
+            _surveysRepository.Add(survey);
 
             survey = new SurveyData()
             {
                 IdGroup = 2,
-                IdStatus = 1,
+                IdStatus = 2,
                 Title = "Анкета удовлетворенности сотрудников"
             };
-            _surveysRepository.AddSurvey(survey);
+            _surveysRepository.Add(survey);
 
             survey = new SurveyData()
             {
                 IdGroup = 2,
-                IdStatus = 1,
+                IdStatus = 2,
                 Title = "Удовлетворенность работой и вознаграждениями"
             };
-            _surveysRepository.AddSurvey(survey);
+            _surveysRepository.Add(survey);
 
             survey = new SurveyData()
             {
                 IdGroup = 2,
-                IdStatus = 1,
+                IdStatus = 2,
                 Title = "Удовлетворенность условиями труда с оценкой важности"
             };
-            _surveysRepository.AddSurvey(survey);
+            _surveysRepository.Add(survey);
 
             survey = new SurveyData()
             {
                 IdGroup = 2,
-                IdStatus = 0,
+                IdStatus = 1,
                 Title = "Название опроса 6"
             };
-            _surveysRepository.AddSurvey(survey);
+            _surveysRepository.Add(survey);
 
             survey = new SurveyData()
             {
                 IdGroup = 2,
-                IdStatus = 0,
+                IdStatus = 1,
                 Title = "Название опроса 7"
             };
-            _surveysRepository.AddSurvey(survey);
+            _surveysRepository.Add(survey);
 
             survey = new SurveyData()
             {
                 IdGroup = 2,
-                IdStatus = 0,
+                IdStatus = 1,
                 Title = "Название опроса 8"
             };
-            _surveysRepository.AddSurvey(survey);
+            _surveysRepository.Add(survey);
 
             survey = new SurveyData()
             {
                 IdGroup = 2,
-                IdStatus = 0,
+                IdStatus = 1,
                 Title = "Название опроса 9"
             };
-            _surveysRepository.AddSurvey(survey);
+            _surveysRepository.Add(survey);
 
             survey = new SurveyData()
             {
                 IdGroup = 2,
-                IdStatus = 0,
+                IdStatus = 1,
                 Title = "Название опроса 10"
             };
-            _surveysRepository.AddSurvey(survey);
+            _surveysRepository.Add(survey);
 
             survey = new SurveyData()
             {
                 IdGroup = 2,
-                IdStatus = 0,
+                IdStatus = 1,
                 Title = "Название опроса 11"
             };
-            _surveysRepository.AddSurvey(survey);
+            _surveysRepository.Add(survey);
 
             survey = new SurveyData()
             {
                 IdGroup = 2,
-                IdStatus = 0,
+                IdStatus = 1,
                 Title = "Название опроса 12"
             };
-            _surveysRepository.AddSurvey(survey);
-
-            survey = new SurveyData()
-            {
-                IdGroup = 3,
-                IdStatus = 0,
-                Title = "Корпоративная культура"
-            };
-            _surveysRepository.AddSurvey(survey);
+            _surveysRepository.Add(survey);
 
             survey = new SurveyData()
             {
                 IdGroup = 3,
                 IdStatus = 1,
+                Title = "Корпоративная культура"
+            };
+            _surveysRepository.Add(survey);
+
+            survey = new SurveyData()
+            {
+                IdGroup = 3,
+                IdStatus = 2,
                 Title = "Диагностика аврала"
             };
-            _surveysRepository.AddSurvey(survey);
+            _surveysRepository.Add(survey);
         }
 
         [HttpGet]
@@ -264,10 +278,10 @@ namespace WebPortalEverthing.Controllers
             var survey = new SurveyData()
             {
                 IdGroup = 1, // Пока что харкод, пока не умеем пробрасывать
-                IdStatus = 0,
+                IdStatus = 1,
                 Title = surveyCreate.Title
             };
-            _surveysRepository.AddSurvey(survey);
+            _surveysRepository.Add(survey);
 
             return RedirectToAction(nameof(SurveysAll));
         }
