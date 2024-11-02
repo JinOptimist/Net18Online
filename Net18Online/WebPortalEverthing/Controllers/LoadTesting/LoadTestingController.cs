@@ -28,6 +28,9 @@ namespace WebPortalEverthing.Controllers.LoadTesting
 
             /* Передаем модель в представление
              Это datamodel(модель БД), На View можно отдавать только viewmodel(данные для пользователя не все или из др. датамоделей), нельзя datamodel */
+
+          var metricsFromRealDB =  _webDbContext.Metrics.Where(x => x.Guid != Guid.Empty).ToList();  //пока просто для примера условие
+
             var metricsFromDB = _loadTestingRepository.GetAll();
 
             if (metricsFromDB.Count == 0)
