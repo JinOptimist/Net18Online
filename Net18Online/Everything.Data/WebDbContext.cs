@@ -1,5 +1,6 @@
 ﻿using Everything.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 
 namespace Everything.Data
 {
@@ -16,6 +17,8 @@ namespace Everything.Data
         public DbSet<CakeData> Cakes { get; set; }
 
         public DbSet<CoffeData> Coffe { get; set; }
+
+        public DbSet<MetricsData> Metrics { get; set; } 
 
         public WebDbContext() { }
 
