@@ -43,7 +43,7 @@ namespace WebPortalEverthing.Controllers.LoadTesting
 
             //Из дата моделей делаем вьюмодели (список вью моделей)
             var metricsViewModel = metricsFromDB
-                .Select(metricDB => new Metric
+                .Select(metricDB => new MetricViewModel
                 {
                     Average = metricDB.Average,
                     Throughput = metricDB.Throughput,
@@ -65,7 +65,7 @@ namespace WebPortalEverthing.Controllers.LoadTesting
 
         /* HttpPost  нужен, чтобы послать данные заполненные пользователем в экшен т.е. метрику (metric)  */
         [HttpPost]
-        public IActionResult CreateProfileView(Metric metric)
+        public IActionResult CreateProfileView(MetricViewModel metric)
         {
             var metricData = new MetricData
             {

@@ -44,7 +44,7 @@ namespace WebPortalEverthing.Models.LoadTesting
         }
 
         // Метод для получения числа живых соседей
-        private int GetAliveNeighbors(int row, int col)
+        public int GetAliveNeighbors(int row, int col)
         {
             int aliveNeighbors = 0;
 

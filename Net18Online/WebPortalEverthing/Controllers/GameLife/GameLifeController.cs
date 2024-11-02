@@ -10,14 +10,14 @@ namespace WebPortalEverthing.Controllers.GameLife
     public class GameLifeController : Controller
     {
         private IGameLifeRepository _gameLifeRepository;
-        static int defWidth = 6;
-        static int defHigth = 7;
-        IFieldData field = new FieldData(defWidth, defHigth);
+        const int DEF_WIDTH = 6;
+        const int DEF_HIGTH = 7;
+        IFieldData field = new FieldData(DEF_WIDTH, DEF_HIGTH);
 
         public GameLifeController(IGameLifeRepository gameLifeRepository)
         {
             _gameLifeRepository = gameLifeRepository;
-            field = new FieldData(defWidth, defHigth);
+            field = new FieldData(DEF_WIDTH, DEF_HIGTH);
             _gameLifeRepository.Add(field);
         }
 
