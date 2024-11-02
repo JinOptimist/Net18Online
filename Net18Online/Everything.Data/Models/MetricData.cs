@@ -1,6 +1,8 @@
-﻿namespace Everything.Data.Models
+﻿using Everything.Data.Interface.Models;
+
+namespace Everything.Data.Models
 {
-    public class MetricsData
+    public class MetricData : BaseModel, IMetricData
     {
         public Guid Guid { get; set; } = Guid.NewGuid(); // Инициализация Guid при создании новой метрики, запись вместо описания в конструкторе, тоже самое д.б.
         public string Name { get; set; }

@@ -4,21 +4,24 @@ using Everything.Data.Interface.Repositories;
 using Everything.Data.Interface.Models;
 using LifeGame.Model;
 using WebPortalEverthing.Models.LoadTesting;
+using Everything.Data;
 
 namespace WebPortalEverthing.Controllers.GameLife
 {
     public class GameLifeController : Controller
     {
         private IGameLifeRepository _gameLifeRepository;
+        private WebDbContext _webDbContext;
         const int DEF_WIDTH = 6;
         const int DEF_HIGTH = 7;
         IFieldData field = new FieldData(DEF_WIDTH, DEF_HIGTH);
 
-        public GameLifeController(IGameLifeRepository gameLifeRepository)
+        public GameLifeController(IGameLifeRepository gameLifeRepository, WebDbContext webDbContext)
         {
             _gameLifeRepository = gameLifeRepository;
             field = new FieldData(DEF_WIDTH, DEF_HIGTH);
             _gameLifeRepository.Add(field);
+            _webDbContext = webDbContext;
         }
 
         public IActionResult GameLifeDefault()

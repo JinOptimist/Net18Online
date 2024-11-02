@@ -2,17 +2,20 @@
 using WebPortalEverthing.Models.LoadTesting;
 using Everything.Data.Fake.Repositories;
 using Everything.Data.Interface.Repositories;
+using Everything.Data;
 
 namespace WebPortalEverthing.Controllers.LoadTesting
 {
     public class LoadTestingController : Controller
     {
         private ILoadTestingRepository _loadTestingRepository;
+        private WebDbContext _webDbContext;
         protected const int DEFAULT_METRICS_COUNT = 6;
 
-        public LoadTestingController(ILoadTestingRepository loadTestingRepository)
+        public LoadTestingController(ILoadTestingRepository loadTestingRepository, WebDbContext webDbContext)
         {
             _loadTestingRepository = loadTestingRepository;
+            _webDbContext = webDbContext;
         }
 
         public IActionResult ContenMetricsListView()
