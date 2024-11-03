@@ -56,11 +56,12 @@ header .navigation ul{
     display: flex;
 }
 .game-block .image-container img{
+    max-height: 200px;
     max-width: 100px;
-    max-width: 200px;
 }
-.game-block{
-    margin: 100px;
+.game-block {
+    margin: 10px;
+    width: 200px;
 }
 .game-block .name{
     display: flex;
