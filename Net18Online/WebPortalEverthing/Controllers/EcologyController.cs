@@ -1,6 +1,7 @@
 using Everything.Data;
 using Everything.Data.Interface.Models;
 using Everything.Data.Interface.Repositories;
+using Everything.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Everything.Data.Repositories;
