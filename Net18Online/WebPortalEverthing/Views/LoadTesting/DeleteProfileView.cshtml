@@ -1,0 +1,19 @@
+﻿@using WebPortalEverthing.Models.LoadTesting
+@model MetricViewModel
+
+@{
+    Layout = "~/Views/Shared/LoadTesting/_LayoutLoadTesting.cshtml";
+}
+
+
+<form method="post">
+    <div class="create-profile-form">
+        <div class="title">Введите данные профайла</div>
+        <div class="input-container">
+            @Html.TextBoxFor(m => m.Name, new { placeholder = "Name" })
+            @Html.TextBoxFor(m => m.Throughput, new { placeholder = "Throughput" })
+            @Html.TextBoxFor(m => m.Average, new { placeholder = "Average" })
+            <button type="submit">Elfkbn</button>
+        </div>
+    </div>
+</form>
