@@ -38,6 +38,12 @@ namespace Everything.Data.Repositories
             _webDbContext.SaveChanges();
         }
 
+        public void Delete(int id)
+        {
+            var data = Get(id);
+            Delete(data);
+        }
+
         public void Delete(Guid Guid)
         {
             var data = Get(Guid);
@@ -66,11 +72,11 @@ namespace Everything.Data.Repositories
                 .ToList();
         }
 
-        public void UpdateImage(int id, string url)
+        public void UpdateThroughput(Guid Guid, decimal Throughput)
         {
-            var Metric = _webDbContext.Metrics.First(x => x.Id == id);
+            var Metric = _webDbContext.Metrics.First(x => x.Guid == Guid);
 
-            Metric.ImageSrc = url;
+            Metric.Throughput = Throughput;
 
             _webDbContext.SaveChanges();
         }
@@ -88,7 +94,7 @@ namespace Everything.Data.Repositories
         {
             return _webDbContext
                 .Metrics
-                .Where(x => !string.IsNullOrEmpty(x.ImageSrc));
+                .Where(x => !string.IsNullOrEmpty(x.Name));
         }
     }
 }

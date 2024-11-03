@@ -8,11 +8,11 @@ namespace WebPortalEverthing.Controllers.LoadTesting
 {
     public class LoadTestingController : Controller
     {
-        private ILoadTestingRepository _loadTestingRepository;
+        private ILoadTestingRepository<MetricData> _loadTestingRepository;
         private WebDbContext _webDbContext;
         protected const int DEFAULT_METRICS_COUNT = 6;
 
-        public LoadTestingController(ILoadTestingRepository loadTestingRepository, WebDbContext webDbContext)
+        public LoadTestingController(ILoadTestingRepository<MetricData> loadTestingRepository, WebDbContext webDbContext)
         {
             _loadTestingRepository = loadTestingRepository;
             _webDbContext = webDbContext;
