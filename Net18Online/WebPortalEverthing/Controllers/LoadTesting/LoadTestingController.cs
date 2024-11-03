@@ -29,11 +29,11 @@ namespace WebPortalEverthing.Controllers.LoadTesting
             /* Передаем модель в представление
              Это datamodel(модель БД), На View можно отдавать только viewmodel(данные для пользователя не все или из др. датамоделей), нельзя datamodel */
 
-          var metricsFromRealDB =  _webDbContext.Metrics.Where(x => x.Guid != Guid.Empty).ToList();  //пока просто для примера условие
+            var metricsFromRealDB = _webDbContext.Metrics.Where(x => x.Guid != Guid.Empty).ToList();  //пока просто для примера условие
 
-            var metricsFromDB = _loadTestingRepository.GetAll();
+            //      var metricsFromDB = _loadTestingRepository.GetAll();
 
-            if (metricsFromDB.Count == 0)
+            if (metricsFromRealDB.Count == 0)
             {
                 for (int i = 1; i <= DEFAULT_METRICS_COUNT; i++)
                 {
@@ -43,14 +43,25 @@ namespace WebPortalEverthing.Controllers.LoadTesting
                         Throughput = i * 10.5m,
                         Average = i * 5.0m
                     };
-                    _loadTestingRepository.Add(metricViewModel);
+                    //          _loadTestingRepository.Add(metricViewModel);
+
+                    var metricFromRealDB = new Everything.Data.Models.MetricData
+                    {
+                        Guid = metricViewModel.Guid,
+                        Name = metricViewModel.Name,
+                        Throughput = metricViewModel.Throughput,
+                        Average = metricViewModel.Average
+                    };
+                    _webDbContext.Metrics.Add(metricFromRealDB);
+                    _webDbContext.SaveChanges();
                 }
             }
 
             //Из дата моделей делаем вьюмодели (список вью моделей)
-            var metricsViewModel = metricsFromDB
+            var metricsViewModel = metricsFromRealDB
                 .Select(metricDB => new MetricViewModel
                 {
+                    Guid = metricDB.Guid,
                     Average = metricDB.Average,
                     Throughput = metricDB.Throughput,
                     Name = metricDB.Name
@@ -73,13 +84,16 @@ namespace WebPortalEverthing.Controllers.LoadTesting
         [HttpPost]
         public IActionResult CreateProfileView(MetricViewModel metric)
         {
-            var metricData = new MetricData
+
+            var metricData = new Everything.Data.Models.MetricData
             {
                 Name = metric.Name,
                 Throughput = metric.Throughput * 1.0m,
                 Average = metric.Average * 1.0m
             };
-            _loadTestingRepository.Add(metricData);
+            //  _loadTestingRepository.Add(metricData);
+            _webDbContext.Metrics.Add(metricData);
+            _webDbContext.SaveChanges();
 
             return Redirect("/LoadTesting/ContenMetricsListView");
         }
