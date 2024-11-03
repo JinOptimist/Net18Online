@@ -2,9 +2,8 @@
 
 namespace Everything.Data.Fake.Models.Surveys
 {
-    public class StatusData : IStatus
+    public class StatusData : BaseModel, IStatusData
     {
-        public int Id { get; set; }
         public string Title { get; set; }
         public string ImagesSrc { get; set; }
     }

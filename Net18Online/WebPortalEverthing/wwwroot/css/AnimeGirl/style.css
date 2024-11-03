@@ -1,84 +1,94 @@
 header.page-header {
-	display: flex;
-	justify-content: space-between;
-	height: 50px;
-	align-items: center;
-	font-size: 25px;
-	border-bottom: 1px #290c73 solid;
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+    align-items: center;
+    font-size: 25px;
+    border-bottom: 1px #290c73 solid;
 }
 
 header .logo {
-	display: flex;
-	align-items: center;
+    display: flex;
+    align-items: center;
 }
-header .logo img {
-	max-height: 50px;
-}
+
+    header .logo img {
+        max-height: 50px;
+    }
+
 header .name {
-	text-transform: uppercase;
+    text-transform: uppercase;
 }
 
 .menu-plus-content {
-	display: flex;
+    display: flex;
 }
 
 .profile-block {
-	display: flex;
-	align-items: center;
-	margin-right: 5px;
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
 }
 
-.profile-block .avatar {
-	max-height: 50px;
-}
-.profile-block .logout {
-	height: 40px;
-	width: 21px;
-}
+    .profile-block .avatar {
+        max-height: 50px;
+    }
+
+    .profile-block .logout {
+        height: 40px;
+        width: 21px;
+    }
 
 .menu {
-	width: 200px;
-	border-right: 1px #ccc solid;
+    width: 200px;
+    border-right: 1px #ccc solid;
 }
 
-.menu a {
-	margin: 3px;
-	display: block;
-}
+    .menu a {
+        margin: 3px;
+        display: block;
+    }
 
 .girls {
-	display: flex;
-	flex-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
 }
+
 .girl {
-	margin: 10px;
-	width: 100px;
-}
-.girl .name {
-	display: flex;
-	justify-content: center;
-}
-.girl .image-container {
-	
-	height: 150px;
-	display: flex;
-	align-items: center;
+    margin: 10px;
+    width: 200px;
 }
 
-.girl .image-container img {
-	max-width: 100px;
-	max-height: 150px;
-}
-.girl .additional-info {
-	border-top: 1px #ccc solid;
-	display: flex;
-	flex-wrap: wrap;
-}
+    .girl .name {
+        display: flex;
+        justify-content: center;
+    }
 
-.girl .additional-info .tag {
-	border: 3px #290c73 solid;
-	display: inline-block;
-	border-radius: 5px;
-	margin: 3px;
-	padding: 3px;
-}
+        .girl .name input {
+            width: 140px;
+        }
+
+    .girl .image-container {
+        height: 200px;
+        display: flex;
+        align-items: center;
+    }
+
+        .girl .image-container img {
+            max-width: 200px;
+            max-height: 200px;
+        }
+
+    .girl .additional-info {
+        border-top: 1px #ccc solid;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+        .girl .additional-info .tag {
+            border: 3px #290c73 solid;
+            display: inline-block;
+            border-radius: 5px;
+            margin: 3px;
+            padding: 3px;
+        }

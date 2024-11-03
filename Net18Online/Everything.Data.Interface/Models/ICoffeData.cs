@@ -8,6 +8,6 @@
 
         string Coffe { get; set; }
 
-        float Cost { get; set; }
+        decimal Cost { get; set; }
     }
 }

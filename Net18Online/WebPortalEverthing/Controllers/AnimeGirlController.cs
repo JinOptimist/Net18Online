@@ -1,6 +1,7 @@
 ﻿using Everything.Data;
-using Everything.Data.Interface.Repositories;
+using Everything.Data.Interface.Models;
 using Everything.Data.Models;
+using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.AnimeGirl;
 
@@ -9,9 +10,9 @@ namespace WebPortalEverthing.Controllers
     public class AnimeGirlController : Controller
     {
         private int DEFAULT_GIRL_COUNT = 4;
-        private IAnimeGirlRepository _animeGirlRepository;
+        private IAnimeGirlRepositoryReal _animeGirlRepository;
         private WebDbContext _webDbContext;
-        public AnimeGirlController(IAnimeGirlRepository animeGirlRepository, WebDbContext webDbContext)
+        public AnimeGirlController(IAnimeGirlRepositoryReal animeGirlRepository, WebDbContext webDbContext)
         {
             _animeGirlRepository = animeGirlRepository;
             _webDbContext = webDbContext;
@@ -30,22 +31,14 @@ namespace WebPortalEverthing.Controllers
 
         public IActionResult AllGirls()
         {
-            //if (!_animeGirlRepository.Any())
-            //{
-            //    GenerateDefaultAnimeGirl();
-            //}
+            if (!_animeGirlRepository.Any())
+            {
+                GenerateDefaultAnimeGirl();
+            }
 
-            //var girlsFromDb = _animeGirlRepository.GetMostPopular();
+            var girlsFromDb = _animeGirlRepository.GetMostPopular();
 
-
-            // TODO Use repository
-            var girlsFromRealDb = _webDbContext
-                .Girls
-                .Where(x => x.Id > 3)
-                .ToList();
-
-
-            var girlsViewModels = girlsFromRealDb
+            var girlsViewModels = girlsFromDb
                 .Select(dbGirl =>
                     new GirlViewModel
                     {
@@ -91,13 +84,26 @@ namespace WebPortalEverthing.Controllers
                 ImageSrc = viewModel.Url,
             };
 
-            _webDbContext.Girls.Add(dataGirl);
-            _webDbContext.Girls.Add(dataGirl);
-            _webDbContext.Girls.Add(dataGirl);
-            _webDbContext.SaveChanges();
+            _animeGirlRepository.Add(dataGirl);
 
-            //_animeGirlRepository.Add(dataGirl);
+            return RedirectToAction("AllGirls");
+        }
+        
+        public IActionResult UpdateName(string newName, int id)
+        {
+            _animeGirlRepository.UpdateName(id, newName);
+            return RedirectToAction("AllGirls");
+        }
 
+        public IActionResult UpdateImage(int id, string url)
+        {
+            _animeGirlRepository.UpdateImage(id, url);
+            return RedirectToAction("AllGirls");
+        }
+
+        public IActionResult Remove(int id)
+        {
+            _animeGirlRepository.Delete(id);
             return RedirectToAction("AllGirls");
         }
     }

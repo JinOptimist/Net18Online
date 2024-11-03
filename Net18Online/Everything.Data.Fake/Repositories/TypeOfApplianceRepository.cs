@@ -20,7 +20,12 @@ namespace Everything.Data.Fake.Repositories
             _typeOfAppliances.Remove(data);
         }
 
-        public List<ITypeOfApplianceData> GetAll()
+        public void Delete(int id)
+        {
+            Delete(Get(id));
+        }
+
+        public IEnumerable<ITypeOfApplianceData> GetAll()
         {
             return _typeOfAppliances;
         }
@@ -76,6 +81,7 @@ namespace Everything.Data.Fake.Repositories
             var jsonString = JsonSerializer.Serialize(_typeOfAppliances);
             File.WriteAllText(filePath, jsonString);
         }
+       
         #endregion
     }
 }
