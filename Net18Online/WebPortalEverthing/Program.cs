@@ -36,6 +36,7 @@ builder.Services.AddScoped<IAnimeGirlRepositoryReal, AnimeGirlRepository>();
 
 builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();
+builder.Services.AddSingleton<IChessPartiesRepository, ChessPartiesRepository>();
 
 builder.Services.AddSingleton<ILoadTestingRepository, LoadTestingRepository>();
 builder.Services.AddSingleton<IGameLifeRepository, GameLifeRepository>();
