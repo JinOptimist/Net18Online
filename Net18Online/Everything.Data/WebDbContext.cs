@@ -14,6 +14,8 @@ namespace Everything.Data
 
         public DbSet<UserData> Users { get; set; }
 
+        public DbSet<EcologyData> Ecologies { get; set; }
+
         public DbSet<CakeData> Cakes { get; set; }
 
         public DbSet<CoffeData> Coffe { get; set; }
