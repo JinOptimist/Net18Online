@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Everything.Data.Interface.Models;
+﻿using Everything.Data.Interface.Models;
 using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
 
@@ -54,6 +49,7 @@ namespace Everything.Data.Repositories
         {
             return _webDbContext.Metrics.FirstOrDefault(x => x.Id == id);
         }
+
         public MetricData? Get(Guid Guid)
         {
             return _webDbContext.Metrics.FirstOrDefault(x => x.Guid == Guid);
@@ -64,11 +60,11 @@ namespace Everything.Data.Repositories
             return GetFinilizeMetric().ToList();
         }
 
-        public IEnumerable<MetricData> GetMostPopular()
+        public IEnumerable<MetricData> GetMostLoaded()
         {
             return GetFinilizeMetric()
                 .Take(3)
-                .OrderByDescending(x => x.Id)
+                .OrderByDescending(x => x.Average)
                 .ToList();
         }
 
@@ -81,9 +77,27 @@ namespace Everything.Data.Repositories
             _webDbContext.SaveChanges();
         }
 
+        public void UpdateThroughput(int Id, decimal Throughput)
+        {
+            var Metric = _webDbContext.Metrics.First(x => x.Id == Id);
+
+            Metric.Throughput = Throughput;
+
+            _webDbContext.SaveChanges();
+        }
+
         public void UpdateName(int id, string newName)
         {
             var Metric = _webDbContext.Metrics.First(x => x.Id == id);
+
+            Metric.Name = newName;
+
+            _webDbContext.SaveChanges();
+        }
+
+        public void UpdateName(Guid Guid, string newName)
+        {
+            var Metric = _webDbContext.Metrics.First(x => x.Guid == Guid);
 
             Metric.Name = newName;
 

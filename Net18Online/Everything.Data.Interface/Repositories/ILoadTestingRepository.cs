@@ -10,6 +10,6 @@ namespace Everything.Data.Interface.Repositories
 
         void UpdateName(Guid Guid, string newName);
 
-        void UpdateThroughput(Guid Guid, string newThroughput);
+        void UpdateThroughput(Guid Guid, decimal Throughput);
     }
 }

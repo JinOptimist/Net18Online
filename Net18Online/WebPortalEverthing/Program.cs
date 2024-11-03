@@ -6,6 +6,7 @@ using MazeCore.Builders;
 using SimulatorOfPrinting.Models;
 using Microsoft.EntityFrameworkCore;
 using AnimeGirlRepository = Everything.Data.Repositories.AnimeGirlRepository;
+using LoadTestingRepository = Everything.Data.Repositories.LoadTestingRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,10 +35,11 @@ builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
 
 builder.Services.AddScoped<IAnimeGirlRepositoryReal, AnimeGirlRepository>();
 
+builder.Services.AddScoped<ILoadTestingRepositoryReal, LoadTestingRepository>();
+
 builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();
 
-builder.Services.AddSingleton<ILoadTestingRepository, LoadTestingRepository>();
 builder.Services.AddSingleton<IGameLifeRepository, GameLifeRepository>();
 
 var app = builder.Build();

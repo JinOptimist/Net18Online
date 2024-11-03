@@ -3,16 +3,17 @@ using WebPortalEverthing.Models.LoadTesting;
 using Everything.Data.Fake.Repositories;
 using Everything.Data.Interface.Repositories;
 using Everything.Data;
+using Everything.Data.Repositories;
 
 namespace WebPortalEverthing.Controllers.LoadTesting
 {
     public class LoadTestingController : Controller
     {
-        private ILoadTestingRepository<MetricData> _loadTestingRepository;
+        private ILoadTestingRepositoryReal _loadTestingRepository;
         private WebDbContext _webDbContext;
         protected const int DEFAULT_METRICS_COUNT = 6;
 
-        public LoadTestingController(ILoadTestingRepository<MetricData> loadTestingRepository, WebDbContext webDbContext)
+        public LoadTestingController(ILoadTestingRepositoryReal loadTestingRepository, WebDbContext webDbContext)
         {
             _loadTestingRepository = loadTestingRepository;
             _webDbContext = webDbContext;
@@ -31,7 +32,6 @@ namespace WebPortalEverthing.Controllers.LoadTesting
 
             var metricsFromRealDB = _webDbContext.Metrics.Where(x => x.Guid != Guid.Empty).ToList();  //пока просто для примера условие
 
-            //      var metricsFromDB = _loadTestingRepository.GetAll();
 
             if (metricsFromRealDB.Count == 0)
             {
@@ -43,7 +43,6 @@ namespace WebPortalEverthing.Controllers.LoadTesting
                         Throughput = i * 10.5m,
                         Average = i * 5.0m
                     };
-                    //          _loadTestingRepository.Add(metricViewModel);
 
                     var metricFromRealDB = new Everything.Data.Models.MetricData
                     {
@@ -91,30 +90,10 @@ namespace WebPortalEverthing.Controllers.LoadTesting
                 Throughput = metric.Throughput * 1.0m,
                 Average = metric.Average * 1.0m
             };
-            //  _loadTestingRepository.Add(metricData);
             _webDbContext.Metrics.Add(metricData);
             _webDbContext.SaveChanges();
 
             return Redirect("/LoadTesting/ContenMetricsListView");
         }
-
-        /*   [HttpPost]
-           public IActionResult _LayoutLoadTesting
-               (string name,
-               decimal throughput,
-               decimal average)
-           {
-               var metricData = new MetricData
-               {
-                   Name = name,
-                   Throughput = throughput * 1.0m,
-                   Average = average * 1.0m
-               };
-               _loadTestingRepository.Add(metricData);
-
-               return Redirect("/LoadTesting/ContenMetricsListView");
-           }*/
-
-
     }
 }
