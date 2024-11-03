@@ -3,16 +3,16 @@ using WebPortalEverthing.Models.GameStore;
 using WebPortalEverthing.Models;
 using Everything.Data.Models;
 using Everything.Data.Interface.Repositories;
-//using Everything.Data.Fake.Models;
 using Everything.Data;
+using Everything.Data.Repositories;
 
 namespace WebPortalEverthing.Controllers
 {
     public class GameStoreController : Controller
     {
-        private IGameStoreRepository _gameStoreRepository;
+        private IGameStoreRepositoryReal _gameStoreRepository;
         private WebDbContext _webDbContext;
-        public GameStoreController(IGameStoreRepository gameStoreRepository, WebDbContext webDbContext)
+        public GameStoreController(IGameStoreRepositoryReal gameStoreRepository, WebDbContext webDbContext)
         {
             _gameStoreRepository = gameStoreRepository;
             _webDbContext = webDbContext;
@@ -33,16 +33,17 @@ namespace WebPortalEverthing.Controllers
         }
         public IActionResult Library()
         {
-            //var gameFromDb = _gameStoreRepository.GetAll();
-            var gameFromDb = _webDbContext.Games.ToList();
+            var gameFromDb = _gameStoreRepository.GetAll();
+
             if (!_gameStoreRepository.Any())
             {
-                GenerateDefaultGame();
+                //GenerateDefaultGame();
             }
 
             var gameViewModels = gameFromDb.Select(dbGame =>
             new GameViewModel
             {
+                Id = dbGame.Id,
                 NameGame = dbGame.NameGame,
                 ImageSrc = dbGame.ImageSrc,
                 Tags = new(),
@@ -82,12 +83,27 @@ namespace WebPortalEverthing.Controllers
                 ImageSrc = viewModel.Url,
                 //Tags = new()
             };
-            
-            _webDbContext.Games.Add(dataGame);
-            _webDbContext.SaveChanges();
 
-            //_gameStoreRepository.Add(dataGame);
+            _gameStoreRepository.Add(dataGame);
 
+            return RedirectToAction("Library");
+        }
+
+        public IActionResult UpdateName(string newName, int id)
+        {
+            _gameStoreRepository.UpdateName(id, newName);
+            return RedirectToAction("Library");
+        }
+
+        public IActionResult UpdateImage(int id, string url)
+        {
+            _gameStoreRepository.UpdateImage(id, url);
+            return RedirectToAction("Library");
+        }
+
+        public IActionResult Remove(int id)
+        {
+            _gameStoreRepository.Delete(id);
             return RedirectToAction("Library");
         }
     }

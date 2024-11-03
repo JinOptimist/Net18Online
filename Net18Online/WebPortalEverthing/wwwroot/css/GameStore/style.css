@@ -50,14 +50,14 @@ header .navigation ul{
     justify-content: space-around; 
 }
 .game-block .image-container{
-    width: 100px;
+    
     height: 200px;
     align-items: center;
     display: flex;
 }
 .game-block .image-container img{
     max-height: 200px;
-    max-width: 100px;
+    max-width: 200px;
 }
 .game-block {
     margin: 10px;
@@ -66,6 +66,9 @@ header .navigation ul{
 .game-block .name{
     display: flex;
     justify-content: center;
+}
+.game-block .name input{
+    width:140px;
 }
 .content .title{
     margin: 10px;
