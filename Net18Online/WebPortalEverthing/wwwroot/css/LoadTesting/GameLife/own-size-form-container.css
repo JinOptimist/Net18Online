@@ -1,0 +1,99 @@
+﻿
+
+/* Контейнер для формы */
+.form-container {
+    display: flex;
+    flex-direction: column; /* Расположение элементов друг под другом */
+    gap: 10px; /* Расстояние между полями */
+    align-items: flex-start; /* Выравнивание по левому краю */
+    width: 200px;
+    margin-top: 100px;
+    margin-left: 100px;
+    margin-right: 50px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Стили для полей ввода */
+.input-field {
+    flex-direction: column; /* Расположение элементов друг под другом */
+    width: 200px;
+    padding: 5px;
+    font-size: 24px;
+    color: #c28cff;
+    font-weight: bold; /* Жирный текст */
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #a303a8;
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.3s;
+    margin-bottom: 15px;
+}
+
+    .input-field::placeholder {
+        color: #9a9a9a;
+    }
+
+    .input-field:focus {
+        border-color: #f7f306;
+    }
+
+/* Кнопка отправки кастомного поля GameLife */
+.button {
+    position: relative;
+    display: block;
+    padding: 9px 8px;
+    font-size: 20px;
+    color: #8df00b;
+    background-image: linear-gradient(45deg, rgba(98, 0, 255, 0.4), rgba(225, 0, 255, 0.4), rgba(43, 1, 14, 0.4), rgba(255, 69, 0, 0.4));
+    background-size: 300% 300%;
+    animation: fireGlow 4s ease infinite;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+    width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 -2px 8px rgba(255, 165, 0, 0.6);
+}
+
+/* Анимация для кнопки */
+@keyframes fireGlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.button:hover {
+    background-color: #1d1d1d;
+    box-shadow: 0 36px 12px rgba(0, 0, 0, 0.4), inset 0 -2px 8px rgba(255, 165, 0, 0.8);
+}
+
+.button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 30%;
+    background-image: linear-gradient(90deg, transparent 0%, rgb(4, 252, 4) 20%, rgba(36, 243, 9, 0.8) 40%, transparent 60%);
+    transition: left 0.5s ease;
+}
+
+.button:hover::before {
+    left: 0;
+}
+
+.button span {
+    position: relative;
+    z-index: 2;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
