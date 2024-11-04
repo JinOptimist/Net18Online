@@ -103,27 +103,27 @@ namespace WebPortalEverthing.Controllers.LoadTesting
         public IActionResult UpdateNameById(int id, string newName)
         {
             _loadTestingRepository.UpdateNameById(id, newName);
-            return RedirectToAction("/LoadTesting/ContenMetricsListView");
+            return RedirectToAction("ContenMetricsListView");
         }
 
 
         public IActionResult UpdateNameByGuid(Guid Guid, string newName)
         {
             _loadTestingRepository.UpdateNameByGuid(Guid, newName);
-            return RedirectToAction("/LoadTesting/ContenMetricsListView");
+            return RedirectToAction("ContenMetricsListView");
         }
 
 
         public IActionResult UpdateThroughputById(int Id, decimal Throughput)
         {
             _loadTestingRepository.UpdateThroughputById(Id, Throughput);
-            return RedirectToAction("/LoadTesting/ContenMetricsListView");
+            return RedirectToAction("ContenMetricsListView");
         }
 
         public IActionResult UpdateThroughputByGuid(Guid Guid, decimal Throughput)
         {
             _loadTestingRepository.UpdateThroughputByGuid(Guid, Throughput);
-            return RedirectToAction("/LoadTesting/ContenMetricsListView");
+            return RedirectToAction("ContenMetricsListView");
         }
 
         public IActionResult RemoveById(int id)
