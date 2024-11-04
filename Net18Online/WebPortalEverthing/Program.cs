@@ -9,6 +9,7 @@ using AnimeGirlRepository = Everything.Data.Repositories.AnimeGirlRepository;
 using EcologyRepository = Everything.Data.Repositories.EcologyRepository;
 using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRepository;
 using CoffeShopRepository = Everything.Data.Repositories.CoffeShopRepository;
+using Everything.Data.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,6 @@ builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(WebDbContext.CON
 
 
 // Register in DI container our services/repository
-builder.Services.AddSingleton<ICakeRepository, CakeRepository>();
 builder.Services.AddSingleton<ISurveyGroupRepository, SurveyGroupRepository>();
 builder.Services.AddSingleton<IStatusRepository, StatusRepository>();
 builder.Services.AddSingleton<ISurveysRepository, SurveysRepository>();
@@ -40,6 +40,8 @@ builder.Services.AddScoped<IKeyCoffeShopRepository, CoffeShopRepository>();
 builder.Services.AddScoped<IMangaRepositoryReal, MangaRepository>();
 
 builder.Services.AddScoped<IAnimeGirlRepositoryReal, AnimeGirlRepository>();
+
+builder.Services.AddScoped<ICakeRepositoryReal, CakeRepository>();
 
 builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();
