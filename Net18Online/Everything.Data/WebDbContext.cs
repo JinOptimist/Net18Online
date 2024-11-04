@@ -1,4 +1,5 @@
 ﻿using Everything.Data.Models;
+using Everything.Data.Models.Surveys;
 using Microsoft.EntityFrameworkCore;
 
 namespace Everything.Data
@@ -16,6 +17,10 @@ namespace Everything.Data
         public DbSet<CakeData> Cakes { get; set; }
 
         public DbSet<CoffeData> Coffe { get; set; }
+
+        public DbSet<StatusData> Statuses { get; set; }
+        public DbSet<SurveyData> Surveys { get; set; }
+        public DbSet<SurveyGroupData> SurveyGroups { get; set; }
 
         public WebDbContext() { }
 

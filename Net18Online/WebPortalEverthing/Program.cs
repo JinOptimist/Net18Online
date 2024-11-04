@@ -18,9 +18,6 @@ builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(WebDbContext.CON
 builder.Services.AddSingleton<ICakeRepository, CakeRepository>();
 builder.Services.AddSingleton<IEcologyRepository, EcologyRepository>();
 builder.Services.AddSingleton<ICoffeShopRepository, CoffeShopRepository>();
-builder.Services.AddSingleton<ISurveyGroupRepository, SurveyGroupRepository>();
-builder.Services.AddSingleton<IStatusRepository, StatusRepository>();
-builder.Services.AddSingleton<ISurveysRepository, SurveysRepository>();
 // Register in DI container services/repository for ServiceCenter
 builder.Services.AddSingleton<ITypeOfApplianceRepository, TypeOfApplianceRepository>();
 
@@ -33,6 +30,9 @@ builder.Services.AddSingleton<IMoviePosterRepository, MoviePosterRepository>();
 builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
 
 builder.Services.AddScoped<IAnimeGirlRepositoryReal, AnimeGirlRepository>();
+builder.Services.AddScoped<ISurveyGroupRepositoryReal, SurveyGroupRepository>();
+builder.Services.AddScoped<IStatusRepositoryReal, StatusRepository>();
+builder.Services.AddScoped<ISurveysRepositoryReal, SurveysRepository>();
 
 builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();
