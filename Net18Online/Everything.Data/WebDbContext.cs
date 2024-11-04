@@ -14,6 +14,8 @@ namespace Everything.Data
 
         public DbSet<UserData> Users { get; set; }
 
+        public DbSet<EcologyData> Ecologies { get; set; }
+
         #region ServiceCenter
         public DbSet<TypeOfApplianceData> TypeOfAppliances { get; set; }
         public DbSet<ProducerData> Producers { get; set; }
@@ -57,6 +59,7 @@ namespace Everything.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(CONNECTION_STRING);
+            //optionsBuilder.UseNpgsql(CONNECTION_STRING);
             // base.OnConfiguring(optionsBuilder);
         }
     }

@@ -6,6 +6,7 @@ using MazeCore.Builders;
 using SimulatorOfPrinting.Models;
 using Microsoft.EntityFrameworkCore;
 using AnimeGirlRepository = Everything.Data.Repositories.AnimeGirlRepository;
+using EcologyRepository = Everything.Data.Repositories.EcologyRepository;
 using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRepository;
 using CoffeShopRepository = Everything.Data.Repositories.CoffeShopRepository;
 
@@ -15,9 +16,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(WebDbContext.CONNECTION_STRING));
+//builder.Services.AddDbContext<WebDbContext>(options => options.UseNpgsql(WebDbContext.CONNECTION_STRING));
+
 
 // Register in DI container our services/repository
 builder.Services.AddSingleton<ICakeRepository, CakeRepository>();
+builder.Services.AddSingleton<ICoffeShopRepository, CoffeShopRepository>();
 builder.Services.AddSingleton<IEcologyRepository, EcologyRepository>();
 builder.Services.AddSingleton<ISurveyGroupRepository, SurveyGroupRepository>();
 builder.Services.AddSingleton<IStatusRepository, StatusRepository>();
@@ -33,7 +37,9 @@ builder.Services.AddSingleton<IDNDRepository, DNDRepository>();
 builder.Services.AddSingleton<IMoviePosterRepository, MoviePosterRepository>();
 
 builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
+builder.Services.AddScoped<IEcologyRepositoryReal, EcologyRepository>();
 builder.Services.AddScoped<IKeyCoffeShopRepository, CoffeShopRepository>();
+
 
 builder.Services.AddScoped<IAnimeGirlRepositoryReal, AnimeGirlRepository>();
 
