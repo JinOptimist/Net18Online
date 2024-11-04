@@ -61,6 +61,7 @@ namespace WebPortalEverthing.Controllers.LoadTesting
             var metricsViewModel = metricsFromRealDB
                 .Select(metricDB => new MetricViewModel
                 {
+                    Id = metricDB.Id,
                     Guid = metricDB.Guid,
                     Average = metricDB.Average,
                     Throughput = metricDB.Throughput,
@@ -128,13 +129,13 @@ namespace WebPortalEverthing.Controllers.LoadTesting
         public IActionResult RemoveById(int id)
         {
             _loadTestingRepository.Delete(id);
-            return RedirectToAction("/LoadTesting/ContenMetricsListView");
+            return RedirectToAction("ContenMetricsListView");
         }
 
         public IActionResult RemoveByGuid(Guid Guid)
         {
             _loadTestingRepository.DeleteByGuid(Guid);
-            return RedirectToAction("/LoadTesting/ContenMetricsListView");
+            return RedirectToAction("ContenMetricsListView");
         }
 
 
