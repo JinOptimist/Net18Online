@@ -21,8 +21,6 @@ builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(WebDbContext.CON
 
 // Register in DI container our services/repository
 builder.Services.AddSingleton<ICakeRepository, CakeRepository>();
-builder.Services.AddSingleton<ICoffeShopRepository, CoffeShopRepository>();
-builder.Services.AddSingleton<IEcologyRepository, EcologyRepository>();
 builder.Services.AddSingleton<ISurveyGroupRepository, SurveyGroupRepository>();
 builder.Services.AddSingleton<IStatusRepository, StatusRepository>();
 builder.Services.AddSingleton<ISurveysRepository, SurveysRepository>();
