@@ -40,7 +40,7 @@ builder.Services.AddSingleton<IMoviePosterRepository, MoviePosterRepository>();
 builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
 builder.Services.AddScoped<IEcologyRepositoryReal, EcologyRepository>();
 builder.Services.AddScoped<IKeyCoffeShopRepository, CoffeShopRepository>();
-
+builder.Services.AddScoped<IMangaRepositoryReal, MangaRepository>();
 
 builder.Services.AddScoped<IAnimeGirlRepositoryReal, AnimeGirlRepository>();
 

@@ -92,3 +92,22 @@ header .name {
             margin: 3px;
             padding: 3px;
         }
+.mangas {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.manga{
+    border: 1px #ccc solid;
+    margin: 5px;
+}
+
+.manga .name{
+    font-weight: 700;
+}
+
+    .manga .girl {
+        border: 1px #ccc solid;
+        padding: 5px;
+    }
