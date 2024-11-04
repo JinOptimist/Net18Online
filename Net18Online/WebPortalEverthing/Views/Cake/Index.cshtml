@@ -6,11 +6,11 @@
 
 <div class="menu">
     <ul class="filter">
-        <li><button class="products">Products</button></li>
-        <li><button class="price">Price</button></li>
-        <li><button class="weight">Weight</button></li>
-        <li><button class="size">Size</button></li>
-        <li><button class="rating">Rating</button></li>
+        <li><button class="filter">Products</button></li>
+        <li><button class="filter">Price</button></li>
+        <li><button class="filter">Weight</button></li>
+        <li><button class="filter">Size</button></li>
+        <li><button class="filter">Rating</button></li>
     </ul>
 </div>
 <div class="cakes">
@@ -20,10 +20,22 @@
             <div class="image-cake">
                 <img src="@cake.ImageSrc" alt="cake" />
             </div>
-            <div class="description">@cake.Description</div>
+            <div name="description">
+                <form method="post" action="/Cake/UpdateDescription">
+                    <input name="id" value="@cake.Id" type="hidden" />
+                    <input name="newDescription" value="@cake.Description" />
+                    <button type="submit">upd</button>
+                </form>
+            </div>
             <div class="price-rating">
                 <div class="rating">@cake.Rating/5</div>
                 <div class="price">@cake.Price BYN</div>
+            </div>
+            <div name="delete">
+                <form method="post" action="/Cake/Remove">
+                    <input name="id" value="@cake.Id" type="hidden" />
+                    <button type="submit">Del</button>
+                </form>
             </div>
         </div>
     }
