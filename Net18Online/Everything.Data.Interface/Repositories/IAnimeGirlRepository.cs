@@ -3,7 +3,6 @@
 namespace Everything.Data.Interface.Repositories
 {
     public interface IAnimeGirlRepository<T> : IBaseRepository<T>
-        //!!!
         where T : IGirlData
     {
         IEnumerable<T> GetMostPopular();

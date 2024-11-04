@@ -3,7 +3,6 @@
 namespace Everything.Data.Interface.Repositories
 {
     public interface IAnimeCatalogRepository : IBaseRepository<IAnimeCatalogData>
-    // AnimeCatalogController
     {
     }
 }
