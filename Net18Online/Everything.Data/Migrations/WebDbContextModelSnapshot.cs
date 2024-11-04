@@ -90,7 +90,7 @@ namespace Everything.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Surname")
+                    b.Property<string>("Surname");
                     
                     b.HasKey("Id");
                     

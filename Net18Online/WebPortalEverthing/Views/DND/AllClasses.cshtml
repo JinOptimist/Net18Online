@@ -9,15 +9,27 @@
     @foreach (var dndClass in Model)
     {
         <div class="dndClass">
-            <div class="name">@dndClass.Name</div>
+            <div class="name">
+                <form method="post" action="/DND/UpdateName">
+                    <input name="id" value="@dndClass.Id" type="hidden" />
+                    <input name="newName" value="@dndClass.Name" />
+                    <button type="submit">upd</button>
+                </form>
+            </div>
             <div class="image-container">
                 <img src="@dndClass.ImageSrc" alt="dndClass" />
             </div>
             <div class="additional-info">
+                <form method="post" action="/DND/UpdateImage">
+                    <input name="id" value="@dndClass.Id" type="hidden" />
+                    <input name="url" />
+                    <button type="submit">new image</button>
+                </form>
                 @foreach (var tag in dndClass.Tags)
                 {
                     <span class="tag">@tag</span>
                 }
+                <a href="/DND/Remove?id=@dndClass.Id">Delete</a>
             </div>
         </div>
     }

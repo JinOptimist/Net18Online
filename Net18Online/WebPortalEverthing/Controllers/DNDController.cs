@@ -1,5 +1,8 @@
-﻿using Everything.Data.Fake.Models;
+﻿using Everything.Data;
+using Everything.Data.Fake.Models;
 using Everything.Data.Interface.Repositories;
+using Everything.Data.Models;
+using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.DND;
 
@@ -7,11 +10,13 @@ namespace WebPortalEverthing.Controllers
 {
     public class DNDController : Controller
     {
-        private int DEFAULT_Class_COUNT = 4;
-        private IDNDRepository _dndRepository;
-        public DNDController(IDNDRepository dndRepository)
+        private int DEFAULT_GIRL_COUNT = 4;
+        private IDndClassRepositoryReal _dndClassRepository;
+        private WebDbContext _webDbContext;
+        public DNDController(IDndClassRepositoryReal dndClassRepository, WebDbContext webDbContext)
         {
-            _dndRepository = dndRepository;
+            _dndClassRepository = dndClassRepository;
+            _webDbContext = webDbContext;
         }
 
         public IActionResult Index()
@@ -21,41 +26,21 @@ namespace WebPortalEverthing.Controllers
 
         public IActionResult AllClasses()
         {
-            if (!_dndRepository.Any())
-            {
-                GenerateDefaultDndClass();
-            }
+            var dndClassesFromDb = _dndClassRepository.GetMostPopular();
 
-            var classesFromDb = _dndRepository.GetAll();
-
-            var classViewModel = classesFromDb
-                .Select(dbClass =>
+            var dndClassesViewModels = dndClassesFromDb
+                .Select(dbDndClass =>
                     new ClassViewModel
                     {
-                        Name = dbClass.Name,
-                        ImageSrc = dbClass.ImageSrc,
-                        Tags = dbClass.Tags
+                        Id = dbDndClass.Id,
+                        Name = dbDndClass.Name,
+                        ImageSrc = dbDndClass.ImageSrc,
+                        Tags = new List<string>() //dbDndClass.Tags
                     }
                 )
                 .ToList();
 
-            return View(classViewModel);
-        }
-
-        private void GenerateDefaultDndClass()
-        {
-            for (int i = 0; i < DEFAULT_Class_COUNT; i++)
-            {
-                var classNumber = (i % 4) + 1;
-                var dataModel = new DNDData
-                {
-                    Name = $"DNDClass {classNumber}",
-                    ImageSrc = $"/images/DND/DNDClass{classNumber}.jpg",
-                    Tags = new List<string> { "4 size", "red" }
-                };
-
-                _dndRepository.Add(dataModel);
-            }
+            return View(dndClassesViewModels);
         }
 
         [HttpGet]
@@ -67,16 +52,34 @@ namespace WebPortalEverthing.Controllers
         [HttpPost]
         public IActionResult Create(ClassCreationViewModel viewModel)
         {
-            var dataDndClass = new DNDData
+            var dataDndClass = new DndClassData
             {
                 Name = viewModel.Name,
                 ImageSrc = viewModel.Url,
-                Tags = new List<string>() { "" }
             };
 
-            _dndRepository.Add(dataDndClass);
+            _dndClassRepository.Add(dataDndClass);
 
-            return RedirectToAction("ClassCreationViewModel");
+            return RedirectToAction("AllClasses");
         }
+
+        public IActionResult UpdateName(string newName, int id)
+        {
+            _dndClassRepository.UpdateName(id, newName);
+            return RedirectToAction("AllClasses");
+        }
+
+        public IActionResult UpdateImage(int id, string url)
+        {
+            _dndClassRepository.UpdateImage(id, url);
+            return RedirectToAction("AllClasses");
+        }
+
+        public IActionResult Remove(int id)
+        {
+            _dndClassRepository.Delete(id);
+            return RedirectToAction("AllClasses");
+        }
+
     }
 }

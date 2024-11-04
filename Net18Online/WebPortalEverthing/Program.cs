@@ -6,6 +6,7 @@ using MazeCore.Builders;
 using SimulatorOfPrinting.Models;
 using Microsoft.EntityFrameworkCore;
 using AnimeGirlRepository = Everything.Data.Repositories.AnimeGirlRepository;
+using DndClassRepository = Everything.Data.Repositories.DndClassRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +26,6 @@ builder.Services.AddSingleton<ISurveysRepository, SurveysRepository>();
 builder.Services.AddSingleton<ITypeOfApplianceRepository, TypeOfApplianceRepository>();
 
 builder.Services.AddSingleton<IGameStoreRepository, GameStoreRepository>();
-builder.Services.AddSingleton<IDNDRepository, DNDRepository>();
 
 // Register in DI container services/repository for MoviePosterRepository
 builder.Services.AddSingleton<IMoviePosterRepository, MoviePosterRepository>();
@@ -33,6 +33,8 @@ builder.Services.AddSingleton<IMoviePosterRepository, MoviePosterRepository>();
 builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
 
 builder.Services.AddScoped<IAnimeGirlRepositoryReal, AnimeGirlRepository>();
+
+builder.Services.AddScoped<IDndClassRepositoryReal, DndClassRepository>();
 
 builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();

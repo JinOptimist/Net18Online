@@ -47,6 +47,8 @@ namespace Everything.Data
 
         public DbSet<CoffeData> Coffe { get; set; }
 
+        public DbSet<DndClassData> DndClasses { get; set; }
+
         public DbSet<MetricData> Metrics { get; set; } // Описание таблицы с метриками
 
         public WebDbContext() { }
