@@ -2,8 +2,12 @@
 
 namespace Everything.Data.Interface.Repositories
 {
-    public interface IMoviePosterRepository : IBaseRepository<IMovieData>
+    public interface IMoviePosterRepository<T> : IBaseRepository<T>
+        where T : IMovieData
     {
-        List<IMovieData> GetAllInCount(int count);
+        IEnumerable<T> GetAllInCount(int count);
+        void UpdateName(int id, string newName);
+
+        void UpdateImage(int id, string url);
     }
 }

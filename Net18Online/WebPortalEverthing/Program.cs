@@ -27,8 +27,7 @@ builder.Services.AddSingleton<ITypeOfApplianceRepository, TypeOfApplianceReposit
 builder.Services.AddSingleton<IGameStoreRepository, GameStoreRepository>();
 builder.Services.AddSingleton<IDNDRepository, DNDRepository>();
 
-// Register in DI container services/repository for MoviePosterRepository
-builder.Services.AddSingleton<IMoviePosterRepository, MoviePosterRepository>();
+builder.Services.AddScoped<IMoviePosterRepositoryReal, MoviePosterRepository>();
 
 builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
 
