@@ -1,6 +1,5 @@
-﻿using Everything.Data;
-using Everything.Data.Interface.Repositories;
-using Everything.Data.Models;
+﻿using Everything.Data.Models;
+using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverything.Models.ServiceCenter;
 
@@ -8,13 +7,11 @@ namespace WebPortalEverything.Controllers
 {
     public class TypeOfApplianceController : Controller
     {
-        private readonly ITypeOfApplianceRepository _typeOfApplianceRepository;
-        private readonly WebDbContext _webDbContext;
+        private readonly ITypeOfApplianceRepositoryReal _typeOfApplianceRepository;
 
-        public TypeOfApplianceController(ITypeOfApplianceRepository typeOfApplianceRepository, WebDbContext webDbContext)
+        public TypeOfApplianceController(ITypeOfApplianceRepositoryReal typeOfApplianceRepository)
         {
             _typeOfApplianceRepository = typeOfApplianceRepository;
-            _webDbContext = webDbContext;
         }
 
         public IActionResult AllTypeOfAppliances()
@@ -64,16 +61,77 @@ namespace WebPortalEverything.Controllers
                         ImageSrc = $"/images/ServiceCenter/TypeOfAppliances/{viewModel.ImageFile.FileName}"
                     };
 
-                    await _webDbContext.TypeOfAppliances.AddAsync(appliance);
-                    await _webDbContext.SaveChangesAsync();
+                    _typeOfApplianceRepository.Add(appliance);
                 }
                 else
                 {
                     ModelState.AddModelError("ImageFile", "Please upload an image.");
+                    return View(viewModel);
                 }
+
+                return RedirectToAction("AllTypeOfAppliances");
             }
 
             return View(viewModel);
+        }
+
+        public IActionResult UpdateName(int id, string newName)
+        {
+            _typeOfApplianceRepository.UpdateName(id, newName);
+            return RedirectToAction("AllTypeOfAppliances");
+        }
+
+        [HttpPost]
+        public IActionResult UpdateImage(int id, IFormFile newImage)
+        {
+            if (newImage == null || newImage.Length == 0)
+            {
+                ModelState.AddModelError("ImageSrc", "Image cannot be empty.");
+                return RedirectToAction("AllTypeOfAppliances"); 
+            }
+
+            string imageUrl = SaveImage(newImage);
+            if (string.IsNullOrEmpty(imageUrl))
+            {
+                ModelState.AddModelError("ImageSrc", "Error saving the image.");
+                return RedirectToAction("AllTypeOfAppliances");
+            }
+
+            _typeOfApplianceRepository.UpdateImage(id, imageUrl);
+
+            return RedirectToAction("AllTypeOfAppliances");
+        }
+
+        ///<summary>
+        ///Example method to save the uploaded image
+        ///</summary>
+        private string SaveImage(IFormFile imageFile)
+        {
+            if (imageFile == null || imageFile.Length == 0)
+            {
+                return null; 
+            }
+
+            var uploadsFolder = Path.Combine("wwwroot/images/ServiceCenter/TypeOfAppliances");
+
+            Directory.CreateDirectory(uploadsFolder);
+
+            var fileName = Guid.NewGuid() + Path.GetExtension(imageFile.FileName);
+            var filePath = Path.Combine(uploadsFolder, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                imageFile.CopyTo(stream);
+            }
+
+            return $"/images/ServiceCenter/TypeOfAppliances/{fileName}";
+        }
+
+
+        public IActionResult Remove(int id)
+        {
+            _typeOfApplianceRepository.Delete(id);
+            return RedirectToAction("AllTypeOfAppliances");
         }
     }
 }
