@@ -48,7 +48,7 @@ namespace Everything.Data.Repositories
             return SerializeObject().ToList();
         }
 
-        public IQueryable<CoffeData> SerializeObject()
+        private IQueryable<CoffeData> SerializeObject()
         {
             return _webDbContext
                 .Coffe
