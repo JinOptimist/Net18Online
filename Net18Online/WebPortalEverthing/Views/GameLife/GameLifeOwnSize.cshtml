@@ -1,31 +1,25 @@
 ﻿@model WebPortalEverthing.Models.LoadTesting.GameLife.FieldViewModel
 
-<!DOCTYPE html>
-<html lang="ru">
+@{
+    Layout = "~/Views/Shared/LoadTesting/_LayoutLoadTesting.cshtml";
+}
+<div class="form-container">
+    <form method="post">
+        <input class="input-field" name="width" type="number" placeholder="Ширина" />
+        <input class="input-field" name="height" type="number" placeholder="Высота" />
+        <button class="button" type="submit"><span>Start Game</span></button>
+    </form>
+</div>
 
-<body>
-
-
-    <div>
-        <form method="post">
-            <div class="create-field-form">
-                <div class="create-field-form-title"> Введите размер поля (max 20) </div>
-                <div class="input-container">
-                    @Html.TextBoxFor(m => m.Rows, new { placeholder = "Rows" })
-                    @Html.TextBoxFor(m => m.Cols, new { placeholder = "Cols" })
-                    <button type="submit">Создать</button>
-                </div>
-            </div>
-        </form>
-    </div>
-
+@if( Model != null )
+{
     <div class="game-life">
         <div class="game-life-title">Game "Life"</div>
         <div id="game-life-field" class="game-life-field">
-            @for( int i = 0 ; i < Model.Cols ; i++ )
+            @for( int i = 0 ; i < Model.Rows ; i++ )
             {
                 <div class="row">
-                    @for( int j = 0 ; j < Model.Rows ; j++ )
+                    @for( int j = 0 ; j < Model.Cols ; j++ )
                     {
                         <span class="cell @(Model.Cells[i, j].IsAlive ? "alive" : "")">
                             @(Model.Cells[i, j].IsAlive ? "+" : "-")
@@ -35,7 +29,7 @@
             }
         </div>
     </div>
-
-
-</body>
-</html>
+} else
+{
+    <div>Empty Game</div>
+}
