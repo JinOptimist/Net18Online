@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Chess</title>
+    <link href="~/css/Chess/reset.css" rel="stylesheet" />
+    <link href="~/css/Chess/style.css" rel="stylesheet" />
+    <link href="~/css/Chess/button.css" rel="stylesheet" />
+    <link href="~/css/Chess/Login.css" rel="stylesheet" />
+    <link href="~/css/Chess/playerRaiting.css" rel="stylesheet" />
+</head>
+
+<body>
+    <header class="page-header">
+        <div class="logo">
+            <img src="~/images/Chess/dack.jpeg" />
+        </div>
+        <div class="name">Шахматы</div>
+        <div class="profile-block">
+            <img src="" alt="" class="avatar" />
+            <button class="log">Login</button>
+        </div>
+    </header>
+
+    <div class="menu-content">
+        <div class="menu">
+            <ul>
+                <li>
+                    <a class="myButton" href="/Chess/Rating">
+                        <img src="~/images/Chess/reiting.svg" alt="" />
+                        <div>Рейтинг игроков</div>
+                    </a>
+                </li>
+                <li>
+                    <a class="myButton" href="#">
+                        <img src="~/images/Chess/teory.jpg" alt="" />
+                        <div>Шахматная теория</div>
+                    </a>
+                </li>
+                <li>
+                    <a class="myButton" href="#">
+                        <img src="~/images/Chess/pesh.webp" alt="" />
+                        <div>Играть</div>
+                    </a>
+                </li>
+                <li>
+                    <a class="myButton" href="/Chess/Parties">
+                        <img src="~/images/Chess/partiya.png" alt="" />
+                        <div>Партии</div>
+                    </a>
+                </li>
+                <li>
+                    <a class="myButton" href="#">
+                        <img src="~/images/Chess/news.png" alt="" />
+                        <div>Новости</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            @RenderBody()
+        </div>
+    </div>
+
+
+</body>
+</html>

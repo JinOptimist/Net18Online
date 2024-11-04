@@ -16,6 +16,35 @@ namespace Everything.Data
 
         public DbSet<EcologyData> Ecologies { get; set; }
 
+        #region ServiceCenter
+        public DbSet<TypeOfApplianceData> TypeOfAppliances { get; set; }
+        public DbSet<ProducerData> Producers { get; set; }
+        public DbSet<ModelData> Models { get; set; }
+        public DbSet<ClientData> Clients { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<TypeOfApplianceData>().ToTable("TypeOfAppliances");
+            modelBuilder.Entity<ProducerData>().ToTable("Producers");
+            modelBuilder.Entity<ModelData>().ToTable("Models");
+            modelBuilder.Entity<ClientData>().ToTable("Clients");
+
+            modelBuilder.Entity<ModelData>()
+                .HasOne<ProducerData>()
+                .WithMany()
+                .HasForeignKey(m => m.ProducerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ModelData>()
+                .HasOne<TypeOfApplianceData>()
+                .WithMany()
+                .HasForeignKey(m => m.TypeId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+        #endregion
+        
         public DbSet<CakeData> Cakes { get; set; }
 
         public DbSet<CoffeData> Coffe { get; set; }

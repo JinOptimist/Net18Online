@@ -42,6 +42,48 @@
         left: -30px;
     }
 
+.bag-product-button {
+    --color: #0d6efd;
+    font-family: inherit;
+    display: inline-block;
+    width: 6em;
+    height: 2.6em;
+    line-height: 2.5em;
+    overflow: hidden;
+    cursor: pointer;
+    margin-left: 16%;
+    font-size: 17px;
+    z-index: 1;
+    color: var(--color);
+    border: 2px solid var(--color);
+    border-radius: 6px;
+    position: relative;
+}
+
+    .bag-product-button::before {
+        position: absolute;
+        content: "";
+        background: var(--color);
+        width: 150px;
+        height: 200px;
+        z-index: -1;
+        border-radius: 50%;
+    }
+
+    .bag-product-button:hover {
+        color: white;
+    }
+
+    .bag-product-button:before {
+        top: 100%;
+        left: 100%;
+        transition: 0.3s all;
+    }
+
+    .bag-product-button:hover::before {
+        top: -30px;
+        left: -30px;
+    }
 
 .editBtn {
     width: 55px;
@@ -125,7 +167,8 @@
         box-shadow: 3.4px 2.5px 4.9px rgba(0, 0, 0, 0.025), 8.6px 6.3px 12.4px rgba(0, 0, 0, 0.035), 17.5px 12.8px 25.3px rgba(0, 0, 0, 0.045), 36.1px 26.3px 52.2px rgba(0, 0, 0, 0.055), 99px 72px 143px rgba(0, 0, 0, 0.08);
     }
 
-.product-button, .delete-button, .editBtn {
+.product-button, .delete-button, .editBtn, .bag-product-button {
     margin: 0 10px;
     flex-shrink: 0;
+    text-align: center;
 }
