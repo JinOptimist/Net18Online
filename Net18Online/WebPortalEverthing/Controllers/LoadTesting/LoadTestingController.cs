@@ -125,13 +125,17 @@ namespace WebPortalEverthing.Controllers.LoadTesting
             return RedirectToAction("/LoadTesting/ContenMetricsListView");
         }
 
-        public IActionResult Remove(int id)
+        public IActionResult RemoveById(int id)
         {
             _loadTestingRepository.Delete(id);
             return RedirectToAction("/LoadTesting/ContenMetricsListView");
         }
 
-
+        public IActionResult RemoveByGuid(Guid Guid)
+        {
+            _loadTestingRepository.DeleteByGuid(Guid);
+            return RedirectToAction("/LoadTesting/ContenMetricsListView");
+        }
 
 
     }

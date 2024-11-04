@@ -14,6 +14,7 @@
             @Html.TextBoxFor(m => m.Throughput, new { placeholder = "Throughput" })
             @Html.TextBoxFor(m => m.Average, new { placeholder = "Average" })
             <button type="submit">Elfkbn</button>
+            <a href="/LoadTesting/Remove?id=@Model.Guid">Delete</a>
         </div>
     </div>
 </form>

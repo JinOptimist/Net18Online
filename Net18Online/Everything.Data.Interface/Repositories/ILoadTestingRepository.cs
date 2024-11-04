@@ -13,5 +13,7 @@ namespace Everything.Data.Interface.Repositories
 
         void UpdateThroughputById(int Id, decimal Throughput);
         void UpdateThroughputByGuid(Guid Guid, decimal Throughput);
+
+        void DeleteByGuid(Guid Guid);
     }
 }

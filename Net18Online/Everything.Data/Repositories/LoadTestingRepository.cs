@@ -39,7 +39,7 @@ namespace Everything.Data.Repositories
             Delete(data);
         }
 
-        public void Delete(Guid Guid)
+        public void DeleteByGuid(Guid Guid)
         {
             var data = Get(Guid);
             Delete(data);
