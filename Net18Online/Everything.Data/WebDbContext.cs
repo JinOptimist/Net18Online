@@ -10,6 +10,8 @@ namespace Everything.Data
 
         public DbSet<GirlData> Girls { get; set; }
 
+        public DbSet<MangaData> Mangas { get; set; }
+
         public DbSet<GameData> Games { get; set; }
 
         public DbSet<UserData> Users { get; set; }
@@ -21,28 +23,6 @@ namespace Everything.Data
         public DbSet<ProducerData> Producers { get; set; }
         public DbSet<ModelData> Models { get; set; }
         public DbSet<ClientData> Clients { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<TypeOfApplianceData>().ToTable("TypeOfAppliances");
-            modelBuilder.Entity<ProducerData>().ToTable("Producers");
-            modelBuilder.Entity<ModelData>().ToTable("Models");
-            modelBuilder.Entity<ClientData>().ToTable("Clients");
-
-            modelBuilder.Entity<ModelData>()
-                .HasOne<ProducerData>()
-                .WithMany()
-                .HasForeignKey(m => m.ProducerId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<ModelData>()
-                .HasOne<TypeOfApplianceData>()
-                .WithMany()
-                .HasForeignKey(m => m.TypeId)
-                .OnDelete(DeleteBehavior.Cascade);
-        }
         #endregion
         
         public DbSet<CakeData> Cakes { get; set; }
@@ -61,6 +41,44 @@ namespace Everything.Data
             optionsBuilder.UseSqlServer(CONNECTION_STRING);
             //optionsBuilder.UseNpgsql(CONNECTION_STRING);
             // base.OnConfiguring(optionsBuilder);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<MangaData>()
+                .HasMany(x => x.Characters)
+                .WithOne(x => x.Manga)
+                .OnDelete(DeleteBehavior.NoAction);
+
+
+
+
+
+
+
+
+
+
+
+
+            modelBuilder.Entity<TypeOfApplianceData>().ToTable("TypeOfAppliances");
+            modelBuilder.Entity<ProducerData>().ToTable("Producers");
+            modelBuilder.Entity<ModelData>().ToTable("Models");
+            modelBuilder.Entity<ClientData>().ToTable("Clients");
+
+            modelBuilder.Entity<ModelData>()
+                .HasOne<ProducerData>()
+                .WithMany()
+                .HasForeignKey(m => m.ProducerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ModelData>()
+                .HasOne<TypeOfApplianceData>()
+                .WithMany()
+                .HasForeignKey(m => m.TypeId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

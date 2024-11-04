@@ -7,6 +7,6 @@ namespace Everything.Data.Models
         public string Name { get; set; }
         public string ImageSrc { get; set; }
         
-        // public List<string> Tags { get; set; }
+        public virtual MangaData? Manga { get; set; }
     }
 }
