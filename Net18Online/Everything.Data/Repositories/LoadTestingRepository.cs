@@ -68,7 +68,7 @@ namespace Everything.Data.Repositories
                 .ToList();
         }
 
-        public void UpdateThroughput(Guid Guid, decimal Throughput)
+        public void UpdateThroughputByGuid(Guid Guid, decimal Throughput)
         {
             var Metric = _webDbContext.Metrics.First(x => x.Guid == Guid);
 
@@ -77,7 +77,7 @@ namespace Everything.Data.Repositories
             _webDbContext.SaveChanges();
         }
 
-        public void UpdateThroughput(int Id, decimal Throughput)
+        public void UpdateThroughputById(int Id, decimal Throughput)
         {
             var Metric = _webDbContext.Metrics.First(x => x.Id == Id);
 
@@ -86,7 +86,7 @@ namespace Everything.Data.Repositories
             _webDbContext.SaveChanges();
         }
 
-        public void UpdateName(int id, string newName)
+        public void UpdateNameById(int id, string newName)
         {
             var Metric = _webDbContext.Metrics.First(x => x.Id == id);
 
@@ -95,7 +95,7 @@ namespace Everything.Data.Repositories
             _webDbContext.SaveChanges();
         }
 
-        public void UpdateName(Guid Guid, string newName)
+        public void UpdateNameByGuid(Guid Guid, string newName)
         {
             var Metric = _webDbContext.Metrics.First(x => x.Guid == Guid);
 

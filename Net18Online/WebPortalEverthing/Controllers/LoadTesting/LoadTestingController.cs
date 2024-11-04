@@ -30,10 +30,10 @@ namespace WebPortalEverthing.Controllers.LoadTesting
             /* Передаем модель в представление
              Это datamodel(модель БД), На View можно отдавать только viewmodel(данные для пользователя не все или из др. датамоделей), нельзя datamodel */
 
-            var metricsFromRealDB = _webDbContext.Metrics.Where(x => x.Guid != Guid.Empty).ToList();  //пока просто для примера условие
-
-
-            if (metricsFromRealDB.Count == 0)
+            //     var metricsFromRealDB = _webDbContext.Metrics.Where(x => x.Guid != Guid.Empty).ToList();  //брали из БД, теперь из репозитория (пока просто для примера условия)
+            var metricsFromRealDB = _loadTestingRepository.GetAll();
+            //if (metricsFromRealDB.Count == 0)
+            if (!_loadTestingRepository.Any())
             {
                 for (int i = 1; i <= DEFAULT_METRICS_COUNT; i++)
                 {
@@ -51,8 +51,9 @@ namespace WebPortalEverthing.Controllers.LoadTesting
                         Throughput = metricViewModel.Throughput,
                         Average = metricViewModel.Average
                     };
-                    _webDbContext.Metrics.Add(metricFromRealDB);
-                    _webDbContext.SaveChanges();
+                    //  _webDbContext.Metrics.Add(metricFromRealDB);
+                    //  _webDbContext.SaveChanges();
+                    _loadTestingRepository.Add(metricFromRealDB);
                 }
             }
 
@@ -90,10 +91,48 @@ namespace WebPortalEverthing.Controllers.LoadTesting
                 Throughput = metric.Throughput * 1.0m,
                 Average = metric.Average * 1.0m
             };
-            _webDbContext.Metrics.Add(metricData);
-            _webDbContext.SaveChanges();
+            // _webDbContext.Metrics.Add(metricData);
+            //_webDbContext.SaveChanges();
+            _loadTestingRepository.Add(metricData);
 
             return Redirect("/LoadTesting/ContenMetricsListView");
         }
+
+
+        public IActionResult UpdateNameById(int id, string newName)
+        {
+            _loadTestingRepository.UpdateNameById(id, newName);
+            return RedirectToAction("/LoadTesting/ContenMetricsListView");
+        }
+
+
+        public IActionResult UpdateNameByGuid(Guid Guid, string newName)
+        {
+            _loadTestingRepository.UpdateNameByGuid(Guid, newName);
+            return RedirectToAction("/LoadTesting/ContenMetricsListView");
+        }
+
+
+        public IActionResult UpdateThroughputById(int Id, decimal Throughput)
+        {
+            _loadTestingRepository.UpdateThroughputById(Id, Throughput);
+            return RedirectToAction("/LoadTesting/ContenMetricsListView");
+        }
+
+        public IActionResult UpdateThroughputByGuid(Guid Guid, decimal Throughput)
+        {
+            _loadTestingRepository.UpdateThroughputByGuid(Guid, Throughput);
+            return RedirectToAction("/LoadTesting/ContenMetricsListView");
+        }
+
+        public IActionResult Remove(int id)
+        {
+            _loadTestingRepository.Delete(id);
+            return RedirectToAction("/LoadTesting/ContenMetricsListView");
+        }
+
+
+
+
     }
 }

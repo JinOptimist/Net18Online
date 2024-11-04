@@ -8,8 +8,10 @@ namespace Everything.Data.Interface.Repositories
     {
         IEnumerable<T> GetMostLoaded();
 
-        void UpdateName(Guid Guid, string newName);
+        void UpdateNameById(int Id, string newName);
+        void UpdateNameByGuid(Guid Guid, string newName);
 
-        void UpdateThroughput(Guid Guid, decimal Throughput);
+        void UpdateThroughputById(int Id, decimal Throughput);
+        void UpdateThroughputByGuid(Guid Guid, decimal Throughput);
     }
 }
