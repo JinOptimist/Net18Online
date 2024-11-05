@@ -11,7 +11,7 @@ namespace Everything.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "SurveyStatuses",
+                name: "Statuses",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -21,7 +21,7 @@ namespace Everything.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SurveyStatuses", x => x.Id);
+                    table.PrimaryKey("PK_Statuses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -45,7 +45,7 @@ namespace Everything.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IdGroup = table.Column<int>(type: "int", nullable: false),
                     IdStatus = table.Column<int>(type: "int", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -57,13 +57,13 @@ namespace Everything.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Surveys");
-
-            migrationBuilder.DropTable(
-                name: "SurveyStatuses");
+                name: "Statuses");
 
             migrationBuilder.DropTable(
                 name: "SurveyGroups");
+
+            migrationBuilder.DropTable(
+                name: "Surveys");
         }
     }
 }
