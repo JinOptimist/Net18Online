@@ -10,6 +10,7 @@ using EcologyRepository = Everything.Data.Repositories.EcologyRepository;
 using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRepository;
 using CoffeShopRepository = Everything.Data.Repositories.CoffeShopRepository;
 using Everything.Data.Models;
+using LoadTestingRepository = Everything.Data.Repositories.LoadTestingRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,10 +44,11 @@ builder.Services.AddScoped<IAnimeGirlRepositoryReal, AnimeGirlRepository>();
 
 builder.Services.AddScoped<ICakeRepositoryReal, CakeRepository>();
 
+builder.Services.AddScoped<ILoadTestingRepositoryReal, LoadTestingRepository>();
+
 builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();
 
-builder.Services.AddSingleton<ILoadTestingRepository, LoadTestingRepository>();
 builder.Services.AddSingleton<IGameLifeRepository, GameLifeRepository>();
 
 var app = builder.Build();

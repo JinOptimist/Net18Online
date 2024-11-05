@@ -3,12 +3,17 @@ using Everything.Data;
 
 namespace Everything.Data.Interface.Repositories
 {
-    public interface ILoadTestingRepository
+    public interface ILoadTestingRepository<T> : IBaseRepository<T>
+        where T : IMetricData
     {
-        void Add(IMetricData data);
-        void Delete(IMetricData data);
-        List<IMetricData> GetAll();
-        IMetricData? Get(Guid Guid);
-        bool Any();
+        IEnumerable<T> GetMostLoaded();
+
+        void UpdateNameById(int Id, string newName);
+        void UpdateNameByGuid(Guid Guid, string newName);
+
+        void UpdateThroughputById(int Id, decimal Throughput);
+        void UpdateThroughputByGuid(Guid Guid, decimal Throughput);
+
+        void DeleteByGuid(Guid Guid);
     }
 }
