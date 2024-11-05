@@ -80,3 +80,11 @@ body {
     margin-top: 10px;
     text-shadow: 0px 15px 30px rgb(245, 154, 119), 0px -10px 15px rgb(192, 243, 7);
 }
+
+.fridaysRemaining {
+    width: 70%; /* Сделайте ширину меньше */
+    margin: 0 auto; /* Выравнивание по центру */
+    text-align: center; /* Центрирование текста внутри блока */
+    padding-left: 15px;
+    padding-right: 15px;
+}
