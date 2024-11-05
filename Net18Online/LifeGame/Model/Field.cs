@@ -8,6 +8,7 @@ namespace LifeGame.Model
 {
     public class Field
     {
+        Random random = new Random();
         private int _rows;
         private int _cols;
         private Cell[,] _cells;
@@ -39,7 +40,6 @@ namespace LifeGame.Model
 
         public void Randomize()
         {
-            Random random = new Random();
             for (int i = 0; i < Rows; i++)
             {
                 for (int j = 0; j < Cols; j++)
@@ -58,7 +58,7 @@ namespace LifeGame.Model
             {
                 for (int j = -1; j <= 1; j++)
                 {
-                    if (i == 0 && j == 0) continue;
+                    if (i == 0 && j == 0) { continue; }
 
                     int neighborRow = row + i;
                     int neighborCol = col + j;
@@ -87,15 +87,9 @@ namespace LifeGame.Model
                     int aliveNeighbors = GetAliveNeighbors(i, j);
                     bool isAlive = Cells[i, j].IsAlive;
 
-                    // Применяем правила
-                    if (isAlive && (aliveNeighbors < 2 || aliveNeighbors > 3))
-                    {
-                        isAlive = false;
-                    }
-                    else if (!isAlive && aliveNeighbors == 3)
-                    {
-                        isAlive = true;
-                    }
+                    var liveIsCreatedByNeighbors = aliveNeighbors == 3;
+                    var stillLiveGoodEnv = isAlive && aliveNeighbors >= 2 && aliveNeighbors <= 3;
+                    isAlive = liveIsCreatedByNeighbors || stillLiveGoodEnv;
 
                     newField[i, j] = new Cell(isAlive);
                 }

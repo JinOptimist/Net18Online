@@ -2,7 +2,9 @@
 
 namespace Everything.Data.Interface.Repositories
 {
-    public interface ICakeRepository : IBaseRepository<ICakeData>
+    public interface ICakeRepository<T> : IBaseRepository<T>
+        where T : ICakeData
     {
+        void UpdateDescription(int id, string newDescription);
     }
 }
