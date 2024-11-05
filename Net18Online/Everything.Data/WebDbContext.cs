@@ -1,4 +1,5 @@
 ﻿using Everything.Data.Models;
+using Everything.Data.Models.Surveys;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 
@@ -30,6 +31,10 @@ namespace Everything.Data
         public DbSet<CoffeData> Coffe { get; set; }
 
         public DbSet<MetricData> Metrics { get; set; } // Описание таблицы с метриками
+
+        public DbSet<StatusData> Statuses { get; set; }
+        public DbSet<SurveyData> Surveys { get; set; }
+        public DbSet<SurveyGroupData> SurveyGroups { get; set; }
 
         public WebDbContext() { }
 
