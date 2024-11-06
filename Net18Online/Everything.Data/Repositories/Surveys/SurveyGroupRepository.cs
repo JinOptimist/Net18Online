@@ -12,6 +12,7 @@ namespace Everything.Data.Repositories.Surveys
         public SurveyGroupRepository(WebDbContext webDbContext) : base(webDbContext)
         {
         }
+
         public void UpdateTitle(int id, string newTitle)
         {
             var surveyGroup = _webDbContext

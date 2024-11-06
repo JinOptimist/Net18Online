@@ -13,12 +13,6 @@ namespace Everything.Data.Repositories.Surveys
         {
         }
 
-        public void Add(StatusData data)
-        {
-            _webDbContext.Add(data);
-            _webDbContext.SaveChanges();
-        }
-
         public void UpdateTitle(int id, string newTitle)
         {
             var surveyGroup = _webDbContext
