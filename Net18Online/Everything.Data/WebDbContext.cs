@@ -28,7 +28,7 @@ namespace Everything.Data
         public DbSet<ModelData> Models { get; set; }
         public DbSet<ClientData> Clients { get; set; }
         #endregion
-        
+
         public DbSet<CakeData> Cakes { get; set; }
 
         public DbSet<CoffeData> Coffe { get; set; }
@@ -56,7 +56,10 @@ namespace Everything.Data
                 .WithOne(x => x.Manga)
                 .OnDelete(DeleteBehavior.NoAction);
 
-
+            modelBuilder.Entity<AnimeDescriptionData>()
+                .HasMany(x => x.Animes)
+                .WithOne(x => x.Description)
+                .OnDelete(DeleteBehavior.NoAction);
 
 
 
