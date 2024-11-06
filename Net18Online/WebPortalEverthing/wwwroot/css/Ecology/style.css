@@ -91,7 +91,6 @@ header .logotip img {
 	display: flex;
 	align-items: center;
 }
-
 .advice .advice-image img {
 	max-width: 200px;
 	max-height: 200px;
@@ -102,7 +101,6 @@ header .logotip img {
 	display: flex;
 	flex-wrap: wrap;
 }
-
 .advice .advice-info .text {
 	border: 2px #56d86c solid;
 	display: inline-block;
@@ -127,4 +125,76 @@ header .logotip img {
 
 .post.ul.custom-list p {
     margin: 0;
+}
+
+.post-actions { 
+	position: relative; 
+	display: inline-block; 
+	cursor: pointer; 
+} 
+.post-actions .dots { 
+	font-size: 18px; 
+} 
+.post-actions .actions-menu { 
+	display: none; 
+	position: absolute; 
+	background-color: #f9f9f9; 
+	box-shadow: 0px 8px 16px rgba(0,0,0,0.2); 
+	z-index: 1; 
+	right: 0; 
+	top: 20px; 
+	border-radius: 8px; 
+} 
+.post-actions:hover .actions-menu { 
+	display: block; 
+}
+.post-actions .actions-menu a { 
+	color: black; 
+	padding: 12px 16px; 
+	text-decoration: none; 
+	display: block; 
+} 
+.post-actions .actions-menu a:hover { 
+	background-color: #f1f1f1; 
+} 
+
+#editForm { 
+	background-color: #fff; 
+	padding: 20px; 
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+	border-radius: 8px; 
+	display: flex; 
+	flex-direction: column; 
+	gap: 10px; 
+	position: fixed; 
+	top: 50%; 
+	left: 50%; 
+	transform: translate(-50%, -50%); 
+	z-index: 2; 
+} 
+#editForm input[type="text"] { 
+	width: 100%; 
+	padding: 10px; 
+	margin-bottom: 10px; 
+	border: 1px solid #ddd; 
+	border-radius: 4px; 
+}
+#editForm button { 
+	background-color: #007bff; 
+	color: #fff; 
+	border: none; 
+	padding: 10px;
+	border-radius: 4px; 
+	cursor: pointer; 
+	font-size: 16px; 
+	align-self: flex-end; 
+} 
+#editForm button:hover { 
+	background-color: #0056b3; 
+}
+
+.container { 
+	width: 80%; 
+	margin: 0 auto; 
+	padding: 20px; 
 }

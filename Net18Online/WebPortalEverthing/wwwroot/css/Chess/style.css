@@ -1,0 +1,26 @@
+﻿.menu-content {
+    display: flex;
+    border-right: 2px black solid;
+    width: 128px;
+}
+
+header.page-header {
+    display: flex;
+    justify-content: space-between;
+    height: 50px;
+    align-items: center;
+    font-size: 25px;
+    border-bottom: 2px black solid;
+}
+
+header .logo img {
+    max-height: 50px;
+}
+
+header .logo {
+    font-size: 0;
+}
+
+.str {
+    white-space: nowrap;
+}

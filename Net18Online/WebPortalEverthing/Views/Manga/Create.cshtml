@@ -1,0 +1,15 @@
+﻿@model WebPortalEverthing.Models.Manga.CreateMangaViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutAnime.cshtml";
+}
+
+<form method="post">
+    <div>
+        @Html.TextBoxFor(x => x.Title, new { placeholder = "Введи название" })
+    </div>
+    <div>
+        @Html.TextBoxFor(x => x.Description, new { placeholder = "Введи описание" })
+    </div>
+    <button type="submit">Создать</button>
+</form>

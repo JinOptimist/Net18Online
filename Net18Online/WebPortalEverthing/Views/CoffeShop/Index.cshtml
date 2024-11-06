@@ -16,8 +16,9 @@
                     <th scope="col">ID</th>
                     <th scope="col">Сoffe</th>
                     <th scope="col">Cost</th>
+                    <th scope="col">Brand</th>
                     <th scope="col">
-                        Brand <a class="btn btn-outline-primary" href="/CoffeShop/Create">
+                        Img <a class="btn btn-outline-primary" href="/CoffeShop/Create">
                             C
                         </a>
                     </th>
@@ -28,16 +29,39 @@
                 {
                     <tr>
                         <th scope="row">
-                            <a class="btn btn-outline-success" asp-controller="CoffeShop" asp-action="Update" asp-route-id="@coffe.Id">
-                                U
-                            </a>
-                            <a class="btn btn-outline-danger" asp-controller="CoffeShop" asp-action="Delete" asp-route-id="@coffe.Id">
+                            <a class="btn btn-outline-danger" href="/CoffeShop/Delete?id=@coffe.Id">
                                 D
                             </a> @coffe.Id
                         </th>
-                        <td>@coffe.Coffe</td>
-                        <td>@coffe.Cost $</td>
-                        <td>@coffe.Brand</td>
+                        <td scope="row">
+                            <form action="/CoffeShop/UpdateCoffe" method="post">
+                                <input type="hidden" name="id" value="@coffe.Id" />
+                                <input name="name" value="@coffe.Coffe" />
+                                <button type="submit" class="btn btn-outline-success">U</button>
+                            </form>
+                        </td>
+                        <td scope="row">
+                            <form action="/CoffeShop/UpdateCost" method="post">
+                                <input type="hidden" name="id" value="@coffe.Id" />
+                                <input name="cost" value="@coffe.Cost" />
+                                <button type="submit" class="btn btn-outline-success">U</button>
+                            </form>
+                        </td>
+                        <td scope="row">
+                            <form action="/CoffeShop/UpdateBrand" method="post">
+                                <input type="hidden" name="id" value="@coffe.Id" />
+                                <input name="brand" value="@coffe.Brand" />
+                                <button type="submit" class="btn btn-outline-success">U</button>
+                            </form>
+                        </td>
+                        <td scope="row">
+                            <img class="admin-img" src="@coffe.Url" alt="coffe" />
+                            <form action="/CoffeShop/UpdateUrl" method="post">
+                                <input type="hidden" name="id" value="@coffe.Id" />
+                                <input name="image" />
+                                <button type="submit" class="btn btn-outline-success">U</button>
+                            </form>
+                        </td>
                     </tr>
                 }
             </tbody>
