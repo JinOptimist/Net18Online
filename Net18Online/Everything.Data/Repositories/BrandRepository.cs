@@ -6,9 +6,7 @@ namespace Everything.Data.Repositories
 {
     public interface IBrandRepositoryReal : IBrandRepository<BrandData>
     {
-        public IEnumerable<BrandData> GetAllWithCoffe();
-
-        void LinkCoffe(int brandId, int coffeId);
+        
     }
 
     public class BrandRepository : BaseRepository<BrandData>, IBrandRepositoryReal
