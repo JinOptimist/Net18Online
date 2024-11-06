@@ -1,8 +1,7 @@
 ﻿namespace WebPortalEverthing.Models.AnimeCatalog
 {
-    public class AnimeCatalogViewModel
+    public class AnimeCatalogCreationViewModel
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string ImageSrc { get; set; }
     }

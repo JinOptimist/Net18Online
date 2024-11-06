@@ -9,6 +9,7 @@ using AnimeGirlRepository = Everything.Data.Repositories.AnimeGirlRepository;
 using EcologyRepository = Everything.Data.Repositories.EcologyRepository;
 using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRepository;
 using CoffeShopRepository = Everything.Data.Repositories.CoffeShopRepository;
+using AnimeCatalogRepository = Everything.Data.Repositories.AnimeCatalogRepository;
 using Everything.Data.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,7 +35,8 @@ builder.Services.AddSingleton<IDNDRepository, DNDRepository>();
 // Register in DI container services/repository for MoviePosterRepository
 builder.Services.AddSingleton<IMoviePosterRepository, MoviePosterRepository>();
 
-builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
+builder.Services.AddScoped<IAnimeCatalogRepositoryReal, AnimeCatalogRepository>();
+builder.Services.AddScoped<IAnimeDescriptionRepositoryReal, AnimeDescriptionsRepository>();
 builder.Services.AddScoped<IEcologyRepositoryReal, EcologyRepository>();
 builder.Services.AddScoped<IKeyCoffeShopRepository, CoffeShopRepository>();
 builder.Services.AddScoped<IMangaRepositoryReal, MangaRepository>();

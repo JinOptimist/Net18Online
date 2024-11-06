@@ -1,0 +1,16 @@
+﻿@using WebPortalEverthing.Models.AnimeCatalog
+@model AnimeCatalogCreationViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutAnimeCatalog.cshtml";
+}
+
+<form method="post">
+    <div>
+        @Html.TextBoxFor(x => x.Name, new { placeholder = "Введи название аниме" })
+    </div>
+    <div>
+        @Html.TextBoxFor(x => x.ImageSrc, new { placeholder = "Введи путь к картинке" })
+    </div>
+    <button type="submit">Создать</button>
+</form>

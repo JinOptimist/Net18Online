@@ -4,6 +4,7 @@ using Everything.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Everything.Data.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    partial class WebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241106151235_AddDescriptionTable")]
+    partial class AddDescriptionTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -378,7 +381,7 @@ namespace Everything.Data.Migrations
             modelBuilder.Entity("Everything.Data.Models.AnimeData", b =>
                 {
                     b.HasOne("Everything.Data.Models.AnimeDescriptionData", "Description")
-                        .WithMany("Animes")
+                        .WithMany("Characters")
                         .HasForeignKey("DescriptionId");
 
                     b.Navigation("Description");
@@ -411,7 +414,7 @@ namespace Everything.Data.Migrations
 
             modelBuilder.Entity("Everything.Data.Models.AnimeDescriptionData", b =>
                 {
-                    b.Navigation("Animes");
+                    b.Navigation("Characters");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.MangaData", b =>

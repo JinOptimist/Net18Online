@@ -4,6 +4,7 @@ using Everything.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Everything.Data.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    partial class WebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241105193530_AddAnimesData")]
+    partial class AddAnimesData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,9 +33,6 @@ namespace Everything.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("DescriptionId")
-                        .HasColumnType("int");
-
                     b.Property<string>("ImageSrc")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -43,30 +43,7 @@ namespace Everything.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DescriptionId");
-
                     b.ToTable("Animes");
-                });
-
-            modelBuilder.Entity("Everything.Data.Models.AnimeDescriptionData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Description");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.CakeData", b =>
@@ -375,15 +352,6 @@ namespace Everything.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Everything.Data.Models.AnimeData", b =>
-                {
-                    b.HasOne("Everything.Data.Models.AnimeDescriptionData", "Description")
-                        .WithMany("Animes")
-                        .HasForeignKey("DescriptionId");
-
-                    b.Navigation("Description");
-                });
-
             modelBuilder.Entity("Everything.Data.Models.GirlData", b =>
                 {
                     b.HasOne("Everything.Data.Models.MangaData", "Manga")
@@ -407,11 +375,6 @@ namespace Everything.Data.Migrations
                         .HasForeignKey("TypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Everything.Data.Models.AnimeDescriptionData", b =>
-                {
-                    b.Navigation("Animes");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.MangaData", b =>
