@@ -19,6 +19,7 @@ namespace Everything.Data
 
         public DbSet<EcologyData> Ecologies { get; set; }
 
+        public DbSet<MovieData> Movies { get; set; }
         #region ServiceCenter
         public DbSet<TypeOfApplianceData> TypeOfAppliances { get; set; }
         public DbSet<ProducerData> Producers { get; set; }

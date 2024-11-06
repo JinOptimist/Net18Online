@@ -1,12 +1,13 @@
 ﻿using Everything.Data.Interface.Repositories;
+using Everything.Data.Repositories;
 
 namespace WebPortalEverthing.Services
 {
     public class GeneratorMoviePosters
     {
-        private IMoviePosterRepository _moviePosterRepository;
+        private IMoviePosterRepositoryReal _moviePosterRepository;
 
-        public GeneratorMoviePosters(IMoviePosterRepository moviePosterRepository)
+        public GeneratorMoviePosters(IMoviePosterRepositoryReal moviePosterRepository)
         {
             _moviePosterRepository = moviePosterRepository;
         }
