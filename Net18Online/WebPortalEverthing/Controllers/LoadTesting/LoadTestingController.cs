@@ -126,6 +126,21 @@ namespace WebPortalEverthing.Controllers.LoadTesting
             return RedirectToAction("ContenMetricsListView");
         }
 
+        public IActionResult UpdateMetric(MetricViewModel metric)
+        {
+            _loadTestingRepository.UpdateNameByGuid(metric.Guid, metric.Name);
+            _loadTestingRepository.UpdateThroughputByGuid(metric.Guid, metric.Throughput);
+            _loadTestingRepository.UpdateAverageByGuid(metric.Guid, metric.Average);
+
+            return RedirectToAction("ContenMetricsListView");
+            /*
+              <input type="hidden" name="id" value="@metric.Id" />
+              <input type="text" name="name" value="@metric.Name" />
+              <input type="hidden" name="guid" value="@metric.Guid" />
+              <input type="text" name="throughput" value="@metric.Throughput" />
+              <input type="text" name="average" value="@metric.Average" />*/
+        }
+
         public IActionResult RemoveById(int id)
         {
             _loadTestingRepository.Delete(id);

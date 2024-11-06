@@ -86,6 +86,23 @@ namespace Everything.Data.Repositories
             _webDbContext.SaveChanges();
         }
 
+        public void UpdateAverageByGuid(Guid Guid, decimal Average)
+        {
+            var Metric = _webDbContext.Metrics.First(x => x.Guid == Guid);
+
+            Metric.Average = Average;
+
+            _webDbContext.SaveChanges();
+        }
+
+        public void UpdateAverageById(int Id, decimal Average)
+        {
+            var Metric = _webDbContext.Metrics.First(x => x.Id == Id);
+
+            Metric.Average = Average;
+
+            _webDbContext.SaveChanges();
+        }
         public void UpdateNameById(int id, string newName)
         {
             var Metric = _webDbContext.Metrics.First(x => x.Id == id);

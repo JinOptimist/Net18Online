@@ -14,6 +14,9 @@ namespace Everything.Data.Interface.Repositories
         void UpdateThroughputById(int Id, decimal Throughput);
         void UpdateThroughputByGuid(Guid Guid, decimal Throughput);
 
+        void UpdateAverageById(int Id, decimal Average);
+        void UpdateAverageByGuid(Guid Guid, decimal Average);
+
         void DeleteByGuid(Guid Guid);
     }
 }

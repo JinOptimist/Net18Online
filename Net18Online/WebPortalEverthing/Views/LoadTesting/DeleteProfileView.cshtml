@@ -8,13 +8,11 @@
 
 <form method="post">
     <div class="create-profile-form">
-        <div class="title">Введите данные профайла</div>
+        <div class="title">Введите Guid профайла</div>
         <div class="input-container">
-            @Html.TextBoxFor(m => m.Name, new { placeholder = "Name" })
-            @Html.TextBoxFor(m => m.Throughput, new { placeholder = "Throughput" })
-            @Html.TextBoxFor(m => m.Average, new { placeholder = "Average" })
-            <button type="submit">Elfkbn</button>
-            <a href="/LoadTesting/Remove?id=@Model.Guid">Delete</a>
+            @Html.TextBoxFor(m => m.Guid, new { placeholder = "Guid" })
+            <button type="submit">Delete by Guid</button>
+            <a href="/LoadTesting/Remove?Guid=@Model.Guid">Delete</a>
         </div>
     </div>
 </form>

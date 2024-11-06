@@ -11,6 +11,15 @@
         {
             <div class="discription-type">
                 <div class="type-name">@metric.Name</div>
+                @*Указать экшен, который будет вызван при отправке формы*@
+                <form action="/LoadTesting/UpdateMetric" method="post">
+                    <input type="hidden" name="id" value="@metric.Id" />
+                    <input type="text" name="name" value="@metric.Name" />
+                    <input type="hidden" name="guid" value="@metric.Guid" />
+                    <input type="text" name="throughput" value="@metric.Throughput" />
+                    <input type="text" name="average" value="@metric.Average" />
+                    <input type="submit" value="Update" />
+                </form>
                 <div class="type-guid">GUID : @metric.Guid</div>
                 <div class="type-container">
                     <img src="~/images/LoadTesting/photo_2024-07-15_09-13-16.jpg" alt="type1" />
@@ -26,7 +35,7 @@
                     <span class="tag">среднее время отклика (Average): @metric.Average</span>
                 </div>
                 <a href="/LoadTesting/RemoveByGuid?Guid=@metric.Guid">Delete Guid</a>
-                <a href="/LoadTesting/Remove?id=@metric.Id">Delete Id</a>
+                <a href="/LoadTesting/RemoveById?id=@metric.Id">Delete Id</a>
             </div>
         }
 
