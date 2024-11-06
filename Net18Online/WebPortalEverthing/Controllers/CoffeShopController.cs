@@ -1,9 +1,7 @@
 ﻿using Everything.Data.Models;
-using Everything.Data.Interface.Repositories;
 using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.CoffeShop;
-using Everything.Data;
 
 namespace WebPortalEverthing.Controllers
 {
@@ -14,6 +12,7 @@ namespace WebPortalEverthing.Controllers
         public CoffeShopController(IKeyCoffeShopRepository coffeShopRepository)
         {
             _coffeShopRepository = coffeShopRepository;
+
         }
 
         public IActionResult Index()
@@ -31,7 +30,6 @@ namespace WebPortalEverthing.Controllers
                 .Select(coffeFromDb =>
                     new CoffeViewModel
                     {
-                        Brand = coffeFromDb.Brand,
                         Id = coffeFromDb.Id,
                         Coffe = coffeFromDb.Coffe,
                         Url = coffeFromDb.Url,
@@ -60,7 +58,6 @@ namespace WebPortalEverthing.Controllers
         {
             var coffe = new CoffeData
             {
-                Brand = viewModel.Brand,
                 Coffe = viewModel.Coffe,
                 Url = viewModel.Url,
                 Cost = viewModel.Cost
@@ -76,7 +73,7 @@ namespace WebPortalEverthing.Controllers
             _coffeShopRepository.Delete(id);
             return RedirectToAction("Index");
         }
-        
+
         public IActionResult UpdateCoffe(int id, string name)
         {
             _coffeShopRepository.UpdateCoffeName(id, name);
@@ -86,12 +83,6 @@ namespace WebPortalEverthing.Controllers
         public IActionResult UpdateCost(int id, decimal cost)
         {
             _coffeShopRepository.UpdateCost(id, cost);
-            return RedirectToAction("Index");
-        }
-
-        public IActionResult UpdateBrand(int id, string brand)
-        {
-            _coffeShopRepository.UpdateBrand(id, brand);
             return RedirectToAction("Index");
         }
 

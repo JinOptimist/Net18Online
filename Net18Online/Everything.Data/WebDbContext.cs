@@ -1,6 +1,5 @@
 ﻿using Everything.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 
 namespace Everything.Data
 {
@@ -29,6 +28,8 @@ namespace Everything.Data
 
         public DbSet<CoffeData> Coffe { get; set; }
 
+        public DbSet<BrandData> Brands { get; set; }
+
         public DbSet<MetricData> Metrics { get; set; } // Описание таблицы с метриками
 
         public WebDbContext() { }
@@ -52,7 +53,10 @@ namespace Everything.Data
                 .WithOne(x => x.Manga)
                 .OnDelete(DeleteBehavior.NoAction);
 
-
+            modelBuilder.Entity<BrandData>()
+                .HasMany(x => x.Coffe)
+                .WithOne(x => x.Brand)
+                .OnDelete(DeleteBehavior.NoAction);
 
 
 

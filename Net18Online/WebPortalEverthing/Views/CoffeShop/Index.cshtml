@@ -1,5 +1,6 @@
 ﻿@using WebPortalEverthing.Models.CoffeShop;
 @model List<CoffeViewModel>
+
 @{
     Layout = "~/Views/Shared/CoffeLayout/_LayoutCoffe.cshtml";
 }
@@ -9,6 +10,11 @@
         Admin panel
     </h1>
 
+    <div>
+        <a class="btn btn-outline-info mt-2" href="/Brand">
+            Brands Info
+        </a>
+    </div>
     <div>
         <table class="table table-striped">
             <thead>
@@ -47,12 +53,8 @@
                                 <button type="submit" class="btn btn-outline-success">U</button>
                             </form>
                         </td>
-                        <td scope="row">
-                            <form action="/CoffeShop/UpdateBrand" method="post">
-                                <input type="hidden" name="id" value="@coffe.Id" />
-                                <input name="brand" value="@coffe.Brand" />
-                                <button type="submit" class="btn btn-outline-success">U</button>
-                            </form>
+                        <td scope="row">                  
+                                @coffe.Brand
                         </td>
                         <td scope="row">
                             <img class="admin-img" src="@coffe.Url" alt="coffe" />

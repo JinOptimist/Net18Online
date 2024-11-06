@@ -1,15 +1,14 @@
 using Everything.Data;
-using Everything.Data.Repositories;
 using Everything.Data.Fake.Repositories;
 using Everything.Data.Interface.Repositories;
+using Everything.Data.Repositories;
 using MazeCore.Builders;
-using SimulatorOfPrinting.Models;
 using Microsoft.EntityFrameworkCore;
+using SimulatorOfPrinting.Models;
 using AnimeGirlRepository = Everything.Data.Repositories.AnimeGirlRepository;
+using CoffeShopRepository = Everything.Data.Repositories.CoffeShopRepository;
 using EcologyRepository = Everything.Data.Repositories.EcologyRepository;
 using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRepository;
-using CoffeShopRepository = Everything.Data.Repositories.CoffeShopRepository;
-using Everything.Data.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +37,7 @@ builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
 builder.Services.AddScoped<IEcologyRepositoryReal, EcologyRepository>();
 builder.Services.AddScoped<IKeyCoffeShopRepository, CoffeShopRepository>();
 builder.Services.AddScoped<IMangaRepositoryReal, MangaRepository>();
+builder.Services.AddScoped<IBrandRepositoryReal, BrandRepository>();
 
 builder.Services.AddScoped<IAnimeGirlRepositoryReal, AnimeGirlRepository>();
 
