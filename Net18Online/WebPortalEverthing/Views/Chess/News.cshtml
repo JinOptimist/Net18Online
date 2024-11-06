@@ -1,0 +1,16 @@
+﻿@using WebPortalEverthing.Models.Chess
+@model List<PartiesViewModel>
+
+@{
+    Layout = "~/Views/Shared/_LayoutChess.cshtml";
+}
+
+@foreach (PartiesViewModel item in Model)
+{
+    <div>
+        <div>@item.Name</div>
+        <div>@item.Color</div>
+        <div>@item.Winner</div>
+    </div>
+}
+

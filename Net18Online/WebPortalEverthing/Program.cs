@@ -6,6 +6,10 @@ using MazeCore.Builders;
 using SimulatorOfPrinting.Models;
 using Microsoft.EntityFrameworkCore;
 using AnimeGirlRepository = Everything.Data.Repositories.AnimeGirlRepository;
+using EcologyRepository = Everything.Data.Repositories.EcologyRepository;
+using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRepository;
+using CoffeShopRepository = Everything.Data.Repositories.CoffeShopRepository;
+using Everything.Data.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,16 +17,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(WebDbContext.CONNECTION_STRING));
+//builder.Services.AddDbContext<WebDbContext>(options => options.UseNpgsql(WebDbContext.CONNECTION_STRING));
+
 
 // Register in DI container our services/repository
-builder.Services.AddSingleton<ICakeRepository, CakeRepository>();
-builder.Services.AddSingleton<IEcologyRepository, EcologyRepository>();
-builder.Services.AddSingleton<ICoffeShopRepository, CoffeShopRepository>();
-builder.Services.AddSingleton<ISurveyGroupRepository, SurveyGroupRepository>();
-builder.Services.AddSingleton<IStatusRepository, StatusRepository>();
-builder.Services.AddSingleton<ISurveysRepository, SurveysRepository>();
+
 // Register in DI container services/repository for ServiceCenter
-builder.Services.AddSingleton<ITypeOfApplianceRepository, TypeOfApplianceRepository>();
+builder.Services.AddScoped<ITypeOfApplianceRepositoryReal, TypeOfApplianceRepository>();
 
 builder.Services.AddSingleton<IGameStoreRepository, GameStoreRepository>();
 builder.Services.AddSingleton<IDNDRepository, DNDRepository>();
@@ -30,8 +31,16 @@ builder.Services.AddSingleton<IDNDRepository, DNDRepository>();
 builder.Services.AddScoped<IMoviePosterRepositoryReal, MoviePosterRepository>();
 
 builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
+builder.Services.AddScoped<IEcologyRepositoryReal, EcologyRepository>();
+builder.Services.AddScoped<IKeyCoffeShopRepository, CoffeShopRepository>();
+builder.Services.AddScoped<IMangaRepositoryReal, MangaRepository>();
 
 builder.Services.AddScoped<IAnimeGirlRepositoryReal, AnimeGirlRepository>();
+builder.Services.AddScoped<ISurveyGroupRepositoryReal, SurveyGroupRepository>();
+builder.Services.AddScoped<IStatusRepositoryReal, StatusRepository>();
+builder.Services.AddScoped<ISurveysRepositoryReal, SurveysRepository>();
+
+builder.Services.AddScoped<ICakeRepositoryReal, CakeRepository>();
 
 builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();
@@ -41,9 +50,13 @@ builder.Services.AddSingleton<IGameLifeRepository, GameLifeRepository>();
 
 var app = builder.Build();
 // Load data into repository from JSON file
-var typeOfApplianceRepo = app.Services.GetRequiredService<ITypeOfApplianceRepository>();
-var jsonFilePath = Path.Combine(app.Environment.ContentRootPath, "Data", "ServiceCenter", "typeOfAppliance.json");
-typeOfApplianceRepo.LoadDataFromJson(jsonFilePath);
+var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
+using (var scope = scopeFactory.CreateScope())
+{
+    var typeOfApplianceRepo = scope.ServiceProvider.GetRequiredService<ITypeOfApplianceRepositoryReal>();
+    var jsonFilePath = Path.Combine(app.Environment.ContentRootPath, "Data", "ServiceCenter", "typeOfAppliance.json");
+    typeOfApplianceRepo.LoadDataFromJson(jsonFilePath);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

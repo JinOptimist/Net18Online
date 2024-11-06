@@ -6,48 +6,13 @@ namespace Everything.Data.Repositories
 {
     public interface IAnimeGirlRepositoryReal : IAnimeGirlRepository<GirlData>
     {
+        IEnumerable<GirlData> GetWithoutManga();
     }
 
-    public class AnimeGirlRepository : IAnimeGirlRepositoryReal
+    public class AnimeGirlRepository : BaseRepository<GirlData>, IAnimeGirlRepositoryReal
     {
-        private WebDbContext _webDbContext;
-
-        public AnimeGirlRepository(WebDbContext webDbContext)
+        public AnimeGirlRepository(WebDbContext webDbContext) : base(webDbContext)
         {
-            _webDbContext = webDbContext;
-        }
-
-        public void Add(GirlData data)
-        {
-            _webDbContext.Add(data);
-            _webDbContext.SaveChanges();
-        }
-
-        public bool Any()
-        {
-            return _webDbContext.Girls.Any();
-        }
-
-        public void Delete(GirlData data)
-        {
-            _webDbContext.Girls.Remove(data);
-            _webDbContext.SaveChanges();
-        }
-
-        public void Delete(int id)
-        {
-            var data = Get(id);
-            Delete(data);
-        }
-
-        public GirlData? Get(int id)
-        {
-            return _webDbContext.Girls.FirstOrDefault(x => x.Id == id);
-        }
-
-        public IEnumerable<GirlData> GetAll()
-        {
-            return GetFinilizeGirl().ToList();
         }
 
         public IEnumerable<GirlData> GetMostPopular()
@@ -58,9 +23,16 @@ namespace Everything.Data.Repositories
                 .ToList();
         }
 
+        public IEnumerable<GirlData> GetWithoutManga()
+        {
+            return _dbSet
+                .Where(x => x.Manga == null)
+                .ToList();
+        }
+
         public void UpdateImage(int id, string url)
         {
-            var girl = _webDbContext.Girls.First(x => x.Id == id);
+            var girl = _dbSet.First(x => x.Id == id);
 
             girl.ImageSrc = url;
 
@@ -69,7 +41,7 @@ namespace Everything.Data.Repositories
 
         public void UpdateName(int id, string newName)
         {
-            var girl = _webDbContext.Girls.First(x => x.Id == id);
+            var girl = _dbSet.First(x => x.Id == id);
 
             girl.Name = newName;
 
@@ -78,8 +50,7 @@ namespace Everything.Data.Repositories
 
         private IQueryable<GirlData> GetFinilizeGirl()
         {
-            return _webDbContext
-                .Girls
+            return _dbSet
                 .Where(x => !string.IsNullOrEmpty(x.ImageSrc));
         }
     }

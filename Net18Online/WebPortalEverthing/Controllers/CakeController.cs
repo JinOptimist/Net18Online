@@ -1,17 +1,17 @@
-﻿using Everything.Data.Models;
-using Everything.Data.Interface.Repositories;
+﻿using Everything.Data;
+using Everything.Data.Models;
+using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.Cake;
-using Everything.Data;
 
 namespace WebPortalEverthing.Controllers
 {
     public class CakeController : Controller
     {
-        private ICakeRepository _cakeRepository;
+        private ICakeRepositoryReal _cakeRepository;
         private WebDbContext _webDbContext;
 
-        public CakeController(ICakeRepository cakeRepository, WebDbContext webDbContext)
+        public CakeController(ICakeRepositoryReal cakeRepository, WebDbContext webDbContext)
         {
             _cakeRepository = cakeRepository;
             _webDbContext = webDbContext;
@@ -19,8 +19,7 @@ namespace WebPortalEverthing.Controllers
         public IActionResult Index()
         {
             var cakesFromDb = _webDbContext
-                .Cakes
-                .ToList();
+                .Cakes;
 
             var cakesViewModel = cakesFromDb
                 .Select(dbCake => new CakeViewModel
@@ -33,21 +32,6 @@ namespace WebPortalEverthing.Controllers
                 }).ToList();
 
             return View(cakesViewModel);
-        }
-
-        private void GenerateDefaultCake()
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                var cake = new CakeData()
-                {
-                    ImageSrc = $"/images/Cake/Cake{i + 1}.jpg",
-                    Description = "Cake yami",
-                    Rating = 5,
-                    Price = 12.45m,
-                };
-                _cakeRepository.Add(cake);
-            }
         }
 
         [HttpGet]
@@ -70,8 +54,17 @@ namespace WebPortalEverthing.Controllers
             _webDbContext.Cakes.Add(cake);
             _webDbContext.SaveChanges();
 
-            //_cakeRepository.Add(cake);
+            return RedirectToAction("Index");
+        }
+        public IActionResult UpdateDescription(int id, string newDescription)
+        {
+            _cakeRepository.UpdateDescription(id, newDescription);
+            return RedirectToAction("Index");
+        }
 
+        public IActionResult Remove(int id)
+        {
+            _cakeRepository.Delete(id);
             return RedirectToAction("Index");
         }
     }

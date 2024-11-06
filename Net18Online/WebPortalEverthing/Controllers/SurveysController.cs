@@ -1,18 +1,18 @@
-﻿using Everything.Data.Interface.Repositories;
-using Everything.Data.Fake.Models.Surveys;
+﻿using Everything.Data.Models.Surveys;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.Surveys;
 using Everything.Data.Interface.Models.Surveys;
+using Everything.Data.Repositories;
 
 namespace WebPortalEverthing.Controllers
 {
     public class SurveysController : Controller
     {
-        private ISurveyGroupRepository _surveyGroupRepository;
-        private IStatusRepository _statusRepository;
-        private ISurveysRepository _surveysRepository;
+        private ISurveyGroupRepositoryReal _surveyGroupRepository;
+        private IStatusRepositoryReal _statusRepository;
+        private ISurveysRepositoryReal _surveysRepository;
 
-        public SurveysController(ISurveyGroupRepository surveyGroupRepository, IStatusRepository statusRepository, ISurveysRepository surveysRepository)
+        public SurveysController(ISurveyGroupRepositoryReal surveyGroupRepository, IStatusRepositoryReal statusRepository, ISurveysRepositoryReal surveysRepository)
         {
             _statusRepository = statusRepository;
             _surveyGroupRepository = surveyGroupRepository;
