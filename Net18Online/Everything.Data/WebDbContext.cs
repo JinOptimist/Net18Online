@@ -38,8 +38,8 @@ namespace Everything.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer(CONNECTION_STRING);
-            optionsBuilder.UseNpgsql(CONNECTION_STRING);
+            optionsBuilder.UseSqlServer(CONNECTION_STRING);
+            //optionsBuilder.UseNpgsql(CONNECTION_STRING);
             // base.OnConfiguring(optionsBuilder);
         }
 
