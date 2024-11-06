@@ -9,6 +9,9 @@ using AnimeGirlRepository = Everything.Data.Repositories.AnimeGirlRepository;
 using CoffeShopRepository = Everything.Data.Repositories.CoffeShopRepository;
 using EcologyRepository = Everything.Data.Repositories.EcologyRepository;
 using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRepository;
+using CoffeShopRepository = Everything.Data.Repositories.CoffeShopRepository;
+using Everything.Data.Models;
+using Everything.Data.Repositories.Surveys;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,9 +23,6 @@ builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(WebDbContext.CON
 
 
 // Register in DI container our services/repository
-builder.Services.AddSingleton<ISurveyGroupRepository, SurveyGroupRepository>();
-builder.Services.AddSingleton<IStatusRepository, StatusRepository>();
-builder.Services.AddSingleton<ISurveysRepository, SurveysRepository>();
 
 // Register in DI container services/repository for ServiceCenter
 builder.Services.AddScoped<ITypeOfApplianceRepositoryReal, TypeOfApplianceRepository>();
@@ -30,8 +30,7 @@ builder.Services.AddScoped<ITypeOfApplianceRepositoryReal, TypeOfApplianceReposi
 builder.Services.AddSingleton<IGameStoreRepository, GameStoreRepository>();
 builder.Services.AddSingleton<IDNDRepository, DNDRepository>();
 
-// Register in DI container services/repository for MoviePosterRepository
-builder.Services.AddSingleton<IMoviePosterRepository, MoviePosterRepository>();
+builder.Services.AddScoped<IMoviePosterRepositoryReal, MoviePosterRepository>();
 
 builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
 builder.Services.AddScoped<IEcologyRepositoryReal, EcologyRepository>();
@@ -40,6 +39,9 @@ builder.Services.AddScoped<IMangaRepositoryReal, MangaRepository>();
 builder.Services.AddScoped<IBrandRepositoryReal, BrandRepository>();
 
 builder.Services.AddScoped<IAnimeGirlRepositoryReal, AnimeGirlRepository>();
+builder.Services.AddScoped<ISurveyGroupRepositoryReal, SurveyGroupRepository>();
+builder.Services.AddScoped<IStatusRepositoryReal, StatusRepository>();
+builder.Services.AddScoped<ISurveysRepositoryReal, SurveysRepository>();
 
 builder.Services.AddScoped<ICakeRepositoryReal, CakeRepository>();
 
