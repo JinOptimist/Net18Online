@@ -36,10 +36,10 @@ namespace WebPortalEverthing.Controllers
                 GenerateDefaultGroups();
             }
 
-            //if (!_surveysRepository.Any())
-            //{
-            //    GenerateDefaultSurveysInGroups();
-            //}
+            if (!_surveysRepository.Any())
+            {
+                GenerateDefaultSurveysInGroups();
+            }
 
             var groupsFromDb = _surveyGroupRepository.GetAll();
 
@@ -143,145 +143,169 @@ namespace WebPortalEverthing.Controllers
             _surveyGroupRepository.Add(group);
         }
 
-        //private void GenerateDefaultSurveysInGroups()
-        //{
-        //    var survey = new SurveyData()
-        //    {
-        //        IdGroup = 1,
-        //        IdStatus = 2,
-        //        Title = "Самооценка сотрудника"
-        //    };
-        //    _surveysRepository.Add(survey);
+        private void GenerateDefaultSurveysInGroups()
+        {
+            var surveyGroup = _surveyGroupRepository
+                .Get(1);
 
-        //    survey = new SurveyData()
-        //    {
-        //        IdGroup = 1,
-        //        IdStatus = 2,
-        //        Title = "Карьерные ожидания сотрудников"
-        //    };
-        //    _surveysRepository.Add(survey);
+            var survey = new SurveyData()
+            {
+                SurveyGroup = surveyGroup,
+                IdStatus = 2,
+                Title = "Самооценка сотрудника"
+            };
+            _surveysRepository.Add(survey);
 
-        //    survey = new SurveyData()
-        //    {
-        //        IdGroup = 1,
-        //        IdStatus = 2,
-        //        Title = "Диагностики синдрома выгорания"
-        //    };
-        //    _surveysRepository.Add(survey);
+            survey = new SurveyData()
+            {
+                SurveyGroup = surveyGroup,
+                IdStatus = 2,
+                Title = "Карьерные ожидания сотрудников"
+            };
+            _surveysRepository.Add(survey);
 
-        //    survey = new SurveyData()
-        //    {
-        //        IdGroup = 2,
-        //        IdStatus = 2,
-        //        Title = "Анкета удовлетворенности сотрудников"
-        //    };
-        //    _surveysRepository.Add(survey);
+            survey = new SurveyData()
+            {
+                SurveyGroup = surveyGroup,
+                IdStatus = 2,
+                Title = "Диагностики синдрома выгорания"
+            };
+            _surveysRepository.Add(survey);
 
-        //    survey = new SurveyData()
-        //    {
-        //        IdGroup = 2,
-        //        IdStatus = 2,
-        //        Title = "Удовлетворенность работой и вознаграждениями"
-        //    };
-        //    _surveysRepository.Add(survey);
+            surveyGroup = _surveyGroupRepository
+                .Get(2);
 
-        //    survey = new SurveyData()
-        //    {
-        //        IdGroup = 2,
-        //        IdStatus = 2,
-        //        Title = "Удовлетворенность условиями труда с оценкой важности"
-        //    };
-        //    _surveysRepository.Add(survey);
+            survey = new SurveyData()
+            {
+                SurveyGroup = surveyGroup,
+                IdStatus = 2,
+                Title = "Анкета удовлетворенности сотрудников"
+            };
+            _surveysRepository.Add(survey);
 
-        //    survey = new SurveyData()
-        //    {
-        //        IdGroup = 2,
-        //        IdStatus = 1,
-        //        Title = "Название опроса 6"
-        //    };
-        //    _surveysRepository.Add(survey);
+            survey = new SurveyData()
+            {
+                SurveyGroup = surveyGroup,
+                IdStatus = 2,
+                Title = "Удовлетворенность работой и вознаграждениями"
+            };
+            _surveysRepository.Add(survey);
 
-        //    survey = new SurveyData()
-        //    {
-        //        IdGroup = 2,
-        //        IdStatus = 1,
-        //        Title = "Название опроса 7"
-        //    };
-        //    _surveysRepository.Add(survey);
+            survey = new SurveyData()
+            {
+                SurveyGroup = surveyGroup,
+                IdStatus = 2,
+                Title = "Удовлетворенность условиями труда с оценкой важности"
+            };
+            _surveysRepository.Add(survey);
 
-        //    survey = new SurveyData()
-        //    {
-        //        IdGroup = 2,
-        //        IdStatus = 1,
-        //        Title = "Название опроса 8"
-        //    };
-        //    _surveysRepository.Add(survey);
+            survey = new SurveyData()
+            {
+                SurveyGroup = surveyGroup,
+                IdStatus = 1,
+                Title = "Название опроса 6"
+            };
+            _surveysRepository.Add(survey);
 
-        //    survey = new SurveyData()
-        //    {
-        //        IdGroup = 2,
-        //        IdStatus = 1,
-        //        Title = "Название опроса 9"
-        //    };
-        //    _surveysRepository.Add(survey);
+            survey = new SurveyData()
+            {
+                SurveyGroup = surveyGroup,
+                IdStatus = 1,
+                Title = "Название опроса 7"
+            };
+            _surveysRepository.Add(survey);
 
-        //    survey = new SurveyData()
-        //    {
-        //        IdGroup = 2,
-        //        IdStatus = 1,
-        //        Title = "Название опроса 10"
-        //    };
-        //    _surveysRepository.Add(survey);
+            survey = new SurveyData()
+            {
+                SurveyGroup = surveyGroup,
+                IdStatus = 1,
+                Title = "Название опроса 8"
+            };
+            _surveysRepository.Add(survey);
 
-        //    survey = new SurveyData()
-        //    {
-        //        IdGroup = 2,
-        //        IdStatus = 1,
-        //        Title = "Название опроса 11"
-        //    };
-        //    _surveysRepository.Add(survey);
+            survey = new SurveyData()
+            {
+                SurveyGroup = surveyGroup,
+                IdStatus = 1,
+                Title = "Название опроса 9"
+            };
+            _surveysRepository.Add(survey);
 
-        //    survey = new SurveyData()
-        //    {
-        //        IdGroup = 2,
-        //        IdStatus = 1,
-        //        Title = "Название опроса 12"
-        //    };
-        //    _surveysRepository.Add(survey);
+            survey = new SurveyData()
+            {
+                SurveyGroup = surveyGroup,
+                IdStatus = 1,
+                Title = "Название опроса 10"
+            };
+            _surveysRepository.Add(survey);
 
-        //    survey = new SurveyData()
-        //    {
-        //        IdGroup = 3,
-        //        IdStatus = 1,
-        //        Title = "Корпоративная культура"
-        //    };
-        //    _surveysRepository.Add(survey);
+            survey = new SurveyData()
+            {
+                SurveyGroup = surveyGroup,
+                IdStatus = 1,
+                Title = "Название опроса 11"
+            };
+            _surveysRepository.Add(survey);
 
-        //    survey = new SurveyData()
-        //    {
-        //        IdGroup = 3,
-        //        IdStatus = 2,
-        //        Title = "Диагностика аврала"
-        //    };
-        //    _surveysRepository.Add(survey);
-        //}
+            survey = new SurveyData()
+            {
+                SurveyGroup = surveyGroup,
+                IdStatus = 1,
+                Title = "Название опроса 12"
+            };
+            _surveysRepository.Add(survey);
+
+            surveyGroup = _surveyGroupRepository
+                .Get(3);
+
+            survey = new SurveyData()
+            {
+                SurveyGroup = surveyGroup,
+                IdStatus = 1,
+                Title = "Корпоративная культура"
+            };
+            _surveysRepository.Add(survey);
+
+            survey = new SurveyData()
+            {
+                SurveyGroup = surveyGroup,
+                IdStatus = 2,
+                Title = "Диагностика аврала"
+            };
+            _surveysRepository.Add(survey);
+        }
 
         [HttpGet]
-        public ActionResult Create()
+        public ActionResult Create(int idGroup)
         {
-            return View();
+            var surveyGroup = _surveyGroupRepository
+                .Get(idGroup);
+
+            var surveyCreate = new SurveyCreateViewModel()
+            {
+                SurveyGroup = new SurveyGroupForListViewModel()
+                {
+                    Id = surveyGroup.Id,
+                    Title = surveyGroup.Title
+                }
+            };
+
+            return View(surveyCreate);
         }
 
         [HttpPost]
         public ActionResult Create(SurveyCreateViewModel surveyCreate)
         {
-            //var survey = new SurveyData()
-            //{
-            //    IdGroup = 1, // Пока что харкод, пока не умеем пробрасывать
-            //    IdStatus = 1,
-            //    Title = surveyCreate.Title
-            //};
-            //_surveysRepository.Add(survey);
+            var selectedSurveyGroup = _surveyGroupRepository
+                .Get(surveyCreate.SurveyGroup.Id);
+
+            var survey = new SurveyData()
+            {
+                SurveyGroup = selectedSurveyGroup,
+                IdStatus = 1, // Пока такой хардкод, пока не сделана связка между таблицами
+                Title = surveyCreate.Title
+            };
+            _surveysRepository.Add(survey);
 
             return RedirectToAction(nameof(SurveysAll));
         }
