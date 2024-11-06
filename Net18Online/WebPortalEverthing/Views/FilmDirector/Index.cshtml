@@ -1,0 +1,34 @@
+﻿@model WebPortalEverthing.Models.FilmDirector.IndexFilmDirectorViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutMoviePoster.cshtml";
+}
+
+<div>
+    <h1>FilmDirectors</h1>
+   <div class="filmDirectors">
+        @foreach (var filmDirector in Model.FilmDirectors)
+        {
+            <div class="filmDirector">
+                <div class="name">@filmDirector.Name</div>
+                <div class="lastName">@filmDirector.LastName</div>
+                <div class="girls">
+                    @foreach (var movie in filmDirector.Movies)
+                    {
+                        <span class="movie">@movie.Name</span>
+                    }
+                </div>
+                <form action="/FilmDirector/LinkFilmAndFilmDirector" method="post">
+                    <input type="hidden" name="filmDirectorId" value="@filmDirector.Id" />
+                    <select name="movieId">
+                        @foreach (var movie in Model.Movies)
+                        {
+                            <option value="@movie.Id">@movie.Name</option>
+                        }
+                    </select>
+                    <button type="submit">Link</button>
+                </form>
+            </div>
+        }
+   </div>
+</div>

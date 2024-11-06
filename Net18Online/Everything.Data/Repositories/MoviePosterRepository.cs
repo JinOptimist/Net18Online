@@ -6,54 +6,27 @@ namespace Everything.Data.Repositories
 {
     public interface IMoviePosterRepositoryReal : IMoviePosterRepository<MovieData>
     {
+        IEnumerable<MovieData> GetWithoutFilmDirector();
     }
 
-    public class MoviePosterRepository : IMoviePosterRepositoryReal
+    public class MoviePosterRepository : BaseRepository<MovieData>, IMoviePosterRepositoryReal
     {
-        private WebDbContext _webDbContext;
 
-        public MoviePosterRepository(WebDbContext webDbContext)
+        public MoviePosterRepository(WebDbContext webDbContext) : base(webDbContext)
         {
-            _webDbContext = webDbContext;
-        }
-
-        public void Add(MovieData data)
-        {
-            _webDbContext.Add(data);
-            _webDbContext.SaveChanges();
-        }
-
-        public bool Any()
-        {
-            return _webDbContext.Movies.Any();
-        }
-
-        public void Delete(MovieData data)
-        {
-            _webDbContext.Movies.Remove(data);
-            _webDbContext.SaveChanges();
-        }
-
-        public void Delete(int id)
-        {
-            var data = Get(id);
-            Delete(data);
-        }
-
-        public MovieData? Get(int id)
-        {
-            return _webDbContext.Movies.FirstOrDefault(x => x.Id == id);
-        }
-
-        public IEnumerable<MovieData> GetAll()
-        {
-            return GetFinilizeMovies().ToList();
         }
 
         public IEnumerable<MovieData> GetAllInCount(int count)
         {
             return GetFinilizeMovies()
                 .Take(count)
+                .ToList();
+        }
+
+        public IEnumerable<MovieData> GetWithoutFilmDirector()
+        {
+            return _dbSet
+                .Where(x => x.FilmDirector == null)
                 .ToList();
         }
 
