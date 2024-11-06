@@ -31,6 +31,8 @@ namespace Everything.Data
 
         public DbSet<CoffeData> Coffe { get; set; }
 
+        public DbSet<BrandData> Brands { get; set; }
+
         public DbSet<MetricData> Metrics { get; set; } // Описание таблицы с метриками
 
         public DbSet<StatusData> Statuses { get; set; }
@@ -64,6 +66,10 @@ namespace Everything.Data
                 .OnDelete(DeleteBehavior.NoAction);
 
 
+            modelBuilder.Entity<BrandData>()
+                .HasMany(x => x.Coffe)
+                .WithOne(x => x.Brand)
+                .OnDelete(DeleteBehavior.NoAction);
 
 
 

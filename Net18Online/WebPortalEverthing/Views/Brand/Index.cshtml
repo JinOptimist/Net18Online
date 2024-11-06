@@ -1,0 +1,38 @@
+﻿@model WebPortalEverthing.Models.Brand.BrandViewModel
+@{
+    Layout = "~/Views/Shared/CoffeLayout/_LayoutCoffe.cshtml";
+}
+
+<div>
+    <h1>Brands:</h1>
+    <div>
+        <a class="btn btn-outline-primary" href="/Brand/Create">
+            Добавить Бренд кофе
+        </a>
+    </div>
+    <div class="brands">
+        @foreach (var brand in Model.Brands)
+        {
+            <div class="brand">
+                <div class="name">@brand.Name</div>
+                <div class="company">@brand.Company</div>
+                <div class="all-coffe">
+                    @foreach (var coffe in brand.CoffeList)
+                    {
+                        <span class="coffe">@coffe.Name</span>
+                    }
+                </div>
+                <form action="/Brand/LinkCoffeAndBrand" method="post">
+                    <input type="hidden" name="brandId" value="@brand.Id" />
+                    <select name="coffeId">
+                        @foreach (var coffe in Model.Coffe)
+                        {
+                            <option value="@coffe.Id">@coffe.Name</option>
+                        }
+                    </select>
+                    <button type="submit">Link</button>
+                </form>
+            </div>
+        }
+    </div>
+</div>     
