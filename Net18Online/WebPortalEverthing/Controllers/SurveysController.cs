@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.Surveys;
 using Everything.Data.Interface.Models.Surveys;
-using Everything.Data.Repositories;
+using Everything.Data.Repositories.Surveys;
 
 namespace WebPortalEverthing.Controllers
 {

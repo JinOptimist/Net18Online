@@ -10,6 +10,7 @@ using EcologyRepository = Everything.Data.Repositories.EcologyRepository;
 using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRepository;
 using CoffeShopRepository = Everything.Data.Repositories.CoffeShopRepository;
 using Everything.Data.Models;
+using Everything.Data.Repositories.Surveys;
 
 var builder = WebApplication.CreateBuilder(args);
 
