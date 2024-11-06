@@ -1,14 +1,14 @@
 ﻿using Everything.Data.Models;
 using Everything.Data.Models.Surveys;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
+//using Microsoft.Identity.Client;
 
 namespace Everything.Data
 {
     public class WebDbContext : DbContext
     {
         public const string CONNECTION_STRING = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=\"Net18Online\";Integrated Security=True;";
-
+        //public const string CONNECTION_STRING = "Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=12345;";
         public DbSet<GirlData> Girls { get; set; }
 
         public DbSet<MangaData> Mangas { get; set; }

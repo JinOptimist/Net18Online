@@ -39,7 +39,7 @@ namespace WebPortalEverthing.Controllers
                     {
                         Id = dbEcology.Id,
                         ImageSrc = dbEcology.ImageSrc,
-                        Texts = new List<string>()
+                        Texts = dbEcology.Text
                     }
                 )
                 .ToList();
@@ -52,23 +52,17 @@ namespace WebPortalEverthing.Controllers
             var ecology = new EcologyData
             {
                 ImageSrc = viewModel.Url,
-                //Text = new List<string>{viewModel.Text},
+                Text = viewModel.Text
             };
             _ecologyRepository.Add(ecology);
             
             return RedirectToAction("EcologyChat");
         }
         
-        /*public IActionResult UpdateText(string newText, int id)
-        {
-            _ecologyRepository.UpdateText(id, newText);
-            return RedirectToAction("EcologyChat");
-        }*/
-
         [HttpPost]
-        public IActionResult UpdateImage(int id, string url)
+        public IActionResult UpdatePost(int id, string url, string text)
         {
-            _ecologyRepository.UpdateImage(id, url);
+            _ecologyRepository.UpdatePost(id, url, text);
             return RedirectToAction("EcologyChat");
         }
 
@@ -78,12 +72,5 @@ namespace WebPortalEverthing.Controllers
             _ecologyRepository.Delete(id);
             return RedirectToAction("EcologyChat");
         }
-
-        /*[HttpPost]
-        public IActionResult UpdatePost(int id, string url, string text)
-        {
-            _ecologyRepository.UpdatePost(id, url, text); 
-            return RedirectToAction("EcologyChat");
-        }*/
     }
 }
