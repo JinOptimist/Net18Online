@@ -78,6 +78,18 @@ namespace WebPortalEverthing.Controllers
         [HttpPost]
         public IActionResult Create(GirlCreationViewModel viewModel)
         {
+            if (_animeGirlRepository.HasSimilarName(viewModel.Name))
+            {
+                ModelState.AddModelError(
+                    nameof(GirlCreationViewModel.Name),
+                    "Слишком похожее имя");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
             var dataGirl = new GirlData
             {
                 Name = viewModel.Name,
