@@ -58,6 +58,11 @@ namespace Everything.Data
                 .WithOne(x => x.Manga)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<SurveyGroupData>()
+                .HasMany(x => x.Surveys)
+                .WithOne(x => x.SurveyGroup)
+                .OnDelete(DeleteBehavior.NoAction);
+
 
 
 

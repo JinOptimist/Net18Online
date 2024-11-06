@@ -11,6 +11,15 @@
 </div>
 <form class="new-survey" method="post">
     <div>
+        @Html.TextBoxFor(x => x.SurveyGroup.Id, new { type = "hidden" })
+    </div>
+    <div>
+        <label>
+            Группа:
+            @Html.TextBoxFor(x => x.SurveyGroup.Title, new { disabled = "true" })
+        </label>
+    </div>
+    <div>
         @Html.TextBoxFor(x => x.Title, new { placeholder = "Введите название опроса" })
     </div>
     <div class="actions">
