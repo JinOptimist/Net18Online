@@ -15,6 +15,7 @@
     <link href="~/css/LoadTesting/create-metric-form.css" rel="stylesheet" />
     <link href="~/css/LoadTesting/create-profile-form.css" rel="stylesheet" />
     <link href="~/css/LoadTesting/GameLife/game-life.css" rel="stylesheet" />
+    <link href="~/css/LoadTesting/GameLife/own-size-form-container.css" rel="stylesheet" />
 
 </head>
 <body>
@@ -34,20 +35,20 @@
     <!-- Прозрачный фон под списком кнопок с переливающимся фоном -->
     <div class="fire-fon"></div>
 
-    <div class="buttona-and-content">
+    < class="buttona-and-content">
         <div class="button-list">
             <div class="fridaysRemaining">
                 До нового года осталось <span id="fridaysCount">0</span> пятниц_ц_ц !
             </div>
             <ul>
                 <li>
-                    <a href="/loadtesting/ContenMetricsListView" class="button"><span>All metrics</span></a>
+                    <a href="/Loadtesting/ContenMetricsListView" class="button"><span>All metrics</span></a>
                 </li>
                 <li>
-                    <a href="/loadtesting/CreateProfileView" class="button"><span>CreateProfile</span></a>
+                    <a href="/Loadtesting/CreateProfileView" class="button"><span>CreateProfile</span></a>
                 </li>
                 <li>
-                    <a href="https://example.com" class="button"><span>Кнопка 2</span></a>
+                    <a href="/GameLife/GameLifeOwnSize" class="button"><span>GameLifeOwnSize</span></a>
                 </li>
             </ul>
 
@@ -69,8 +70,8 @@
         @RenderBody();
         <!-- Добавьте этот блок для рендеринга секции Scripts из \LoadTesting\GameLife\GameLifeDefault.cshtml -->
         @RenderSection("Scripts", required: false)
-    </div><!-- Закрытие блока .content -->
-    </div>  <!-- Закрытие блока .buttona-and-content -->
+        <div></div><!-- Закрытие блока .content -->
+    <div></div>  <!-- Закрытие блока .buttona-and-content -->
 
 </body>
 </html>

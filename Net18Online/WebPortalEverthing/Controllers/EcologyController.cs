@@ -1,23 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Everything.Data.Fake.Models;
+using Everything.Data;
+using Everything.Data.Interface.Models;
 using Everything.Data.Interface.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Everything.Data.Repositories;
 using WebPortalEverthing.Models.Ecology;
+using Everything.Data.Models;
+
+
 
 namespace WebPortalEverthing.Controllers
 {
     public class EcologyController : Controller
     {
-        private IEcologyRepository _ecologyRepository;
+        private IEcologyRepositoryReal _ecologyRepository;
+        private WebDbContext _webDbContext;
 
-        public EcologyController(IEcologyRepository ecologyRepository)
+        public EcologyController(IEcologyRepositoryReal ecologyRepository, WebDbContext webDbContext)
         {
             _ecologyRepository = ecologyRepository;
+            _webDbContext = webDbContext;
         }
 
         public IActionResult Index()
@@ -29,7 +31,19 @@ namespace WebPortalEverthing.Controllers
         [HttpGet]
         public IActionResult EcologyChat()
         {
-            return View();
+            var ecologyFromDb = _ecologyRepository.GetAll();
+
+            var ecologyViewModels = ecologyFromDb
+                .Select(dbEcology =>
+                    new EcologyViewModel
+                    {
+                        Id = dbEcology.Id,
+                        ImageSrc = dbEcology.ImageSrc,
+                        Texts = dbEcology.Text
+                    }
+                )
+                .ToList();
+            return View(ecologyViewModels);
         }
 
         [HttpPost]
@@ -38,23 +52,25 @@ namespace WebPortalEverthing.Controllers
             var ecology = new EcologyData
             {
                 ImageSrc = viewModel.Url,
-                Text = new List<string>{viewModel.Text},
+                Text = viewModel.Text
             };
             _ecologyRepository.Add(ecology);
+            
+            return RedirectToAction("EcologyChat");
+        }
+        
+        [HttpPost]
+        public IActionResult UpdatePost(int id, string url, string text)
+        {
+            _ecologyRepository.UpdatePost(id, url, text);
+            return RedirectToAction("EcologyChat");
+        }
 
-            var ecologyFromDb = _ecologyRepository.GetAll();
-
-            var ecologyViewModels = ecologyFromDb
-                .Select(dbEcology =>
-                    new EcologyViewModel
-                    {
-                        ImageSrc = dbEcology.ImageSrc,
-                        Texts = dbEcology.Text
-                    }
-                )
-                .ToList();
-
-            return View(ecologyViewModels);
+        [HttpPost]
+        public IActionResult Remove(int id)
+        {
+            _ecologyRepository.Delete(id);
+            return RedirectToAction("EcologyChat");
         }
     }
 }

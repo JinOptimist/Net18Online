@@ -5,21 +5,17 @@ namespace WebPortalEverthing.Models.LoadTesting
 {
     public class FieldData : BaseModel, IFieldData
     {
+        public int Rows { get; set; }
+        public int Cols { get; set; }
+        public ICellData[,] Cells { get; set; }
+        Random random = new Random();
 
-        private int _rows;
-        private int _cols;
-        private CellData[,] _cells; // 2D-массив клеток
-
-        public int Rows { get => _rows; set => _rows = value; }
-        public int Cols { get => _cols; set => _cols = value; }
-        public CellData[,] Cells { get => _cells; set => _cells = value; }
-        ICellData[,] IFieldData.Cells { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public FieldData(int rows, int cols)
         {
             this.Rows = rows;
             this.Cols = cols;
-            Cells = new CellData[rows, cols];
+            Cells = new ICellData[rows, cols];
 
             // Инициализация клеток
             for (int i = 0; i < rows; i++)
@@ -38,7 +34,6 @@ namespace WebPortalEverthing.Models.LoadTesting
 
         public void Randomize()
         {
-            Random random = new Random();
             for (int i = 0; i < Rows; i++)
             {
                 for (int j = 0; j < Cols; j++)
@@ -49,7 +44,7 @@ namespace WebPortalEverthing.Models.LoadTesting
         }
 
         // Метод для получения числа живых соседей
-        private int GetAliveNeighbors(int row, int col)
+        public int GetAliveNeighbors(int row, int col)
         {
             int aliveNeighbors = 0;
 
@@ -57,7 +52,7 @@ namespace WebPortalEverthing.Models.LoadTesting
             {
                 for (int j = -1; j <= 1; j++)
                 {
-                    if (i == 0 && j == 0) continue;
+                    if (i == 0 && j == 0) { continue; }
 
                     int neighborRow = row + i;
                     int neighborCol = col + j;
@@ -86,15 +81,9 @@ namespace WebPortalEverthing.Models.LoadTesting
                     int aliveNeighbors = GetAliveNeighbors(i, j);
                     bool isAlive = Cells[i, j].IsAlive;
 
-                    // Применяем правила
-                    if (isAlive && (aliveNeighbors < 2 || aliveNeighbors > 3))
-                    {
-                        isAlive = false;
-                    }
-                    else if (!isAlive && aliveNeighbors == 3)
-                    {
-                        isAlive = true;
-                    }
+                    var liveIsCreatedByNeighbors = aliveNeighbors == 3;
+                    var stillLiveGoodEnv = isAlive && aliveNeighbors >= 2 && aliveNeighbors <= 3;
+                    isAlive = liveIsCreatedByNeighbors || stillLiveGoodEnv;
 
                     newField[i, j] = new CellData(isAlive);
                 }

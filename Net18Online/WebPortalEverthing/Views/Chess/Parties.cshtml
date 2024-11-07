@@ -1,0 +1,17 @@
+﻿@model WebPortalEverthing.Models.Chess.PartiesCreateViewModels
+@{
+    Layout = "~/Views/Shared/_LayoutChess.cshtml";
+}
+
+<form method="post">
+    <div>
+        @Html.TextBoxFor(x => x.Name, new {placeholder = "Имя игрока" })
+    </div>
+    <div>
+        @Html.TextBoxFor(x => x.Color, new {placeholder = "Цвет"})
+    </div>
+    <div>
+        @Html.TextBoxFor(x => x.Winner, new {placeholder = "Победитель"})
+    </div>
+    <button type="submit">Добавить</button>
+</form>

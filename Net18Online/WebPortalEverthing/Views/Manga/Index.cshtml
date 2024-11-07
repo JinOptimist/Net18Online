@@ -1,0 +1,34 @@
+﻿@model WebPortalEverthing.Models.Manga.IndexMangaViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutAnime.cshtml";
+}
+
+<div>
+    <h1>Mangas</h1>
+   <div class="mangas">
+        @foreach (var manga in Model.Mangas)
+        {
+            <div class="manga">
+                <div class="name">@manga.Title</div>
+                <div class="desc">@manga.Description</div>
+                <div class="girls">
+                    @foreach (var girl in manga.Girls)
+                    {
+                        <span class="girl">@girl.Name</span>
+                    }
+                </div>
+                <form action="/Manga/LinkGirlAndManga" method="post">
+                    <input type="hidden" name="mangaId" value="@manga.Id" />
+                    <select name="girlId">
+                        @foreach (var girl in Model.Girls)
+                        {
+                            <option value="@girl.Id">@girl.Name</option>
+                        }
+                    </select>
+                    <button type="submit">Link</button>
+                </form>
+            </div>
+        }
+   </div>
+</div>

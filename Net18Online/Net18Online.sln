@@ -26,7 +26,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Everything.Data.Interface", "Everything.Data.Interface\Everything.Data.Interface.csproj", "{5495057C-F0A2-43B8-8DE3-902D77D3B25F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimulatorOfPrinting", "SimulatorOfPrinting\SimulatorOfPrinting\SimulatorOfPrinting.csproj", "{23F01339-F575-40F9-AC80-445C6085C3F2}"
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Everything.Data", "Everything.Data\Everything.Data.csproj", "{CBFC210A-4BB5-4DC7-B68B-3F2741D2D8DE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Everything.Data", "Everything.Data\Everything.Data.csproj", "{CBFC210A-4BB5-4DC7-B68B-3F2741D2D8DE}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LifeGame", "LifeGame\LifeGame.csproj", "{15C29ED9-32ED-49E6-B2EB-BE93A2FABA7A}"
 EndProject
 Global

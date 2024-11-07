@@ -1,20 +1,18 @@
 ﻿using Everything.Data.Models;
-using Everything.Data.Interface.Repositories;
+using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.CoffeShop;
-using Everything.Data;
 
 namespace WebPortalEverthing.Controllers
 {
     public class CoffeShopController : Controller
     {
-        private ICoffeShopRepository _coffeShopRepository;
-        private WebDbContext _webDbContext;
+        private IKeyCoffeShopRepository _coffeShopRepository;
 
-        public CoffeShopController(ICoffeShopRepository coffeShopRepository, WebDbContext webDbContext)
+        public CoffeShopController(IKeyCoffeShopRepository coffeShopRepository)
         {
             _coffeShopRepository = coffeShopRepository;
-            _webDbContext = webDbContext;
+
         }
 
         public IActionResult Index()
@@ -26,15 +24,12 @@ namespace WebPortalEverthing.Controllers
 
         public List<CoffeViewModel> CoffeView()
         {
-            var valuesCoffeFromDb = _webDbContext
-                .Coffe
-                .ToList();
+            var valuesCoffeFromDb = _coffeShopRepository.GetAll();
 
             var viewModels = valuesCoffeFromDb
                 .Select(coffeFromDb =>
                     new CoffeViewModel
                     {
-                        Brand = coffeFromDb.Brand,
                         Id = coffeFromDb.Id,
                         Coffe = coffeFromDb.Coffe,
                         Url = coffeFromDb.Url,
@@ -47,29 +42,10 @@ namespace WebPortalEverthing.Controllers
 
         public IActionResult Coffe()
         {
-            //if (!_coffeShopRepository.Any())
-            //{
-            //    DefaultCoffeViewValue();
-            //}
-
             var viewModels = CoffeView();
 
             return View(viewModels);
         }
-
-        //public void DefaultCoffeViewValue()
-        //{
-        //    var costOfAmericano = 1;
-        //    var AmericanoViewModel = new CoffeData
-        //    {
-        //        Coffe = "Americano",
-        //        Url = $"/images/CoffeShop/Americano.jpeg",
-        //        Cost = costOfAmericano,
-        //    };
-
-        //    _coffeShopRepository
-        //        .Add(AmericanoViewModel);
-        //}
 
         [HttpGet]
         public IActionResult Create()
@@ -82,62 +58,37 @@ namespace WebPortalEverthing.Controllers
         {
             var coffe = new CoffeData
             {
-                Brand = viewModel.Brand,
                 Coffe = viewModel.Coffe,
                 Url = viewModel.Url,
                 Cost = viewModel.Cost
             };
 
-            _webDbContext
-                .Add(coffe);
-            _webDbContext
-                .SaveChanges();
+            _coffeShopRepository.Add(coffe);
 
             return RedirectToAction("Index");
         }
 
         public IActionResult Delete(int id)
         {
-            var coffeItem = _webDbContext.Coffe.Find(id);
-
-            if (coffeItem != null)
-            {
-                _webDbContext.Coffe
-                    .Remove(coffeItem);
-                _webDbContext
-                    .SaveChanges();
-            }
-
+            _coffeShopRepository.Delete(id);
             return RedirectToAction("Index");
         }
 
-        public IActionResult Update(int id)
+        public IActionResult UpdateCoffe(int id, string name)
         {
-            var coffeItem = _webDbContext.Coffe.Find(id);
-
-            var newCoffeItem = new CoffeData
-            {
-                Brand = coffeItem.Brand,
-                Coffe = coffeItem.Coffe,
-                Url = coffeItem.Url,
-                Cost = coffeItem.Cost
-            };
-
-            return View(newCoffeItem);
+            _coffeShopRepository.UpdateCoffeName(id, name);
+            return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        public IActionResult Update(int id, CoffeUpdateViewModel viewModel)
+        public IActionResult UpdateCost(int id, decimal cost)
         {
-            var coffeItem = _webDbContext.Coffe.Find(id);
+            _coffeShopRepository.UpdateCost(id, cost);
+            return RedirectToAction("Index");
+        }
 
-            coffeItem.Coffe = viewModel.Coffe;
-            coffeItem.Url = viewModel.Url;  
-            coffeItem.Cost = viewModel.Cost;
-            coffeItem.Brand = viewModel.Brand;
-
-            _webDbContext.SaveChanges();
-
+        public IActionResult UpdateUrl(int id, string url)
+        {
+            _coffeShopRepository.UpdateImage(id, url);
             return RedirectToAction("Index");
         }
     }

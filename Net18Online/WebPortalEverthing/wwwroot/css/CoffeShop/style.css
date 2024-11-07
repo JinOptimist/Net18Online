@@ -108,6 +108,12 @@ input {
     gap: 20px;
 }
 
+img.admin-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
 .product {
     display: flex;
     height: auto;
@@ -154,9 +160,10 @@ input {
 
 .product-bottom {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     padding: 10px 0;
+    margin-left: 10px;
 }
 
 .catalog-filter-item {

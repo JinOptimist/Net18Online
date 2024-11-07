@@ -95,3 +95,7 @@ div.menu ul.filter li {
     justify-content: space-between;
     width: 100px;
 }
+
+.cakes .cake .description input.newDescription{
+    max-width: 90px;
+}

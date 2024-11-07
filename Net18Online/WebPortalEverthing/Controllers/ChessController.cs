@@ -1,7 +1,9 @@
+
 ﻿using Everything.Data.Fake.Models;
 using Everything.Data.Fake.Repositories;
 using Everything.Data.Interface.Repositories;
 using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.Chess;
 
 namespace WebProject.Controllers
@@ -9,12 +11,15 @@ namespace WebProject.Controllers
     public class ChessController : Controller
     {
 
+
         private IChessPartiesRepository _chessPartiesRepository;
 
         public ChessController(IChessPartiesRepository chessPartiesRepository)
         {
             _chessPartiesRepository = chessPartiesRepository;
         }
+
+        private static List<PartiesViewModel> partiesViewModels = new List<PartiesViewModel>();
 
         public IActionResult Index(string name)
         {
@@ -42,6 +47,7 @@ namespace WebProject.Controllers
                 Winner = DbParties.Winner,
             }
             ).ToList();
+
             return View(partiesViewModels);
         }
 
@@ -54,7 +60,10 @@ namespace WebProject.Controllers
         [HttpPost]
         public IActionResult Parties(PartiesCreateViewModels model)
         {
+
             var party = new PartiesData
+            var party = new PartiesViewModel
+
             {
                 Name = model.Name,
                 Color = model.Color,
@@ -62,6 +71,8 @@ namespace WebProject.Controllers
             };
 
             _chessPartiesRepository.Add(party); 
+            partiesViewModels.Add(party); 
+
 
             return RedirectToAction("News");
         }
