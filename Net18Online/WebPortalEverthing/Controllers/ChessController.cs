@@ -62,8 +62,6 @@ namespace WebProject.Controllers
         {
 
             var party = new PartiesData
-            var party = new PartiesViewModel
-
             {
                 Name = model.Name,
                 Color = model.Color,
@@ -71,8 +69,6 @@ namespace WebProject.Controllers
             };
 
             _chessPartiesRepository.Add(party); 
-            partiesViewModels.Add(party); 
-
 
             return RedirectToAction("News");
         }
