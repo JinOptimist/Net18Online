@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.Surveys;
 using Everything.Data.Interface.Models.Surveys;
 using Everything.Data.Repositories.Surveys;
+using Everything.Data.Interface.Enums;
 
 namespace WebPortalEverthing.Controllers
 {
@@ -286,7 +287,22 @@ namespace WebPortalEverthing.Controllers
                 SurveyGroup = new SurveyGroupForListViewModel()
                 {
                     Id = surveyGroup.Id,
-                    Title = surveyGroup.Title
+                    Title = surveyGroup.Title,
+                },
+                Questions = new()
+                {
+                    new QuestionViewModel
+                    {
+                        Title = "Вопрос 1",
+                        IsRequired = true,
+                        AnswerType = AnswerType.TextString
+                    },
+                    new QuestionViewModel
+                    {
+                        Title = "Вопрос 2",
+                        IsRequired = true,
+                        AnswerType = AnswerType.TextString
+                    }
                 }
             };
 
@@ -308,6 +324,24 @@ namespace WebPortalEverthing.Controllers
             _surveysRepository.Add(survey);
 
             return RedirectToAction(nameof(SurveysAll));
+        }
+
+        [HttpPost]
+        public ActionResult AddQuestion(SurveyCreateViewModel surveyCreate)
+        {
+            surveyCreate.Questions.Add(new QuestionViewModel()
+            {
+                Title = string.Empty,
+                AnswerType = AnswerType.TextString
+            });
+
+            return View(surveyCreate);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteQuestion(SurveyCreateViewModel surveyCreate)
+        {
+            return View(surveyCreate);
         }
     }
 }

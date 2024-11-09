@@ -34,10 +34,12 @@ namespace Everything.Data
         public DbSet<BrandData> Brands { get; set; }
 
         public DbSet<MetricData> Metrics { get; set; } // Описание таблицы с метриками
-
+        #region SURVEYS
         public DbSet<StatusData> Statuses { get; set; }
         public DbSet<SurveyData> Surveys { get; set; }
         public DbSet<SurveyGroupData> SurveyGroups { get; set; }
+        public DbSet<QuestionData> Questions { get; set; }
+        #endregion
 
         public WebDbContext() { }
 
@@ -65,6 +67,10 @@ namespace Everything.Data
                 .WithOne(x => x.SurveyGroup)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<SurveyData>()
+                .HasMany(x => x.Questions)
+                .WithOne(x => x.Survey)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<BrandData>()
                 .HasMany(x => x.Coffe)

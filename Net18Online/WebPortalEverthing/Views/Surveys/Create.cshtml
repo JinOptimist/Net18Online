@@ -1,4 +1,5 @@
-﻿@using WebPortalEverthing.Models.Surveys
+﻿@using Everything.Data.Interface.Enums
+@using WebPortalEverthing.Models.Surveys
 
 @model SurveyCreateViewModel
 
@@ -10,17 +11,63 @@
     <span>Создание нового опроса</span>
 </div>
 <form class="new-survey" method="post">
-    <div>
-        @Html.TextBoxFor(x => x.SurveyGroup.Id, new { type = "hidden" })
+    <div class="round-border">
+        <div>
+            @Html.TextBoxFor(x => x.SurveyGroup.Id, new { type = "hidden" })
+        </div>
+        <div>
+            <label>
+                Группа:
+                @Html.TextBoxFor(x => x.SurveyGroup.Title, new { disabled = "true" })
+            </label>
+        </div>
+        <div>
+            <label>
+                Название опроса
+                @Html.TextBoxFor(x => x.Title)
+            </label>
+        </div>
     </div>
-    <div>
-        <label>
-            Группа:
-            @Html.TextBoxFor(x => x.SurveyGroup.Title, new { disabled = "true" })
-        </label>
+    <div class="questions">
+        @foreach (var question in Model.Questions)
+        {
+            <div class="question round-border">
+                <div class="answer-option">
+                    <div>
+                        <select name="AnswerType">
+                            <option value="@AnswerType.TextString">Текст (строка)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>
+                            Обязательный вопрос
+                            @Html.CheckBox(nameof(question.IsRequired), question.IsRequired)
+                        </label>
+                    </div>
+                    <div>
+                        <button type="submit" asp-controller="Surveys" asp-action="DeleteQuestion">Удалить</button>
+                    </div>
+                </div>
+                <hr>
+                <div class="title">
+                    <input type="text" name="Title" value="@question.Title" />
+                </div>
+                <div>
+                    @switch (question.AnswerType)
+                    {
+                        case AnswerType.TextString:
+                                <input type="text" value="Краткий ответ" />
+                            break;
+                        default:
+                                <span>Контрол не задан</span>
+                            break;
+                    }
+                </div>
+            </div>
+        }
     </div>
-    <div>
-        @Html.TextBoxFor(x => x.Title, new { placeholder = "Введите название опроса" })
+    <div class="add-question round-border">
+        <button type="submit" asp-controller="Surveys" asp-action="AddQuestion">Добавить вопрос</button>
     </div>
     <div class="actions">
         <button class="save-button" type="submit">Сохранить</button>
