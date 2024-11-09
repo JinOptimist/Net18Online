@@ -303,7 +303,8 @@ namespace WebPortalEverthing.Controllers
             {
                 SurveyGroup = selectedSurveyGroup,
                 IdStatus = 1, // Пока такой хардкод, пока не сделана связка между таблицами
-                Title = surveyCreate.Title
+                Title = surveyCreate.Title,
+                Description = surveyCreate.Description
             };
             _surveysRepository.Add(survey);
 
