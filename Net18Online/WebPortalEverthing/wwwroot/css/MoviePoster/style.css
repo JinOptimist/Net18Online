@@ -90,12 +90,13 @@ header .name {
 }
 
 .movie .image-container {
-	height: auto;
+	height: 230px;
 	display: flex;
 	align-items: flex-end;
 }
 
 .movie .image-container img {
+	height: 100%;
 	margin: auto;
 	width: 150px;
 

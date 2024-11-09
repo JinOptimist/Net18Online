@@ -9,6 +9,6 @@ namespace Everything.Data.Models
     public class EcologyData : BaseModel, IEcologyData
     {
         public string ImageSrc { get; set; }
-        //List<string> Text { get; set; }
+        public string Text { get; set; }
     }
 }
