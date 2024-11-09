@@ -296,6 +296,11 @@ namespace WebPortalEverthing.Controllers
         [HttpPost]
         public ActionResult Create(SurveyCreateViewModel surveyCreate)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(surveyCreate);
+            }
+
             var selectedSurveyGroup = _surveyGroupRepository
                 .Get(surveyCreate.SurveyGroup.Id);
 
