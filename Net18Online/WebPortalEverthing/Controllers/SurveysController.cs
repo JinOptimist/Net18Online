@@ -339,7 +339,7 @@ namespace WebPortalEverthing.Controllers
         }
 
         [HttpPost]
-        public ActionResult DeleteQuestion(SurveyCreateViewModel surveyCreate)
+        public ActionResult DeleteQuestion(SurveyCreateViewModel surveyCreate, Guid guidQuestion)
         {
             return View(surveyCreate);
         }

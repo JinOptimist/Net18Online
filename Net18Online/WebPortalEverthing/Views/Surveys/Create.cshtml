@@ -31,43 +31,11 @@
     <div class="questions">
         @foreach (var question in Model.Questions)
         {
-            <div class="question round-border">
-                <div class="answer-option">
-                    <div>
-                        <select name="AnswerType">
-                            <option value="@AnswerType.TextString">Текст (строка)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label>
-                            Обязательный вопрос
-                            @Html.CheckBox(nameof(question.IsRequired), question.IsRequired)
-                        </label>
-                    </div>
-                    <div>
-                        <button type="submit" asp-controller="Surveys" asp-action="DeleteQuestion">Удалить</button>
-                    </div>
-                </div>
-                <hr>
-                <div class="title">
-                    <input type="text" name="Title" value="@question.Title" />
-                </div>
-                <div>
-                    @switch (question.AnswerType)
-                    {
-                        case AnswerType.TextString:
-                                <input type="text" value="Краткий ответ" />
-                            break;
-                        default:
-                                <span>Контрол не задан</span>
-                            break;
-                    }
-                </div>
-            </div>
+            @Html.Partial("Question", question)
         }
     </div>
     <div class="add-question round-border">
-        <button type="submit" asp-controller="Surveys" asp-action="AddQuestion">Добавить вопрос</button>
+        <button type="submit" asp-action="AddQuestion">Добавить вопрос</button>
     </div>
     <div class="actions">
         <button class="save-button" type="submit">Сохранить</button>

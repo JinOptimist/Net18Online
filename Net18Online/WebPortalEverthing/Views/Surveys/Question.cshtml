@@ -1,0 +1,40 @@
+﻿@using Everything.Data.Interface.Enums
+@using WebPortalEverthing.Models.Surveys
+
+@model QuestionViewModel
+
+<div class="question round-border">
+    @Html.HiddenFor(x => x.Id)
+    <div class="answer-option">
+        <div>
+            <select name="AnswerType">
+                <option value="@AnswerType.TextString">Текст (строка)</option>
+            </select>
+        </div>
+        <div>
+        <label>
+            Обязательный вопрос
+            @Html.CheckBoxFor(x => x.IsRequired)
+        </label>
+        </div>
+        <div>
+            <button type="submit" asp-action="DeleteQuestion" asp-route-data-surveyCreate="@Model" asp-route-guidQuestion="@Model.Id">Удалить</button>
+        </div>
+    </div>
+    <hr>
+    <div class="title">
+        @Html.TextBoxFor(x => x.Title)
+        @Html.ValidationMessageFor(x => x.Title)
+    </div>
+    <div>
+        @switch (Model.AnswerType)
+        {
+            case AnswerType.TextString:
+                    <input type="text" value="Краткий ответ" />
+                break;
+            default:
+                    <span>Контрол не задан</span>
+                break;
+        }
+    </div>
+</div>
