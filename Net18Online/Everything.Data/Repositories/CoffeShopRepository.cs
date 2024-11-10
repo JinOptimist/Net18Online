@@ -3,103 +3,57 @@ using Everything.Data.Models;
 
 namespace Everything.Data.Repositories
 {
-    public interface IKeyCoffeShopRepository : ICoffeShopRepository<CoffeData> { }
+	public interface IKeyCoffeShopRepository : ICoffeShopRepository<CoffeData>
+	{
+	}
 
-    public class CoffeShopRepository : IKeyCoffeShopRepository
-    {
-        private WebDbContext _webDbContext;
+	public class CoffeShopRepository : BaseRepository<CoffeData>, IKeyCoffeShopRepository
+	{
+		public CoffeShopRepository(WebDbContext webDbContext) : base(webDbContext)
+		{
+		}
 
-        public CoffeShopRepository(WebDbContext webDbContext)
-        {
-            _webDbContext = webDbContext;
-        }
+        public IEnumerable<CoffeData> GetCoffeByName(string name)
+		{
+			return _dbSet
+				.Where(x => x.Coffe == name)
+				.ToList();
+		}
 
-        public void Add(CoffeData data)
-        {
-            _webDbContext.Add(data);
-            _webDbContext.SaveChanges();
-        }
+		public void UpdateCoffeName(int id, string name)
+		{
 
-        public bool Any()
-        {
-            return _webDbContext.Coffe.Any();
-        }
+			var item = _dbSet.First(x => x.Id == id);
 
-        public void Delete(CoffeData data)
-        {
-            _webDbContext.Coffe.Remove(data);
-            _webDbContext.SaveChanges();
-        }
+			item.Coffe = name;
 
-        public void Delete(int id)
-        {
-            Delete(Get(id));
-        }
+			_webDbContext.SaveChanges();
+		}
 
-        public CoffeData? Get(int id)
-        {
-            return _webDbContext
-                .Coffe
-                .FirstOrDefault(x => x.Id == id);
-        }
+		public void UpdateCost(int id, decimal cost)
+		{
 
-        public IEnumerable<CoffeData> GetAll()
-        {
-            return SerializeObject().ToList();
-        }
+			var item = _dbSet.First(x => x.Id == id);
 
-        private IQueryable<CoffeData> SerializeObject()
-        {
-            return _webDbContext
-                .Coffe
-                .Where(x => !string.IsNullOrEmpty(x.Url));
-        }
+			item.Cost = cost;
 
-        public void UpdateBrand(int id, string brand)
-        {
-            var item = _webDbContext
-                .Coffe
-                .FirstOrDefault(x => x.Id == id);
+			_webDbContext.SaveChanges();
+		}
 
-            item.Brand = brand;
+		public void UpdateImage(int id, string url)
+		{
 
-            _webDbContext.SaveChanges();
-        }
+			var item = _dbSet.First(x => x.Id == id);
 
-        public void UpdateCoffeName(int id, string name)
-        {
+			item.Url = url;
 
-            var item = _webDbContext
-                .Coffe
-                .FirstOrDefault(x => x.Id == id);
+			_webDbContext.SaveChanges();
+		}
 
-            item.Coffe = name;
-
-            _webDbContext.SaveChanges();
-        }
-
-        public void UpdateCost(int id, decimal cost)
-        {
-
-            var item = _webDbContext
-                .Coffe
-                .FirstOrDefault(x => x.Id == id);
-
-            item.Cost = cost;
-
-            _webDbContext.SaveChanges();
-        }
-
-        public void UpdateImage(int id, string url)
-        {
-
-            var item = _webDbContext
-                .Coffe
-                .FirstOrDefault(x => x.Id == id);
-
-            item.Url = url;
-
-            _webDbContext.SaveChanges();
-        }
-    }
+		private IQueryable<CoffeData> SerializeObject()
+		{
+			return _dbSet
+				.Where(x => !string.IsNullOrEmpty(x.Url));
+		}
+	}
 }

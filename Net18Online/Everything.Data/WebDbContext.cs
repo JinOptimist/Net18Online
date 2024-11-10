@@ -1,13 +1,14 @@
 ﻿using Everything.Data.Models;
+using Everything.Data.Models.Surveys;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
+//using Microsoft.Identity.Client;
 
 namespace Everything.Data
 {
     public class WebDbContext : DbContext
     {
         public const string CONNECTION_STRING = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=\"Net18Online\";Integrated Security=True;";
-
+        //public const string CONNECTION_STRING = "Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=12345;";
         public DbSet<GirlData> Girls { get; set; }
 
         public DbSet<MangaData> Mangas { get; set; }
@@ -18,6 +19,7 @@ namespace Everything.Data
 
         public DbSet<EcologyData> Ecologies { get; set; }
 
+        public DbSet<MovieData> Movies { get; set; }
         #region ServiceCenter
         public DbSet<TypeOfApplianceData> TypeOfAppliances { get; set; }
         public DbSet<ProducerData> Producers { get; set; }
@@ -29,7 +31,13 @@ namespace Everything.Data
 
         public DbSet<CoffeData> Coffe { get; set; }
 
+        public DbSet<BrandData> Brands { get; set; }
+
         public DbSet<MetricData> Metrics { get; set; } // Описание таблицы с метриками
+
+        public DbSet<StatusData> Statuses { get; set; }
+        public DbSet<SurveyData> Surveys { get; set; }
+        public DbSet<SurveyGroupData> SurveyGroups { get; set; }
 
         public WebDbContext() { }
 
@@ -52,7 +60,16 @@ namespace Everything.Data
                 .WithOne(x => x.Manga)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<SurveyGroupData>()
+                .HasMany(x => x.Surveys)
+                .WithOne(x => x.SurveyGroup)
+                .OnDelete(DeleteBehavior.NoAction);
 
+
+            modelBuilder.Entity<BrandData>()
+                .HasMany(x => x.Coffe)
+                .WithOne(x => x.Brand)
+                .OnDelete(DeleteBehavior.NoAction);
 
 
 

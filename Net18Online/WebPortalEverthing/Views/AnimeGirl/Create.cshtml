@@ -7,9 +7,19 @@
 <form method="post">
     <div>
         @Html.TextBoxFor(x => x.Name, new { placeholder = "Введи имя" })
+        @Html.ValidationMessageFor(x => x.Name)
     </div>
     <div>
         @Html.TextBoxFor(x => x.Url, new { placeholder = "Введи путь к картинке" })
+        @Html.ValidationMessageFor(x => x.Url)
+    </div>
+    <div>
+        @Html.TextBoxFor(x => x.Height, new { placeholder = "Рост", @type = "number" })
+        @Html.ValidationMessageFor(x => x.Height)
+    </div>
+    <div>
+        @Html.TextBoxFor(x => x.Weight, new { placeholder = "Вес", @type = "number" })
+        @Html.ValidationMessageFor(x => x.Weight)
     </div>
     <button type="submit">Создать</button>
 </form>

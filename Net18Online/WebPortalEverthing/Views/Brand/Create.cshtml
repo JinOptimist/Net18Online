@@ -1,0 +1,15 @@
+﻿@model WebPortalEverthing.Models.Brand.CreateBrandViewModel
+@{
+    Layout = "~/Views/Shared/CoffeLayout/_LayoutCoffe.cshtml";
+}
+
+
+<form method="post">
+    <div>
+        @Html.TextBoxFor(x => x.Name, new { placeholder = "Название" })
+    </div>
+    <div>
+        @Html.TextBoxFor(x => x.Company, new { placeholder = "Компания владелец" })
+    </div>
+    <button type="submit"> создать </button>
+</form>

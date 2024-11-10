@@ -7,6 +7,8 @@ namespace Everything.Data.Repositories
     public interface IAnimeGirlRepositoryReal : IAnimeGirlRepository<GirlData>
     {
         IEnumerable<GirlData> GetWithoutManga();
+        bool HasSimilarName(string name);
+        bool IsNameUniq(string name);
     }
 
     public class AnimeGirlRepository : BaseRepository<GirlData>, IAnimeGirlRepositoryReal
@@ -28,6 +30,16 @@ namespace Everything.Data.Repositories
             return _dbSet
                 .Where(x => x.Manga == null)
                 .ToList();
+        }
+
+        public bool HasSimilarName(string name)
+        {
+            return _dbSet.Any(x => x.Name.StartsWith(name) || name.StartsWith(x.Name));
+        }
+
+        public bool IsNameUniq(string name)
+        {
+            return !_dbSet.Any(x => x.Name == name);
         }
 
         public void UpdateImage(int id, string url)

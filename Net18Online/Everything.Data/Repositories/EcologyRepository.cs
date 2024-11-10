@@ -8,68 +8,20 @@ namespace Everything.Data.Repositories
     {
     }
 
-    public class EcologyRepository : IEcologyRepositoryReal
+    public class EcologyRepository : BaseRepository<EcologyData>, IEcologyRepositoryReal
     {
-        private WebDbContext _webDbContext;
-
-        public EcologyRepository(WebDbContext webDbContext)
+        public EcologyRepository(WebDbContext webDbContext) : base(webDbContext)
         {
-            _webDbContext = webDbContext;
-        }
-        
-        public void Add(EcologyData data)
-        {
-            _webDbContext.Add(data);
-            _webDbContext.SaveChanges();
         }
 
-        public bool Any()
+        public void UpdatePost(int id, string url, string text)
         {
-            return _webDbContext.Ecologies.Any();
-        }
-
-        public void Delete(EcologyData data)
-        {
-            _webDbContext.Ecologies.Remove(data);
-            _webDbContext.SaveChanges();
-        }
-
-        public void Delete(int id)
-        {
-            var data = Get(id);
-            Delete(data);
-        }
-
-        public EcologyData? Get(int id)
-        {
-            return _webDbContext.Ecologies.FirstOrDefault(x => x.Id == id);
-        }
-        
-        public IEnumerable<EcologyData> GetAll()
-        {
-            return _webDbContext
-                    .Ecologies
-                    .Where(x => !string.IsNullOrEmpty(x.ImageSrc))
-                    .ToList();
-        }
-
-        public void UpdateImage(int id, string url)
-        {
-            var ecology = _webDbContext.Ecologies.First(x => x.Id == id);
+            var ecology = _dbSet.First(e => e.Id == id); 
 
             ecology.ImageSrc = url;
-
+            ecology.Text = text; 
+                
             _webDbContext.SaveChanges();
         }
-
-        /*public void UpdatePost(int id, string url, string text)
-        { 
-            var ecology = _ecologies.FirstOrDefault(e => e.Id == id); 
-            if (ecology != null) 
-            { 
-                ecology.ImageSrc = url;
-                ecology.Texts = new List<string> { text }; 
-            } 
-        }*/
     }
 }    

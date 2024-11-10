@@ -2,7 +2,8 @@
 
 namespace Everything.Data.Interface.Repositories
 {
-    public interface ISurveysRepository : IBaseRepository<ISurveyData>
+    public interface ISurveysRepository<T> : IBaseRepository<T>
+        where T : ISurveyData
     {
     }
 }
