@@ -4,58 +4,24 @@ using System.Text.Json;
 
 namespace Everything.Data.Repositories
 {
-    public interface ITypeOfApplianceRepositoryReal : ITypeOfApplianceRepository<TypeOfApplianceData>
+    public interface ITypeOfApplianceRepositoryReal : IBaseRepository<TypeOfApplianceData>
     {
+        IEnumerable<TypeOfApplianceData> GetTypeOfAppliancesByName(string name);
+        void LoadDataFromJson(string filePath);
+        void SaveDataToJson(string filePath);
+        void UpdateImage(int id, string url);
+        void UpdateName(int id, string newName);
     }
 
-    public class TypeOfApplianceRepository : ITypeOfApplianceRepositoryReal
+    public class TypeOfApplianceRepository : BaseRepository<TypeOfApplianceData>, ITypeOfApplianceRepositoryReal
     {
-        private readonly WebDbContext _webDbContext;
-
-        public TypeOfApplianceRepository(WebDbContext webDbContext)
+        public TypeOfApplianceRepository(WebDbContext webDbContext) : base(webDbContext)
         {
-            _webDbContext = webDbContext;
-        }
-
-        public void Add(TypeOfApplianceData data)
-        {
-            _webDbContext.TypeOfAppliances.Add(data);
-            _webDbContext.SaveChanges();
-        }
-
-        public bool Any()
-        {
-            return _webDbContext.TypeOfAppliances.Any();
-        }
-
-        public void Delete(TypeOfApplianceData data)
-        {
-            _webDbContext.TypeOfAppliances.Remove(data);
-            _webDbContext.SaveChanges();
-        }
-
-        public void Delete(int id)
-        {
-            var data = Get(id);
-            if (data != null)
-            {
-                Delete(data);
-            }
-        }
-
-        public TypeOfApplianceData? Get(int id)
-        {
-            return _webDbContext.TypeOfAppliances.FirstOrDefault(x => x.Id == id);
-        }
-
-        public IEnumerable<TypeOfApplianceData> GetAll()
-        {
-            return _webDbContext.TypeOfAppliances.ToList();
         }
 
         public IEnumerable<TypeOfApplianceData> GetTypeOfAppliancesByName(string name)
         {
-            return _webDbContext.TypeOfAppliances
+            return _dbSet
                 .Where(x => x.Name.Contains(name))
                 .ToList();
         }
@@ -71,11 +37,10 @@ namespace Everything.Data.Repositories
                 {
                     foreach (var appliance in appliances)
                     {
-                        appliance.Id = 0;
-
-                        if (!_webDbContext.TypeOfAppliances.Any(x => x.Name == appliance.Name))
+                        appliance.Id = 0;  
+                        if (!_dbSet.Any(x => x.Name == appliance.Name))
                         {
-                            _webDbContext.TypeOfAppliances.Add(appliance);
+                            _dbSet.Add(appliance);
                         }
                     }
                     _webDbContext.SaveChanges();
@@ -85,7 +50,7 @@ namespace Everything.Data.Repositories
 
         public void SaveDataToJson(string filePath)
         {
-            var appliances = _webDbContext.TypeOfAppliances.ToList();
+            var appliances = _dbSet.ToList();
             var jsonData = JsonSerializer.Serialize(appliances, new JsonSerializerOptions { WriteIndented = true });
 
             var directory = Path.GetDirectoryName(filePath);
@@ -123,3 +88,4 @@ namespace Everything.Data.Repositories
         }
     }
 }
+

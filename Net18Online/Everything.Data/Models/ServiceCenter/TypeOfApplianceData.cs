@@ -6,5 +6,7 @@ namespace Everything.Data.Models
     {
         public string Name { get; set; }
         public string ImageSrc { get; set; }
+
+        public virtual List<ModelData> ModelsOnType { get; set; } = new List<ModelData>();
     }
 }
