@@ -1,0 +1,17 @@
+﻿@using WebPortalEverything.Models.ServiceCenter
+@model CreateProducerViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutServiceCenter.cshtml";
+}
+
+<h2>Создать нового продюсера</h2>
+
+<form method="post" enctype="multipart/form-data">
+    <div>
+        @Html.LabelFor(x => x.ProducerName, "Имя производителя:")
+        @Html.TextBoxFor(x => x.ProducerName, new { placeholder = "Введите имя производителя" })
+        @Html.ValidationMessageFor(x => x.ProducerName)
+    </div>
+    <button type="submit">Создать</button>
+</form>

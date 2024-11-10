@@ -1,0 +1,38 @@
+﻿@using WebPortalEverything.Models.ServiceCenter
+@model WebPortalEverything.Models.ServiceCenter.IndexProducerViewModel
+
+@{
+    ViewBag.Title = "All Producers";
+    Layout = "~/Views/Shared/_LayoutServiceCenter.cshtml";
+}
+
+<div>
+    <h1>Producers</h1>
+    <div class="producers">
+        @foreach (var producer in Model.Producers)
+        {
+            <div class="producer">
+                <div class="name">
+                    @producer.ProducerName
+                    <form action="/Producer/UpdateProducerName" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to update the producer name?');">
+                        <input type="hidden" name="id" value="@producer.Id" />
+                        <input type="text" name="newProducerName" placeholder="New Producer Name" />
+                        <button type="submit">Update Name</button>
+                    </form>
+                </div>
+
+                <div class="models">
+                    <h4>Models:</h4>
+                    <ul>
+                        @foreach (var model in producer.Models)
+                        {
+                            <li>
+                                <span>model.Name</span> (Type: model.TypeName)
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -25,6 +25,7 @@ builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(WebDbContext.CON
 
 // Register in DI container services/repository for ServiceCenter
 builder.Services.AddScoped<ITypeOfApplianceRepositoryReal, TypeOfApplianceRepository>();
+builder.Services.AddScoped<IProducerRepositoryReal, ProducerRepository>();
 
 builder.Services.AddSingleton<IGameStoreRepository, GameStoreRepository>();
 builder.Services.AddSingleton<IDNDRepository, DNDRepository>();
