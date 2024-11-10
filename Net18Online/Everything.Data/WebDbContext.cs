@@ -15,6 +15,8 @@ namespace Everything.Data
 
         public DbSet<GameData> Games { get; set; }
 
+        public DbSet<GameStudiosData> Studios { get; set; }
+
         public DbSet<UserData> Users { get; set; }
 
         public DbSet<EcologyData> Ecologies { get; set; }
@@ -26,7 +28,7 @@ namespace Everything.Data
         public DbSet<ModelData> Models { get; set; }
         public DbSet<ClientData> Clients { get; set; }
         #endregion
-        
+
         public DbSet<CakeData> Cakes { get; set; }
 
         public DbSet<CoffeData> Coffe { get; set; }
@@ -69,6 +71,11 @@ namespace Everything.Data
             modelBuilder.Entity<BrandData>()
                 .HasMany(x => x.Coffe)
                 .WithOne(x => x.Brand)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<GameStudiosData>()
+                .HasMany(x => x.Games)
+                .WithOne(x => x.Studios)
                 .OnDelete(DeleteBehavior.NoAction);
 
 

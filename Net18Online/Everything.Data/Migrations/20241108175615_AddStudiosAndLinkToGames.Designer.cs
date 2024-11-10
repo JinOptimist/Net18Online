@@ -4,6 +4,7 @@ using Everything.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Everything.Data.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    partial class WebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241108175615_AddStudiosAndLinkToGames")]
+    partial class AddStudiosAndLinkToGames
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,7 +43,7 @@ namespace Everything.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Brands", (string)null);
+                    b.ToTable("Brands");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.CakeData", b =>
@@ -67,7 +70,7 @@ namespace Everything.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cakes", (string)null);
+                    b.ToTable("Cakes");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.ClientData", b =>
@@ -147,7 +150,7 @@ namespace Everything.Data.Migrations
 
                     b.HasIndex("BrandId");
 
-                    b.ToTable("Coffe", (string)null);
+                    b.ToTable("Coffe");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.EcologyData", b =>
@@ -168,7 +171,7 @@ namespace Everything.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Ecologies", (string)null);
+                    b.ToTable("Ecologies");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.GameData", b =>
@@ -194,7 +197,7 @@ namespace Everything.Data.Migrations
 
                     b.HasIndex("StudiosId");
 
-                    b.ToTable("Games", (string)null);
+                    b.ToTable("Games");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.GameStudiosData", b =>
@@ -215,7 +218,7 @@ namespace Everything.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Studios", (string)null);
+                    b.ToTable("Studios");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.GirlData", b =>
@@ -241,7 +244,7 @@ namespace Everything.Data.Migrations
 
                     b.HasIndex("MangaId");
 
-                    b.ToTable("Girls", (string)null);
+                    b.ToTable("Girls");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.MangaData", b =>
@@ -262,7 +265,7 @@ namespace Everything.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Mangas", (string)null);
+                    b.ToTable("Mangas");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.MetricData", b =>
@@ -288,7 +291,7 @@ namespace Everything.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Metrics", (string)null);
+                    b.ToTable("Metrics");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.ModelData", b =>
@@ -336,7 +339,7 @@ namespace Everything.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Movies", (string)null);
+                    b.ToTable("Movies");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.ProducerData", b =>
@@ -374,7 +377,7 @@ namespace Everything.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Statuses", (string)null);
+                    b.ToTable("Statuses");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.Surveys.SurveyData", b =>
@@ -399,7 +402,7 @@ namespace Everything.Data.Migrations
 
                     b.HasIndex("SurveyGroupId");
 
-                    b.ToTable("Surveys", (string)null);
+                    b.ToTable("Surveys");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.Surveys.SurveyGroupData", b =>
@@ -416,7 +419,7 @@ namespace Everything.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SurveyGroups", (string)null);
+                    b.ToTable("SurveyGroups");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.TypeOfApplianceData", b =>
@@ -461,7 +464,7 @@ namespace Everything.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.CoffeData", b =>

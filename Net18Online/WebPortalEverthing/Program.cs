@@ -11,6 +11,7 @@ using EcologyRepository = Everything.Data.Repositories.EcologyRepository;
 using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRepository;
 using Everything.Data.Models;
 using Everything.Data.Repositories.Surveys;
+using GameStoreRepository = Everything.Data.Repositories.GameStoreRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +27,6 @@ builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(WebDbContext.CON
 // Register in DI container services/repository for ServiceCenter
 builder.Services.AddScoped<ITypeOfApplianceRepositoryReal, TypeOfApplianceRepository>();
 
-builder.Services.AddSingleton<IGameStoreRepository, GameStoreRepository>();
 builder.Services.AddSingleton<IDNDRepository, DNDRepository>();
 
 builder.Services.AddScoped<IMoviePosterRepositoryReal, MoviePosterRepository>();
@@ -41,7 +41,8 @@ builder.Services.AddScoped<IAnimeGirlRepositoryReal, AnimeGirlRepository>();
 builder.Services.AddScoped<ISurveyGroupRepositoryReal, SurveyGroupRepository>();
 builder.Services.AddScoped<IStatusRepositoryReal, StatusRepository>();
 builder.Services.AddScoped<ISurveysRepositoryReal, SurveysRepository>();
-
+builder.Services.AddScoped<IGameStoreRepositoryReal, GameStoreRepository>();
+builder.Services.AddScoped<IGameStudiosRepositoryReal, GameStudiosRepository>();
 builder.Services.AddScoped<ICakeRepositoryReal, CakeRepository>();
 
 builder.Services.AddScoped<TextProvider>();
