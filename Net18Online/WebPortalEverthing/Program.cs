@@ -46,6 +46,7 @@ builder.Services.AddScoped<ISurveysRepositoryReal, SurveysRepository>();
 builder.Services.AddScoped<ICakeRepositoryReal, CakeRepository>();
 
 builder.Services.AddScoped<ILoadTestingRepositoryReal, LoadTestingRepository>();
+builder.Services.AddScoped<ILoadVolumeTestingRepositoryReal, LoadVolumeTestingRepository>();
 
 builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();

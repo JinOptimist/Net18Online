@@ -54,5 +54,32 @@ namespace WebPortalEverthing.Controllers.LoadTesting
 
             return View(viewModel);
         }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(CreateLoadVolumeModel viewModel)
+        {
+            var loadVolumeData = new LoadVolumeTestingData
+            {
+                Title = viewModel.Title,
+                Description = viewModel.Description
+            };
+
+            _loadVolumeTestingRepositoryReal.Add(loadVolumeData);
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult LinkLoadVolumeAndMetric(int loadVolumeId, int metricId)
+        {
+            _loadVolumeTestingRepositoryReal.LinkMetric(loadVolumeId, metricId);
+            return RedirectToAction("Index");
+        }
     }
 }
