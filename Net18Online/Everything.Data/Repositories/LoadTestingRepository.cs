@@ -6,37 +6,16 @@ namespace Everything.Data.Repositories
 {
     public interface ILoadTestingRepositoryReal : ILoadTestingRepository<MetricData>
     {
+        IEnumerable<MetricData> GetWithoutVolumeLoad();
+        bool HasSimilarName(string name);
+        bool IsNameUniq(string name);
     }
-    public class LoadTestingRepository : ILoadTestingRepositoryReal
+    public class LoadTestingRepository : BaseRepository<MetricData>, ILoadTestingRepositoryReal
     {
-        private WebDbContext _webDbContext;
+        //     private WebDbContext _webDbContext; у родителя теперь
 
-        public LoadTestingRepository(WebDbContext webDbContext)
+        public LoadTestingRepository(WebDbContext webDbContext) : base(webDbContext)
         {
-            _webDbContext = webDbContext;
-        }
-
-        public void Add(MetricData data)
-        {
-            _webDbContext.Add(data);
-            _webDbContext.SaveChanges();
-        }
-
-        public bool Any()
-        {
-            return _webDbContext.Metrics.Any();
-        }
-
-        public void Delete(MetricData data)
-        {
-            _webDbContext.Metrics.Remove(data);
-            _webDbContext.SaveChanges();
-        }
-
-        public void Delete(int id)
-        {
-            var data = Get(id);
-            Delete(data);
         }
 
         public void DeleteByGuid(Guid Guid)
@@ -45,19 +24,9 @@ namespace Everything.Data.Repositories
             Delete(data);
         }
 
-        public MetricData? Get(int id)
-        {
-            return _webDbContext.Metrics.FirstOrDefault(x => x.Id == id);
-        }
-
         public MetricData? Get(Guid Guid)
         {
-            return _webDbContext.Metrics.FirstOrDefault(x => x.Guid == Guid);
-        }
-
-        public IEnumerable<MetricData> GetAll()
-        {
-            return GetFinilizeMetric().ToList();
+            return _dbSet.FirstOrDefault(x => x.Guid == Guid);
         }
 
         public IEnumerable<MetricData> GetMostLoaded()
@@ -70,7 +39,7 @@ namespace Everything.Data.Repositories
 
         public void UpdateThroughputByGuid(Guid Guid, decimal Throughput)
         {
-            var Metric = _webDbContext.Metrics.First(x => x.Guid == Guid);
+            var Metric = _dbSet.First(x => x.Guid == Guid);
 
             Metric.Throughput = Throughput;
 
@@ -79,7 +48,7 @@ namespace Everything.Data.Repositories
 
         public void UpdateThroughputById(int Id, decimal Throughput)
         {
-            var Metric = _webDbContext.Metrics.First(x => x.Id == Id);
+            var Metric = _dbSet.First(x => x.Id == Id);
 
             Metric.Throughput = Throughput;
 
@@ -88,7 +57,7 @@ namespace Everything.Data.Repositories
 
         public void UpdateAverageByGuid(Guid Guid, decimal Average)
         {
-            var Metric = _webDbContext.Metrics.First(x => x.Guid == Guid);
+            var Metric = _dbSet.First(x => x.Guid == Guid);
 
             Metric.Average = Average;
 
@@ -97,7 +66,7 @@ namespace Everything.Data.Repositories
 
         public void UpdateAverageById(int Id, decimal Average)
         {
-            var Metric = _webDbContext.Metrics.First(x => x.Id == Id);
+            var Metric = _dbSet.First(x => x.Id == Id);
 
             Metric.Average = Average;
 
@@ -105,7 +74,7 @@ namespace Everything.Data.Repositories
         }
         public void UpdateNameById(int id, string newName)
         {
-            var Metric = _webDbContext.Metrics.First(x => x.Id == id);
+            var Metric = _dbSet.First(x => x.Id == id);
 
             Metric.Name = newName;
 
@@ -114,7 +83,7 @@ namespace Everything.Data.Repositories
 
         public void UpdateNameByGuid(Guid Guid, string newName)
         {
-            var Metric = _webDbContext.Metrics.First(x => x.Guid == Guid);
+            var Metric = _dbSet.First(x => x.Guid == Guid);
 
             Metric.Name = newName;
 
@@ -127,5 +96,23 @@ namespace Everything.Data.Repositories
                 .Metrics
                 .Where(x => !string.IsNullOrEmpty(x.Name));
         }
+
+        public IEnumerable<MetricData> GetWithoutVolumeLoad()
+        {
+            return _dbSet
+                .Where(x => x.LoadVolumeTesting == null)
+                .ToList();
+        }
+
+        public bool HasSimilarName(string name)
+        {
+            return _dbSet.Any(x => x.Name.StartsWith(name) || name.StartsWith(x.Name));
+        }
+
+        public bool IsNameUniq(string name)
+        {
+            return !_dbSet.Any(x => x.Name == name);
+        }
+
     }
 }

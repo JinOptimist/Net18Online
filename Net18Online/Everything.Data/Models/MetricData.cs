@@ -10,5 +10,7 @@ namespace Everything.Data.Models
         public string Name { get; set; }
         public decimal Throughput { get; set; }
         public decimal Average { get; set; }
+
+        public virtual LoadVolumeTestingData? LoadVolumeTesting { get; set; }
     }
 }
