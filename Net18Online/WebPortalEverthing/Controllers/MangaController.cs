@@ -70,14 +70,14 @@ namespace WebPortalEverthing.Controllers
 
             _mangaRepositoryReal.Add(manga);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexLoadVolume");
         }
 
         [HttpPost]
         public IActionResult LinkGirlAndManga(int mangaId, int girlId)
         {
             _mangaRepositoryReal.LinkGirl(mangaId, girlId);
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexLoadVolume");
         }
     }
 }

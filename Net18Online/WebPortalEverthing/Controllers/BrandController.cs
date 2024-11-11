@@ -73,14 +73,14 @@ namespace WebPortalEverthing.Controllers
 
 
             _brandRepositoryReal.Add(brand);
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexLoadVolume");
         }
 
         [HttpPost]
         public IActionResult LinkCoffeAndBrand(int brandId, int coffeId)
         {
             _brandRepositoryReal.LinkCoffe(brandId, coffeId);
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexLoadVolume");
         }
     }
 }

@@ -66,13 +66,13 @@ namespace WebPortalEverthing.Controllers
             };
 
             _gameStudiosRepository.Add(studios);
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexLoadVolume");
         }
         [HttpPost]
         public IActionResult LinkGameAndStudio(int studioId, int gameId)
         {
             _gameStudiosRepository.LinkGame(studioId, gameId);
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexLoadVolume");
         }
     }
 }

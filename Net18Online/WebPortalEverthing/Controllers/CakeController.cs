@@ -59,18 +59,18 @@ namespace WebPortalEverthing.Controllers
 
             _cakeRepository.Add(cake);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexLoadVolume");
         }
         public IActionResult UpdateDescription(int id, string newDescription)
         {
             _cakeRepository.UpdateDescription(id, newDescription);
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexLoadVolume");
         }
 
         public IActionResult Remove(int id)
         {
             _cakeRepository.Delete(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexLoadVolume");
         }
     }
 }

@@ -70,31 +70,31 @@ namespace WebPortalEverthing.Controllers
 
             _coffeShopRepository.Add(coffe);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexLoadVolume");
         }
 
         public IActionResult Delete(int id)
         {
             _coffeShopRepository.Delete(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexLoadVolume");
         }
 
         public IActionResult UpdateCoffe(int id, string name)
         {
             _coffeShopRepository.UpdateCoffeName(id, name);
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexLoadVolume");
         }
 
         public IActionResult UpdateCost(int id, decimal cost)
         {
             _coffeShopRepository.UpdateCost(id, cost);
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexLoadVolume");
         }
 
         public IActionResult UpdateUrl(int id, string url)
         {
             _coffeShopRepository.UpdateImage(id, url);
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexLoadVolume");
         }
     }
 }
