@@ -12,6 +12,7 @@ using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRe
 using Everything.Data.Models;
 using Everything.Data.Repositories.Surveys;
 using GameStoreRepository = Everything.Data.Repositories.GameStoreRepository;
+using LoadTestingRepository = Everything.Data.Repositories.LoadTestingRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,11 +46,13 @@ builder.Services.AddScoped<IGameStoreRepositoryReal, GameStoreRepository>();
 builder.Services.AddScoped<IGameStudiosRepositoryReal, GameStudiosRepository>();
 builder.Services.AddScoped<ICakeRepositoryReal, CakeRepository>();
 
+builder.Services.AddScoped<ILoadTestingRepositoryReal, LoadTestingRepository>();
+builder.Services.AddScoped<ILoadVolumeTestingRepositoryReal, LoadVolumeTestingRepository>();
+
 builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();
 builder.Services.AddSingleton<IChessPartiesRepository, ChessPartiesRepository>();
 
-builder.Services.AddSingleton<ILoadTestingRepository, LoadTestingRepository>();
 builder.Services.AddSingleton<IGameLifeRepository, GameLifeRepository>();
 
 var app = builder.Build();

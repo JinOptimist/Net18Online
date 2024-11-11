@@ -1,6 +1,4 @@
-﻿using WebPortalEverthing.Models.Brand;
-
-namespace WebPortalEverthing.Models.CoffeShop
+﻿namespace WebPortalEverthing.Models.CoffeShop
 {
     public class CoffeViewModel
     {
