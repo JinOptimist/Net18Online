@@ -11,7 +11,6 @@ namespace Everything.Data.Repositories
     public interface IGameStoreRepositoryReal : IGameStoreRepository<GameData>
     {
         IEnumerable<GameData> GetWithoutOwner();
-        bool HasBannedName(string name, List<string> bannedWords);
         bool HasSimilarName(string name);
     }
     public class GameStoreRepository : BaseRepository<GameData>, IGameStoreRepositoryReal
@@ -26,20 +25,6 @@ namespace Everything.Data.Repositories
                 .Where(x => x.Studios == null).ToList();
         }
 
-        public bool HasBannedName(string name, List<string> bannedWords)
-        {
-            name = name.ToLower();
-
-            foreach (var bannedWord in bannedWords)
-            {
-                if (name == bannedWord.ToLower())
-                {
-                    return false; 
-                }
-            }
-
-            return true;
-        }
 
         public bool HasSimilarName(string name)
         {

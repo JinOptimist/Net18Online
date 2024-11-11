@@ -7,6 +7,7 @@ using Everything.Data.Interface.Repositories;
 using Everything.Data;
 using Everything.Data.Repositories;
 using WebPortalEverthing.Models.AnimeGirl;
+using WebPortalEverthing.Services;
 
 namespace WebPortalEverthing.Controllers
 {
@@ -14,6 +15,7 @@ namespace WebPortalEverthing.Controllers
     {
         private IGameStoreRepositoryReal _gameStoreRepository;
         private WebDbContext _webDbContext;
+        private CheckingForBannedNames _checkingForBannedNames = new();
         private List<string> _bannedWords = new List<string> { "admin", "root", "test" };
         public GameStoreController(IGameStoreRepositoryReal gameStoreRepository, WebDbContext webDbContext)
         {
@@ -87,7 +89,7 @@ namespace WebPortalEverthing.Controllers
                     "Слишком похожее имя");
             }
 
-            if (_gameStoreRepository.HasBannedName(viewModel.Name, _bannedWords))
+            if (_checkingForBannedNames.HasBannedName(viewModel.Name, _bannedWords))
             {
                 ModelState.AddModelError(
                     nameof(AddGameViewModel.Name),
