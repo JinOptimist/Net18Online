@@ -34,6 +34,7 @@ namespace Everything.Data
         public DbSet<BrandData> Brands { get; set; }
 
         public DbSet<MetricData> Metrics { get; set; } // Описание таблицы с метриками
+        public DbSet<LoadVolumeTestingData> LoadVolumeTestingMetrics { get; set; } // Описание таблицы с метриками LoadVolumeTesting
 
         public DbSet<StatusData> Statuses { get; set; }
         public DbSet<SurveyData> Surveys { get; set; }
@@ -80,6 +81,10 @@ namespace Everything.Data
                 .WithOne(x => x.DndClass)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<LoadVolumeTestingData>()
+               .HasMany(x => x.VolumeMetrics)
+               .WithOne(x => x.LoadVolumeTesting)
+               .OnDelete(DeleteBehavior.NoAction);
 
 
 

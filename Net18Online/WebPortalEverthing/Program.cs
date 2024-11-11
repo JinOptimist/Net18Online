@@ -12,6 +12,7 @@ using EcologyRepository = Everything.Data.Repositories.EcologyRepository;
 using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRepository;
 using Everything.Data.Models;
 using Everything.Data.Repositories.Surveys;
+using LoadTestingRepository = Everything.Data.Repositories.LoadTestingRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +45,9 @@ builder.Services.AddScoped<ISurveysRepositoryReal, SurveysRepository>();
 
 builder.Services.AddScoped<ICakeRepositoryReal, CakeRepository>();
 
+builder.Services.AddScoped<ILoadTestingRepositoryReal, LoadTestingRepository>();
+builder.Services.AddScoped<ILoadVolumeTestingRepositoryReal, LoadVolumeTestingRepository>();
+
 builder.Services.AddScoped<IDndClassRepositoryReal, DndClassRepository>();
 builder.Services.AddScoped<IDndSubClassRepositoryReal, DndSubClassRepository>();
 
@@ -51,7 +55,6 @@ builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();
 builder.Services.AddSingleton<IChessPartiesRepository, ChessPartiesRepository>();
 
-builder.Services.AddSingleton<ILoadTestingRepository, LoadTestingRepository>();
 builder.Services.AddSingleton<IGameLifeRepository, GameLifeRepository>();
 
 var app = builder.Build();
