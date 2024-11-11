@@ -82,6 +82,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=IndexLoadVolume}/{id?}");
+    pattern: "{controller=Home}/{action=IndexLoadVolumeView}/{id?}");
 
 app.Run();

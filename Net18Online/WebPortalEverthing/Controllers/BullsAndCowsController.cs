@@ -20,10 +20,10 @@ namespace WebPortalEverthing.Controllers
             {
                 _gameModel.NumberOfTheFirstGamer = number;
                 _gameModel.Turn = "Second";
-                return RedirectToAction("IndexLoadVolume");
+                return RedirectToAction("IndexLoadVolumeView");
             }
 
-            return View("IndexLoadVolume", _gameModel);
+            return View("IndexLoadVolumeView", _gameModel);
         }
 
         [HttpPost]
@@ -36,7 +36,7 @@ namespace WebPortalEverthing.Controllers
                 return RedirectToAction("Guess");
             }
 
-            return View("IndexLoadVolume", _gameModel);
+            return View("IndexLoadVolumeView", _gameModel);
         }
 
         [HttpGet]

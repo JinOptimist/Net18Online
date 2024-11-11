@@ -19,7 +19,7 @@ namespace WebPortalEverthing.Controllers.LoadTesting
             _metricRepositoryReal = metricRepositoryReal;
         }
 
-        public IActionResult IndexLoadVolume()
+        public IActionResult IndexLoadVolumeView()
         {
             var loadVolumeViewModels = _loadVolumeTestingRepositoryReal
                 .GetAllWithVolumeMetrics()
@@ -72,14 +72,14 @@ namespace WebPortalEverthing.Controllers.LoadTesting
 
             _loadVolumeTestingRepositoryReal.Add(loadVolumeData);
 
-            return RedirectToAction("IndexLoadVolume");
+            return RedirectToAction("IndexLoadVolumeView");
         }
 
         [HttpPost]
         public IActionResult LinkLoadVolumeAndMetric(int loadVolumeId, int metricId)
         {
             _loadVolumeTestingRepositoryReal.LinkMetric(loadVolumeId, metricId);
-            return RedirectToAction("IndexLoadVolume");
+            return RedirectToAction("IndexLoadVolumeView");
         }
     }
 }
