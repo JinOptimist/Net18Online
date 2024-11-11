@@ -23,7 +23,22 @@ namespace WebPortalEverthing.Models.CustomValidationAttrubites
                 return false;
             }
 
-            if (decimalValue < 0)
+            if (value is not int intValue)
+            {
+                return false;
+            }
+
+            if (value is not float floatValue)
+            {
+                return false;
+            }
+
+            if (value is not double doubleValue)
+            {
+                return false;
+            }
+
+            if (decimalValue <= 0 || intValue <= 0 || floatValue <= 0 || doubleValue <= 0)
             {
                 return false;
             }
