@@ -45,6 +45,7 @@ builder.Services.AddScoped<ISurveysRepositoryReal, SurveysRepository>();
 builder.Services.AddScoped<ICakeRepositoryReal, CakeRepository>();
 
 builder.Services.AddScoped<IDndClassRepositoryReal, DndClassRepository>();
+builder.Services.AddScoped<IDndSubClassRepositoryReal, DndSubClassRepository>();
 
 builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();

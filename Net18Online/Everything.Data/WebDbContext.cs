@@ -26,7 +26,7 @@ namespace Everything.Data
         public DbSet<ModelData> Models { get; set; }
         public DbSet<ClientData> Clients { get; set; }
         #endregion
-        
+
         public DbSet<CakeData> Cakes { get; set; }
 
         public DbSet<CoffeData> Coffe { get; set; }
@@ -38,6 +38,10 @@ namespace Everything.Data
         public DbSet<StatusData> Statuses { get; set; }
         public DbSet<SurveyData> Surveys { get; set; }
         public DbSet<SurveyGroupData> SurveyGroups { get; set; }
+
+        public DbSet<DndClassData> DndClasses { get; set; }
+
+        public DbSet<DndSubClassData> DndSubClasses { get; set; }
 
         public WebDbContext() { }
 
@@ -69,6 +73,11 @@ namespace Everything.Data
             modelBuilder.Entity<BrandData>()
                 .HasMany(x => x.Coffe)
                 .WithOne(x => x.Brand)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<DndClassData>()
+                .HasMany(x => x.SubClasses)
+                .WithOne(x => x.DndClass)
                 .OnDelete(DeleteBehavior.NoAction);
 
 

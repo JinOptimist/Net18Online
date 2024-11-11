@@ -6,9 +6,5 @@ namespace Everything.Data.Interface.Repositories
         where T : IDNDData
     {
         IEnumerable<T> GetMostPopular();
-
-        void UpdateName(int id, string newName);
-
-        void UpdateImage(int id, string url);
     }
 }

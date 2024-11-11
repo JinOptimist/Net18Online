@@ -25,10 +25,6 @@
                     <input name="url" />
                     <button type="submit">new image</button>
                 </form>
-                @foreach (var tag in dndClass.Tags)
-                {
-                    <span class="tag">@tag</span>
-                }
                 <a href="/DND/Remove?id=@dndClass.Id">Delete</a>
             </div>
         </div>

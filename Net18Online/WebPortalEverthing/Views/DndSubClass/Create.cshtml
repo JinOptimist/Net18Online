@@ -1,0 +1,12 @@
+﻿@model WebPortalEverthing.Models.DND.ClassCreationViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutDND.cshtml";
+}
+
+<form method="post">
+    <div>
+        @Html.TextBoxFor(x => x.Name, new { placeholder = "Введи название" })
+    </div>
+    <button type="submit">Создать</button>
+</form>

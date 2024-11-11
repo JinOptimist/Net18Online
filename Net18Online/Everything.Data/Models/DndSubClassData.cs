@@ -2,10 +2,10 @@
 
 namespace Everything.Data.Models
 {
-    public class DndClassData : BaseModel, IDNDData
+    public class DndSubClassData : BaseModel, IDndSubClassData
     {
         public string Name { get; set; }
         public string ImageSrc { get; set; }
-        public virtual List<DndSubClassData> SubClasses { get; set; } = new List<DndSubClassData>();
+        public virtual DndClassData? DndClass { get; set; }
     }
 }
