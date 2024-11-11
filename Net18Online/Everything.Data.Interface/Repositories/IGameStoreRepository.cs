@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 
 namespace Everything.Data.Interface.Repositories
 {
-    public interface IGameStoreRepository : IBaseRepository<IGameData>
+    public interface IGameStoreRepository<T> : IBaseRepository<T>
+        where T : IGameData
     {
+        void UpdateName(int id, string newName);
+
+        void UpdateImage(int id, string url);
     }
 }

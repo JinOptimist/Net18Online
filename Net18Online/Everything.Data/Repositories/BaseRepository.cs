@@ -16,35 +16,35 @@ namespace Everything.Data.Repositories
             _dbSet = webDbContext.Set<T>();
         }
 
-        public void Add(T data)
+        public virtual void Add(T data)
         {
             _webDbContext.Add(data);
             _webDbContext.SaveChanges();
         }
 
-        public bool Any()
+        public virtual bool Any()
         {
             return _dbSet.Any();
         }
 
-        public void Delete(T data)
+        public virtual void Delete(T data)
         {
             _dbSet.Remove(data);
             _webDbContext.SaveChanges();
         }
 
-        public void Delete(int id)
+        public virtual void Delete(int id)
         {
             var data = Get(id);
             Delete(data);
         }
 
-        public T? Get(int id)
+        public virtual T? Get(int id)
         {
             return _dbSet.FirstOrDefault(x => x.Id == id);
         }
 
-        public IEnumerable<T> GetAll()
+        public virtual IEnumerable<T> GetAll()
         {
             return _dbSet.ToList();
         }

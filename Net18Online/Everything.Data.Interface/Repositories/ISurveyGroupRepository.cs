@@ -5,5 +5,6 @@ namespace Everything.Data.Interface.Repositories
     public interface ISurveyGroupRepository<T> : IBaseRepository<T>
         where T : ISurveyGroupData
     {
+        bool HasSimilarTitle(string title);
     }
 }

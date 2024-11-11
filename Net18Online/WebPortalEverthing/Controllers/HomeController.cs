@@ -1,21 +1,30 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebPortalEverthing.Models;
+using WebPortalEverthing.Models.Home;
+using WebPortalEverthing.Services;
 
 namespace WebPortalEverthing.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private AuthService _authService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(AuthService authService)
         {
-            _logger = logger;
+            _authService = authService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var viewModel = new IndexViewModel();
+
+            var userName = _authService.GetName();
+
+            viewModel.UserName = userName;
+
+            return View(viewModel);
         }
 
         public IActionResult Privacy()
