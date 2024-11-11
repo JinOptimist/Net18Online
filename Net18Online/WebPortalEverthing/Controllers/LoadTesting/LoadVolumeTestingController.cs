@@ -56,13 +56,13 @@ namespace WebPortalEverthing.Controllers.LoadTesting
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult CreateloadVolumeView()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(CreateLoadVolumeModel viewModel)
+        public IActionResult CreateloadVolumeView(CreateLoadVolumeModel viewModel)
         {
             var loadVolumeData = new LoadVolumeTestingData
             {
