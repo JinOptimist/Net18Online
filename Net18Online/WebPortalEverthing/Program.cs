@@ -2,19 +2,27 @@ using Everything.Data;
 using Everything.Data.Fake.Repositories;
 using Everything.Data.Interface.Repositories;
 using Everything.Data.Repositories;
+using Everything.Data.Repositories.Surveys;
 using MazeCore.Builders;
 using Microsoft.EntityFrameworkCore;
 using SimulatorOfPrinting.Models;
+using WebPortalEverthing.Services;
 using AnimeGirlRepository = Everything.Data.Repositories.AnimeGirlRepository;
 using CoffeShopRepository = Everything.Data.Repositories.CoffeShopRepository;
 using EcologyRepository = Everything.Data.Repositories.EcologyRepository;
-using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRepository;
-using Everything.Data.Models;
-using Everything.Data.Repositories.Surveys;
 using GameStoreRepository = Everything.Data.Repositories.GameStoreRepository;
 using LoadTestingRepository = Everything.Data.Repositories.LoadTestingRepository;
+using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRepository;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services
+    .AddAuthentication(AuthService.AUTH_TYPE_KEY)
+    .AddCookie(AuthService.AUTH_TYPE_KEY, config =>
+    {
+        config.LoginPath = "/Auth/Login";
+        config.AccessDeniedPath = "/Auth/Deny";
+    });
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -23,12 +31,11 @@ builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(WebDbContext.CON
 //builder.Services.AddDbContext<WebDbContext>(options => options.UseNpgsql(WebDbContext.CONNECTION_STRING));
 
 
-// Register in DI container our services/repository
-
 // Register in DI container services/repository for ServiceCenter
 builder.Services.AddScoped<ITypeOfApplianceRepositoryReal, TypeOfApplianceRepository>();
 
 builder.Services.AddSingleton<IDNDRepository, DNDRepository>();
+builder.Services.AddSingleton<IChessPartiesRepository, ChessPartiesRepository>();
 
 builder.Services.AddScoped<IMoviePosterRepositoryReal, MoviePosterRepository>();
 
@@ -48,12 +55,15 @@ builder.Services.AddScoped<ICakeRepositoryReal, CakeRepository>();
 
 builder.Services.AddScoped<ILoadTestingRepositoryReal, LoadTestingRepository>();
 builder.Services.AddScoped<ILoadVolumeTestingRepositoryReal, LoadVolumeTestingRepository>();
+builder.Services.AddScoped<IUserRepositryReal, UserRepository>();
 
 builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();
-builder.Services.AddSingleton<IChessPartiesRepository, ChessPartiesRepository>();
+builder.Services.AddScoped<AuthService>();
 
 builder.Services.AddSingleton<IGameLifeRepository, GameLifeRepository>();
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 // Load data into repository from JSON file
@@ -78,7 +88,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseAuthentication(); // Who Am I?
+app.UseAuthorization(); // May I?
 
 app.MapControllerRoute(
     name: "default",
