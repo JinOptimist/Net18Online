@@ -1,0 +1,36 @@
+﻿@model WebPortalEverthing.Models.GameStudios.IndexStudiosViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutGameStore.cshtml";
+}
+
+
+<div>
+    <h1>Game Studios</h1>
+    <div class="studios">
+        @foreach (var studio in Model.Studios)
+        {
+            <div class="studio">
+                <div class="name">@studio.Name</div>
+                <div class="desc">@studio.Description</div>
+                 <div class="games">
+                    @foreach (var game in studio.GameNames)
+                    {
+                        <span class="game">@game.Name</span>
+                    }
+                </div>
+                <form action="/GameStudios/LinkGameAndStudio" method="post">
+                    <input type="hidden" name="studioId" value="@studio.Id" />
+                    <select name="gameId">
+                        @foreach (var game in Model.Games)
+                        {
+                            <option value="@game.Id">@game.Name</option>
+                        }
+                    </select>
+                    <button type="submit">Link</button>
+                </form> 
+            </div>
+        }
+    </div>
+</div>
+
