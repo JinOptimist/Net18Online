@@ -4,6 +4,7 @@ using Everything.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Everything.Data.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    partial class WebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241109212635_AddDescriptionForSurveys")]
+    partial class AddDescriptionForSurveys
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,53 +153,6 @@ namespace Everything.Data.Migrations
                     b.ToTable("Coffe");
                 });
 
-            modelBuilder.Entity("Everything.Data.Models.DndClassData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ImageSrc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DndClasses");
-                });
-
-            modelBuilder.Entity("Everything.Data.Models.DndSubClassData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("DndClassId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ImageSrc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DndClassId");
-
-                    b.ToTable("DndSubClasses");
-                });
-
             modelBuilder.Entity("Everything.Data.Models.EcologyData", b =>
                 {
                     b.Property<int>("Id")
@@ -265,27 +221,6 @@ namespace Everything.Data.Migrations
                     b.ToTable("Girls");
                 });
 
-            modelBuilder.Entity("Everything.Data.Models.LoadVolumeTestingData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LoadVolumeTestingMetrics");
-                });
-
             modelBuilder.Entity("Everything.Data.Models.MangaData", b =>
                 {
                     b.Property<int>("Id")
@@ -321,9 +256,6 @@ namespace Everything.Data.Migrations
                     b.Property<Guid>("Guid")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("LoadVolumeTestingId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -332,8 +264,6 @@ namespace Everything.Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LoadVolumeTestingId");
 
                     b.ToTable("Metrics");
                 });
@@ -524,16 +454,6 @@ namespace Everything.Data.Migrations
                     b.Navigation("Brand");
                 });
 
-            modelBuilder.Entity("Everything.Data.Models.DndSubClassData", b =>
-                {
-                    b.HasOne("Everything.Data.Models.DndClassData", "DndClass")
-                        .WithMany("SubClasses")
-                        .HasForeignKey("DndClassId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("DndClass");
-                });
-
             modelBuilder.Entity("Everything.Data.Models.GirlData", b =>
                 {
                     b.HasOne("Everything.Data.Models.MangaData", "Manga")
@@ -542,16 +462,6 @@ namespace Everything.Data.Migrations
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Manga");
-                });
-
-            modelBuilder.Entity("Everything.Data.Models.MetricData", b =>
-                {
-                    b.HasOne("Everything.Data.Models.LoadVolumeTestingData", "LoadVolumeTesting")
-                        .WithMany("VolumeMetrics")
-                        .HasForeignKey("LoadVolumeTestingId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("LoadVolumeTesting");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.ModelData", b =>
@@ -583,16 +493,6 @@ namespace Everything.Data.Migrations
             modelBuilder.Entity("Everything.Data.Models.BrandData", b =>
                 {
                     b.Navigation("Coffe");
-                });
-
-            modelBuilder.Entity("Everything.Data.Models.DndClassData", b =>
-                {
-                    b.Navigation("SubClasses");
-                });
-
-            modelBuilder.Entity("Everything.Data.Models.LoadVolumeTestingData", b =>
-                {
-                    b.Navigation("VolumeMetrics");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.MangaData", b =>

@@ -1,0 +1,23 @@
+﻿@using WebPortalEverthing.Models.Surveys
+
+@model SurveyGroupCreateViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutSurveys.cshtml";
+}
+
+<div class="main-content-title">
+    <span>Создание новой группы опросов</span>
+</div>
+<form class="new-survey-group" method="post">
+    <div>
+        <label>
+            Наименование группы
+            @Html.TextBoxFor(x => x.Title)
+            @Html.ValidationMessageFor(x => x.Title)
+        </label>
+    </div>
+    <div class="actions">
+        <button class="save-button" type="submit">Сохранить</button>
+    </div>
+</form>

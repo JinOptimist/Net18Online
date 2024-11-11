@@ -296,6 +296,11 @@ namespace WebPortalEverthing.Controllers
         [HttpPost]
         public ActionResult Create(SurveyCreateViewModel surveyCreate)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(surveyCreate);
+            }
+
             var selectedSurveyGroup = _surveyGroupRepository
                 .Get(surveyCreate.SurveyGroup.Id);
 
@@ -303,7 +308,8 @@ namespace WebPortalEverthing.Controllers
             {
                 SurveyGroup = selectedSurveyGroup,
                 IdStatus = 1, // Пока такой хардкод, пока не сделана связка между таблицами
-                Title = surveyCreate.Title
+                Title = surveyCreate.Title,
+                Description = surveyCreate.Description
             };
             _surveysRepository.Add(survey);
 
