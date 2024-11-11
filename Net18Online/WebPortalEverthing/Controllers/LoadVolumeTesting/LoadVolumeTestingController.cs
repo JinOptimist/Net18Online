@@ -6,7 +6,7 @@ using WebPortalEverthing.Models.AnimeGirl;
 using WebPortalEverthing.Models.LoadTesting;
 using WebPortalEverthing.Models.Manga;
 
-namespace WebPortalEverthing.Controllers.LoadTesting
+namespace WebPortalEverthing.Controllers.LoadVolumeTesting
 {
     public class LoadVolumeTestingController : Controller
     {

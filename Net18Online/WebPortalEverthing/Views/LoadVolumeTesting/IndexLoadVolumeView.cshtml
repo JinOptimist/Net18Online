@@ -18,7 +18,7 @@
                         <span class="metricName">@metric.Name</span>
                     }
                 </div>
-                <form action="/LoadTesting/LinkLoadVolumeAndMetric" method="post">
+                <form action="/LoadVolumeTesting/LinkLoadVolumeAndMetric" method="post">
                     <input type="hidden" name="loadVolumeId" value="@loadVolume.Id" />
                     <select name="metricId">
                         @foreach( var metric in Model.Metrics )
