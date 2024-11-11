@@ -2,6 +2,7 @@
 using Everything.Data.Models;
 using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using WebPortalEverthing.Models.AnimeGirl;
 using WebPortalEverthing.Models.Cake;
 
 namespace WebPortalEverthing.Controllers
@@ -43,6 +44,11 @@ namespace WebPortalEverthing.Controllers
         [HttpPost]
         public IActionResult Create(CakeCreationViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
             var cake = new CakeData
             {
                 ImageSrc = viewModel.Url,
@@ -51,8 +57,7 @@ namespace WebPortalEverthing.Controllers
                 Rating = 0,
             };
 
-            _webDbContext.Cakes.Add(cake);
-            _webDbContext.SaveChanges();
+            _cakeRepository.Add(cake);
 
             return RedirectToAction("Index");
         }
