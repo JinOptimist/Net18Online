@@ -9,5 +9,8 @@ namespace Everything.Data.Models
         public int Age { get; set; }
         public decimal Coins { get; set; }
         public string AvatarUrl { get; set; }
+        
+        public IEnumerable<EcologyData>? Ecologies { get; set; }
+        public IEnumerable<CommentData>? Comments { get; set; }
     }
 }
