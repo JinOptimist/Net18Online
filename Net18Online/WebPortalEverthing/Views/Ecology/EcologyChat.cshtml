@@ -1,6 +1,7 @@
 @using WebPortalEverthing.Models.Ecology
 @model List<EcologyViewModel>
 
+
 @{
     Layout = "~/Views/Shared/_LayoutEcology.cshtml";
 }
@@ -11,9 +12,11 @@
     <form method="post" action="/Ecology/EcologyChat">
         <label for="imageUrl">Entet image URL:</label>
         <input type="text" id="imageUrl" name="Url" />
+        @(Html.ValidationMessageFor<List<PostCreationViewModel>>(model => model.Url))
         <div>
             <label for="imageText">Enter text:</label>
             <input type="text" id="imageText" name="Text" />
+            @Html.ValidationMessageFor<List<PostCreationViewModel>>(model => model.Text)
         </div>
         <button type="submit">Submit</button>
     </form>
