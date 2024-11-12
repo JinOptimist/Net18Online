@@ -83,8 +83,14 @@ namespace WebPortalEverthing.Controllers.LoadTesting
 
         /* HttpPost  нужен, чтобы послать данные заполненные пользователем в экшен т.е. метрику (metric)  */
         [HttpPost]
-        public IActionResult CreateProfileView(MetricViewModel metric)
+        // public IActionResult CreateProfileView(MetricViewModel metric) модель без валидации
+        public IActionResult CreateProfileView(MetricCreationViewModel metric)
         {
+            //ModelState.IsValid это метод в самом контроллере, предоставляется фреймворком
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
 
             var metricData = new Everything.Data.Models.MetricData
             {

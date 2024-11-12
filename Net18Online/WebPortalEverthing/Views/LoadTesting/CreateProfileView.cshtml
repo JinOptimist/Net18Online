@@ -1,5 +1,5 @@
 ﻿@using WebPortalEverthing.Models.LoadTesting
-@model MetricViewModel
+@model MetricCreationViewModel
 
 @{
     Layout = "~/Views/Shared/LoadTesting/_LayoutLoadTesting.cshtml";
@@ -10,8 +10,13 @@
         <div class="title">Введите данные профайла</div>
         <div class="input-container">
             @Html.TextBoxFor(m => m.Name, new { placeholder = "Name" })
-            @Html.TextBoxFor(m => m.Throughput, new { placeholder = "Throughput" })
-            @Html.TextBoxFor(m => m.Average, new { placeholder = "Average" })
+            @Html.ValidationMessageFor(x => x.Name)
+
+            @Html.TextBoxFor(m => m.Throughput, new { placeholder = "Throughput", @type = "number" })
+            @Html.ValidationMessageFor(x => x.Throughput)
+
+            @Html.TextBoxFor(m => m.Average, new { placeholder = "Average", @type = "number" })
+            @Html.ValidationMessageFor(x => x.Average)
             <button type="submit">Создать</button>
         </div>
     </div>
