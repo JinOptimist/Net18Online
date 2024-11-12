@@ -18,9 +18,11 @@ namespace WebPortalEverthing.Models.LoadTesting
         Guid Guid { get; set; } = Guid.NewGuid(); // Инициализация Guid при создании новой метрики, вместо описания в конструкторе
 
         [Required]
+        [ZeroUpAttribute]
         public decimal Throughput { get; set; }
 
         [Required]
+        [ZeroUpAttribute]
         public decimal Average { get; set; }
     }
 }
