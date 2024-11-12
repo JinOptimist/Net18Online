@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using WebPortalEverthing.Models.LoadTesting.TestingAttributes;
 
 namespace WebPortalEverthing.Models.LoadTesting
 {
@@ -10,7 +11,7 @@ namespace WebPortalEverthing.Models.LoadTesting
 
         [Required]
         [StringLength(100), MinLength(3,ErrorMessage ="Name must be between 3 and 100 characters")]
-    //    [UniqueMetricName]
+        [UniqMetricName]
         public string Name { get; set; }
 
         [Required]
