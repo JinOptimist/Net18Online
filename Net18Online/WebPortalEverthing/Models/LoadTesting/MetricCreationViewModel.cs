@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebPortalEverthing.Models.LoadTesting
 {
@@ -8,7 +9,7 @@ namespace WebPortalEverthing.Models.LoadTesting
         public int Id { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(100), MinLength(3,ErrorMessage ="Name must be between 3 and 100 characters")]
     //    [UniqueMetricName]
         public string Name { get; set; }
 
