@@ -8,6 +8,7 @@ namespace WebPortalEverthing.Controllers
 {
 	public class CoffeShopController : Controller
 	{
+		private const int MINIMAL_AGE = 16;
 		private IKeyCoffeShopRepository _coffeShopRepository;
 		private IUserRepositryReal _userRepositryReal;
 		private AuthService _authService;
@@ -40,7 +41,7 @@ namespace WebPortalEverthing.Controllers
 
 			var user = _userRepositryReal.Get(id.Value);
 
-			var valuesCoffeFromDb = user.Age > 16
+			var valuesCoffeFromDb = user.Age > MINIMAL_AGE
 				? _coffeShopRepository.GetAll()
 				: _coffeShopRepository.GetDefaultCoffe();
 
