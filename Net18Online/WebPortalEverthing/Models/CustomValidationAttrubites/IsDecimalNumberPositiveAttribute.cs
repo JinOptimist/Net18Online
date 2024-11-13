@@ -2,7 +2,7 @@
 
 namespace WebPortalEverthing.Models.CustomValidationAttrubites
 {
-    public class IsNumberPositiveAttribute : ValidationAttribute
+    public class IsDecimalNumberPositiveAttribute : ValidationAttribute
     {
         public override string FormatErrorMessage(string name)
         {
@@ -23,22 +23,7 @@ namespace WebPortalEverthing.Models.CustomValidationAttrubites
                 return false;
             }
 
-            if (value is not int intValue)
-            {
-                return false;
-            }
-
-            if (value is not float floatValue)
-            {
-                return false;
-            }
-
-            if (value is not double doubleValue)
-            {
-                return false;
-            }
-
-            if (decimalValue <= 0 || intValue <= 0 || floatValue <= 0 || doubleValue <= 0)
+            if (decimalValue <= 0)
             {
                 return false;
             }
