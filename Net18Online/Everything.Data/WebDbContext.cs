@@ -76,6 +76,11 @@ namespace Everything.Data
                 .WithOne(x => x.Survey)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<UserData>()
+                .HasMany(x => x.СreatorSurveyGroups)
+                .WithOne(x => x.СreatorUser)
+                .OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<BrandData>()
                 .HasMany(x => x.Coffe)
                 .WithOne(x => x.Brand)

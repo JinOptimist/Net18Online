@@ -4,6 +4,7 @@ using Everything.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Everything.Data.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    partial class WebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241113090508_AddCreatorUserFromSurveyGroup")]
+    partial class AddCreatorUserFromSurveyGroup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -382,34 +385,6 @@ namespace Everything.Data.Migrations
                     b.ToTable("Producers", (string)null);
                 });
 
-            modelBuilder.Entity("Everything.Data.Models.Surveys.QuestionData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AnswerType")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsRequired")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("SurveyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SurveyId");
-
-                    b.ToTable("Questions");
-                });
-
             modelBuilder.Entity("Everything.Data.Models.Surveys.StatusData", b =>
                 {
                     b.Property<int>("Id")
@@ -588,17 +563,6 @@ namespace Everything.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Everything.Data.Models.Surveys.QuestionData", b =>
-                {
-                    b.HasOne("Everything.Data.Models.Surveys.SurveyData", "Survey")
-                        .WithMany("Questions")
-                        .HasForeignKey("SurveyId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Survey");
-                });
-
             modelBuilder.Entity("Everything.Data.Models.Surveys.SurveyData", b =>
                 {
                     b.HasOne("Everything.Data.Models.Surveys.SurveyGroupData", "SurveyGroup")
@@ -638,11 +602,6 @@ namespace Everything.Data.Migrations
             modelBuilder.Entity("Everything.Data.Models.MangaData", b =>
                 {
                     b.Navigation("Characters");
-                });
-
-            modelBuilder.Entity("Everything.Data.Models.Surveys.SurveyData", b =>
-                {
-                    b.Navigation("Questions");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.Surveys.SurveyGroupData", b =>
