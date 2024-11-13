@@ -5,7 +5,7 @@
 namespace Everything.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class CommentsConnection : Migration
+    public partial class AddEcologyV2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,16 +34,15 @@ namespace Everything.Data.Migrations
                         name: "FK_Comments_Ecologies_PostId",
                         column: x => x.PostId,
                         principalTable: "Ecologies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Comments_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
+           
             migrationBuilder.CreateIndex(
                 name: "IX_Ecologies_UserId",
                 table: "Ecologies",
@@ -64,8 +63,7 @@ namespace Everything.Data.Migrations
                 table: "Ecologies",
                 column: "UserId",
                 principalTable: "Users",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
         }
 
         /// <inheritdoc />

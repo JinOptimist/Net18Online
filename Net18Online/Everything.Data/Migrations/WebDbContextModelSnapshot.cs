@@ -175,7 +175,6 @@ namespace Everything.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
-
                 });
 
             modelBuilder.Entity("Everything.Data.Models.EcologyData", b =>
@@ -581,13 +580,13 @@ namespace Everything.Data.Migrations
                     b.HasOne("Everything.Data.Models.EcologyData", "Ecology")
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Everything.Data.Models.UserData", "User")
                         .WithMany("Comments")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Ecology");
@@ -600,7 +599,7 @@ namespace Everything.Data.Migrations
                     b.HasOne("Everything.Data.Models.UserData", "User")
                         .WithMany("Ecologies")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -725,7 +724,6 @@ namespace Everything.Data.Migrations
                     b.Navigation("Ecologies");
 
                     b.Navigation("СreatorSurveyGroups");
-
                 });
 #pragma warning restore 612, 618
         }
