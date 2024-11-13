@@ -1,4 +1,5 @@
 ﻿using Everything.Data.Interface.Models;
+using Everything.Data.Models.Surveys;
 
 namespace Everything.Data.Models
 {
@@ -9,5 +10,10 @@ namespace Everything.Data.Models
         public int Age { get; set; }
         public decimal Coins { get; set; }
         public string AvatarUrl { get; set; }
+        
+        public IEnumerable<EcologyData>? Ecologies { get; set; }
+        public IEnumerable<CommentData>? Comments { get; set; }
+        
+        public virtual List<SurveyGroupData> СreatorSurveyGroups { get; set; } = new();
     }
 }
