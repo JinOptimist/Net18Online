@@ -8,5 +8,6 @@ namespace WebPortalEverthing.Models.Surveys
         public string Title { get; set; }
         [IsNullOrMinLength(20)]
         public string? Description { get; set; }
+        public List<QuestionViewModel> Questions { get; set; } = new();
     }
 }
