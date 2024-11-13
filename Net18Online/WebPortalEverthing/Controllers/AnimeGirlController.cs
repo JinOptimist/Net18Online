@@ -3,7 +3,9 @@ using Everything.Data.Interface.Models;
 using Everything.Data.Models;
 using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebPortalEverthing.Models.AnimeGirl;
+using WebPortalEverthing.Models.AnimeGirl.Profile;
 using WebPortalEverthing.Services;
 
 namespace WebPortalEverthing.Controllers
@@ -12,18 +14,21 @@ namespace WebPortalEverthing.Controllers
     {
         private int DEFAULT_GIRL_COUNT = 4;
         private IAnimeGirlRepositoryReal _animeGirlRepository;
+        private IMangaRepositoryReal _mangaRepositoryReal;
         private IUserRepositryReal _userRepositryReal;
         private AuthService _authService;
         private WebDbContext _webDbContext;
         public AnimeGirlController(IAnimeGirlRepositoryReal animeGirlRepository,
             WebDbContext webDbContext,
             IUserRepositryReal userRepositryReal,
-            AuthService authService)
+            AuthService authService,
+            IMangaRepositoryReal mangaRepositoryReal)
         {
             _animeGirlRepository = animeGirlRepository;
             _webDbContext = webDbContext;
             _userRepositryReal = userRepositryReal;
             _authService = authService;
+            _mangaRepositoryReal = mangaRepositoryReal;
         }
 
         public IActionResult Index(string name, int age)
@@ -44,17 +49,15 @@ namespace WebPortalEverthing.Controllers
                 GenerateDefaultAnimeGirl();
             }
 
-            var id = _authService.GetUserId();
-            if (id is null)
+            var currentUserId = _authService.GetUserId();
+            if (currentUserId is null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            var user = _userRepositryReal.Get(id.Value);
-            
-            var girlsFromDb = user.Age > 20
-                ? _animeGirlRepository.GetAll()
-                : _animeGirlRepository.GetMostPopular();
+            var user = _userRepositryReal.Get(currentUserId.Value);
+
+            var girlsFromDb = _animeGirlRepository.GetAllWithCreatorsAndManga();
 
             var girlsViewModels = girlsFromDb
                 .Select(dbGirl =>
@@ -63,7 +66,11 @@ namespace WebPortalEverthing.Controllers
                         Id = dbGirl.Id,
                         Name = dbGirl.Name,
                         ImageSrc = dbGirl.ImageSrc,
-                        Tags = new List<string>() //dbGirl.Tags
+                        Tags = new List<string>(),
+                        CreatorName = dbGirl.Creator?.Login ?? "Неизвестный",
+                        MangaName = dbGirl.Manga?.Title ?? "Из фанфика",
+                        CanDelete = dbGirl.Creator is null
+                            || dbGirl.Creator?.Id == currentUserId
                     }
                 )
                 .ToList();
@@ -90,7 +97,14 @@ namespace WebPortalEverthing.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            var viewModel = new GirlCreationViewModel();
+
+            viewModel.Mangas = _mangaRepositoryReal
+                .GetAll()
+                .Select(x => new SelectListItem(x.Title, x.Id.ToString()))
+                .ToList();
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -105,8 +119,15 @@ namespace WebPortalEverthing.Controllers
 
             if (!ModelState.IsValid)
             {
+                viewModel.Mangas = _mangaRepositoryReal
+                    .GetAll()
+                    .Select(x => new SelectListItem(x.Title, x.Id.ToString()))
+                    .ToList();
+
                 return View(viewModel);
             }
+
+            var currentUserId = _authService.GetUserId();
 
             var dataGirl = new GirlData
             {
@@ -114,11 +135,11 @@ namespace WebPortalEverthing.Controllers
                 ImageSrc = viewModel.Url,
             };
 
-            _animeGirlRepository.Add(dataGirl);
+            _animeGirlRepository.Create(dataGirl, currentUserId!.Value, viewModel.MangaId);
 
             return RedirectToAction("AllGirls");
         }
-        
+
         public IActionResult UpdateName(string newName, int id)
         {
             _animeGirlRepository.UpdateName(id, newName);
@@ -135,6 +156,35 @@ namespace WebPortalEverthing.Controllers
         {
             _animeGirlRepository.Delete(id);
             return RedirectToAction("AllGirls");
+        }
+
+        public IActionResult Profile()
+        {
+            var viewModel = new ProfileViewModel();
+
+            viewModel.UserName = _authService.GetName()!;
+
+            var userId = _authService.GetUserId()!.Value;
+
+            viewModel.Mangas = _mangaRepositoryReal
+                .GetMangaWithInfoAboutAuthors(userId)
+                .Select(x => new MangaShortInfoViewModel
+                {
+                    Name = x.Name,
+                    IsCreatedWithСharacter = x.HasCharaterWithSpecialAuthor
+                })
+                .ToList();
+
+            viewModel.Girls = _animeGirlRepository
+                .GetAllByAuthorId(userId)
+                .Select(x => new GirlShortInfoViewModel
+                {
+                    Name = x.Name,
+                    Url = x.ImageSrc
+                })
+                .ToList();
+
+            return View(viewModel);
         }
     }
 }

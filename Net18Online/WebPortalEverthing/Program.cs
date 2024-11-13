@@ -12,6 +12,7 @@ using CoffeShopRepository = Everything.Data.Repositories.CoffeShopRepository;
 using EcologyRepository = Everything.Data.Repositories.EcologyRepository;
 using GameStoreRepository = Everything.Data.Repositories.GameStoreRepository;
 using LoadTestingRepository = Everything.Data.Repositories.LoadTestingRepository;
+using AnimeCatalogRepository = Everything.Data.Repositories.AnimeCatalogRepository;
 using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRepository;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,7 +40,8 @@ builder.Services.AddSingleton<IChessPartiesRepository, ChessPartiesRepository>()
 
 builder.Services.AddScoped<IMoviePosterRepositoryReal, MoviePosterRepository>();
 
-builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
+builder.Services.AddScoped<IAnimeCatalogRepositoryReal, AnimeCatalogRepository>();
+builder.Services.AddScoped<IAnimeReviewRepositoryReal, AnimeReviewsRepository>();
 builder.Services.AddScoped<IEcologyRepositoryReal, EcologyRepository>();
 builder.Services.AddScoped<IKeyCoffeShopRepository, CoffeShopRepository>();
 builder.Services.AddScoped<IMangaRepositoryReal, MangaRepository>();

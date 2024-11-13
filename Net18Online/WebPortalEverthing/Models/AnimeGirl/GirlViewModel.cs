@@ -6,6 +6,11 @@
         public string ImageSrc { get; set; }
 
         public List<string> Tags { get; set; }
-        public string Name { get; internal set; }
+        public string Name { get; set; }
+
+        public string CreatorName { get; set; }
+        public string MangaName { get; set; }
+
+        public bool CanDelete { get; set; }
     }
 }

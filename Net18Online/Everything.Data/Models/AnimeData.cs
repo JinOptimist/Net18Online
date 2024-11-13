@@ -2,12 +2,10 @@
 
 namespace Everything.Data.Models
 {
-    public class GirlData : BaseModel, IGirlData
+    public class AnimeData : BaseModel, IAnimeCatalogData
     {
         public string Name { get; set; }
         public string ImageSrc { get; set; }
-        
-        public virtual UserData? Creator { get; set; }
-        public virtual MangaData? Manga { get; set; }
+        public virtual List<AnimeReviewData> Reviews { get; set; } = new List<AnimeReviewData>();
     }
 }
