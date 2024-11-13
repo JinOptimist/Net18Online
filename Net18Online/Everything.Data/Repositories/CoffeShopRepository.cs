@@ -13,10 +13,17 @@ namespace Everything.Data.Repositories
 		{
 		}
 
-        public IEnumerable<CoffeData> GetCoffeByName(string name)
+		public IEnumerable<CoffeData> GetCoffeByName(string name)
 		{
 			return _dbSet
 				.Where(x => x.Coffe == name)
+				.ToList();
+		}
+
+		public IEnumerable<CoffeData> GetDefaultCoffe()
+		{
+			return SerializeObject()
+				.Where(x => x.Coffe == "Latte" || x.Coffe == "Raf" || x.Coffe == "Americano")
 				.ToList();
 		}
 

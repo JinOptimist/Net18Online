@@ -1,4 +1,8 @@
-﻿<div class="text-center">
+﻿@using WebPortalEverthing.Models.Home
+@model IndexViewModel
+
+<div class="text-center">
+    <div>Привет @(string.IsNullOrEmpty(Model.UserName) ? "Гость" : Model.UserName)</div>
     <div>
         Если вам хочется полюбоваться на аниме девочек то вас <a href="/AnimeGirl/Index">сюда</a>
     </div>

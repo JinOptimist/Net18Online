@@ -10,7 +10,7 @@ namespace WebPortalEverthing.Models.CoffeShop
         [MinStringLength(3)]
         public string Coffe { get; set; }
 
-        [IsNumberPositive]
+        [IsDecimalNumberPositive]
         public decimal Cost { get; set; }
     }
 }
