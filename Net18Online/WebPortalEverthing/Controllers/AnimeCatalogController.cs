@@ -65,6 +65,11 @@ namespace WebPortalEverthing.Controllers
         [HttpPost]
         public IActionResult Create(AnimeCatalogCreationViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
             var dataCatalog = new AnimeData
             {
                 Name = viewModel.Name,
