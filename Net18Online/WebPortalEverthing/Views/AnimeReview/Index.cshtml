@@ -1,0 +1,36 @@
+﻿@model WebPortalEverthing.Models.AnimeReview.IndexAnimeReviewViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutAnimeCatalog.cshtml";
+}
+
+@section Reviews
+{
+    <link href="~/css/AnimeCatalog/reviews.css" rel="stylesheet" />
+}
+
+
+<h1 class="pageName">Reviews</h1>
+<div class="reviews">
+    @foreach (var anime in Model.Animes)
+    {
+        <div class="anime">
+            <div class="imageName">
+                @anime.Name
+            </div>
+            <div class="animeImage">
+                <img src="@anime.ImgSrc" />
+            </div>
+            <form action="/AnimeReview/LinkAnimeAndReview" method="post">
+                <input type="hidden" name="animeId" value="@anime.Id" />
+                <select name="animeReviewId">
+                    @foreach (var review in Model.Reviews)
+                    {
+                        <option value="@review.Id">@review.Review</option>
+                    }
+                </select>
+                <button type="submit">Link</button>
+            </form>
+        </div>
+    }
+</div>
