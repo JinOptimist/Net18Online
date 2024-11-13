@@ -1,4 +1,5 @@
-﻿@using WebPortalEverthing.Models.Surveys
+﻿@using Everything.Data.Interface.Enums
+@using WebPortalEverthing.Models.Surveys
 
 @model SurveyCreateViewModel
 
@@ -10,28 +11,40 @@
     <span>Создание нового опроса</span>
 </div>
 <form class="new-survey" method="post">
-    <div>
-        @Html.TextBoxFor(x => x.SurveyGroup.Id, new { type = "hidden" })
+    <div class="round-border">
+        <div>
+            @Html.HiddenFor(x => x.SurveyGroup.Id)
+        </div>
+        <div>
+            <label>
+                Группа:
+                @Html.HiddenFor(x => x.SurveyGroup.Title)
+                @Html.DisplayTextFor(x => x.SurveyGroup.Title)
+            </label>
+        </div>
+        <div>
+            <label>
+                Название опроса
+                @Html.TextBoxFor(x => x.Title)
+                @Html.ValidationMessageFor(x => x.Title)
+            </label>
+        </div>
+        <div>
+            <label>
+                Описание
+                @Html.TextAreaFor(x => x.Description)
+                @Html.ValidationMessageFor(x => x.Description)
+            </label>
+        </div>
     </div>
-    <div>
-        <label>
-            Группа:
-            @Html.TextBoxFor(x => x.SurveyGroup.Title)
-        </label>
+    <div class="questions">
+        @foreach (var question in Model.Questions)
+        {
+            @Html.Partial("Question", question)
+        }
     </div>
-    <div>
-        <label>
-            Название опроса
-            @Html.TextBoxFor(x => x.Title)
-            @Html.ValidationMessageFor(x => x.Title)
-        </label>
-    </div>
-    <div>
-        <label>
-            Описание
-            @Html.TextAreaFor(x => x.Description)
-            @Html.ValidationMessageFor(x => x.Description)
-        </label>
+    <div class="add-question round-border">
+        <button type="submit" asp-action="AddQuestion">Добавить вопрос</button>
     </div>
     <div class="actions">
         <button class="save-button" type="submit">Сохранить</button>

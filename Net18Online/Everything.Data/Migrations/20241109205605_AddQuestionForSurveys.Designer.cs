@@ -4,6 +4,7 @@ using Everything.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Everything.Data.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    partial class WebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241109205605_AddQuestionForSurveys")]
+    partial class AddQuestionForSurveys
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -150,34 +153,6 @@ namespace Everything.Data.Migrations
                     b.ToTable("Coffe");
                 });
 
-            modelBuilder.Entity("Everything.Data.Models.CommentData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CommentText")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PostId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Comments");
-
-                });
-
             modelBuilder.Entity("Everything.Data.Models.EcologyData", b =>
                 {
                     b.Property<int>("Id")
@@ -194,12 +169,7 @@ namespace Everything.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Ecologies");
                 });
@@ -220,35 +190,9 @@ namespace Everything.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("StudiosId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("StudiosId");
 
                     b.ToTable("Games");
-                });
-
-            modelBuilder.Entity("Everything.Data.Models.GameStudiosData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Studios");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.GirlData", b =>
@@ -275,27 +219,6 @@ namespace Everything.Data.Migrations
                     b.HasIndex("MangaId");
 
                     b.ToTable("Girls");
-                });
-
-            modelBuilder.Entity("Everything.Data.Models.LoadVolumeTestingData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LoadVolumeTestingMetrics");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.MangaData", b =>
@@ -333,9 +256,6 @@ namespace Everything.Data.Migrations
                     b.Property<Guid>("Guid")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("LoadVolumeTestingId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -344,8 +264,6 @@ namespace Everything.Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LoadVolumeTestingId");
 
                     b.ToTable("Metrics");
                 });
@@ -472,9 +390,6 @@ namespace Everything.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("IdStatus")
                         .HasColumnType("int");
 
@@ -504,12 +419,7 @@ namespace Everything.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("СreatorUserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("СreatorUserId");
 
                     b.ToTable("SurveyGroups");
                 });
@@ -543,9 +453,6 @@ namespace Everything.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
                     b.Property<string>("AvatarUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -554,10 +461,6 @@ namespace Everything.Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Login")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -576,46 +479,6 @@ namespace Everything.Data.Migrations
                     b.Navigation("Brand");
                 });
 
-            modelBuilder.Entity("Everything.Data.Models.CommentData", b =>
-                {
-                    b.HasOne("Everything.Data.Models.EcologyData", "Ecology")
-                        .WithMany("Comments")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Everything.Data.Models.UserData", "User")
-                        .WithMany("Comments")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Ecology");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Everything.Data.Models.EcologyData", b =>
-                {
-                    b.HasOne("Everything.Data.Models.UserData", "User")
-                        .WithMany("Ecologies")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Everything.Data.Models.GameData", b =>
-                {
-                    b.HasOne("Everything.Data.Models.GameStudiosData", "Studios")
-                        .WithMany("Games")
-                        .HasForeignKey("StudiosId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Studios");
-                });
-
             modelBuilder.Entity("Everything.Data.Models.GirlData", b =>
                 {
                     b.HasOne("Everything.Data.Models.MangaData", "Manga")
@@ -624,16 +487,6 @@ namespace Everything.Data.Migrations
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Manga");
-                });
-
-            modelBuilder.Entity("Everything.Data.Models.MetricData", b =>
-                {
-                    b.HasOne("Everything.Data.Models.LoadVolumeTestingData", "LoadVolumeTesting")
-                        .WithMany("VolumeMetrics")
-                        .HasForeignKey("LoadVolumeTestingId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("LoadVolumeTesting");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.ModelData", b =>
@@ -673,34 +526,9 @@ namespace Everything.Data.Migrations
                     b.Navigation("SurveyGroup");
                 });
 
-            modelBuilder.Entity("Everything.Data.Models.Surveys.SurveyGroupData", b =>
-                {
-                    b.HasOne("Everything.Data.Models.UserData", "СreatorUser")
-                        .WithMany("СreatorSurveyGroups")
-                        .HasForeignKey("СreatorUserId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("СreatorUser");
-                });
-
             modelBuilder.Entity("Everything.Data.Models.BrandData", b =>
                 {
                     b.Navigation("Coffe");
-                });
-
-            modelBuilder.Entity("Everything.Data.Models.EcologyData", b =>
-                {
-                    b.Navigation("Comments");
-                });
-
-            modelBuilder.Entity("Everything.Data.Models.GameStudiosData", b =>
-                {
-                    b.Navigation("Games");
-                });
-
-            modelBuilder.Entity("Everything.Data.Models.LoadVolumeTestingData", b =>
-                {
-                    b.Navigation("VolumeMetrics");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.MangaData", b =>
@@ -716,16 +544,6 @@ namespace Everything.Data.Migrations
             modelBuilder.Entity("Everything.Data.Models.Surveys.SurveyGroupData", b =>
                 {
                     b.Navigation("Surveys");
-                });
-
-            modelBuilder.Entity("Everything.Data.Models.UserData", b =>
-                {
-                    b.Navigation("Comments");
-
-                    b.Navigation("Ecologies");
-
-                    b.Navigation("СreatorSurveyGroups");
-
                 });
 #pragma warning restore 612, 618
         }
