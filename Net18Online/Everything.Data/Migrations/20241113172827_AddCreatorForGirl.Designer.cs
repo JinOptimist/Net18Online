@@ -4,6 +4,7 @@ using Everything.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Everything.Data.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    partial class WebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241113172827_AddCreatorForGirl")]
+    partial class AddCreatorForGirl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -310,9 +313,6 @@ namespace Everything.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AuthorId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -322,8 +322,6 @@ namespace Everything.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AuthorId");
 
                     b.ToTable("Mangas");
                 });
@@ -642,16 +640,6 @@ namespace Everything.Data.Migrations
                     b.Navigation("Manga");
                 });
 
-            modelBuilder.Entity("Everything.Data.Models.MangaData", b =>
-                {
-                    b.HasOne("Everything.Data.Models.UserData", "Author")
-                        .WithMany("CreatedMangas")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Author");
-                });
-
             modelBuilder.Entity("Everything.Data.Models.MetricData", b =>
                 {
                     b.HasOne("Everything.Data.Models.LoadVolumeTestingData", "LoadVolumeTesting")
@@ -749,8 +737,6 @@ namespace Everything.Data.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("CreatedGirls");
-
-                    b.Navigation("CreatedMangas");
 
                     b.Navigation("Ecologies");
 

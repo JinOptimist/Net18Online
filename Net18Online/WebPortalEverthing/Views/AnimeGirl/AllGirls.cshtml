@@ -24,11 +24,16 @@
                     <input name="url" />
                     <button type="submit">new image</button>
                 </form>
+                <span class="tag">@girl.CreatorName</span>
+                <span class="tag">@girl.MangaName</span>
                 @foreach (var tag in girl.Tags)
                 {
                     <span class="tag">@tag</span>
                 }
-                <a href="/AnimeGirl/Remove?id=@girl.Id">Delete</a>
+                @if (girl.CanDelete)
+                {
+                    <a class="tag" href="/AnimeGirl/Remove?id=@girl.Id">Delete</a>
+                }
             </div>
         </div>
     }

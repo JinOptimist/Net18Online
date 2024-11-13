@@ -68,6 +68,16 @@ namespace Everything.Data
                 .WithOne(x => x.Manga)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<MangaData>()
+                .HasOne(x => x.Author)
+                .WithMany(x => x.CreatedMangas)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<GirlData>()
+                .HasOne(x => x.Creator)
+                .WithMany(x => x.CreatedGirls)
+                .OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<SurveyGroupData>()
                 .HasMany(x => x.Surveys)
                 .WithOne(x => x.SurveyGroup)
@@ -120,14 +130,6 @@ namespace Everything.Data
                 .WithMany(x => x.Comments)
                 .OnDelete(DeleteBehavior.NoAction)
                 .HasForeignKey(x => x.UserId);
-
-
-
-
-
-
-
-
 
             modelBuilder.Entity<TypeOfApplianceData>().ToTable("TypeOfAppliances");
             modelBuilder.Entity<ProducerData>().ToTable("Producers");
