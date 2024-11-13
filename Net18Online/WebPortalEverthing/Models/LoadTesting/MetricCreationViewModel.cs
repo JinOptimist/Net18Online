@@ -23,6 +23,7 @@ namespace WebPortalEverthing.Models.LoadTesting
 
         [Required]
         [ZeroUpAttribute]
+        [IsCorrectAverageAttribute]
         public decimal Average { get; set; }
     }
 }
