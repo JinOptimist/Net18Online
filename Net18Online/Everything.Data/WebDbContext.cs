@@ -20,6 +20,10 @@ namespace Everything.Data
         public DbSet<EcologyData> Ecologies { get; set; }
 
         public DbSet<MovieData> Movies { get; set; }
+
+        public DbSet<AnimeData> Animes { get; set; }
+
+        public DbSet<AnimeReviewData> AnimeReviews { get; set; }
         #region ServiceCenter
         public DbSet<TypeOfApplianceData> TypeOfAppliances { get; set; }
         public DbSet<ProducerData> Producers { get; set; }
@@ -77,6 +81,10 @@ namespace Everything.Data
                .WithOne(x => x.LoadVolumeTesting)
                .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<AnimeData>()
+                .HasMany(x => x.Reviews)
+                .WithOne(x => x.Anime)
+                .OnDelete(DeleteBehavior.NoAction);
 
 
 

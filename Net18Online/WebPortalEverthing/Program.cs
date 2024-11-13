@@ -12,6 +12,7 @@ using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRe
 using Everything.Data.Models;
 using Everything.Data.Repositories.Surveys;
 using LoadTestingRepository = Everything.Data.Repositories.LoadTestingRepository;
+using AnimeCatalogRepository = Everything.Data.Repositories.AnimeCatalogRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +33,8 @@ builder.Services.AddSingleton<IDNDRepository, DNDRepository>();
 
 builder.Services.AddScoped<IMoviePosterRepositoryReal, MoviePosterRepository>();
 
-builder.Services.AddScoped<IAnimeCatalogRepository, AnimeCatalogRepository>();
+builder.Services.AddScoped<IAnimeCatalogRepositoryReal, AnimeCatalogRepository>();
+builder.Services.AddScoped<IAnimeReviewRepositoryReal, AnimeReviewsRepository>();
 builder.Services.AddScoped<IEcologyRepositoryReal, EcologyRepository>();
 builder.Services.AddScoped<IKeyCoffeShopRepository, CoffeShopRepository>();
 builder.Services.AddScoped<IMangaRepositoryReal, MangaRepository>();

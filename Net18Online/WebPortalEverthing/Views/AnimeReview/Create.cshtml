@@ -1,0 +1,15 @@
+﻿@model WebPortalEverthing.Models.AnimeReview.CreateAnimeReviewViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutAnimeCatalog.cshtml";
+}
+
+<form method="post">
+    <div>
+        @Html.TextBoxFor(x => x.Name, new { placeholder = "Введи имя" })
+    </div>
+    <div>
+        @Html.TextBoxFor(x => x.Review, new { placeholder = "Введи отзыв" })
+    </div>
+    <button type="submit">Создать</button>
+</form>

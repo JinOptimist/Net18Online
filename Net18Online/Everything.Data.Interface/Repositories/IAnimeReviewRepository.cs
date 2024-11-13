@@ -2,8 +2,8 @@
 
 namespace Everything.Data.Interface.Repositories
 {
-    public interface IAnimeCatalogRepository<T> : IBaseRepository<T>
-        where T : IAnimeCatalogData
+    public interface IAnimeReviewRepository<T> : IBaseRepository<T>
+        where T : IAnimeReviewData
     {
     }
 }
