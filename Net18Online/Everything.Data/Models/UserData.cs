@@ -15,5 +15,7 @@ namespace Everything.Data.Models
         public IEnumerable<CommentData>? Comments { get; set; }
         
         public virtual List<SurveyGroupData> СreatorSurveyGroups { get; set; } = new();
+        public virtual List<GirlData> CreatedGirls { get; set; } = new();
+        public virtual List<MangaData> CreatedMangas { get; set; } = new();
     }
 }
