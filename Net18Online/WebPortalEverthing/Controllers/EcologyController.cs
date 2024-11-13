@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using Everything.Data.Repositories;
 using WebPortalEverthing.Models.Ecology;
 using Everything.Data.Models;
-
+using WebPortalEverthing.Services;
 
 
 namespace WebPortalEverthing.Controllers
@@ -15,14 +15,22 @@ namespace WebPortalEverthing.Controllers
 public class EcologyController : Controller
 { 
     private IEcologyRepositoryReal _ecologyRepository;
+    private IUserRepositryReal _userRepositryReal;
     private WebDbContext _webDbContext;
     private ICommentRepositoryReal _commentRepositoryReal;
+    private AuthService _authService;
 
-    public EcologyController(IEcologyRepositoryReal ecologyRepository, ICommentRepositoryReal commentRepositoryReal, WebDbContext webDbContext)
+    public EcologyController(IEcologyRepositoryReal ecologyRepository, 
+        ICommentRepositoryReal commentRepositoryReal,
+        IUserRepositryReal userRepositryReal,
+        AuthService authService,
+        WebDbContext webDbContext)
     {
         _ecologyRepository = ecologyRepository;
         _commentRepositoryReal = commentRepositoryReal;
         _webDbContext = webDbContext;
+        _userRepositryReal = userRepositryReal;
+        _authService = authService;
     }
 
     public IActionResult Index()
@@ -34,6 +42,18 @@ public class EcologyController : Controller
     [HttpGet]
     public IActionResult EcologyChat()
     {
+        var id = _authService.GetUserId();
+        if (id is null)
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
+        var user = _userRepositryReal.Get(id.Value);
+        if (user.Coins < 150)
+        {
+            return RedirectToAction("Index");
+        }
+
         var ecologyFromDb = _ecologyRepository.GetAll();
 
         var ecologyViewModels = ecologyFromDb
@@ -52,6 +72,18 @@ public class EcologyController : Controller
     [HttpPost]
     public IActionResult EcologyChat(PostCreationViewModel viewModel)
     {
+        if (_ecologyRepository.IsEclogyTextHas(viewModel.Text))
+        {
+            ModelState.AddModelError(
+                nameof(PostCreationViewModel.Text),
+                "so similar texts");
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return View(viewModel);
+        }
+        
         var ecology = new EcologyData
         {
             ImageSrc = viewModel.Url,
