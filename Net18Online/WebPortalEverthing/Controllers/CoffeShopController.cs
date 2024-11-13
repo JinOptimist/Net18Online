@@ -2,99 +2,125 @@
 using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.CoffeShop;
+using WebPortalEverthing.Services;
 
 namespace WebPortalEverthing.Controllers
 {
-    public class CoffeShopController : Controller
-    {
-        private IKeyCoffeShopRepository _coffeShopRepository;
+	public class CoffeShopController : Controller
+	{
+		private const int MINIMAL_AGE = 16;
+		private IKeyCoffeShopRepository _coffeShopRepository;
+		private IUserRepositryReal _userRepositryReal;
+		private AuthService _authService;
 
-        public CoffeShopController(IKeyCoffeShopRepository coffeShopRepository)
-        {
-            _coffeShopRepository = coffeShopRepository;
+		public CoffeShopController(IKeyCoffeShopRepository coffeShopRepository, IUserRepositryReal userRepositryReal, AuthService authService)
+		{
+			_coffeShopRepository = coffeShopRepository;
+			_userRepositryReal = userRepositryReal;
+			_authService = authService;
 
-        }
+		}
 
-        public IActionResult Index()
-        {
-            var viewModels = CoffeView();
+		public IActionResult Index()
+		{
+			var id = _authService.GetUserId();
 
-            return View(viewModels);
-        }
+			if (id is null)
+			{
+				return RedirectToAction("Index", "Home");
+			}
 
-        public List<CoffeViewModel> CoffeView()
-        {
-            var valuesCoffeFromDb = _coffeShopRepository.GetAll();
+			var viewModels = CoffeView();
 
-            var viewModels = valuesCoffeFromDb
-                .Select(coffeFromDb =>
-                    new CoffeViewModel
-                    {
-                        Id = coffeFromDb.Id,
-                        Coffe = coffeFromDb.Coffe,
-                        Url = coffeFromDb.Url,
-                        Cost = coffeFromDb.Cost,
-                    }
-                ).ToList();
+			return View(viewModels);
+		}
 
-            return viewModels;
-        }
+		public List<CoffeViewModel> CoffeView()
+		{
+			var id = _authService.GetUserId();
 
-        public IActionResult Coffe()
-        {
-            var viewModels = CoffeView();
+			var user = _userRepositryReal.Get(id.Value);
 
-            return View(viewModels);
-        }
+			var valuesCoffeFromDb = user.Age > MINIMAL_AGE
+				? _coffeShopRepository.GetAll()
+				: _coffeShopRepository.GetDefaultCoffe();
 
-        [HttpGet]
-        public IActionResult Create()
-        {
-            return View();
-        }
+			var viewModels = valuesCoffeFromDb
+				.Select(coffeFromDb =>
+					new CoffeViewModel
+					{
+						Id = coffeFromDb.Id,
+						Coffe = coffeFromDb.Coffe,
+						Url = coffeFromDb.Url,
+						Cost = coffeFromDb.Cost,
+					}
+				).ToList();
 
-        [HttpPost]
-        public IActionResult Create(CoffeCreateViewModel viewModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(viewModel);
-            }
+			return viewModels;
+		}
 
-            var coffe = new CoffeData
-            {
-                Coffe = viewModel.Coffe,
-                Url = viewModel.Url,
-                Cost = viewModel.Cost
-            };
+		public IActionResult Coffe()
+		{
+			var id = _authService.GetUserId();
 
-            _coffeShopRepository.Add(coffe);
+			if (id is null)
+			{
+				return RedirectToAction("Index", "Home");
+			}
 
-            return RedirectToAction("Index");
-        }
+			var viewModels = CoffeView();
 
-        public IActionResult Delete(int id)
-        {
-            _coffeShopRepository.Delete(id);
-            return RedirectToAction("Index");
-        }
+			return View(viewModels);
+		}
 
-        public IActionResult UpdateCoffe(int id, string name)
-        {
-            _coffeShopRepository.UpdateCoffeName(id, name);
-            return RedirectToAction("Index");
-        }
+		[HttpGet]
+		public IActionResult Create()
+		{
+			return View();
+		}
 
-        public IActionResult UpdateCost(int id, decimal cost)
-        {
-            _coffeShopRepository.UpdateCost(id, cost);
-            return RedirectToAction("Index");
-        }
+		[HttpPost]
+		public IActionResult Create(CoffeCreateViewModel viewModel)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(viewModel);
+			}
 
-        public IActionResult UpdateUrl(int id, string url)
-        {
-            _coffeShopRepository.UpdateImage(id, url);
-            return RedirectToAction("Index");
-        }
-    }
+			var coffe = new CoffeData
+			{
+				Coffe = viewModel.Coffe,
+				Url = viewModel.Url,
+				Cost = viewModel.Cost
+			};
+
+			_coffeShopRepository.Add(coffe);
+
+			return RedirectToAction("Index");
+		}
+
+		public IActionResult Delete(int id)
+		{
+			_coffeShopRepository.Delete(id);
+			return RedirectToAction("Index");
+		}
+
+		public IActionResult UpdateCoffe(int id, string name)
+		{
+			_coffeShopRepository.UpdateCoffeName(id, name);
+			return RedirectToAction("Index");
+		}
+
+		public IActionResult UpdateCost(int id, decimal cost)
+		{
+			_coffeShopRepository.UpdateCost(id, cost);
+			return RedirectToAction("Index");
+		}
+
+		public IActionResult UpdateUrl(int id, string url)
+		{
+			_coffeShopRepository.UpdateImage(id, url);
+			return RedirectToAction("Index");
+		}
+	}
 }
