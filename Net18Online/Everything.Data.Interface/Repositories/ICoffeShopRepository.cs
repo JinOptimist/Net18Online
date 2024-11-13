@@ -5,7 +5,9 @@ namespace Everything.Data.Interface.Repositories
     public interface ICoffeShopRepository<T> : IBaseRepository<T>
         where T : ICoffeData
     {
-        public IEnumerable<T> GetCoffeByName(string name);
+        public IEnumerable<T> GetDefaultCoffe();
+
+		public IEnumerable<T> GetCoffeByName(string name);
 
 		void UpdateCoffeName(int id, string name);
         

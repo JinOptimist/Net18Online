@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.Surveys;
 using Everything.Data.Interface.Models.Surveys;
 using Everything.Data.Repositories.Surveys;
-using WebPortalEverthing.Models.AnimeGirl;
+using WebPortalEverthing.Services;
+using Everything.Data.Models;
 
 namespace WebPortalEverthing.Controllers
 {
@@ -11,16 +12,18 @@ namespace WebPortalEverthing.Controllers
     {
         private ISurveyGroupRepositoryReal _surveyGroupRepository;
         private IStatusRepositoryReal _statusRepository;
+        private AuthService _authService;
 
-        public SurveyGroupController(ISurveyGroupRepositoryReal surveyGroupRepository, IStatusRepositoryReal statusRepository)
+        public SurveyGroupController(ISurveyGroupRepositoryReal surveyGroupRepository, IStatusRepositoryReal statusRepository, AuthService authService)
         {
             _statusRepository = statusRepository;
             _surveyGroupRepository = surveyGroupRepository;
+            _authService = authService;
         }
 
         public ActionResult Index()
         {
-            var groupsFromDb = _surveyGroupRepository.GetAll();
+            var groupsFromDb = _surveyGroupRepository.GetAllWithСreatorUsers();
 
             var surveyGroupsViewModels = groupsFromDb
                 .Select(GetSurveyGroupViewModelFromData)
@@ -29,12 +32,26 @@ namespace WebPortalEverthing.Controllers
             return View(surveyGroupsViewModels);
         }
 
-        private SurveyGroupViewModel GetSurveyGroupViewModelFromData(ISurveyGroupData surveyGroup)
+        private SurveyGroupViewModel GetSurveyGroupViewModelFromData(SurveyGroupData surveyGroup)
         {
             return new SurveyGroupViewModel
             {
                 Id = surveyGroup.Id,
-                Title = surveyGroup.Title
+                Title = surveyGroup.Title,
+                СreatorUser = GetСreatorUserViewModelViewModelFromData(surveyGroup.СreatorUser)
+            };
+        }
+
+        private СreatorUserViewModel? GetСreatorUserViewModelViewModelFromData(UserData? userData)
+        {   
+            if (userData == null)
+            {
+                return null;
+            }
+
+            return new СreatorUserViewModel
+            {
+                Login = userData.Login
             };
         }
 
@@ -59,11 +76,8 @@ namespace WebPortalEverthing.Controllers
                 return View(viewModel);
             }
 
-            var surveyGroup = new SurveyGroupData()
-            {
-                Title = viewModel.Title
-            };
-            _surveyGroupRepository.Add(surveyGroup);
+            var userId = _authService.GetUserId();
+            _surveyGroupRepository.CreateSurveyGroup(viewModel.Title, userId);
 
             return RedirectToAction(nameof(Index));
         }
