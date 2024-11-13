@@ -8,7 +8,7 @@
 .reviews {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; /* Отступы между блоками */
+    gap: 20px;
 }
 
 .anime {
@@ -17,28 +17,28 @@
     align-items: center;
     width: 200px;
     margin: 10px;
-    border: 1px solid #ddd; /* Опционально: рамка для блока */
+    border: 1px solid #ddd;
     padding: 10px;
     box-sizing: border-box;
 }
 
 .imageName {
-    font-size: 1.2em; /* Размер шрифта для названия */
+    font-size: 1.2em;
     text-align: center;
-    margin-bottom: 10px; /* Отступ снизу для разделения с картинкой */
-    padding: 0; /* Убираем дополнительные отступы */
+    margin-bottom: 10px;
+    padding: 0;
 }
 
 .animeImage {
     width: 100%;
-    border-radius: 8px; /* Закругление краев изображения */
-    overflow: hidden; /* Обрезка изображения, если оно выходит за пределы блока */
-    margin-bottom: 15px; /* Отступ снизу для разделения с кнопкой */
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 15px;
 }
 
     .animeImage img {
         width: 100%;
         height: auto;
         display: block;
-        border-radius: 8px; /* Повторное закругление на изображении */
+        border-radius: 8px;
     }
