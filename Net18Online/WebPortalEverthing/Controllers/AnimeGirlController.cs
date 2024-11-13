@@ -4,6 +4,7 @@ using Everything.Data.Models;
 using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.AnimeGirl;
+using WebPortalEverthing.Services;
 
 namespace WebPortalEverthing.Controllers
 {
@@ -11,11 +12,18 @@ namespace WebPortalEverthing.Controllers
     {
         private int DEFAULT_GIRL_COUNT = 4;
         private IAnimeGirlRepositoryReal _animeGirlRepository;
+        private IUserRepositryReal _userRepositryReal;
+        private AuthService _authService;
         private WebDbContext _webDbContext;
-        public AnimeGirlController(IAnimeGirlRepositoryReal animeGirlRepository, WebDbContext webDbContext)
+        public AnimeGirlController(IAnimeGirlRepositoryReal animeGirlRepository,
+            WebDbContext webDbContext,
+            IUserRepositryReal userRepositryReal,
+            AuthService authService)
         {
             _animeGirlRepository = animeGirlRepository;
             _webDbContext = webDbContext;
+            _userRepositryReal = userRepositryReal;
+            _authService = authService;
         }
 
         public IActionResult Index(string name, int age)
@@ -36,7 +44,17 @@ namespace WebPortalEverthing.Controllers
                 GenerateDefaultAnimeGirl();
             }
 
-            var girlsFromDb = _animeGirlRepository.GetMostPopular();
+            var id = _authService.GetUserId();
+            if (id is null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var user = _userRepositryReal.Get(id.Value);
+            
+            var girlsFromDb = user.Age > 20
+                ? _animeGirlRepository.GetAll()
+                : _animeGirlRepository.GetMostPopular();
 
             var girlsViewModels = girlsFromDb
                 .Select(dbGirl =>

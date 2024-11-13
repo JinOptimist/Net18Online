@@ -1,0 +1,48 @@
+﻿/* Общие стили */
+.type-name {
+    font-size: 24px;
+    color: rgb(141, 240, 11);
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.discription-type form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Поля ввода */
+.discription-type input[type="text"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 18px;
+    color: black; /* Цвет текста черный */
+    background-color: rgba(60, 64, 67, 0.75); /* Темно-серый прозрачный фон */
+    width: 100%;
+}
+
+/* Дополнительная информация */
+.additional-info, .type-guid {
+    font-size: 18px;
+    color: rgb(141, 240, 11);
+    margin-top: 10px;
+}
+/* Стили для кнопки Update */
+.discription-type input[type="submit"] {
+    
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 18px;
+    color: white; /* Белый текст для контраста */
+    background-color: rgba(60, 64, 67, 0.75); /* Темно-серый прозрачный фон */
+    width: 100%;
+    cursor: pointer; /* Курсор меняет вид на руку при наведении */
+    transition: background-color 0.3s ease; /* Плавное изменение фона при наведении */
+}
+
+    .discription-type input[type="submit"]:hover {
+        background-color: rgba(50, 54, 57, 0.9); /* Изменение цвета фона при наведении */
+    }

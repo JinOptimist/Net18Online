@@ -56,6 +56,11 @@ namespace WebPortalEverthing.Controllers
         [HttpPost]
         public IActionResult Create(CoffeCreateViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
             var coffe = new CoffeData
             {
                 Coffe = viewModel.Coffe,

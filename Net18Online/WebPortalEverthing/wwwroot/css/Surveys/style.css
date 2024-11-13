@@ -167,3 +167,20 @@ header .logo img {
         border-radius: 5px;
         font-weight: bold;
     }
+
+.survey-group-page {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.survey-group-page .survey-group {
+    border: 1px solid;
+    border-radius: 5px;
+    margin: 5px 10px;
+    padding: 10px;
+}
+
+    .survey-group-page .survey-group .title {
+        display: flex;
+        justify-content: center;
+    }

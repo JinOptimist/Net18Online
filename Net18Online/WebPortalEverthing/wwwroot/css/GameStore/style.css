@@ -56,7 +56,7 @@ header .navigation ul{
     display: flex;
 }
 .game-block .image-container img{
-    max-width: 100px;
+    max-height: 200px;
     max-width: 200px;
 }
 .game-block{
@@ -78,3 +78,7 @@ header .navigation ul{
     display:flex;
     flex-wrap: wrap;
 }
+
+    .content .studios {
+        margin: 10px;
+    }

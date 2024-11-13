@@ -13,18 +13,27 @@
 <form class="new-survey" method="post">
     <div class="round-border">
         <div>
-            @Html.TextBoxFor(x => x.SurveyGroup.Id, new { type = "hidden" })
+            @Html.HiddenFor(x => x.SurveyGroup.Id)
         </div>
         <div>
             <label>
                 Группа:
-                @Html.TextBoxFor(x => x.SurveyGroup.Title, new { disabled = "true" })
+                @Html.HiddenFor(x => x.SurveyGroup.Title)
+                @Html.DisplayTextFor(x => x.SurveyGroup.Title)
             </label>
         </div>
         <div>
             <label>
                 Название опроса
                 @Html.TextBoxFor(x => x.Title)
+                @Html.ValidationMessageFor(x => x.Title)
+            </label>
+        </div>
+        <div>
+            <label>
+                Описание
+                @Html.TextAreaFor(x => x.Description)
+                @Html.ValidationMessageFor(x => x.Description)
             </label>
         </div>
     </div>

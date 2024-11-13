@@ -7,12 +7,15 @@
 <form method="post">
     <div>
         @Html.TextBoxFor(x => x.Coffe, new { placeholder = "Кофе" })
+        @Html.ValidationMessageFor(x => x.Coffe)
     </div>
     <div>
         @Html.TextBoxFor(x => x.Url, new { placeholder = "Ссылка на картинку" })
+        @Html.ValidationMessageFor(x => x.Url)
     </div>
     <div>
         @Html.TextBoxFor(x => x.Cost, new { placeholder = "Стоимость кофе" })
+        @Html.ValidationMessageFor(x => x.Cost)
     </div>
     <button type="submit"> создать </button>
 </form>
