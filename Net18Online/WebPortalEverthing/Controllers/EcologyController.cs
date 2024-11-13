@@ -72,7 +72,7 @@ public class EcologyController : Controller
     [HttpPost]
     public IActionResult EcologyChat(PostCreationViewModel viewModel)
     {
-        if (_ecologyRepository.IsEclogyTextHas(viewModel.Text))
+        if (CalcCountWorldRepeat.IsEclogyTextHas(viewModel.Text)>=4)
         {
             ModelState.AddModelError(
                 nameof(PostCreationViewModel.Text),
@@ -153,11 +153,8 @@ public class EcologyController : Controller
     [HttpGet]
     public IActionResult CommentsForPost(int postId)
     {
-        var comm = _commentRepositoryReal.GetAll();
-
-        var commentsFiltered = comm
-            .Where(c => c.PostId == postId).ToList();
-        return View(commentsFiltered);
+        var comm = _commentRepositoryReal.GetCommentsByPostId(postId);
+        return View(comm);
     }
 }
 }
