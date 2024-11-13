@@ -24,9 +24,9 @@ namespace Everything.Data.Repositories.Surveys
             _webDbContext.SaveChanges();
         }
 
-        public bool HasSimilarTitle(string title)
+        public bool HasUniqueTitle(string title)
         {
-            return _dbSet.Any(x => x.Title == title);
+            return !_dbSet.Any(x => x.Title == title);
         }
     }
 }
