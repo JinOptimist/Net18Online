@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using WebPortalEverthing.Models.LoadTesting.TestingAttributes;
 
@@ -23,7 +23,7 @@ namespace WebPortalEverthing.Models.LoadTesting
 
         [Required]
         [ZeroUpAttribute]
-        [IsCorrectAverageAttribute]
+        [IsCorrectAverage(0.01, 10000.00, UnitLoad.Seconds, LoadLevel.Medium)]
         public decimal Average { get; set; }
     }
 }
