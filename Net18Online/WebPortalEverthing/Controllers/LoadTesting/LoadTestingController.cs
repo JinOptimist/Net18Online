@@ -83,7 +83,7 @@ namespace WebPortalEverthing.Controllers.LoadTesting
 
         /* HttpPost  нужен, чтобы послать данные заполненные пользователем в экшен т.е. метрику (metric)  */
         [HttpPost]
-        public IActionResult CreateProfileView(MetricViewModel metric)
+        public IActionResult CreateProfileView(MetricCreationViewModel metric)
         {
 
             var metricData = new Everything.Data.Models.MetricData
@@ -126,7 +126,7 @@ namespace WebPortalEverthing.Controllers.LoadTesting
             return RedirectToAction("ContenMetricsListView");
         }
 
-        public IActionResult UpdateMetric(MetricViewModel metric)
+        public IActionResult UpdateMetric(MetricCreationViewModel metric)
         {
             _loadTestingRepository.UpdateNameByGuid(metric.Guid, metric.Name);
             _loadTestingRepository.UpdateThroughputByGuid(metric.Guid, metric.Throughput);
