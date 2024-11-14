@@ -1,0 +1,34 @@
+﻿@model WebPortalEverthing.Models.LoadTesting.IndexVolumeLoadViewModel
+
+@{
+    Layout = "~/Views/Shared/LoadTesting/_LayoutLoadTesting.cshtml";
+}
+
+<div>
+    <h1>Load Volumes</h1>
+    <div class="loadVolumes">
+        @foreach( var loadVolume in Model.LoadVolumes )
+        {
+            <div class="loadVolume">
+                <div class="name">@loadVolume.Title</div>
+                <div class="desc">@loadVolume.Description</div>
+                <div class="metrics">
+                    @foreach( var metric in loadVolume.Metrics )
+                    {
+                        <span class="metricName">@metric.Name</span>
+                    }
+                </div>
+                <form action="/LoadVolumeTesting/LinkLoadVolumeAndMetric" method="post">
+                    <input type="hidden" name="loadVolumeId" value="@loadVolume.Id" />
+                    <select name="metricId">
+                        @foreach( var metric in Model.Metrics )
+                        {
+                            <option value="@metric.Id">@metric.Name</option>
+                        }
+                    </select>
+                    <button type="submit">Link LoadVolume and Metric</button>
+                </form>
+            </div>
+        }
+    </div>
+</div>
