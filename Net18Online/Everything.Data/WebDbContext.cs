@@ -20,7 +20,7 @@ namespace Everything.Data
         public DbSet<UserData> Users { get; set; }
 
         public DbSet<EcologyData> Ecologies { get; set; }
-        
+
         public DbSet<CommentData> Comments { get; set; }
 
         public DbSet<MovieData> Movies { get; set; }
@@ -40,6 +40,10 @@ namespace Everything.Data
         public DbSet<CoffeData> Coffe { get; set; }
 
         public DbSet<BrandData> Brands { get; set; }
+
+        public DbSet<CoffeCompanyData> CoffeCompanies { get; set; }
+
+        public DbSet<CoffeShopActivityData> Activities { get; set; }
 
         public DbSet<MetricData> Metrics { get; set; } // Описание таблицы с метриками
         public DbSet<LoadVolumeTestingData> LoadVolumeTestingMetrics { get; set; } // Описание таблицы с метриками LoadVolumeTesting
@@ -97,10 +101,26 @@ namespace Everything.Data
                 .WithOne(x => x.СreatorUser)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<CoffeData>()
+                .HasOne(x => x.Creator)
+                .WithMany(x => x.CreatedCoffe)
+                .OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<BrandData>()
                 .HasMany(x => x.Coffe)
                 .WithOne(x => x.Brand)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<CoffeCompanyData>()
+                .HasMany(x => x.Coffe)
+                .WithOne(x => x.Company)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<CoffeShopActivityData>()
+                .HasMany(x => x.CoffeCompanies)
+                .WithOne(x => x.TypeOfActivity)
+                .OnDelete(DeleteBehavior.NoAction);
+                
 
             modelBuilder.Entity<GameStudiosData>()
                 .HasMany(x => x.Games)
@@ -111,23 +131,23 @@ namespace Everything.Data
                .HasMany(x => x.VolumeMetrics)
                .WithOne(x => x.LoadVolumeTesting)
                .OnDelete(DeleteBehavior.NoAction);
-            
-            
-            
+
+
+
             modelBuilder.Entity<UserData>().HasKey(us => us.Id);
             modelBuilder.Entity<UserData>()
                 .HasMany(p => p.Ecologies)
                 .WithOne(x => x.User)
                 .OnDelete(DeleteBehavior.NoAction)
-                .HasForeignKey(p =>p.UserId);
-            
+                .HasForeignKey(p => p.UserId);
+
             modelBuilder.Entity<EcologyData>().HasKey(ec => ec.Id);
             modelBuilder.Entity<EcologyData>()
                 .HasMany(x => x.Comments)
                 .WithOne(x => x.Ecology)
                 .OnDelete(DeleteBehavior.NoAction)
                 .HasForeignKey(x => x.PostId);
-            
+
             modelBuilder.Entity<CommentData>().HasKey(c => c.Id);
             modelBuilder.Entity<CommentData>()
                 .HasOne(x => x.User)

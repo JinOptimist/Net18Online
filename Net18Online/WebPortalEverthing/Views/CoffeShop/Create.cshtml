@@ -17,5 +17,8 @@
         @Html.TextBoxFor(x => x.Cost, new { placeholder = "Стоимость кофе" })
         @Html.ValidationMessageFor(x => x.Cost)
     </div>
+    <div>
+        @Html.DropDownListFor(x => x.BrandId, Model.Brands)
+    </div>
     <button type="submit"> создать </button>
 </form>
