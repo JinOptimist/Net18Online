@@ -20,7 +20,7 @@ namespace Everything.Data
         public DbSet<UserData> Users { get; set; }
 
         public DbSet<EcologyData> Ecologies { get; set; }
-        
+
         public DbSet<CommentData> Comments { get; set; }
 
         public DbSet<MovieData> Movies { get; set; }
@@ -42,7 +42,8 @@ namespace Everything.Data
         public DbSet<BrandData> Brands { get; set; }
 
         public DbSet<MetricData> Metrics { get; set; } // Описание таблицы с метриками
-        public DbSet<LoadVolumeTestingData> LoadVolumeTestingMetrics { get; set; } // Описание таблицы с метриками LoadVolumeTesting
+        public DbSet<LoadVolumeTestingData> LoadVolumeTestingMetrics { get; set; } // Описание таблицы с разделами LoadVolumeTesting
+        public DbSet<LoadUserData> LoadUsers { get; set; }
 
         #region SURVEYS
         public DbSet<StatusData> Statuses { get; set; }
@@ -111,23 +112,23 @@ namespace Everything.Data
                .HasMany(x => x.VolumeMetrics)
                .WithOne(x => x.LoadVolumeTesting)
                .OnDelete(DeleteBehavior.NoAction);
-            
-            
-            
+
+
+
             modelBuilder.Entity<UserData>().HasKey(us => us.Id);
             modelBuilder.Entity<UserData>()
                 .HasMany(p => p.Ecologies)
                 .WithOne(x => x.User)
                 .OnDelete(DeleteBehavior.NoAction)
-                .HasForeignKey(p =>p.UserId);
-            
+                .HasForeignKey(p => p.UserId);
+
             modelBuilder.Entity<EcologyData>().HasKey(ec => ec.Id);
             modelBuilder.Entity<EcologyData>()
                 .HasMany(x => x.Comments)
                 .WithOne(x => x.Ecology)
                 .OnDelete(DeleteBehavior.NoAction)
                 .HasForeignKey(x => x.PostId);
-            
+
             modelBuilder.Entity<CommentData>().HasKey(c => c.Id);
             modelBuilder.Entity<CommentData>()
                 .HasOne(x => x.User)
