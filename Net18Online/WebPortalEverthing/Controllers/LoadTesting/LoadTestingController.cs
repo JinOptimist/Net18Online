@@ -4,6 +4,7 @@ using Everything.Data.Fake.Repositories;
 using Everything.Data.Interface.Repositories;
 using Everything.Data;
 using Everything.Data.Repositories;
+using System.Globalization;
 
 namespace WebPortalEverthing.Controllers.LoadTesting
 {
@@ -83,21 +84,30 @@ namespace WebPortalEverthing.Controllers.LoadTesting
 
         /* HttpPost  нужен, чтобы послать данные заполненные пользователем в экшен т.е. метрику (metric)  */
         [HttpPost]
-        public IActionResult CreateProfileView(MetricViewModel metric)
+        public IActionResult CreateProfileView(MetricCreationViewModel metric)
         {
+            // Установка локали вручную (при необходимости)
+            var culture = new CultureInfo("ru-RU");
+            Thread.CurrentThread.CurrentCulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
+
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
 
             var metricData = new Everything.Data.Models.MetricData
             {
                 Name = metric.Name,
-                Throughput = metric.Throughput * 1.0m,
-                Average = metric.Average * 1.0m
+                Throughput = metric.Throughput,
+                Average = metric.Average
             };
-            // _webDbContext.Metrics.Add(metricData);
-            //_webDbContext.SaveChanges();
+
             _loadTestingRepository.Add(metricData);
 
             return Redirect("/LoadTesting/ContenMetricsListView");
         }
+
 
 
         public IActionResult UpdateNameById(int id, string newName)
@@ -153,6 +163,14 @@ namespace WebPortalEverthing.Controllers.LoadTesting
             return RedirectToAction("ContenMetricsListView");
         }
 
+        public void ConfigureServices(IServiceCollection services)
+        {
+            var cultureInfo = new CultureInfo("ru-RU");
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+
+            services.AddControllersWithViews();
+        }
 
     }
 }
