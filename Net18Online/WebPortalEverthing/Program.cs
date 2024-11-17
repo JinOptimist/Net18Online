@@ -57,6 +57,7 @@ builder.Services.AddScoped<ICakeRepositoryReal, CakeRepository>();
 
 builder.Services.AddScoped<ILoadTestingRepositoryReal, LoadTestingRepository>();
 builder.Services.AddScoped<ILoadVolumeTestingRepositoryReal, LoadVolumeTestingRepository>();
+builder.Services.AddScoped<ILoadUserRepositryReal, LoadUserRepository>();
 builder.Services.AddScoped<IUserRepositryReal, UserRepository>();
 
 builder.Services.AddScoped<TextProvider>();
