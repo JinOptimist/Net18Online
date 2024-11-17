@@ -32,7 +32,10 @@
             <div class="avatar">
                 <img src="~/images/LoadTesting/avatar.jpg" alt="avatar" class="avatar-image" />
             </div>
-            <a href="https://example.com/login" class="login-button">Логин</a>
+            <div class="login-button">
+                <a class="login-button-registration" asp-area="" asp-controller="LoadAuth" asp-action="RegistrationLoadUserView">Регистрация</a>
+                <a href="LoginLoadUserView" class="login-button-login">Логин</a>
+            </div>
         </div>
     </div>
 
