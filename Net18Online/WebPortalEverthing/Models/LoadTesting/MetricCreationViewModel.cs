@@ -6,7 +6,7 @@ namespace WebPortalEverthing.Models.LoadTesting
 {
     public class MetricCreationViewModel
     {
-        //    [UniqMetricId]
+    //    [UniqMetricId]
         public int Id { get; set; }
 
         [Required]
