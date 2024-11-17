@@ -18,12 +18,15 @@ namespace WebPortalEverthing.Models.LoadTesting
         public Guid Guid { get; set; } = Guid.NewGuid(); // Инициализация Guid при создании новой метрики, вместо описания в конструкторе
 
         [Required]
-        //    [ZeroUpAttribute]
+        [ZeroUpAttribute]
         public decimal Throughput { get; set; }
 
         [Required]
-        //    [ZeroUpAttribute]
-        //  [IsCorrectAverage(0.01, 10000.00, UnitLoad.Seconds, LoadLevel.Medium)]
+        [ZeroUpAttribute]
+        /*Почему нельзя использовать decimal в атрибутах? Это ограничение платформы .NET. Атрибуты должны быть сериализуемы в метаданные,
+          а тип decimal не является простым типом (primitive) и поэтому не поддерживается.
+           Почему double? Тип double является допустимым для атрибутов и может использоваться для хранения чисел с плавающей точкой.
+         * [IsCorrectAverage(0.01m, 10000.00m, UnitLoad.Seconds, LoadLevel.Medium)] */
         public decimal Average { get; set; }
     }
 }

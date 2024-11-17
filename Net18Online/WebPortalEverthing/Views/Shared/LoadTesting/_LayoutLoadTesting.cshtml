@@ -17,6 +17,9 @@
     <link href="~/css/LoadTesting/GameLife/game-life.css" rel="stylesheet" />
     <link href="~/css/LoadTesting/GameLife/own-size-form-container.css" rel="stylesheet" />
     <link href="~/css/LoadTesting/inputUpdateMetric.css" rel="stylesheet" />
+    <link href="~/css/LoadTesting/createLoadVolume.css" rel="stylesheet" />
+    <link href="~/css/LoadTesting/login-form.css" rel="stylesheet" />
+    <link href="~/css/LoadTesting/registration-form.css" rel="stylesheet" />
 
 </head>
 <body>
@@ -29,7 +32,10 @@
             <div class="avatar">
                 <img src="~/images/LoadTesting/avatar.jpg" alt="avatar" class="avatar-image" />
             </div>
-            <a href="https://example.com/login" class="login-button">Логин</a>
+            <div class="login-button">
+                <a class="login-button-registration" asp-area="" asp-controller="LoadAuth" asp-action="RegistrationLoadUserView">Регистрация</a>
+                <a href="LoginLoadUserView" class="login-button-login">Логин</a>
+            </div>
         </div>
     </div>
 
@@ -56,6 +62,12 @@
                 </li>
                 <li>
                     <a href="/GameLife/GameLifeOwnSize" class="button"><span>GameLifeOwnSize</span></a>
+                </li>
+                <li>
+                    <a href="/LoadVolumeTesting/IndexLoadVolumeView" class="button"><span>All Load Volumies</span></a>
+                </li>
+                <li>
+                    <a href="/LoadVolumeTesting/CreateloadVolumeView" class="button"><span>Create LoadVolume</span></a>
                 </li>
             </ul>
 

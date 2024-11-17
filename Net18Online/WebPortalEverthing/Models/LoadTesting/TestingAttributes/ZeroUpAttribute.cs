@@ -18,7 +18,7 @@ namespace WebPortalEverthing.Models.LoadTesting.TestingAttributes
                 return new ValidationResult("Not a number");
             }
 
-            if (value is decimal number || value is double || value is float || value is int || value is string) // Проверка на соответствие типу double/decimal
+            if (value is decimal number|| value is double|| value is float|| value is int) // Проверка на соответствие типу double/decimal
             {
                 return new ValidationResult("Invalid data type");
             }

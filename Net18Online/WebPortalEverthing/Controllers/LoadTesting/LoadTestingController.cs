@@ -32,7 +32,6 @@ namespace WebPortalEverthing.Controllers.LoadTesting
              Это datamodel(модель БД), На View можно отдавать только viewmodel(данные для пользователя не все или из др. датамоделей), нельзя datamodel */
 
             //     var metricsFromRealDB = _webDbContext.Metrics.Where(x => x.Guid != Guid.Empty).ToList();  //брали из БД, теперь из репозитория (пока просто для примера условия)
-            var metricsFromRealDB = _loadTestingRepository.GetAll();
             //if (metricsFromRealDB.Count == 0)
             if (!_loadTestingRepository.Any())
             {
@@ -57,6 +56,7 @@ namespace WebPortalEverthing.Controllers.LoadTesting
                     _loadTestingRepository.Add(metricFromRealDB);
                 }
             }
+            var metricsFromRealDB = _loadTestingRepository.GetAll();
 
             //Из дата моделей делаем вьюмодели (список вью моделей)
             var metricsViewModel = metricsFromRealDB
@@ -84,13 +84,10 @@ namespace WebPortalEverthing.Controllers.LoadTesting
 
         /* HttpPost  нужен, чтобы послать данные заполненные пользователем в экшен т.е. метрику (metric)  */
         [HttpPost]
+        // public IActionResult CreateProfileView(MetricViewModel metric) модель без валидации
         public IActionResult CreateProfileView(MetricCreationViewModel metric)
         {
-            // Установка локали вручную (при необходимости)
-            var culture = new CultureInfo("ru-RU");
-            Thread.CurrentThread.CurrentCulture = culture;
-            Thread.CurrentThread.CurrentUICulture = culture;
-
+            //ModelState.IsValid это метод в самом контроллере, предоставляется фреймворком
             if (!ModelState.IsValid)
             {
                 return View();
@@ -99,15 +96,15 @@ namespace WebPortalEverthing.Controllers.LoadTesting
             var metricData = new Everything.Data.Models.MetricData
             {
                 Name = metric.Name,
-                Throughput = metric.Throughput,
-                Average = metric.Average
+                Throughput = metric.Throughput * 1.0m,
+                Average = metric.Average * 1.0m
             };
-
+            // _webDbContext.Metrics.Add(metricData);
+            //_webDbContext.SaveChanges();
             _loadTestingRepository.Add(metricData);
 
             return Redirect("/LoadTesting/ContenMetricsListView");
         }
-
 
 
         public IActionResult UpdateNameById(int id, string newName)
@@ -136,7 +133,7 @@ namespace WebPortalEverthing.Controllers.LoadTesting
             return RedirectToAction("ContenMetricsListView");
         }
 
-        public IActionResult UpdateMetric(MetricViewModel metric)
+        public IActionResult UpdateMetric(MetricCreationViewModel metric)
         {
             _loadTestingRepository.UpdateNameByGuid(metric.Guid, metric.Name);
             _loadTestingRepository.UpdateThroughputByGuid(metric.Guid, metric.Throughput);
@@ -163,14 +160,6 @@ namespace WebPortalEverthing.Controllers.LoadTesting
             return RedirectToAction("ContenMetricsListView");
         }
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            var cultureInfo = new CultureInfo("ru-RU");
-            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
-            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
-
-            services.AddControllersWithViews();
-        }
 
     }
 }

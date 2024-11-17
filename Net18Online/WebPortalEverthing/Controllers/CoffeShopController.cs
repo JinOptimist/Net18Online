@@ -87,14 +87,14 @@ namespace WebPortalEverthing.Controllers
 				return View(viewModel);
 			}
 
-			var coffe = new CoffeData
-			{
-				Coffe = viewModel.Coffe,
-				Url = viewModel.Url,
-				Cost = viewModel.Cost
-			};
+            var coffe = new CoffeData
+            {
+                Coffe = viewModel.Coffe,
+                Url = viewModel.Url,
+                Cost = viewModel.Cost
+            };
 
-			_coffeShopRepository.Add(coffe);
+            _coffeShopRepository.Add(coffe);
 
 			return RedirectToAction("Index");
 		}

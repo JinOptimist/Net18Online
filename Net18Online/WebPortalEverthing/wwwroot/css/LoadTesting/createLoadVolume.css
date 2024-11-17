@@ -1,0 +1,84 @@
+﻿form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background-color: #2c003e; /* Темно-фиолетовый фон */
+    border-radius: 15px;
+    max-width: 500px;
+    margin: 50px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+    form div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    form input[type="text"] {
+        padding: 12px;
+        font-size: 18px;
+        color: #e4d9ff; /* Светло-фиолетовый текст */
+        background-color: rgba(98, 0, 255, 0.15); /* Темный фоновый цвет с прозрачностью */
+        border: 1px solid #5e3a8a;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+    }
+
+        form input[type="text"]::placeholder {
+            color: #a88dcc; /* Пастельный фиолетовый для текста-подсказки */
+        }
+
+        form input[type="text"]:focus {
+            background-color: rgba(98, 0, 255, 0.25);
+            border-color: #a88dcc;
+        }
+
+    form button[type="submit"] {
+        padding: 15px;
+        font-size: 20px;
+        font-weight: bold;
+        color: rgb(141, 240, 11);
+        background-image: linear-gradient(45deg, rgba(50, 0, 75, 0.4), rgba(128, 0, 128, 0.4));
+        background-size: 300% 300%;
+        animation: fireGlow 4s ease infinite;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        transition: background-color 0.3s ease;
+    }
+
+        form button[type="submit"]:hover {
+            background-color: #1d1d1d;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6), inset 0 -2px 8px rgba(255, 165, 0, 0.6);
+        }
+
+/* Анимация для кнопки */
+@keyframes fireGlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}

@@ -1,0 +1,19 @@
+﻿@using WebPortalEverthing.Models.LoadTesting.Auth
+@model RegLoadUserViewModel
+
+<div class="registration-form">
+    <form method="post">
+        <div>
+            @Html.TextBoxFor(x => x.Login, new { placeholder = "логин" })
+        </div>
+        <div>
+            @Html.TextBoxFor(x => x.Password, new { @type = "password", placeholder = "пароль" })
+        </div>
+        <div>
+            @Html.TextBoxFor(x => x.Email, new { @type = "email", placeholder = "email" })
+        </div>
+        <div>
+            <button type="submit">Регистрация</button>
+        </div>
+    </form>
+</div>
