@@ -15,4 +15,5 @@ namespace Everything.Data.Models
         public UserData User { get; set; }
         public IEnumerable<CommentData>? Comments { get; set; }
     }
+
 }
