@@ -23,7 +23,7 @@ builder.Services
     .AddCookie(AuthService.AUTH_TYPE_KEY, config =>
     {
         config.LoginPath = "/Auth/Login";
-        config.AccessDeniedPath = "/Auth/Deny";
+        config.AccessDeniedPath = "/Home/Forbidden";
     });
 
 // Add services to the container.
@@ -65,6 +65,7 @@ builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<LoadAuthService>();
+builder.Services.AddScoped<EnumHelper>();
 
 builder.Services.AddSingleton<IGameLifeRepository, GameLifeRepository>();
 
@@ -79,6 +80,9 @@ using (var scope = scopeFactory.CreateScope())
     var jsonFilePath = Path.Combine(app.Environment.ContentRootPath, "Data", "ServiceCenter", "typeOfAppliance.json");
     typeOfApplianceRepo.LoadDataFromJson(jsonFilePath);
 }
+
+var seed = new Seed();
+seed.Fill(app.Services);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

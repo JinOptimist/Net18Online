@@ -1,4 +1,6 @@
-﻿namespace Everything.Data.Interface.Models
+﻿using Enums.Users;
+
+namespace Everything.Data.Interface.Models
 {
     public interface IUser : IBaseModel
     {
@@ -7,5 +9,7 @@
         public int Age { get; set; }
         public decimal Coins { get; set; }
         public string AvatarUrl { get; set; }
+
+        public Role Role { get; set; }
     }
 }
