@@ -42,12 +42,6 @@ public class EcologyController : Controller
     [HttpGet]
     public IActionResult EcologyProfile()
     {
-        return View();
-    }
-    
-    [HttpPost]
-    public IActionResult EcologyProfile(EcologyProfileViewModel profileViewModel)
-    {
         var userId = _authService.GetUserId();
 
         if (userId is null)
@@ -56,14 +50,25 @@ public class EcologyController : Controller
         }
 
         var info = _commentRepositoryReal.GetCommentAuthors((int)userId);
+        
+        var viewModel = new EcologyProfileViewModel();
 
-        var profileModel = new EcologyProfileViewModel();
-        
-        //помогите пожалуйста дописать этот метод, я не понимаю как смапить данные
-        
-        return View(profileModel);
+        info.Comments.Select(dbComment => new CommentForProfileViewModel()
+        {
+            CommentId = dbComment.Id,
+            CommentText = dbComment.CommentText
+        });
+        viewModel.Posts = info
+            .Posts
+            .Select(dbPost => new EcologyForProfileViewModel
+            {
+                ImageSrc = dbPost.ImageSrc,
+                Texts = dbPost.Text,
+            })
+            .ToList();
+        return View(viewModel);
     }
-  
+    
     [HttpGet]
     public IActionResult EcologyChat()
     {

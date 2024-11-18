@@ -23,7 +23,8 @@ public class CommentRepository : BaseRepository<CommentData>, ICommentRepository
     
     public CommentsAndPostsByUser GetCommentAuthors(int userId)
     {
-        var user = (_dbSet.FirstOrDefault(us => us.UserId == userId))?.User;
+        var user = _webDbContext.Users.FirstOrDefault(u => u.Id == userId);
+        //var user = (_dbSet.FirstOrDefault(us => us.UserId == userId))?.User;
 
         if (user is null)
         {
