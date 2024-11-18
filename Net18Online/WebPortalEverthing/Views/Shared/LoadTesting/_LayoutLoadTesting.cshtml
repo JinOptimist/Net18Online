@@ -32,12 +32,15 @@
         <div class="name">LOAD TESTING</div>
         <div class="profile-blok">
             <div class="avatar">
-                <img src="~/images/LoadTesting/avatar.jpg" alt="avatar" class="avatar-image" />
             </div>
-            <div class="name-user-auth">Привет, @loadAuthService.GetName()</div>
-            <div class="name-user-auth-coins">
-                Количество монет
-                <div class="coin-icon">@loadAuthService.GetUserCoins()</div>
+            <div class="name-user-auth">
+                Привет, @loadAuthService.GetName()
+                <div class="name-user-auth-coins">
+                    Количество монет
+                    <div class="coin-icon">@loadAuthService.GetUserCoins() </div>
+
+                </div>
+
             </div>
             <div class="login-button">
                 <a class="login-button-registration" asp-area="" asp-controller="LoadAuth" asp-action="RegistrationLoadUserView">Registration</a>
