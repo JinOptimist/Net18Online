@@ -1,20 +1,35 @@
 ﻿using Everything.Data.Interface.Models;
 using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Everything.Data.Repositories
 {
     public interface IAnimeGirlRepositoryReal : IAnimeGirlRepository<GirlData>
     {
+        void Create(GirlData dataGirl, int currentUserId, int mangaId);
         IEnumerable<GirlData> GetWithoutManga();
+        IEnumerable<GirlData> GetAllWithCreatorsAndManga();
         bool HasSimilarName(string name);
         bool IsNameUniq(string name);
+        IEnumerable<GirlData> GetAllByAuthorId(int userId);
     }
 
     public class AnimeGirlRepository : BaseRepository<GirlData>, IAnimeGirlRepositoryReal
     {
         public AnimeGirlRepository(WebDbContext webDbContext) : base(webDbContext)
         {
+        }
+
+        public void Create(GirlData dataGirl, int currentUserId, int mangaId)
+        {
+            var creator = _webDbContext.Users.First(x => x.Id == currentUserId);
+            var manga = _webDbContext.Mangas.First(x => x.Id == mangaId);
+
+            dataGirl.Creator = creator;
+            dataGirl.Manga = manga;
+
+            Add(dataGirl);
         }
 
         public IEnumerable<GirlData> GetMostPopular()
@@ -29,6 +44,14 @@ namespace Everything.Data.Repositories
         {
             return _dbSet
                 .Where(x => x.Manga == null)
+                .ToList();
+        }
+
+        public IEnumerable<GirlData> GetAllWithCreatorsAndManga()
+        {
+            return _dbSet
+                .Include(x => x.Creator)
+                .Include(x => x.Manga)
                 .ToList();
         }
 
@@ -64,6 +87,15 @@ namespace Everything.Data.Repositories
         {
             return _dbSet
                 .Where(x => !string.IsNullOrEmpty(x.ImageSrc));
+        }
+
+        public IEnumerable<GirlData> GetAllByAuthorId(int userId)
+        {
+
+            return _dbSet
+                .Where(x => x.Creator != null
+                    && x.Creator.Id == userId)
+                .ToList();
         }
     }
 }

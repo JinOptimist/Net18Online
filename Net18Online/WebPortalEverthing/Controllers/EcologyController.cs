@@ -6,71 +6,155 @@ using Microsoft.Extensions.Logging;
 using Everything.Data.Repositories;
 using WebPortalEverthing.Models.Ecology;
 using Everything.Data.Models;
-
+using WebPortalEverthing.Services;
 
 
 namespace WebPortalEverthing.Controllers
 {
-    public class EcologyController : Controller
+    
+public class EcologyController : Controller
+{ 
+    private IEcologyRepositoryReal _ecologyRepository;
+    private IUserRepositryReal _userRepositryReal;
+    private WebDbContext _webDbContext;
+    private ICommentRepositoryReal _commentRepositoryReal;
+    private AuthService _authService;
+
+    public EcologyController(IEcologyRepositoryReal ecologyRepository, 
+        ICommentRepositoryReal commentRepositoryReal,
+        IUserRepositryReal userRepositryReal,
+        AuthService authService,
+        WebDbContext webDbContext)
     {
-        private IEcologyRepositoryReal _ecologyRepository;
-        private WebDbContext _webDbContext;
+        _ecologyRepository = ecologyRepository;
+        _commentRepositoryReal = commentRepositoryReal;
+        _webDbContext = webDbContext;
+        _userRepositryReal = userRepositryReal;
+        _authService = authService;
+    }
 
-        public EcologyController(IEcologyRepositoryReal ecologyRepository, WebDbContext webDbContext)
+    public IActionResult Index()
+    {
+        var model = new EcologyViewModel();
+        return View(model);
+    }
+
+    [HttpGet]
+    public IActionResult EcologyChat()
+    {
+        var id = _authService.GetUserId();
+        if (id is null)
         {
-            _ecologyRepository = ecologyRepository;
-            _webDbContext = webDbContext;
+            return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult Index()
+        var user = _userRepositryReal.Get(id.Value);
+        if (user.Coins < 150)
         {
-            var model = new EcologyViewModel();
-            return View(model);
+            return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        public IActionResult EcologyChat()
-        {
-            var ecologyFromDb = _ecologyRepository.GetAll();
+        var ecologyFromDb = _ecologyRepository.GetAll();
 
-            var ecologyViewModels = ecologyFromDb
-                .Select(dbEcology =>
-                    new EcologyViewModel
-                    {
-                        Id = dbEcology.Id,
-                        ImageSrc = dbEcology.ImageSrc,
-                        Texts = dbEcology.Text
-                    }
-                )
-                .ToList();
-            return View(ecologyViewModels);
+        var ecologyViewModels = ecologyFromDb
+            .Select(dbEcology =>
+                new EcologyViewModel
+                {
+                    PostId = dbEcology.Id,
+                    ImageSrc = dbEcology.ImageSrc,
+                    Texts = dbEcology.Text
+                }
+            )
+            .ToList();
+        return View(ecologyViewModels);
+    }
+
+    [HttpPost]
+    public IActionResult EcologyChat(PostCreationViewModel viewModel)
+    {
+        if (CalcCountWorldRepeat.IsEclogyTextHas(viewModel.Text)>=4)
+        {
+            ModelState.AddModelError(
+                nameof(PostCreationViewModel.Text),
+                "so similar texts");
         }
 
-        [HttpPost]
-        public IActionResult EcologyChat(PostCreationViewModel viewModel)
+        if (!ModelState.IsValid)
         {
-            var ecology = new EcologyData
-            {
-                ImageSrc = viewModel.Url,
-                Text = viewModel.Text
-            };
-            _ecologyRepository.Add(ecology);
-            
-            return RedirectToAction("EcologyChat");
+            return View(viewModel);
         }
         
-        [HttpPost]
-        public IActionResult UpdatePost(int id, string url, string text)
+        var ecology = new EcologyData
         {
-            _ecologyRepository.UpdatePost(id, url, text);
-            return RedirectToAction("EcologyChat");
-        }
-
-        [HttpPost]
-        public IActionResult Remove(int id)
-        {
-            _ecologyRepository.Delete(id);
-            return RedirectToAction("EcologyChat");
-        }
+            ImageSrc = viewModel.Url,
+            Text = viewModel.Text
+        };
+        _ecologyRepository.Add(ecology);
+            
+        return RedirectToAction("EcologyChat");
     }
+        
+    [HttpPost]
+    public IActionResult UpdatePost(int id, string url, string text)
+    {
+        _ecologyRepository.UpdatePost(id, url, text);
+        return RedirectToAction("EcologyChat");
+    }
+
+    [HttpPost]
+    public IActionResult Remove(int id)
+    {
+        _ecologyRepository.Delete(id);
+        return RedirectToAction("EcologyChat");
+    }
+    
+    /*[HttpPost]
+    public IActionResult AddComment(int postId, string commentTect, string userId)
+    {
+       //var userId
+        if (ModelState.IsValid && userId != null)
+        {
+            var comment = new CommentViewModel()
+            {
+                PostId = postId,
+                CommentText = commentText,
+                UserId = userId.Value
+            };
+            _commentRepositoryReal.Add(comment);
+            return RedirectToAction("EcologyChat");
+        }
+        return BadRequest("Invalid comment data.");
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> CommentsForPost(int postId)
+    {
+        var comments = await _commentRepositoryReal.Comments
+            .Where(c => c.PostId == postId)
+            .Include(c => c.User)
+            .ToListAsync();
+        return View(comments as string);
+    }*/
+
+    [HttpPost]
+    public IActionResult AddComment(int postId, string commentText)
+    {
+        //var userId
+        if (!ModelState.IsValid) return BadRequest("Invalid comment data.");
+        var comment = new CommentData()
+        {
+            PostId = postId, 
+            CommentText = commentText
+        }; 
+        _commentRepositoryReal.Add(comment); 
+        return RedirectToAction("EcologyChat");
+    }
+
+    [HttpGet]
+    public IActionResult CommentsForPost(int postId)
+    {
+        var comm = _commentRepositoryReal.GetCommentsByPostId(postId);
+        return View(comm);
+    }
+}
 }

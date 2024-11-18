@@ -3,7 +3,7 @@ using Everything.Data.Interface.Repositories;
 
 namespace Everything.Data.Fake.Repositories
 {
-    public class AnimeCatalogRepository : BaseRepository<IAnimeCatalogData>, IAnimeCatalogRepository
+    public class AnimeCatalogRepository : BaseRepository<IAnimeCatalogData>, IAnimeCatalogRepository<IAnimeCatalogData>
     {
     }
 }

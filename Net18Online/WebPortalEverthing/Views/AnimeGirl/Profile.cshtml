@@ -1,0 +1,31 @@
+﻿@using WebPortalEverthing.Models.AnimeGirl.Profile
+@model ProfileViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutAnime.cshtml";
+}
+
+<div>
+    <h1>@Model.UserName</h1>
+</div>
+
+<div class="mangas">
+    Manga: 
+    @foreach (var manga in Model.Mangas)
+    {
+        <span class="@(manga.IsCreatedWithСharacter ? "special" : "")">@manga.Name</span>
+    }
+</div>
+<div>
+    Girls:
+    <div class="girls">
+        @foreach (var girl in Model.Girls)
+        {
+            <div class="girl">
+                <div class="name">@girl.Name</div>
+                <div class="image-container">
+                    <img src="@girl.Url" alt="girl" />
+                </div>
+            </div>
+        }
+    </div>
+</div>

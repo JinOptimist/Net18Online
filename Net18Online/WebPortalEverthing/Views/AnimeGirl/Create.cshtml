@@ -21,5 +21,8 @@
         @Html.TextBoxFor(x => x.Weight, new { placeholder = "Вес", @type = "number" })
         @Html.ValidationMessageFor(x => x.Weight)
     </div>
+    <div>
+        @Html.DropDownListFor(x => x.MangaId, Model.Mangas)
+    </div>
     <button type="submit">Создать</button>
 </form>

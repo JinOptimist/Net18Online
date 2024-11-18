@@ -1,5 +1,6 @@
 ﻿using Everything.Data.Interface.Repositories;
 using Everything.Data.Models.Surveys;
+using Microsoft.EntityFrameworkCore;
 
 namespace Everything.Data.Repositories.Surveys
 {
@@ -11,6 +12,13 @@ namespace Everything.Data.Repositories.Surveys
     {
         public SurveyGroupRepository(WebDbContext webDbContext) : base(webDbContext)
         {
+        }
+
+        public IEnumerable<SurveyGroupData> GetAllWithСreatorUsers()
+        {
+            return _dbSet
+                .Include(x => x.СreatorUser)
+                .ToList();
         }
 
         public void UpdateTitle(int id, string newTitle)
@@ -27,6 +35,21 @@ namespace Everything.Data.Repositories.Surveys
         public bool HasUniqueTitle(string title)
         {
             return !_dbSet.Any(x => x.Title == title);
+        }
+
+        public void CreateSurveyGroup(string title, int? userId)
+        {
+            var user = _webDbContext
+                .Users
+                .FirstOrDefault(x => x.Id == userId);
+
+            var surveyGroup = new SurveyGroupData()
+            {
+                Title = title,
+                СreatorUser = user
+            };
+
+            Add(surveyGroup);
         }
     }
 }
