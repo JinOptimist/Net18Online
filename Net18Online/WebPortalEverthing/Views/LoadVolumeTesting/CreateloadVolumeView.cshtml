@@ -1,0 +1,15 @@
+﻿@model WebPortalEverthing.Models.LoadTesting.CreateLoadVolumeModel
+
+@{
+    Layout = "~/Views/Shared/LoadTesting/_LayoutLoadTesting.cshtml";
+}
+
+<form method="post">
+    <div>
+        @Html.TextBoxFor(x => x.Title, new { placeholder = "Volume metric`s name" })
+    </div>
+    <div>
+        @Html.TextBoxFor(x => x.Description, new { placeholder = "Description metric`s name" })
+    </div>
+    <button type="submit">Create volume indicator</button>
+</form>

@@ -28,6 +28,7 @@ namespace Everything.Data
         public DbSet<AnimeData> Animes { get; set; }
 
         public DbSet<AnimeReviewData> AnimeReviews { get; set; }
+        public DbSet<FilmDirectorData> FilmDirectors { get; set; }
         #region ServiceCenter
         public DbSet<TypeOfApplianceData> TypeOfAppliances { get; set; }
         public DbSet<ProducerData> Producers { get; set; }
@@ -46,7 +47,8 @@ namespace Everything.Data
         public DbSet<CoffeShopActivityData> Activities { get; set; }
 
         public DbSet<MetricData> Metrics { get; set; } // Описание таблицы с метриками
-        public DbSet<LoadVolumeTestingData> LoadVolumeTestingMetrics { get; set; } // Описание таблицы с метриками LoadVolumeTesting
+        public DbSet<LoadVolumeTestingData> LoadVolumeTestingMetrics { get; set; } // Описание таблицы с разделами LoadVolumeTesting
+        public DbSet<LoadUserData> LoadUsers { get; set; }
 
         #region SURVEYS
         public DbSet<StatusData> Statuses { get; set; }
@@ -176,6 +178,11 @@ namespace Everything.Data
                 .WithMany()
                 .HasForeignKey(m => m.TypeId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<FilmDirectorData>()
+                .HasMany(x => x.Movies)
+                .WithOne(x => x.FilmDirector)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

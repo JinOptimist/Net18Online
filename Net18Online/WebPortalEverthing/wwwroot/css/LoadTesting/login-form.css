@@ -1,0 +1,67 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url("./images/LoadTesting/7.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: rgb(35, 38, 39);
+    margin: 0;
+    background-position: center 250px;
+}
+
+.login-form {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 15px;
+    box-shadow: 0px 15px 30px rgba(245, 154, 119, 0.5), 0px -10px 15px rgba(192, 243, 7, 0.5);
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+    .login-form form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .login-form input[type="text"],
+    .login-form input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        outline: none;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        text-shadow: 0px 1px 2px black;
+        box-shadow: inset 0 -2px 8px rgba(255, 165, 0, 0.8);
+        transition: all 0.3s ease;
+    }
+
+        .login-form input[type="text"]::placeholder,
+        .login-form input[type="password"]::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+            text-shadow: none;
+        }
+
+        .login-form input[type="text"]:focus,
+        .login-form input[type="password"]:focus {
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: inset 0 -2px 10px rgba(255, 140, 0, 0.8), 0 0 10px rgba(255, 140, 0, 0.8);
+        }
+
+    .login-form button {
+        padding: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        color: white;
+        background: linear-gradient(90deg, orange, darkviolet);
+        border: none;
+        border-radius: 8px;
+        box-sh
