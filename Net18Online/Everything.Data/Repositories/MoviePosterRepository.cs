@@ -1,11 +1,13 @@
 ﻿using Everything.Data.Interface.Models;
 using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Everything.Data.Repositories
 {
     public interface IMoviePosterRepositoryReal : IMoviePosterRepository<MovieData>
     {
+        // bool HasSimilarUrl(string url); Когда пронаследуемся от базового репозитория и получим доступ к _DbSet
     }
 
     public class MoviePosterRepository : IMoviePosterRepositoryReal

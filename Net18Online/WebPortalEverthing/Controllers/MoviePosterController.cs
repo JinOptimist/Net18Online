@@ -4,6 +4,7 @@ using Everything.Data.Repositories;
 using Everything.Data.Interface.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.MoviePoster;
+using WebPortalEverthing.Models.AnimeGirl;
 
 namespace WebPortalEverthing.Controllers
 {
@@ -76,6 +77,18 @@ namespace WebPortalEverthing.Controllers
         [HttpPost]
         public IActionResult CreatePoster(MovieCreationViewModel viewModel)
         {
+            //if (_moviePosterRepository.HasSimilarUrl(viewModel.Url)) Когда пронаследуемся от базового репозитория и получим доступ к _DbSet
+            //{
+            //    ModelState.AddModelError(
+            //        nameof(MovieCreationViewModel.Url),
+            //        "Такой url уже есть");
+            //}
+
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
             var dataMovie = new MovieData
             {
                 Name = viewModel.Name,
