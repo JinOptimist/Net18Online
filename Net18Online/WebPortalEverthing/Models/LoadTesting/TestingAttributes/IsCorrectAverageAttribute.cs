@@ -10,7 +10,7 @@ namespace WebPortalEverthing.Models.LoadTesting.TestingAttributes
         private UnitLoad _option;
         private LoadLevel _level;
 
-        public IsCorrectAverageAttribute(double min, double max, UnitLoad option, LoadLevel level)
+        public IsCorrectAverageAttribute(decimal min, decimal max, UnitLoad option, LoadLevel level)
         {
             _min = 0.01m;
             _max = 20000m;
@@ -41,7 +41,7 @@ namespace WebPortalEverthing.Models.LoadTesting.TestingAttributes
 
         public override bool IsValid(object? value)
         {
-            if (value is not double)
+            if (value is not decimal)
             {
                 return false;
             }
