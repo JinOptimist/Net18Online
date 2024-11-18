@@ -6,5 +6,6 @@ namespace Everything.Data.Models.Surveys
     {
         public string Title { get; set; }
         public virtual List<SurveyData> Surveys { get; set; } = new();
+        public virtual UserData? СreatorUser { get; set; }
     }
 }

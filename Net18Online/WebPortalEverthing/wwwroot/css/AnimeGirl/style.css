@@ -111,3 +111,8 @@ header .name {
         border: 1px #ccc solid;
         padding: 5px;
     }
+
+.special{
+    color: darkred;
+    font-size: 30px;
+}

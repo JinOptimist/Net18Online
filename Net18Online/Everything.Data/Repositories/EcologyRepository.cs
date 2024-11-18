@@ -16,12 +16,13 @@ namespace Everything.Data.Repositories
 
         public void UpdatePost(int id, string url, string text)
         {
-            var ecology = _dbSet.First(e => e.Id == id); 
+            var ecology = _dbSet.First(e => e.Id == id);
 
             ecology.ImageSrc = url;
-            ecology.Text = text; 
-                
+            ecology.Text = text;
+
             _webDbContext.SaveChanges();
         }
+        
     }
 }    

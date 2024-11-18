@@ -1,4 +1,5 @@
-﻿using WebPortalEverthing.Models.CustomValidationAttrubites;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using WebPortalEverthing.Models.CustomValidationAttrubites;
 
 namespace WebPortalEverthing.Models.AnimeGirl
 {
@@ -15,5 +16,8 @@ namespace WebPortalEverthing.Models.AnimeGirl
 
         [Weight]
         public int Weight { get; set; }
+
+        public int MangaId { get; set; }
+        public List<SelectListItem>? Mangas { get; set; }
     }
 }
