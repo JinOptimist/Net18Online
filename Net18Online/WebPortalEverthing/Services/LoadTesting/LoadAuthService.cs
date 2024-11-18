@@ -35,7 +35,7 @@
             return int.Parse(isStr);
         }
 
-        public int? GetUserCoins()
+        public decimal? GetUserCoins()
         {
             var isStr = GetClaimValue(CLAIM_TYPE_COINS);
             if (isStr == null)
@@ -43,7 +43,7 @@
                 return null;
             }
 
-            return int.Parse(isStr);
+            return decimal.Parse(isStr);
         }
 
         private string? GetClaimValue(string type)
