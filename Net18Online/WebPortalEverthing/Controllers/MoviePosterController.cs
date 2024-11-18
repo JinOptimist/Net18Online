@@ -76,7 +76,7 @@ namespace WebPortalEverthing.Controllers
         [HttpPost]
         public IActionResult CreatePoster(MovieCreationViewModel viewModel)
         {
-            //if (_moviePosterRepository.HasSimilarUrl(viewModel.Url)) Когда пронаследуемся от базового репозитория и получим доступ к _DbSet
+            //if (_moviePosterRepository.HasSimilarUrl(viewModel.Url))
             //{
             //    ModelState.AddModelError(
             //        nameof(MovieCreationViewModel.Url),
