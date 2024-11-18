@@ -4,7 +4,6 @@ using Everything.Data.Repositories;
 using Everything.Data.Interface.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.MoviePoster;
-using WebPortalEverthing.Models.AnimeGirl;
 
 namespace WebPortalEverthing.Controllers
 {
