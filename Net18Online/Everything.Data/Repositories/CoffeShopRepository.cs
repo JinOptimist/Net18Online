@@ -1,66 +1,82 @@
 ﻿using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Everything.Data.Repositories
 {
-	public interface IKeyCoffeShopRepository : ICoffeShopRepository<CoffeData>
-	{
-	}
+    public interface IKeyCoffeShopRepository : ICoffeShopRepository<CoffeData>
+    {
+        void Create(CoffeData dataCoffe, int currentUserId, int brandId);
+        public IEnumerable<CoffeData> GetAllWithCreatorsAndBrand();
 
-	public class CoffeShopRepository : BaseRepository<CoffeData>, IKeyCoffeShopRepository
-	{
-		public CoffeShopRepository(WebDbContext webDbContext) : base(webDbContext)
-		{
-		}
+    }
 
-		public IEnumerable<CoffeData> GetCoffeByName(string name)
-		{
-			return _dbSet
-				.Where(x => x.Coffe == name)
-				.ToList();
-		}
+    public class CoffeShopRepository : BaseRepository<CoffeData>, IKeyCoffeShopRepository
+    {
+        public CoffeShopRepository(WebDbContext webDbContext) : base(webDbContext)
+        {
+        }
 
-		public IEnumerable<CoffeData> GetDefaultCoffe()
-		{
-			return SerializeObject()
-				.Where(x => x.Coffe == "Latte" || x.Coffe == "Raf" || x.Coffe == "Americano")
-				.ToList();
-		}
+        public void Create(CoffeData dataCoffe, int currentUserId, int brandId)
+        {
+            var creator = _webDbContext.Users.First(x => x.Id == currentUserId);
+            var brand = _webDbContext.Brands.First(x => x.Id == brandId);
 
-		public void UpdateCoffeName(int id, string name)
-		{
+            dataCoffe.Creator = creator;
+            dataCoffe.Brand = brand;
 
-			var item = _dbSet.First(x => x.Id == id);
+            Add(dataCoffe);
+        }
 
-			item.Coffe = name;
+        public IEnumerable<CoffeData> GetAllWithCreatorsAndBrand()
+        {
+            return _dbSet
+                .Include(x => x.Creator)
+                .Include(x => x.Brand)
+                .ToList();
+        }
 
-			_webDbContext.SaveChanges();
-		}
+        public IEnumerable<CoffeData> GetDefaultCoffe()
+        {
+            return SerializeObject()
+                .Where(x => x.Coffe == "Latte" || x.Coffe == "Raf" || x.Coffe == "Americano")
+                .ToList();
+        }
 
-		public void UpdateCost(int id, decimal cost)
-		{
+        public void UpdateCoffeName(int id, string name)
+        {
 
-			var item = _dbSet.First(x => x.Id == id);
+            var item = _dbSet.First(x => x.Id == id);
 
-			item.Cost = cost;
+            item.Coffe = name;
 
-			_webDbContext.SaveChanges();
-		}
+            _webDbContext.SaveChanges();
+        }
 
-		public void UpdateImage(int id, string url)
-		{
+        public void UpdateCost(int id, decimal cost)
+        {
 
-			var item = _dbSet.First(x => x.Id == id);
+            var item = _dbSet.First(x => x.Id == id);
 
-			item.Url = url;
+            item.Cost = cost;
 
-			_webDbContext.SaveChanges();
-		}
+            _webDbContext.SaveChanges();
+        }
 
-		private IQueryable<CoffeData> SerializeObject()
-		{
-			return _dbSet
-				.Where(x => !string.IsNullOrEmpty(x.Url));
-		}
-	}
+        public void UpdateImage(int id, string url)
+        {
+
+            var item = _dbSet.First(x => x.Id == id);
+
+            item.Url = url;
+
+            _webDbContext.SaveChanges();
+        }
+
+        private IQueryable<CoffeData> SerializeObject()
+        {
+            return _dbSet
+                .Where(x => !string.IsNullOrEmpty(x.Url));
+        }
+    }
 }

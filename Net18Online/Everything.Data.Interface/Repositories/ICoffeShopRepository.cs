@@ -7,8 +7,6 @@ namespace Everything.Data.Interface.Repositories
     {
         public IEnumerable<T> GetDefaultCoffe();
 
-		public IEnumerable<T> GetCoffeByName(string name);
-
 		void UpdateCoffeName(int id, string name);
         
         void UpdateImage(int id, string url);

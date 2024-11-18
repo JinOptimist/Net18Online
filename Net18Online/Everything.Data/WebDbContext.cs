@@ -42,6 +42,10 @@ namespace Everything.Data
 
         public DbSet<BrandData> Brands { get; set; }
 
+        public DbSet<CoffeCompanyData> CoffeCompanies { get; set; }
+
+        public DbSet<CoffeShopActivityData> Activities { get; set; }
+
         public DbSet<MetricData> Metrics { get; set; } // Описание таблицы с метриками
         public DbSet<LoadVolumeTestingData> LoadVolumeTestingMetrics { get; set; } // Описание таблицы с разделами LoadVolumeTesting
         public DbSet<LoadUserData> LoadUsers { get; set; }
@@ -99,10 +103,26 @@ namespace Everything.Data
                 .WithOne(x => x.СreatorUser)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<CoffeData>()
+                .HasOne(x => x.Creator)
+                .WithMany(x => x.CreatedCoffe)
+                .OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<BrandData>()
                 .HasMany(x => x.Coffe)
                 .WithOne(x => x.Brand)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<CoffeCompanyData>()
+                .HasMany(x => x.Coffe)
+                .WithOne(x => x.Company)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<CoffeShopActivityData>()
+                .HasMany(x => x.CoffeCompanies)
+                .WithOne(x => x.TypeOfActivity)
+                .OnDelete(DeleteBehavior.NoAction);
+                
 
             modelBuilder.Entity<GameStudiosData>()
                 .HasMany(x => x.Games)

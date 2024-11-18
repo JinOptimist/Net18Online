@@ -4,6 +4,7 @@ using Everything.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Everything.Data.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    partial class WebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241116093538_CreateCoffeCompanyAndActivityAndCreator")]
+    partial class CreateCoffeCompanyAndActivityAndCreator
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -299,27 +302,6 @@ namespace Everything.Data.Migrations
                     b.ToTable("Ecologies");
                 });
 
-            modelBuilder.Entity("Everything.Data.Models.FilmDirectorData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FilmDirectors");
-                });
-
             modelBuilder.Entity("Everything.Data.Models.GameData", b =>
                 {
                     b.Property<int>("Id")
@@ -398,37 +380,6 @@ namespace Everything.Data.Migrations
                     b.ToTable("Girls");
                 });
 
-            modelBuilder.Entity("Everything.Data.Models.LoadUserData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Coins")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Login")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LoadUsers");
-                });
-
             modelBuilder.Entity("Everything.Data.Models.LoadVolumeTestingData", b =>
                 {
                     b.Property<int>("Id")
@@ -441,16 +392,11 @@ namespace Everything.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("LoadUserDataId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LoadUserDataId");
 
                     b.ToTable("LoadVolumeTestingMetrics");
                 });
@@ -495,9 +441,6 @@ namespace Everything.Data.Migrations
                     b.Property<Guid>("Guid")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("LoadUserDataId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("LoadVolumeTestingId")
                         .HasColumnType("int");
 
@@ -509,8 +452,6 @@ namespace Everything.Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("LoadUserDataId");
 
                     b.HasIndex("LoadVolumeTestingId");
 
@@ -552,9 +493,6 @@ namespace Everything.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("FilmDirectorId")
-                        .HasColumnType("int");
-
                     b.Property<string>("ImageSrc")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -565,7 +503,6 @@ namespace Everything.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FilmDirectorId");
                     b.ToTable("Movies");
                 });
 
@@ -838,13 +775,6 @@ namespace Everything.Data.Migrations
                     b.Navigation("Manga");
                 });
 
-            modelBuilder.Entity("Everything.Data.Models.LoadVolumeTestingData", b =>
-                {
-                    b.HasOne("Everything.Data.Models.LoadUserData", null)
-                        .WithMany("LoadVolumeTestingParts")
-                        .HasForeignKey("LoadUserDataId");
-                });
-
             modelBuilder.Entity("Everything.Data.Models.MangaData", b =>
                 {
                     b.HasOne("Everything.Data.Models.UserData", "Author")
@@ -857,10 +787,6 @@ namespace Everything.Data.Migrations
 
             modelBuilder.Entity("Everything.Data.Models.MetricData", b =>
                 {
-                    b.HasOne("Everything.Data.Models.LoadUserData", null)
-                        .WithMany("Metrics")
-                        .HasForeignKey("LoadUserDataId");
-
                     b.HasOne("Everything.Data.Models.LoadVolumeTestingData", "LoadVolumeTesting")
                         .WithMany("VolumeMetrics")
                         .HasForeignKey("LoadVolumeTestingId")
@@ -893,16 +819,6 @@ namespace Everything.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Survey");
-                });
-
-            modelBuilder.Entity("Everything.Data.Models.MovieData", b =>
-                {
-                    b.HasOne("Everything.Data.Models.FilmDirectorData", "FilmDirector")
-                        .WithMany("Movies")
-                        .HasForeignKey("FilmDirectorId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("FilmDirector");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.Surveys.SurveyData", b =>
@@ -954,18 +870,6 @@ namespace Everything.Data.Migrations
             modelBuilder.Entity("Everything.Data.Models.GameStudiosData", b =>
                 {
                     b.Navigation("Games");
-                });
-
-            modelBuilder.Entity("Everything.Data.Models.FilmDirectorData", b =>
-                {
-                    b.Navigation("Movies");
-                });
-
-            modelBuilder.Entity("Everything.Data.Models.LoadUserData", b =>
-                {
-                    b.Navigation("LoadVolumeTestingParts");
-
-                    b.Navigation("Metrics");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.LoadVolumeTestingData", b =>

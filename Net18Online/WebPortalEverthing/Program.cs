@@ -14,6 +14,7 @@ using GameStoreRepository = Everything.Data.Repositories.GameStoreRepository;
 using LoadTestingRepository = Everything.Data.Repositories.LoadTestingRepository;
 using AnimeCatalogRepository = Everything.Data.Repositories.AnimeCatalogRepository;
 using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRepository;
+using WebPortalEverthing.Services.LoadTesting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,6 +64,7 @@ builder.Services.AddScoped<IUserRepositryReal, UserRepository>();
 builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<LoadAuthService>();
 
 builder.Services.AddSingleton<IGameLifeRepository, GameLifeRepository>();
 

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using WebPortalEverthing.Models.Auth;
 using WebPortalEverthing.Models.LoadTesting.Auth;
-using WebPortalEverthing.Services;
+using WebPortalEverthing.Services.LoadTesting;
 
 namespace WebPortalEverthing.Controllers.LoadAuth
 {
@@ -44,12 +44,13 @@ namespace WebPortalEverthing.Controllers.LoadAuth
 
             var claims = new List<Claim>()
             {
-                new Claim(AuthService.CLAIM_TYPE_ID, user.Id.ToString()),
-                new Claim(AuthService.CLAIM_TYPE_NAME, user.Login),
-                new Claim (ClaimTypes.AuthenticationMethod, AuthService.AUTH_TYPE_KEY),
+                new Claim(LoadAuthService.CLAIM_TYPE_ID, user.Id.ToString()),
+                new Claim(LoadAuthService.CLAIM_TYPE_NAME, user.Login),
+                new Claim(LoadAuthService.CLAIM_TYPE_COINS, user.Coins.ToString()),
+                new Claim (ClaimTypes.AuthenticationMethod, LoadAuthService.AUTH_TYPE_KEY),
             };
 
-            var identity = new ClaimsIdentity(claims, AuthService.AUTH_TYPE_KEY);
+            var identity = new ClaimsIdentity(claims, LoadAuthService.AUTH_TYPE_KEY);
 
             var principal = new ClaimsPrincipal(identity);
 
@@ -57,7 +58,7 @@ namespace WebPortalEverthing.Controllers.LoadAuth
                 .SignInAsync(principal)
                 .Wait();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("IndexLoadVolumeView", "LoadVolumeTesting");
         }
 
         [HttpGet]
@@ -83,7 +84,7 @@ namespace WebPortalEverthing.Controllers.LoadAuth
                 .SignOutAsync()
                 .Wait();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("IndexLoadVolumeView", "LoadVolumeTesting");
         }
     }
 }
