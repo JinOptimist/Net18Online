@@ -6,49 +6,17 @@ namespace Everything.Data.Repositories
 {
     public interface IMoviePosterRepositoryReal : IMoviePosterRepository<MovieData>
     {
+        IEnumerable<MovieData> GetAllWithoutDirector();
     }
 
-    public class MoviePosterRepository : IMoviePosterRepositoryReal
+    public class MoviePosterRepository : BaseRepository<MovieData>, IMoviePosterRepositoryReal
     {
-        private WebDbContext _webDbContext;
 
-        public MoviePosterRepository(WebDbContext webDbContext)
+        public MoviePosterRepository(WebDbContext webDbContext) : base(webDbContext)
         {
-            _webDbContext = webDbContext;
         }
 
-        public void Add(MovieData data)
-        {
-            _webDbContext.Add(data);
-            _webDbContext.SaveChanges();
-        }
-
-        public bool Any()
-        {
-            return _webDbContext.Movies.Any();
-        }
-
-        public void Delete(MovieData data)
-        {
-            _webDbContext.Movies.Remove(data);
-            _webDbContext.SaveChanges();
-        }
-
-        public void Delete(int id)
-        {
-            var data = Get(id);
-            Delete(data);
-        }
-
-        public MovieData? Get(int id)
-        {
-            return _webDbContext.Movies.FirstOrDefault(x => x.Id == id);
-        }
-
-        public IEnumerable<MovieData> GetAll()
-        {
-            return GetFinilizeMovies().ToList();
-        }
+       
 
         public IEnumerable<MovieData> GetAllInCount(int count)
         {
@@ -57,9 +25,16 @@ namespace Everything.Data.Repositories
                 .ToList();
         }
 
+        public IEnumerable<MovieData> GetAllWithoutDirector()
+        {
+            return _dbSet
+                .Where(x => x.FilmDirector == null)
+                .ToList();
+        }
+
         public void UpdateImage(int id, string url)
         {
-            var movie = _webDbContext.Movies.First(x => x.Id == id);
+            var movie = _dbSet.First(x => x.Id == id);
 
             movie.ImageSrc = url;
 
@@ -68,7 +43,7 @@ namespace Everything.Data.Repositories
 
         public void UpdateName(int id, string newName)
         {
-            var movie = _webDbContext.Movies.First(x => x.Id == id);
+            var movie = _dbSet.First(x => x.Id == id);
 
             movie.Name = newName;
 
@@ -77,8 +52,7 @@ namespace Everything.Data.Repositories
 
         private IQueryable<MovieData> GetFinilizeMovies()
         {
-            return _webDbContext
-                .Movies
+            return _dbSet
                 .Where(x => !string.IsNullOrEmpty(x.ImageSrc));
         }
     }

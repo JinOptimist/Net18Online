@@ -46,7 +46,7 @@ builder.Services.AddScoped<IEcologyRepositoryReal, EcologyRepository>();
 builder.Services.AddScoped<IKeyCoffeShopRepository, CoffeShopRepository>();
 builder.Services.AddScoped<IMangaRepositoryReal, MangaRepository>();
 builder.Services.AddScoped<IBrandRepositoryReal, BrandRepository>();
-
+builder.Services.AddScoped<IFilmDirectorRepositoryReal, FilmDirectorRepository>();
 builder.Services.AddScoped<IAnimeGirlRepositoryReal, AnimeGirlRepository>();
 builder.Services.AddScoped<ISurveyGroupRepositoryReal, SurveyGroupRepository>();
 builder.Services.AddScoped<IStatusRepositoryReal, StatusRepository>();
