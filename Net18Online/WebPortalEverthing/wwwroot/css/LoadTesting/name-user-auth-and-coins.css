@@ -1,0 +1,35 @@
+﻿.name-user-auth {
+    font-size: 20px;
+    color: white;
+    text-shadow: 0px 1px 2px black;
+    margin: 20px auto;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0px 5px 15px rgba(255, 140, 0, 0.8), inset 0 -2px 10px rgba(255, 165, 0, 0.8);
+}
+
+.name-user-auth-coins {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: white;
+    text-shadow: 0px 1px 2px black;
+    margin: 15px auto;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0px 5px 15px rgba(255, 140, 0, 0.8), inset 0 -2px 10px rgba(255, 165, 0, 0.8);
+    gap: 10px;
+}
+
+    .name-user-auth-coins .coin-icon {
+        width: 30px;
+        height: 30px;
+        background-image: url("/images/LoadTesting/coin-icon.jpg"); /* изобр монетки */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }

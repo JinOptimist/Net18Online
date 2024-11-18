@@ -57,7 +57,7 @@ namespace WebPortalEverthing.Controllers.LoadAuth
                 .SignInAsync(principal)
                 .Wait();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("IndexLoadVolumeView", "LoadVolumeTesting");
         }
 
         [HttpGet]
@@ -83,7 +83,7 @@ namespace WebPortalEverthing.Controllers.LoadAuth
                 .SignOutAsync()
                 .Wait();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("IndexLoadVolumeView", "LoadVolumeTesting");
         }
     }
 }
