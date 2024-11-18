@@ -5,8 +5,8 @@ namespace WebPortalEverthing.Models.LoadTesting.TestingAttributes
 {
     public class IsCorrectAverageAttribute : ValidationAttribute
     {
-        private double _min;
-        private double _max;
+        private decimal _min;
+        private decimal _max;
         private UnitLoad _option;
         private LoadLevel _level;
 
@@ -29,7 +29,6 @@ namespace WebPortalEverthing.Models.LoadTesting.TestingAttributes
             _min = min;
             _max = max;
             _option = option;
-            _level = level;
         }
 
         public override string FormatErrorMessage(string name)
@@ -47,7 +46,7 @@ namespace WebPortalEverthing.Models.LoadTesting.TestingAttributes
                 return false;
             }
 
-            var average = (double)value;
+            var average = (decimal)value;
 
             if (average < _min)
             {
