@@ -44,36 +44,22 @@ public class EcologyController : Controller
     {
         return View();
     }
+    
     [HttpPost]
     public IActionResult EcologyProfile(EcologyProfileViewModel profileViewModel)
     {
+        var userId = _authService.GetUserId();
+
+        if (userId is null)
+        {
+            throw new Exception("User is not authenticated");
+        }
+
+        var info = _commentRepositoryReal.GetCommentAuthors((int)userId);
+
         var profileModel = new EcologyProfileViewModel();
-        profileModel.UserName = _authService.GetName()!;
-        var userId = _authService.GetUserId()!.Value;
-
-        profileModel.Comments = _commentRepositoryReal
-            .GetCommentAuthors(userId)
-            .Select(x => new EcologyProfileViewModel
-            {
-                Posts = UserName
-                    .Posts
-                    .Select(p => new EcologyViewModel
-                    {
-                        PostId = p.Id,
-                        ImageSrc = p.ImageSrc,
-                        Texts = p.Text
-                    })
-                    .ToList(),
-
-                Comments = UserName
-                    .Comments
-                    .Select(c => new CommentViewModel
-                    {
-                        PostText = c.Post.Text,
-                        CommentText = c.CommentText
-                    })
-                    .ToList()
-            });
+        
+        //помогите пожалуйста дописать этот метод, я не понимаю как смапить данные
         
         return View(profileModel);
     }

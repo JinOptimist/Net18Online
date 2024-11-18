@@ -756,11 +756,6 @@ namespace Everything.Data.Migrations
                     b.Navigation("SurveyGroup");
                 });
 
-            modelBuilder.Entity("Everything.Data.Models.AnimeData", b =>
-                {
-                    b.Navigation("Reviews");
-                });
-                    
             modelBuilder.Entity("Everything.Data.Models.Surveys.SurveyGroupData", b =>
                 {
                     b.HasOne("Everything.Data.Models.UserData", "СreatorUser")
@@ -769,6 +764,11 @@ namespace Everything.Data.Migrations
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("СreatorUser");
+                });
+
+            modelBuilder.Entity("Everything.Data.Models.AnimeData", b =>
+                {
+                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.BrandData", b =>
