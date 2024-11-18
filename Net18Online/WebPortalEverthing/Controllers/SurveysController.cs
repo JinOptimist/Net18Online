@@ -317,17 +317,7 @@ namespace WebPortalEverthing.Controllers
                 return View(surveyCreate);
             }
 
-            var selectedSurveyGroup = _surveyGroupRepository
-                .Get(surveyCreate.SurveyGroup.Id);
-
-            var survey = new SurveyData()
-            {
-                SurveyGroup = selectedSurveyGroup,
-                IdStatus = 1, // Пока такой хардкод, пока не сделана связка между таблицами
-                Title = surveyCreate.Title,
-                Description = surveyCreate.Description
-            };
-            _surveysRepository.Add(survey);
+            _surveysRepository.CreateSurvey(surveyCreate.Title, surveyCreate.SurveyGroup.Id, surveyCreate.Description);
 
             return RedirectToAction(nameof(SurveysAll));
         }

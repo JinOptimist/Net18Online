@@ -13,6 +13,24 @@ namespace Everything.Data.Repositories.Surveys
         {
         }
 
+        public void CreateSurvey(string title, int groupId, string? description)
+        {
+            var group = _webDbContext
+                .SurveyGroups
+                .First(x => x.Id == groupId);
+
+            var survey = new SurveyData()
+            {
+                SurveyGroup = group,
+                IdStatus = 1, // Пока такой хардкод, пока не сделана связка между таблицами
+                Title = title,
+                Description = description
+            };
+
+            _dbSet.Add(survey);
+            _webDbContext.SaveChanges();
+        }
+
         public void UpdateTitle(int id, string newTitle)
         {
             var surveyGroup = _webDbContext
