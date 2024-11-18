@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebPortalEverthing.Models.CustomValidationAttrubites;
 
 namespace WebPortalEverthing.Models.Ecology
@@ -10,5 +11,7 @@ namespace WebPortalEverthing.Models.Ecology
         [EcologyText]
         [IsCorrectLength(15)]
         public string Text { get; set;}
+        public int PostId { get; set; }
+        public List<SelectListItem>? Posts { get; set; }
     }
 }

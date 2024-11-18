@@ -44,6 +44,7 @@ builder.Services.AddScoped<IMoviePosterRepositoryReal, MoviePosterRepository>();
 builder.Services.AddScoped<IAnimeCatalogRepositoryReal, AnimeCatalogRepository>();
 builder.Services.AddScoped<IAnimeReviewRepositoryReal, AnimeReviewsRepository>();
 builder.Services.AddScoped<IEcologyRepositoryReal, EcologyRepository>();
+builder.Services.AddScoped<ICommentRepositoryReal, CommentRepository>();
 builder.Services.AddScoped<IKeyCoffeShopRepository, CoffeShopRepository>();
 builder.Services.AddScoped<IMangaRepositoryReal, MangaRepository>();
 builder.Services.AddScoped<IBrandRepositoryReal, BrandRepository>();
