@@ -8,6 +8,7 @@ using Everything.Data;
 using Everything.Data.Repositories;
 using WebPortalEverthing.Models.AnimeGirl;
 using WebPortalEverthing.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebPortalEverthing.Controllers
 {
@@ -17,15 +18,19 @@ namespace WebPortalEverthing.Controllers
         private WebDbContext _webDbContext;
         private CheckingForBannedNames _checkingForBannedNames = new();
         private List<string> _bannedWords = new List<string> { "admin", "root", "test" };
-        public GameStoreController(IGameStoreRepositoryReal gameStoreRepository, WebDbContext webDbContext)
+        private AuthService _authService;
+
+        public GameStoreController(IGameStoreRepositoryReal gameStoreRepository, WebDbContext webDbContext, AuthService authService)
         {
             _gameStoreRepository = gameStoreRepository;
             _webDbContext = webDbContext;
+            _authService = authService;
         }
         public IActionResult Index()
         {
             var model = new GameViewModel();
-
+            var userName = _authService.GetName();
+            model.UserName = userName;
             model.Date = DateTime.Now;
             model.NameGame = "Dota 2";
 
@@ -38,8 +43,8 @@ namespace WebPortalEverthing.Controllers
         }
         public IActionResult Library()
         {
-            //var gameFromDb = _gameStoreRepository.GetAll();
-            var gameFromDb = _webDbContext.Games.ToList();
+            var gameFromDb = _gameStoreRepository.AllBuyersGames();
+            //var gameFromDb = _webDbContext.Games.ToList();
             if (!_gameStoreRepository.Any())
             {
                 //GenerateDefaultGame();
@@ -123,7 +128,15 @@ namespace WebPortalEverthing.Controllers
             _gameStoreRepository.UpdateImage(id, url);
             return RedirectToAction("Library");
         }
-
+      
+        [HttpPost]
+        public IActionResult Purchases(int buyerId, int gameId)
+        {                      
+           
+                _gameStoreRepository.LinkGame(buyerId, gameId);
+                return RedirectToAction("Library");
+            
+        }
         public IActionResult Remove(int id)
         {
             _gameStoreRepository.Delete(id);

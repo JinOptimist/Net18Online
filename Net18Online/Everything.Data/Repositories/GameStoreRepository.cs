@@ -5,18 +5,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Everything.Data.DataLayerModels;
 
 namespace Everything.Data.Repositories
 {
     public interface IGameStoreRepositoryReal : IGameStoreRepository<GameData>
     {
+        IEnumerable<GameData> AllBuyersGames();
         IEnumerable<GameData> GetWithoutOwner();
+        IEnumerable<GameWithInfoAboutAuthor> GetGameWithBuyer(int buyerId);
+        void LinkGame(int buyerId, int gameId);
         bool HasSimilarName(string name);
     }
     public class GameStoreRepository : BaseRepository<GameData>, IGameStoreRepositoryReal
     {
         public GameStoreRepository(WebDbContext webDbContext) : base(webDbContext)
         {
+        }
+
+        public IEnumerable<GameData> AllBuyersGames()
+        {
+            return _dbSet.Include(x => x.Buyer);
         }
 
         public IEnumerable<GameData> GetWithoutOwner()
@@ -55,6 +65,31 @@ namespace Everything.Data.Repositories
                 .Games
                 .Where(x => !string.IsNullOrEmpty(x.ImageSrc))
                 .OrderBy(x => x.Id);
+        }
+        public void LinkGame(int buyerId, int gameId)
+        {
+            var game = _webDbContext.Games.First(x => x.Id == gameId);
+            var buyer = _dbSet.First(x => x.Id == buyerId);
+
+            buyer.Buyer?.Games.Add(game);
+            _webDbContext.SaveChanges();
+        }
+
+        public IEnumerable<GameWithInfoAboutAuthor> GetGameWithBuyer(int buyerId)
+        {
+            var games = _dbSet
+                .Where(user => user
+                .Buyer
+                .Games
+                .Any(game => game.Buyer != null
+                && game.Buyer.Id == buyerId))
+                .Select(x => new GameWithInfoAboutAuthor
+                { 
+                    Name = x.NameGame,
+                    ImageSrc = x.ImageSrc,
+                }).ToList();
+
+            return game;
         }
     }
 

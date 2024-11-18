@@ -17,5 +17,7 @@ namespace Everything.Data.Models
         public virtual List<SurveyGroupData> СreatorSurveyGroups { get; set; } = new();
         public virtual List<GirlData> CreatedGirls { get; set; } = new();
         public virtual List<MangaData> CreatedMangas { get; set; } = new();
+
+        public virtual List<GameData> Games { get; set; } = new List<GameData>(); 
     }
 }

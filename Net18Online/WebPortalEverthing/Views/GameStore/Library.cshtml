@@ -1,12 +1,12 @@
 ﻿@using WebPortalEverthing.Models.GameStore
-@model List<GameViewModel>
+@model LibraryViewModel
 @{
     Layout = "~/Views/Shared/_LayoutGameStore.cshtml";
 }
 
 <div class="content">
     <div class="title">Library</div>
-    @foreach (var game in Model)
+    @foreach (var game in Model.Games)
     {
         <div class="Library">
             <div class="game-block">

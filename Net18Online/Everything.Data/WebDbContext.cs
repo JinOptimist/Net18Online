@@ -157,6 +157,11 @@ namespace Everything.Data
                 .WithMany()
                 .HasForeignKey(m => m.TypeId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<GameData>()
+                .HasOne(x => x.Buyer)
+                .WithMany(x => x.Games)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
