@@ -1,3 +1,4 @@
+using Everything.Data.DataLayerModels;
 using Everything.Data.Interface.Models;
 using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
@@ -10,6 +11,10 @@ namespace Everything.Data.Repositories
     {
         void Create(EcologyData ecology, int currentUserId, int postId);
         IEnumerable<EcologyData>GetAllWithUsersAndComments();
+        
+        EcologyData FindById(int postId);
+        void AddPostToMovedPosts(MovedPostReference movedPost);
+
     }
 
     public class EcologyRepository : BaseRepository<EcologyData>, IEcologyRepositoryReal
@@ -25,6 +30,22 @@ namespace Everything.Data.Repositories
             ecology.ImageSrc = url;
             ecology.Text = text; 
                 
+            _webDbContext.SaveChanges();
+        }
+        
+        public EcologyData FindById(int postId)
+        {
+            return _webDbContext.Ecologies.Find(postId);
+        }
+
+        public void AddPostToMovedPosts(MovedPostReference movedPost)
+        {
+            var movedPostReference = new MovedPostReference
+            {
+                PostId = movedPost.Id
+            };
+
+            _webDbContext.MovedPostReferences.Add(movedPostReference);
             _webDbContext.SaveChanges();
         }
         

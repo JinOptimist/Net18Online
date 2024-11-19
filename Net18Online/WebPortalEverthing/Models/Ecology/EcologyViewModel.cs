@@ -13,5 +13,7 @@ namespace WebPortalEverthing.Models.Ecology
         public ICollection<CommentViewModel> Comments { get; set; }
     
         public bool CanDelete { get; set; }
+            
+        public bool CanMove { get; set; }
     }
 }
