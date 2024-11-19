@@ -4,7 +4,7 @@
     {
         private IHttpContextAccessor _httpContextAccessor;
 
-        public const string AUTH_TYPE_KEY = "Smile";
+        public const string AUTH_TYPE_KEY = "ByPass";
         public const string CLAIM_TYPE_ID = "Id";
         public const string CLAIM_TYPE_NAME = "Name";
         public const string CLAIM_TYPE_COINS = "Coins";

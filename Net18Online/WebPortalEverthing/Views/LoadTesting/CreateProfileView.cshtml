@@ -12,15 +12,11 @@
             @Html.TextBoxFor(m => m.Name, new { placeholder = "Name" })
             @Html.ValidationMessageFor(x => x.Name)
 
-            @*   @Html.TextBoxFor(m => m.Throughput, new { placeholder = "Throughput" })   *@
-            @Html.TextBoxFor(m => m.Throughput, new { placeholder = "Throughput", @type = "number", step = "0.01" })
+            @Html.TextBoxFor(m => m.ThroughputInput, new { placeholder = "Throughput", @type = "text" })
+            @Html.ValidationMessageFor(x => x.ThroughputInput)
 
-            @Html.ValidationMessageFor(x => x.Throughput)
-
-            @*   @Html.TextBoxFor(m => m.Average, new { placeholder = "Average" }) *@
-            @Html.TextBoxFor(m => m.Average, new { placeholder = "Average", @type = "number", step = "0.01" })
-
-            @Html.ValidationMessageFor(x => x.Average)
+            @Html.TextBoxFor(m => m.AverageInput, new { placeholder = "Average ", @type = "text", })
+            @Html.ValidationMessageFor(x => x.AverageInput)
 
             <button type="submit">Создать</button>
         </div>

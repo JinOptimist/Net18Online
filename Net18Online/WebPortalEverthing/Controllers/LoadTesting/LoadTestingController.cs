@@ -84,27 +84,27 @@ namespace WebPortalEverthing.Controllers.LoadTesting
 
         /* HttpPost  нужен, чтобы послать данные заполненные пользователем в экшен т.е. метрику (metric)  */
         [HttpPost]
-        // public IActionResult CreateProfileView(MetricViewModel metric) модель без валидации
         public IActionResult CreateProfileView(MetricCreationViewModel metric)
         {
-            //ModelState.IsValid это метод в самом контроллере, предоставляется фреймворком
+            // Проверка модели
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(metric);
             }
 
+            // Создание объекта данных
             var metricData = new Everything.Data.Models.MetricData
             {
                 Name = metric.Name,
-                Throughput = metric.Throughput * 1.0m,
-                Average = metric.Average * 1.0m
+                Throughput = (decimal)metric.Throughput,
+                Average = (decimal)metric.Average
             };
-            // _webDbContext.Metrics.Add(metricData);
-            //_webDbContext.SaveChanges();
+
             _loadTestingRepository.Add(metricData);
 
             return Redirect("/LoadTesting/ContenMetricsListView");
         }
+
 
 
         public IActionResult UpdateNameById(int id, string newName)
@@ -136,8 +136,8 @@ namespace WebPortalEverthing.Controllers.LoadTesting
         public IActionResult UpdateMetric(MetricCreationViewModel metric)
         {
             _loadTestingRepository.UpdateNameByGuid(metric.Guid, metric.Name);
-            _loadTestingRepository.UpdateThroughputByGuid(metric.Guid, metric.Throughput);
-            _loadTestingRepository.UpdateAverageByGuid(metric.Guid, metric.Average);
+            _loadTestingRepository.UpdateThroughputByGuid(metric.Guid, (decimal)metric.Throughput);
+            _loadTestingRepository.UpdateAverageByGuid(metric.Guid, (decimal)metric.Average);
 
             return RedirectToAction("ContenMetricsListView");
             /*
