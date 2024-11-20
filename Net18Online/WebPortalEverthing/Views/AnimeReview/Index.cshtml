@@ -12,24 +12,29 @@
 
 <h1 class="pageName">Reviews</h1>
 <div class="reviews">
-    @foreach (var anime in Model.Animes)
+    @foreach (var index in Model.Index)
     {
         <div class="anime">
             <div class="imageName">
-                @anime.Name
+                @index.Anime.Name
             </div>
             <div class="animeImage">
-                <img src="@anime.ImgSrc" />
+                <img src="@index.Anime.ImgSrc" />
             </div>
-            <form action="/AnimeReview/LinkAnimeAndReview" method="post">
-                <input type="hidden" name="animeId" value="@anime.Id" />
-                <select name="animeReviewId">
-                    @foreach (var review in Model.Reviews)
-                    {
-                        <option value="@review.Id">@review.Review</option>
-                    }
-                </select>
-                <button type="submit">Link</button>
+            <div class="topReviews">
+                @foreach (var review in index.Reviews)
+                {
+                    <div class="review">
+                        <span>@review.Review : @review.UserName</span>
+                    </div>
+                }
+            </div>
+            <form method="post" asp-action="CreateReviewAndLinktoAnime">
+                <input type="hidden" name="animeId" value="@index.Anime.Id" />
+                <div>
+                    @Html.TextBoxFor(x => x.NewReview.Review, new { placeholder = "Enter your review" })
+                </div>
+                <button type="submit">Submit</button>
             </form>
         </div>
     }

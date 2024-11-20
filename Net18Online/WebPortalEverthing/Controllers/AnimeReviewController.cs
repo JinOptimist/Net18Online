@@ -1,9 +1,11 @@
 ﻿using Everything.Data.Fake.Models;
+using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
 using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.AnimeCatalog;
 using WebPortalEverthing.Models.AnimeReview;
+using WebPortalEverthing.Services;
 
 namespace WebPortalEverthing.Controllers
 {
@@ -11,30 +13,16 @@ namespace WebPortalEverthing.Controllers
     {
         private IAnimeReviewRepositoryReal _animeReviewRepository;
         private IAnimeCatalogRepositoryReal _animeCatalogRepository;
-
-        public AnimeReviewController(IAnimeReviewRepositoryReal animeReviewRepositoryReal, IAnimeCatalogRepositoryReal animeCatalogRepositoryReal)
+        private AuthService _authService;
+        public AnimeReviewController(IAnimeReviewRepositoryReal animeReviewRepositoryReal, IAnimeCatalogRepositoryReal animeCatalogRepositoryReal, AuthService authService)
         {
             _animeReviewRepository = animeReviewRepositoryReal;
             _animeCatalogRepository = animeCatalogRepositoryReal;
+            _authService = authService;
         }
 
         public IActionResult Index()
         {
-            var animeReviewViewModels = _animeReviewRepository
-                .GetAll()
-                .Select(x => new AnimeReviewShortInfoViewModel
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Review = x.Review,
-                    Anime = new AnimeCatalogNameAndIdViewModel
-                    {
-                        Id = x.Id,
-                        Name = x.Name,
-                    }
-                })
-                .ToList();
-
             var animeCataolgViewModels = _animeCatalogRepository
                 .GetAll()
                 .Select(x => new AnimeCatalogNameAndIdViewModel
@@ -47,37 +35,46 @@ namespace WebPortalEverthing.Controllers
 
             var viewModel = new IndexAnimeReviewViewModel
             {
-                Reviews = animeReviewViewModels,
-                Animes = animeCataolgViewModels
+                Index = new List<AnimeReviewViewModel>()
             };
+
+            foreach (var item in animeCataolgViewModels)
+            {
+                viewModel.Index.Add(new AnimeReviewViewModel
+                {
+                    Anime = item,
+                    Reviews = _animeReviewRepository
+                        .GetAllWithAnime(item.Id)
+                        .Select(x => new AnimeReviewShortInfoViewModel
+                        {
+                            Id = x.Id,
+                            Review = x.Review,
+                            UserName = _animeReviewRepository.GetUserName(x.Id),
+                            Anime = new AnimeCatalogNameAndIdViewModel
+                            {
+                                Id = x.Id,
+                            }
+                        })
+                        .ToList()
+                });
+            }
 
             return View(viewModel);
         }
 
-        [HttpGet]
-        public IActionResult Create()
-        {
-            return View();
-        }
-
         [HttpPost]
-        public IActionResult Create(CreateAnimeReviewViewModel viewModel)
+        public IActionResult CreateReviewAndLinktoAnime(IndexAnimeReviewViewModel viewModel, int animeId)
         {
+            var currentUserId = _authService.GetUserId();
+
             var animeReview = new AnimeReviewData
             {
-                Name = viewModel.Name,
-                Review = viewModel.Review
+                Review = viewModel.NewReview.Review
             };
 
-            _animeReviewRepository.Add(animeReview);
+            _animeReviewRepository.Create(animeReview, currentUserId!.Value);
+            _animeReviewRepository.LinkAnime(animeReview.Id, animeId);
 
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        public IActionResult LinkAnimeAndReview(int animeId, int animeReviewId)
-        {
-            _animeReviewRepository.LinkAnime(animeReviewId, animeId);
             return RedirectToAction("Index");
         }
     }

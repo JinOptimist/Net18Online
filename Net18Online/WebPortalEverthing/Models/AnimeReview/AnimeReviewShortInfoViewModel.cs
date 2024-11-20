@@ -6,9 +6,9 @@ namespace WebPortalEverthing.Models.AnimeReview
     {
         public int Id { get; set; }
 
-        public string Name { get; set; }
-
         public string Review { get; set; }
+
+        public string UserName { get; set; }
 
         public AnimeCatalogNameAndIdViewModel Anime { get; set; } = new();
     }
