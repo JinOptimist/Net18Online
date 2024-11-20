@@ -58,7 +58,7 @@ namespace WebPortalEverthing.Controllers
 
         private SurveyGroupViewModel GetSurveyGroupViewModelFromData(ISurveyGroupData surveyGroup)
         {
-            var isAllowSurveyCreation = _authService.IsUserHasGroup(Role.SurveysCreatorOrEditor);
+            var isAllowSurveyCreation = _authService.HasRole(Role.SurveysCreatorOrEditor);
             var surveysFromDb = _surveysRepository.GetAll();
 
             return new SurveyGroupViewModel
@@ -284,7 +284,7 @@ namespace WebPortalEverthing.Controllers
         }
 
         [HttpGet]
-        [IsUserHasGroup(Role.SurveysCreatorOrEditor)]
+        [HasRole(Role.SurveysCreatorOrEditor)]
         public ActionResult Create(int idGroup)
         {
             var surveyGroup = _surveyGroupRepository
@@ -318,7 +318,7 @@ namespace WebPortalEverthing.Controllers
         }
 
         [HttpPost]
-        [IsUserHasGroup(Role.SurveysCreatorOrEditor)]
+        [HasRole(Role.SurveysCreatorOrEditor)]
         public ActionResult Create(SurveyCreateViewModel surveyCreate)
         {
             if (!ModelState.IsValid)

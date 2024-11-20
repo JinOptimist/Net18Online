@@ -5,10 +5,10 @@ using WebPortalEverthing.Services;
 
 namespace WebPortalEverthing.Controllers.AuthAttributes
 {
-    public class IsUserHasGroupAttribute : ActionFilterAttribute
+    public class HasRoleAttribute : ActionFilterAttribute
     {
         private Role _role;
-        public IsUserHasGroupAttribute(Role role)
+        public HasRoleAttribute(Role role)
         {
             _role = role;
         }
@@ -20,7 +20,7 @@ namespace WebPortalEverthing.Controllers.AuthAttributes
                 .RequestServices
                 .GetRequiredService<AuthService>();
 
-            if (!authService.IsUserHasGroup(_role))
+            if (!authService.HasRole(_role))
             {
                 context.Result = new ForbidResult();
                 return;

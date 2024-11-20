@@ -56,7 +56,7 @@ namespace WebPortalEverthing.Services
             return IsAuthenticated() && GetRole().HasFlag(Role.Admin);
         }
 
-        public bool IsUserHasGroup(Role role)
+        public bool HasRole(Role role)
         {
             return IsAuthenticated() && GetRole().HasFlag(role);
         }
