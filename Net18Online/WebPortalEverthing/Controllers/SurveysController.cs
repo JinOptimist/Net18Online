@@ -58,14 +58,14 @@ namespace WebPortalEverthing.Controllers
 
         private SurveyGroupViewModel GetSurveyGroupViewModelFromData(ISurveyGroupData surveyGroup)
         {
-            var sAllowSurveyCreation = _authService.IsUserHasGroup(Role.SurveysCreatorOrEditor);
+            var isAllowSurveyCreation = _authService.IsUserHasGroup(Role.SurveysCreatorOrEditor);
             var surveysFromDb = _surveysRepository.GetAll();
 
             return new SurveyGroupViewModel
             {
                 Id = surveyGroup.Id,
                 Title = surveyGroup.Title,
-                IsAllowSurveyCreation = sAllowSurveyCreation,
+                IsAllowSurveyCreation = isAllowSurveyCreation,
                 Surveys = surveysFromDb
                             .Where(survey => survey.SurveyGroup.Id == surveyGroup.Id)
                             .Select(GetSurveyViewModelFromData)
