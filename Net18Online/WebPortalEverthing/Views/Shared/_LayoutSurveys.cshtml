@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject WebPortalEverthing.Services.AuthService AuthService
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -26,7 +28,12 @@
             </div>
         </div>
         <div class="profile-block">
-            <img class="profile-image" src="~/images/Surveys/avatar-default.jpg" alt="" />
+            <div>
+                @AuthService.GetName()
+            </div>
+            <div>
+                <img class="profile-image" src="~/images/Surveys/avatar-default.jpg" alt="" />
+            </div>
         </div>
     </header>
     <div class="menu-and-content">
