@@ -223,3 +223,24 @@ img.admin-img {
 .filter-radio {
     display: none;
 }
+
+.brand {
+    display: block;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    border: 1px #ccc solid;
+    margin: 5px;
+    width: 600px;
+}
+
+.name, .company {
+    color: darkred;
+}
+
+.all-coffe {
+    color: blueviolet;
+}
+
+.coffe {
+    margin-right: 10px;
+}
