@@ -1,4 +1,5 @@
-﻿using Everything.Data.Models;
+﻿using Everything.Data.DataLayerModels;
+using Everything.Data.Models;
 using Everything.Data.Models.Surveys;
 using Microsoft.EntityFrameworkCore;
 //using Microsoft.Identity.Client;
@@ -20,6 +21,8 @@ namespace Everything.Data
         public DbSet<UserData> Users { get; set; }
 
         public DbSet<EcologyData> Ecologies { get; set; }
+        
+        public DbSet<MovedPostReference> MovedPostReferences { get; set; }
 
         public DbSet<CommentData> Comments { get; set; }
 

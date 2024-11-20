@@ -1,4 +1,6 @@
+using System.Security.Claims;
 using Everything.Data;
+using Everything.Data.DataLayerModels;
 using Everything.Data.Interface.Models;
 using Everything.Data.Interface.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -35,8 +37,31 @@ public class EcologyController : Controller
 
     public IActionResult Index()
     {
-        var model = new EcologyViewModel();
-        return View(model);
+        // Получаем ссылки на перенесенные посты
+        var movedPostReferences = _webDbContext.MovedPostReferences.ToList();
+        var movedPosts = movedPostReferences 
+            .Select(reference =>
+            {
+                var post = _ecologyRepository.FindById(reference.PostId);
+                return post;
+            })
+            .Where(post => post != null) 
+            .Select(post => new EcologyViewModel 
+            { 
+                PostId = post.Id, 
+                ImageSrc = post.ImageSrc, 
+                Texts = post.Text, 
+                UserName = post.User?.Login ?? "Unknown", 
+                CanDelete = false, // Перенесенные посты не могут быть удалены
+                CanMove = false // Перенесенные посты не могут быть снова перенесены
+            }).ToList();
+        
+        var viewModel = new MovedPostsViewModel
+        {
+            Posts = movedPosts
+        };
+        
+        return View(viewModel);
     }
 
     [HttpGet]
@@ -69,34 +94,37 @@ public class EcologyController : Controller
         return View(viewModel);
     }
     
+    [HttpPost]
+    public IActionResult MovePost(int postId)
+    {
+        var post = _ecologyRepository.FindById(postId);
+        if (post != null)
+        {
+            var movedPostReference = new MovedPostReference
+            {
+                PostId = post.Id
+            }; 
+            _ecologyRepository.AddPostToMovedPosts(movedPostReference);
+        } 
+        return RedirectToAction("Index");
+    }
+    
     [HttpGet]
     public IActionResult EcologyChat()
     {
         var currentUserId = _authService.GetUserId();
+        var isAdmin = User.Claims.Any(c => c.Type == ClaimTypes.Role && c.Value == "Admin"); 
         if (currentUserId is null)
         {
             return RedirectToAction("Index");
         }
 
         var user = _userRepositryReal.Get(currentUserId.Value);
-        /*if (user.Coins < 150)
+        if (user.Coins < 150)
         {
             return RedirectToAction("Index");
-        }*/
-        
-        /*if (User.Identity.IsAuthenticated)
-        {
-            string typeUser;
-            var roleClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role); 
-            if (roleClaim != null && roleClaim.Value == "Admin") 
-            { 
-                typeUser = "Admin";
-            } 
-            else 
-            { 
-                typeUser = "User";
-            } 
-        }*/
+        }
+
         var ecologyFromDb = _ecologyRepository.GetAllWithUsersAndComments();
 
         var ecologyViewModels = ecologyFromDb
@@ -109,13 +137,15 @@ public class EcologyController : Controller
                     UserName = dbEcology.User?.Login ?? "Unknown",
                     //Text = dbEcology.Comments?.CommentText ?? "Without comments",
                     //CanDelete = typeUser == "Admin" || dbEcology.User?.Id == currentUserId
-                    CanDelete = dbEcology.User?.Id == currentUserId
+                    CanDelete = dbEcology.User?.Id == currentUserId,
+                    CanMove = isAdmin
                 }
             )
             .ToList();
+
         return View(ecologyViewModels);
     }
-
+    
     [HttpPost]
     public IActionResult EcologyChat(PostCreationViewModel viewModel)
     {
