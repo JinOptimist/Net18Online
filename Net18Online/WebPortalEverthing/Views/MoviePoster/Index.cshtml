@@ -5,6 +5,7 @@
 }
 
 <div class="main-info">
+    <div>Привет, @(string.IsNullOrEmpty(Model.UserName) ? "Гость" : Model.UserName)</div>
     <div>
         Афиша была обновлена в @Model.Hours часов @Model.Minutes минут @Model.Seconds секунд
     </div>
