@@ -1,4 +1,5 @@
-﻿namespace WebPortalEverthing.Services.LoadTesting
+﻿
+namespace WebPortalEverthing.Services.LoadTesting
 {
     public class LoadAuthService
     {
@@ -55,5 +56,6 @@
                .FirstOrDefault(x => x.Type == type)
                ?.Value;
         }
+
     }
 }

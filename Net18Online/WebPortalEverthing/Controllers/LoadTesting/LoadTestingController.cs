@@ -5,6 +5,7 @@ using Everything.Data.Interface.Repositories;
 using Everything.Data;
 using Everything.Data.Repositories;
 using System.Globalization;
+using WebPortalEverthing.Services.LoadTesting;
 
 namespace WebPortalEverthing.Controllers.LoadTesting
 {
@@ -14,10 +15,15 @@ namespace WebPortalEverthing.Controllers.LoadTesting
         private WebDbContext _webDbContext;
         protected const int DEFAULT_METRICS_COUNT = 6;
 
-        public LoadTestingController(ILoadTestingRepositoryReal loadTestingRepository, WebDbContext webDbContext)
+        private ILoadUserRepositryReal _loadUserRepositryReal;
+        private LoadAuthService _loadAuthService;
+
+        public LoadTestingController(ILoadTestingRepositoryReal loadTestingRepository, WebDbContext webDbContext, ILoadUserRepositryReal loadUserRepositryReal, LoadAuthService loadAuthService)
         {
             _loadTestingRepository = loadTestingRepository;
             _webDbContext = webDbContext;
+            _loadUserRepositryReal = loadUserRepositryReal;
+            _loadAuthService = loadAuthService;
         }
 
         public IActionResult ContenMetricsListView()
@@ -79,6 +85,8 @@ namespace WebPortalEverthing.Controllers.LoadTesting
         [HttpGet]
         public IActionResult CreateProfileView()
         {
+            var currentUserName = _loadAuthService.GetName();
+            if (!currentUserName.Contains("Admin")) { RedirectToAction("/LoadTesting/ContenMetricsListView", "LoadTesting"); }
             return View();
         }
 
@@ -86,11 +94,14 @@ namespace WebPortalEverthing.Controllers.LoadTesting
         [HttpPost]
         public IActionResult CreateProfileView(MetricCreationViewModel metric)
         {
+
             // Проверка модели
             if (!ModelState.IsValid)
             {
                 return View(metric);
             }
+            var currentUserName = _loadAuthService.GetName();
+            if (!currentUserName.Contains("Admin")) { RedirectToAction("/LoadTesting/ContenMetricsListView", "LoadTesting"); }
 
             // Создание объекта данных
             var metricData = new Everything.Data.Models.MetricData
