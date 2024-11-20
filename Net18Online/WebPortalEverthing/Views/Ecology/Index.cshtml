@@ -1,4 +1,3 @@
-@model WebPortalEverthing.Models.Ecology.EcologyViewModel
 @model WebPortalEverthing.Models.Ecology.MovedPostsViewModel
 @{
     Layout ="~/Views/Shared/_LayoutEcology.cshtml";
@@ -12,7 +11,7 @@
             </div>
             <div class="advice-info">
                 <span class="text">Using renewable energy will reduce carbon emissions</span>
-             </div>
+            </div>
         </div>
         <div class="advice">
             <div class="advice-image">
@@ -20,7 +19,7 @@
             </div>
             <div class="advice-info">
                 <span class="text">Using a bicycle instead of car helps to reduce air pollution</span>
-                </div>
+            </div>
         </div>
         <div class="advice">
             <div class="advice-image">
@@ -33,13 +32,13 @@
         <ul>
             @foreach (var post in Model.Posts)
             {
-            <li>
-                <div class="post">
-                    <img src="@post.ImageSrc" alt="Post Image" class="post-image" />
-                    <p>@post.Texts</p>
-                    <p>Posted by: @post.UserName</p>
-                </div>
-            </li>
+                <li>
+                    <div class="post">
+                        <img src="@post.ImageSrc" alt="Post Image" class="post-image" />
+                        <p>@post.Texts</p>
+                        <p>Posted by: @post.UserName</p>
+                    </div>
+                </li>
             }
         </ul>
     </div>
