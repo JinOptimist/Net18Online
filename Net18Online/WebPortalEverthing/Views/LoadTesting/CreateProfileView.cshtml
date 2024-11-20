@@ -1,24 +1,42 @@
 ﻿@using WebPortalEverthing.Models.LoadTesting
+@using WebPortalEverthing.Services
+
 @model MetricCreationViewModel
+@inject AuthService authService
+
 
 @{
     Layout = "~/Views/Shared/LoadTesting/_LayoutLoadTesting.cshtml";
 }
 
-<form method="post">
-    <div class="create-profile-form">
-        <div class="title">Введите данные профайла</div>
-        <div class="input-container">
-            @Html.TextBoxFor(m => m.Name, new { placeholder = "Name" })
-            @Html.ValidationMessageFor(x => x.Name)
+@if( !User.Identity?.IsAuthenticated ?? false )
+{
+    <form method="post">
+        <div class="create-profile-form">
+            <div class="title">Введите данные профайла</div>
+            <div class="input-container">
+                @Html.TextBoxFor(m => m.Name, new { placeholder = "Name" })
+                @Html.ValidationMessageFor(x => x.Name)
 
-            @Html.TextBoxFor(m => m.ThroughputInput, new { placeholder = "Throughput", @type = "text" })
-            @Html.ValidationMessageFor(x => x.ThroughputInput)
+                @Html.TextBoxFor(m => m.ThroughputInput, new { placeholder = "Throughput", @type = "text" })
+                @Html.ValidationMessageFor(x => x.ThroughputInput)
 
-            @Html.TextBoxFor(m => m.AverageInput, new { placeholder = "Average ", @type = "text", })
-            @Html.ValidationMessageFor(x => x.AverageInput)
+                @Html.TextBoxFor(m => m.AverageInput, new { placeholder = "Average ", @type = "text", })
+                @Html.ValidationMessageFor(x => x.AverageInput)
 
-            <button type="submit">Создать</button>
+                <button type="submit">Создать</button>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
+} else
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout">Выйти</a>
+    </li>
+}
+@if( authService.IsAdmin() )
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Users">Users</a>
+    </li>
+}
