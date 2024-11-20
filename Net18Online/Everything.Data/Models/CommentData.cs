@@ -9,5 +9,5 @@ public class CommentData : BaseModel, ICommentData
     public string CommentText { get; set; }
     public int UserId { get; set; }
     public EcologyData Ecology { get; set; }
-    public UserData User { get; set; }
+    public UserData? User { get; set; }
 }

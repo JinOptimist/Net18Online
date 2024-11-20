@@ -44,6 +44,12 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout">Выйти</a>
                             </li>
                         }
+                        @if (authService.IsAdmin())
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Users">Users</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

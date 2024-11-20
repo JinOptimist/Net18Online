@@ -116,3 +116,24 @@ header .name {
 	margin: 3px;
 	padding: 3px;
 }
+
+.filmDirectors	 {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.filmDirector {
+	border: 1px #ccc solid;
+	margin: 5px;
+}
+	.filmDirector .name {
+		font-weight: 700;
+	}
+	.filmDirector .lastname {
+		font-weight: 700;
+	}
+
+	.filmDirector .movie {
+		border: 1px #ccc solid;
+		padding: 5px;
+	}

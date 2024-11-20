@@ -76,6 +76,18 @@ namespace WebPortalEverthing.Controllers
         [HttpPost]
         public IActionResult CreatePoster(MovieCreationViewModel viewModel)
         {
+            if (_moviePosterRepository.HasSimilarUrl(viewModel.Url))
+            {
+                ModelState.AddModelError(
+                    nameof(MovieCreationViewModel.Url),
+                    "Такой url уже есть");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
             var dataMovie = new MovieData
             {
                 Name = viewModel.Name,

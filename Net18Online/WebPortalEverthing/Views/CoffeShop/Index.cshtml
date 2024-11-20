@@ -22,6 +22,8 @@
                     <th scope="col">ID</th>
                     <th scope="col">Сoffe</th>
                     <th scope="col">Cost</th>
+                    <th scope="col">Brand</th>
+                    <th scope="col">Creator</th>
                     <th scope="col">
                         Img <a class="btn btn-outline-primary" href="/CoffeShop/Create">
                             C
@@ -34,30 +36,48 @@
                 {
                     <tr>
                         <th scope="row">
-                            <a class="btn btn-outline-danger" href="/CoffeShop/Delete?id=@coffe.Id">
-                                D
-                            </a> @coffe.Id
+                            @if (coffe.CanDeleteOrUpdate)
+                            {
+                                <a class="btn btn-outline-danger" href="/CoffeShop/Delete?id=@coffe.Id">
+                                    D
+                                </a>
+                            } @coffe.Id
                         </th>
                         <td scope="row">
                             <form action="/CoffeShop/UpdateCoffe" method="post">
                                 <input type="hidden" name="id" value="@coffe.Id" />
                                 <input name="name" value="@coffe.Coffe" />
-                                <button type="submit" class="btn btn-outline-success">U</button>
+                                @if (coffe.CanDeleteOrUpdate)
+                                {
+                                    <button type="submit" class="btn btn-outline-success">U</button>
+                                }
                             </form>
                         </td>
                         <td scope="row">
                             <form action="/CoffeShop/UpdateCost" method="post">
                                 <input type="hidden" name="id" value="@coffe.Id" />
                                 <input name="cost" value="@coffe.Cost" />
-                                <button type="submit" class="btn btn-outline-success">U</button>
+                                @if (coffe.CanDeleteOrUpdate)
+                                {
+                                    <button type="submit" class="btn btn-outline-success">U</button>
+                                }
                             </form>
+                        </td>
+                        <td scope="row">
+                            <span>@coffe.Brand</span>
+                        </td>
+                        <td scope="row">
+                            <span>@coffe.CreatorName</span>
                         </td>
                         <td scope="row">
                             <img class="admin-img" src="@coffe.Url" alt="coffe" />
                             <form action="/CoffeShop/UpdateUrl" method="post">
                                 <input type="hidden" name="id" value="@coffe.Id" />
                                 <input name="image" />
-                                <button type="submit" class="btn btn-outline-success">U</button>
+                                @if (coffe.CanDeleteOrUpdate)
+                                {
+                                    <button type="submit" class="btn btn-outline-success">U</button>
+                                }
                             </form>
                         </td>
                     </tr>

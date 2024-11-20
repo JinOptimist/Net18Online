@@ -64,7 +64,7 @@ namespace WebPortalEverthing.Controllers
         [HttpPost]
         public ActionResult Create(SurveyGroupCreateViewModel viewModel)
         {
-            if (_surveyGroupRepository.HasSimilarTitle(viewModel.Title))
+            if (!_surveyGroupRepository.HasUniqueTitle(viewModel.Title))
             {
                 ModelState.AddModelError(
                     nameof(SurveyGroupCreateViewModel.Title),
