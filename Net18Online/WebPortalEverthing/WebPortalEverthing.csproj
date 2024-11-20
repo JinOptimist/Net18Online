@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Enums\Enums.csproj" />
     <ProjectReference Include="..\Everything.Data.Fake\Everything.Data.Fake.csproj" />
     <ProjectReference Include="..\Everything.Data.Interface\Everything.Data.Interface.csproj" />
     <ProjectReference Include="..\Everything.Data\Everything.Data.csproj" />

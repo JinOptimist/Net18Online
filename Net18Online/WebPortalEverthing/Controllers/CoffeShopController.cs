@@ -26,11 +26,11 @@ namespace WebPortalEverthing.Controllers
 
 		public IActionResult Index()
 		{
-			var userId = _authService.GetUserId();
+			var isAdmin = _authService.IsAdmin();
 
-			if (userId is null)
+			if (!isAdmin)
 			{
-				return RedirectToAction("Index", "Home");
+				return RedirectToAction("Coffe");
 			}
 
 			var viewModels = CoffeView();

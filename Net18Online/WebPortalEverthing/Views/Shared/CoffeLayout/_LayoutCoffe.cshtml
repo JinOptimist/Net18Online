@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using WebPortalEverthing.Services
+@inject AuthService authService
+
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8" />
@@ -20,7 +23,8 @@
         </div>
         <div class="wraper">
             <ul class="header-menu">
-                @if (User.Identity?.IsAuthenticated ?? false)
+                <li><a href="/">На портал</a></li>
+                @if (authService.IsAdmin())
                 {
                     <li><a href="/CoffeShop">Admin</a></li>
                 }
@@ -32,9 +36,18 @@
             </ul>
         </div>
         <div class="header-actions">
-			<div class="logo">
-                <a href="#"><img src="~/images/CoffeShop/default_user_profile.jpg" alt="User profile" /></a>
-			</div>
+            @if (User.Identity?.IsAuthenticated ?? false)
+            {
+                <div class="logo">
+                    <a href="#"><img src="~/images/CoffeShop/default_user_profile.jpg" alt="User profile" /></a>
+                </div>
+            }
+            else
+            {
+                <div class="logo">
+                    <a href="#"><img src="~/images/CoffeShop/no_auth_user.png" alt="User profile" /></a>
+                </div>
+            }
         </div>
     </header>
     @RenderBody()
