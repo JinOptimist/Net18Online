@@ -7,9 +7,11 @@ namespace Everything.Data.Repositories
 {
     public interface IUserRepositryReal : IUserRepositry<UserData>
     {
+        string GetAvatarUrl(int userId);
         bool IsAdminExist();
         UserData? Login(string login, string password);
         void Register(string login, string password, int age, Role role = Role.User);
+        void UpdateAvatarUrl(int userId, string avatarUrl);
         void UpdateRole(int userId, Role role);
     }
 
@@ -22,6 +24,11 @@ namespace Everything.Data.Repositories
         public override void Add(UserData data)
         {
             throw new NotImplementedException("User method Register to create a new User");
+        }
+
+        public string GetAvatarUrl(int userId)
+        {
+            return _dbSet.First(x => x.Id == userId).AvatarUrl;
         }
 
         public bool IsAdminExist()
@@ -44,11 +51,18 @@ namespace Everything.Data.Repositories
                 Password = BrokePassword(password),
                 Age = age,
                 Coins = 100,
-                AvatarUrl = "/images/avatar/default.png",
+                AvatarUrl = "/images/AnimeGirl/avatar-default.webp",
                 Role = role
             };
 
             _dbSet.Add(user);
+            _webDbContext.SaveChanges();
+        }
+
+        public void UpdateAvatarUrl(int userId, string avatarUrl)
+        {
+            var user = _dbSet.First(x => x.Id == userId);
+            user.AvatarUrl = avatarUrl;
             _webDbContext.SaveChanges();
         }
 

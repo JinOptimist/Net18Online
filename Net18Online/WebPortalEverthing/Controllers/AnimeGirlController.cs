@@ -1,9 +1,9 @@
 ﻿using Everything.Data;
-using Everything.Data.Interface.Models;
 using Everything.Data.Models;
 using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using WebPortalEverthing.Controllers.AuthAttributes;
 using WebPortalEverthing.Models.AnimeGirl;
 using WebPortalEverthing.Models.AnimeGirl.Profile;
 using WebPortalEverthing.Services;
@@ -18,17 +18,21 @@ namespace WebPortalEverthing.Controllers
         private IUserRepositryReal _userRepositryReal;
         private AuthService _authService;
         private WebDbContext _webDbContext;
+        private IWebHostEnvironment _webHostEnvironment;
+
         public AnimeGirlController(IAnimeGirlRepositoryReal animeGirlRepository,
             WebDbContext webDbContext,
             IUserRepositryReal userRepositryReal,
             AuthService authService,
-            IMangaRepositoryReal mangaRepositoryReal)
+            IMangaRepositoryReal mangaRepositoryReal,
+            IWebHostEnvironment webHostEnvironment)
         {
             _animeGirlRepository = animeGirlRepository;
             _webDbContext = webDbContext;
             _userRepositryReal = userRepositryReal;
             _authService = authService;
             _mangaRepositoryReal = mangaRepositoryReal;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index(string name, int age)
@@ -158,6 +162,7 @@ namespace WebPortalEverthing.Controllers
             return RedirectToAction("AllGirls");
         }
 
+        [IsAuthenticated]
         public IActionResult Profile()
         {
             var viewModel = new ProfileViewModel();
@@ -165,6 +170,8 @@ namespace WebPortalEverthing.Controllers
             viewModel.UserName = _authService.GetName()!;
 
             var userId = _authService.GetUserId()!.Value;
+            
+            viewModel.AvatarUrl = _userRepositryReal.GetAvatarUrl(userId);
 
             viewModel.Mangas = _mangaRepositoryReal
                 .GetMangaWithInfoAboutAuthors(userId)
@@ -185,6 +192,29 @@ namespace WebPortalEverthing.Controllers
                 .ToList();
 
             return View(viewModel);
+        }
+
+        [IsAuthenticated]
+        [HttpPost]
+        public IActionResult UpdateAvatar(IFormFile avatar)
+        {
+            var webRootPath = _webHostEnvironment.WebRootPath;
+
+            var userId = _authService.GetUserId()!.Value;
+            var avatarFileName = $"avatar-{userId}.jpg";
+
+            var path = Path.Combine(webRootPath, "images", "avatars", avatarFileName);
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                avatar
+                    .CopyToAsync(fileStream)
+                    .Wait();
+            }
+
+            var avatarUrl = $"/images/avatars/{avatarFileName}";
+            _userRepositryReal.UpdateAvatarUrl(userId, avatarUrl);
+
+            return RedirectToAction("Profile");
         }
     }
 }
