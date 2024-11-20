@@ -26,9 +26,9 @@ namespace WebPortalEverthing.Controllers
 
 		public IActionResult Index()
 		{
-			var userId = _authService.IsAdmin();
+			var isAdmin = _authService.IsAdmin();
 
-			if (!userId)
+			if (!isAdmin)
 			{
 				return RedirectToAction("Coffe");
 			}
