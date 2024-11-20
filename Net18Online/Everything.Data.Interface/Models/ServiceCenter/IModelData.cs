@@ -7,3 +7,4 @@
         int TypeId { get; set; }
     }
 }
+

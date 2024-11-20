@@ -1,4 +1,5 @@
 ﻿using Everything.Data.Interface.Models;
+using Everything.Data.Models;
 
 namespace Everything.Data.Models
 {
@@ -6,6 +7,6 @@ namespace Everything.Data.Models
     {
         public string Producer { get; set; }
 
-        public virtual List<ModelData> ModelsOnProducer { get; set; } = new List<ModelData>();
+        public virtual ICollection<ModelData> ModelsOnProducer { get; set; } = new List<ModelData>();
     }
 }

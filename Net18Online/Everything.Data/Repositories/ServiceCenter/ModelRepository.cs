@@ -1,9 +1,21 @@
 ﻿using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Everything.Data.Repositories
 {
-    public class ModelRepository : BaseRepository<ModelData>, IModelRepository<ModelData>
+    public interface IModelRepositoryReal : IBaseRepository<ModelData>
+    {
+        IEnumerable<ModelData> GetModelsByProducerId(int producerId);
+        IEnumerable<ModelData> GetModelsByTypeId(int typeId);
+        IEnumerable<ModelData> GetModelsByName(string name);
+        IEnumerable<ModelData> GetAllModels();
+        void UpdateName(int id, string newName);
+        void UpdateProducer(int id, int newProducerId);
+        void UpdateType(int id, int newTypeId);
+    }
+
+    public class ModelRepository : BaseRepository<ModelData>, IModelRepositoryReal
     {
         public ModelRepository(WebDbContext webDbContext) : base(webDbContext)
         {
@@ -58,6 +70,13 @@ namespace Everything.Data.Repositories
                 model.TypeId = newTypeId;
                 _webDbContext.SaveChanges();
             }
+        }
+
+        public IEnumerable<ModelData> GetAllModels()
+        {
+            return _dbSet.Include(m => m.ModelProducer)
+                         .Include(m => m.ModelType)
+                         .ToList();
         }
     }
 }

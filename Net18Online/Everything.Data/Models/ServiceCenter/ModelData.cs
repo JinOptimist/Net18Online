@@ -8,7 +8,8 @@ namespace Everything.Data.Models
         public int ProducerId { get; set; }
         public int TypeId { get; set; }
 
-        public virtual TypeOfApplianceData? ModelType { get; set; }
         public virtual ProducerData? ModelProducer { get; set; }
+        public virtual TypeOfApplianceData? ModelType { get; set; }
     }
 }
+

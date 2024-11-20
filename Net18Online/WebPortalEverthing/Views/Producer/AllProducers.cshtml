@@ -24,10 +24,10 @@
                 <div class="models">
                     <h4>Models:</h4>
                     <ul>
-                        @foreach (var model in producer.Models)
+                        @foreach (var model1 in producer.Models)
                         {
                             <li>
-                                <span>model.Name</span> (Type: model.TypeName)
+                                <span>@model1.Name</span> (Type: @model1.TypeName)
                             </li>
                         }
                     </ul>

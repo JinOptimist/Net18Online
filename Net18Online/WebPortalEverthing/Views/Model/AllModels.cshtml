@@ -1,0 +1,29 @@
+﻿@using WebPortalEverything.Models.ServiceCenter
+@model List<WebPortalEverything.Models.ServiceCenter.ModelShortInfoViewModel>
+
+@{
+    ViewBag.Title = "All Models";
+    Layout = "~/Views/Shared/_LayoutServiceCenter.cshtml";
+}
+
+<div>
+    <h1>All Models</h1>
+    <div class="models">
+        @foreach (var model1 in Model)
+        {
+            <div class="model">
+                <div class="name">
+                    @model1.Name
+                    <form action="/Model/UpdateName" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to update the name?');">
+                        <input type="hidden" name="id" value="model.Id" />
+                        <input type="text" name="newName" placeholder="New Model Name" />
+                        <button type="submit">Update Name</button>
+                    </form>
+                </div>
+
+                <div>Producer: @model1.ProducerName</div>
+                <div>Type: @model1.TypeName</div>
+            </div>
+        }
+    </div>
+</div>

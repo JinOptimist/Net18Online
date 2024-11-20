@@ -26,7 +26,7 @@ namespace Everything.Data
         public DbSet<ModelData> Models { get; set; }
         public DbSet<ClientData> Clients { get; set; }
         #endregion
-        
+
         public DbSet<CakeData> Cakes { get; set; }
 
         public DbSet<CoffeData> Coffe { get; set; }
@@ -71,31 +71,29 @@ namespace Everything.Data
                 .WithOne(x => x.Brand)
                 .OnDelete(DeleteBehavior.NoAction);
 
-
-
-
-
-
-
-
-
+            #region ServiceCenter
+            modelBuilder.Entity<ClientData>().ToTable("Clients");
 
             modelBuilder.Entity<TypeOfApplianceData>().ToTable("TypeOfAppliances");
             modelBuilder.Entity<ProducerData>().ToTable("Producers");
+
             modelBuilder.Entity<ModelData>().ToTable("Models");
-            modelBuilder.Entity<ClientData>().ToTable("Clients");
 
             modelBuilder.Entity<ModelData>()
-                .HasOne<ProducerData>()
-                .WithMany()
+                .HasOne(m => m.ModelProducer)
+                .WithMany(p => p.ModelsOnProducer) // Один Producer -> много Models
                 .HasForeignKey(m => m.ProducerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<ModelData>()
-                .HasOne<TypeOfApplianceData>()
-                .WithMany()
+                .HasOne(m => m.ModelType)
+                .WithMany(t => t.ModelsOnType) // Один Type -> много Models
                 .HasForeignKey(m => m.TypeId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            #endregion
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

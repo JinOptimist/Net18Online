@@ -1,0 +1,32 @@
+﻿@using WebPortalEverything.Models.ServiceCenter
+@model WebPortalEverything.Models.ServiceCenter.CreateModelViewModel
+
+@{
+    ViewBag.Title = "Create Model";
+    Layout = "~/Views/Shared/_LayoutServiceCenter.cshtml";
+}
+
+<h2>Create New Model</h2>
+
+<form method="post" enctype="multipart/form-data">
+    <div>
+        @Html.LabelFor(x => x.Name, "Model Name:")
+        @Html.TextBoxFor(x => x.Name, new { placeholder = "Enter model name" })
+        @Html.ValidationMessageFor(x => x.Name)
+    </div>
+    <div>
+        @Html.Label("Producer:")
+        <select asp-for="ProducerId" asp-items="@(new SelectList(Model.Producers, "Id", "ProducerName"))">
+            <option value="">Select Producer</option>
+        </select>
+        @Html.ValidationMessageFor(x => x.ProducerId)
+    </div>
+    <div>
+        @Html.Label("Type:")
+        <select asp-for="TypeId" asp-items="@(new SelectList(Model.Types, "Id", "Name"))">
+            <option value="">Select Type</option>
+        </select>
+        @Html.ValidationMessageFor(x => x.TypeId)
+    </div>
+    <button type="submit">Create</button>
+</form>
