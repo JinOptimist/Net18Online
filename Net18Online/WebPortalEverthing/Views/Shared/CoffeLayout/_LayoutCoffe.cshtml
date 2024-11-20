@@ -36,9 +36,18 @@
             </ul>
         </div>
         <div class="header-actions">
-			<div class="logo">
-                <a href="#"><img src="~/images/CoffeShop/default_user_profile.jpg" alt="User profile" /></a>
-			</div>
+            @if (User.Identity?.IsAuthenticated ?? false)
+            {
+                <div class="logo">
+                    <a href="#"><img src="~/images/CoffeShop/default_user_profile.jpg" alt="User profile" /></a>
+                </div>
+            }
+            else
+            {
+                <div class="logo">
+                    <a href="#"><img src="~/images/CoffeShop/no_auth_user.png" alt="User profile" /></a>
+                </div>
+            }
         </div>
     </header>
     @RenderBody()
