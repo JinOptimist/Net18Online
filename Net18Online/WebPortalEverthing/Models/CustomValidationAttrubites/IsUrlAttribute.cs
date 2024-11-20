@@ -19,7 +19,7 @@ namespace WebPortalEverthing.Models.CustomValidationAttrubites
                 return false;
             }
 
-            if (!url.ToLower().StartsWith("http"))
+            if (!url.ToLower().StartsWith("http") && !url.ToLower().StartsWith("data:image"))
             {
                 return false;
             }

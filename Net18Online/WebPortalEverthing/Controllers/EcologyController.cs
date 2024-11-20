@@ -11,7 +11,7 @@ using WebPortalEverthing.Services;
 
 namespace WebPortalEverthing.Controllers
 {
-    
+ 
 public class EcologyController : Controller
 { 
     private IEcologyRepositoryReal _ecologyRepository;
@@ -40,21 +40,64 @@ public class EcologyController : Controller
     }
 
     [HttpGet]
-    public IActionResult EcologyChat()
+    public IActionResult EcologyProfile()
     {
-        var id = _authService.GetUserId();
-        if (id is null)
+        var userId = _authService.GetUserId();
+
+        if (userId is null)
         {
-            return RedirectToAction("Index", "Home");
+            throw new Exception("User is not authenticated");
         }
 
-        var user = _userRepositryReal.Get(id.Value);
-        if (user.Coins < 150)
+        var info = _commentRepositoryReal.GetCommentAuthors((int)userId);
+        
+        var viewModel = new EcologyProfileViewModel();
+
+        info.Comments.Select(dbComment => new CommentForProfileViewModel()
+        {
+            CommentId = dbComment.Id,
+            CommentText = dbComment.CommentText
+        });
+        viewModel.Posts = info
+            .Posts
+            .Select(dbPost => new EcologyForProfileViewModel
+            {
+                ImageSrc = dbPost.ImageSrc,
+                Texts = dbPost.Text,
+            })
+            .ToList();
+        return View(viewModel);
+    }
+    
+    [HttpGet]
+    public IActionResult EcologyChat()
+    {
+        var currentUserId = _authService.GetUserId();
+        if (currentUserId is null)
         {
             return RedirectToAction("Index");
         }
 
-        var ecologyFromDb = _ecologyRepository.GetAll();
+        var user = _userRepositryReal.Get(currentUserId.Value);
+        /*if (user.Coins < 150)
+        {
+            return RedirectToAction("Index");
+        }*/
+        
+        /*if (User.Identity.IsAuthenticated)
+        {
+            string typeUser;
+            var roleClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role); 
+            if (roleClaim != null && roleClaim.Value == "Admin") 
+            { 
+                typeUser = "Admin";
+            } 
+            else 
+            { 
+                typeUser = "User";
+            } 
+        }*/
+        var ecologyFromDb = _ecologyRepository.GetAllWithUsersAndComments();
 
         var ecologyViewModels = ecologyFromDb
             .Select(dbEcology =>
@@ -62,7 +105,11 @@ public class EcologyController : Controller
                 {
                     PostId = dbEcology.Id,
                     ImageSrc = dbEcology.ImageSrc,
-                    Texts = dbEcology.Text
+                    Texts = dbEcology.Text,
+                    UserName = dbEcology.User?.Login ?? "Unknown",
+                    //Text = dbEcology.Comments?.CommentText ?? "Without comments",
+                    //CanDelete = typeUser == "Admin" || dbEcology.User?.Id == currentUserId
+                    CanDelete = dbEcology.User?.Id == currentUserId
                 }
             )
             .ToList();
@@ -81,15 +128,17 @@ public class EcologyController : Controller
 
         if (!ModelState.IsValid)
         {
-            return View(viewModel);
+            return View("EcologyChat");
         }
+        var currentUserId = _authService.GetUserId();
         
         var ecology = new EcologyData
         {
             ImageSrc = viewModel.Url,
             Text = viewModel.Text
         };
-        _ecologyRepository.Add(ecology);
+        _ecologyRepository.Create(ecology, currentUserId!.Value, viewModel.PostId);
+        //_ecologyRepository.Add(ecology);
             
         return RedirectToAction("EcologyChat");
     }

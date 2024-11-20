@@ -1,4 +1,5 @@
-﻿using WebPortalEverthing.Models.CustomValidationAttrubites;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using WebPortalEverthing.Models.CustomValidationAttrubites;
 
 namespace WebPortalEverthing.Models.CoffeShop
 {
@@ -12,5 +13,8 @@ namespace WebPortalEverthing.Models.CoffeShop
 
         [IsDecimalNumberPositive]
         public decimal Cost { get; set; }
+
+        public int BrandId { get; set; }
+        public List<SelectListItem>? Brands { get; set; }
     }
 }

@@ -11,5 +11,10 @@
         public string Coffe { get; set; }
 
         public decimal Cost { get; set; }
+
+        public string CreatorName { get; set; }
+
+        public bool CanDeleteOrUpdate { get; set; }
+
     }
 }

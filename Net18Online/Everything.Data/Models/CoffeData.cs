@@ -10,6 +10,10 @@ namespace Everything.Data.Models
 
         public decimal Cost { get; set; }
 
+        public virtual UserData? Creator { get; set; }
+
+        public virtual CoffeCompanyData? Company { get; set; }
+
         public virtual BrandData? Brand { get; set; }
     }
 }
