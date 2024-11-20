@@ -12,6 +12,7 @@ namespace Everything.Data.Models
         public string Title { get; set; }
         public string Description { get; set; }
 
+        public virtual LoadUserData LoadUserDataCreator { get; set; }
         public virtual List<MetricData> VolumeMetrics { get; set; } = new List<MetricData>();
     }
 }

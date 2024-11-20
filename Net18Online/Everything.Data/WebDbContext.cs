@@ -134,6 +134,16 @@ namespace Everything.Data
                .WithOne(x => x.LoadVolumeTesting)
                .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<MetricData>()
+                .HasOne(x => x.LoadUserDataCreator)
+                .WithMany(x => x.Metrics)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<LoadVolumeTestingData>()
+                .HasOne(x => x.LoadUserDataCreator)
+                .WithMany(x => x.LoadVolumeTestingParts)
+                .OnDelete(DeleteBehavior.NoAction);
+
 
 
             modelBuilder.Entity<UserData>().HasKey(us => us.Id);
