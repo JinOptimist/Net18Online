@@ -1,11 +1,13 @@
 ﻿using Everything.Data.Interface.Models;
 using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Everything.Data.Repositories
 {
     public interface IMoviePosterRepositoryReal : IMoviePosterRepository<MovieData>
     {
+        bool HasSimilarUrl(string url);
         IEnumerable<MovieData> GetAllWithoutDirector();
     }
 
@@ -30,6 +32,11 @@ namespace Everything.Data.Repositories
             return _dbSet
                 .Where(x => x.FilmDirector == null)
                 .ToList();
+        }
+
+        public bool HasSimilarUrl(string url)
+        {
+            return _dbSet.Any(x => x.ImageSrc == url);
         }
 
         public void UpdateImage(int id, string url)
