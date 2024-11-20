@@ -39,6 +39,11 @@ header .name {
         width: 21px;
     }
 
+.profile .avatar {
+    max-width: 300px;
+    max-height: 300px;
+}
+
 .menu {
     width: 200px;
     border-right: 1px #ccc solid;
@@ -92,27 +97,28 @@ header .name {
             margin: 3px;
             padding: 3px;
         }
+
 .mangas {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
 }
 
-.manga{
+.manga {
     border: 1px #ccc solid;
     margin: 5px;
 }
 
-.manga .name{
-    font-weight: 700;
-}
+    .manga .name {
+        font-weight: 700;
+    }
 
     .manga .girl {
         border: 1px #ccc solid;
         padding: 5px;
     }
 
-.special{
+.special {
     color: darkred;
     font-size: 30px;
 }

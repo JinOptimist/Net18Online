@@ -67,6 +67,7 @@ builder.Services.AddScoped<MazeBuilder>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<LoadAuthService>();
 builder.Services.AddScoped<EnumHelper>();
+builder.Services.AddScoped<UserService>();
 
 builder.Services.AddSingleton<IGameLifeRepository, GameLifeRepository>();
 
