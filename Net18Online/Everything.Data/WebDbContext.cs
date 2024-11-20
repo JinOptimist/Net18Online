@@ -88,6 +88,11 @@ namespace Everything.Data
                 .WithMany(x => x.CreatedGirls)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<MovieData>()
+                .HasOne(x => x.Creator)
+                .WithMany(x => x.CreatedMovies)
+                .OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<SurveyGroupData>()
                 .HasMany(x => x.Surveys)
                 .WithOne(x => x.SurveyGroup)
@@ -182,6 +187,11 @@ namespace Everything.Data
             modelBuilder.Entity<FilmDirectorData>()
                 .HasMany(x => x.Movies)
                 .WithOne(x => x.FilmDirector)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<FilmDirectorData>()
+                .HasOne(x => x.Creator)
+                .WithMany(x => x.CreatedFilmDirectors)
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }
