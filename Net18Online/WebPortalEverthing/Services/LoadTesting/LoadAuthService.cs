@@ -1,4 +1,6 @@
 ﻿
+using Enums.Users;
+
 namespace WebPortalEverthing.Services.LoadTesting
 {
     public class LoadAuthService
@@ -9,6 +11,7 @@ namespace WebPortalEverthing.Services.LoadTesting
         public const string CLAIM_TYPE_ID = "Id";
         public const string CLAIM_TYPE_NAME = "Name";
         public const string CLAIM_TYPE_COINS = "Coins";
+        public const string CLAIM_TYPE_ROLE = "Role";
 
         public LoadAuthService(IHttpContextAccessor httpContextAccessor)
         {
@@ -36,6 +39,28 @@ namespace WebPortalEverthing.Services.LoadTesting
             return int.Parse(isStr);
         }
 
+        public Role GetRole()
+        {
+            var roleStr = GetClaimValue(CLAIM_TYPE_ROLE);
+            if (roleStr is null)
+            {
+                throw new Exception("Guest cant has a role");
+            }
+            var roleInt = int.Parse(roleStr);
+            var role = (Role)roleInt;
+            return role;
+        }
+
+        public bool IsAdmin()
+        {
+            return IsAuthenticated() && GetRole().HasFlag(Role.Admin);
+        }
+
+        public bool HasRole(Role role)
+        {
+            return IsAuthenticated() && GetRole().HasFlag(role);
+        }
+
         public decimal? GetUserCoins()
         {
             var isStr = GetClaimValue(CLAIM_TYPE_COINS);
@@ -46,6 +71,8 @@ namespace WebPortalEverthing.Services.LoadTesting
 
             return decimal.Parse(isStr);
         }
+
+
 
         private string? GetClaimValue(string type)
         {

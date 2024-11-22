@@ -6,6 +6,7 @@ using Everything.Data;
 using Everything.Data.Repositories;
 using System.Globalization;
 using WebPortalEverthing.Services.LoadTesting;
+using WebPortalEverthing.Services;
 
 namespace WebPortalEverthing.Controllers.LoadTesting
 {
@@ -103,6 +104,8 @@ namespace WebPortalEverthing.Controllers.LoadTesting
             var currentUserName = _loadAuthService.GetName();
             if (!currentUserName.Contains("Admin")) { RedirectToAction("/LoadTesting/ContenMetricsListView", "LoadTesting"); }
 
+            var currentUserId = _loadAuthService.GetUserId();
+
             // Создание объекта данных
             var metricData = new Everything.Data.Models.MetricData
             {
@@ -111,7 +114,7 @@ namespace WebPortalEverthing.Controllers.LoadTesting
                 Average = (decimal)metric.Average
             };
 
-            _loadTestingRepository.Add(metricData);
+            _loadTestingRepository.Create(metricData, currentUserId!.Value, metric.LoadVolumeId);
 
             return Redirect("/LoadTesting/ContenMetricsListView");
         }

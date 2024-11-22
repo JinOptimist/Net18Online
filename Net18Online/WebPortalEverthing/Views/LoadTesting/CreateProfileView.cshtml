@@ -1,9 +1,9 @@
 ﻿@using WebPortalEverthing.Models.LoadTesting
 @using WebPortalEverthing.Services
+@using WebPortalEverthing.Services.LoadTesting
 
 @model MetricCreationViewModel
-@inject AuthService authService
-
+@inject LoadAuthService loadAuthService
 
 @{
     Layout = "~/Views/Shared/LoadTesting/_LayoutLoadTesting.cshtml";
@@ -34,7 +34,7 @@
         <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout">Выйти</a>
     </li>
 }
-@if( authService.IsAdmin() )
+@if( loadAuthService.IsAdmin() )
 {
     <li class="nav-item">
         <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Users">Users</a>

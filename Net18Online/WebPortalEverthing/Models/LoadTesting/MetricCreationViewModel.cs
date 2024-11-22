@@ -41,5 +41,7 @@ namespace WebPortalEverthing.Models.LoadTesting
                     : 0;
             }
         }
+
+        public int LoadVolumeId { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace Everything.Data.Repositories
         IEnumerable<MetricData> GetWithoutVolumeLoad();
         bool HasSimilarName(string name);
         bool IsNameUniq(string name);
+        void Create(MetricData metricData, int currentUserId, int LoadVolumeId);
     }
     public class LoadTestingRepository : BaseRepository<MetricData>, ILoadTestingRepositoryReal
     {
@@ -16,6 +17,17 @@ namespace Everything.Data.Repositories
 
         public LoadTestingRepository(WebDbContext webDbContext) : base(webDbContext)
         {
+        }
+
+        public void Create(MetricData metricData, int currentUserId, int LoadVolumeId)
+        {
+            var creator = _webDbContext.LoadUsers.First(x => x.Id == currentUserId);
+            var LoadVolume = _webDbContext.LoadVolumeTestingMetrics.First(x => x.Id == LoadVolumeId);
+
+            metricData.LoadUserDataCreator = creator;
+            metricData.LoadVolumeTesting = LoadVolume;
+
+            Add(metricData);
         }
 
         public void DeleteByGuid(Guid Guid)
