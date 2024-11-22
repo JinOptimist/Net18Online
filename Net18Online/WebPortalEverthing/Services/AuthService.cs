@@ -56,6 +56,11 @@ namespace WebPortalEverthing.Services
             return IsAuthenticated() && GetRole().HasFlag(Role.Admin);
         }
 
+        public bool HasRole(Role role)
+        {
+            return IsAuthenticated() && GetRole().HasFlag(role);
+        }
+
         private string? GetClaimValue(string type)
         {
             return _httpContextAccessor
@@ -65,7 +70,5 @@ namespace WebPortalEverthing.Services
                .FirstOrDefault(x => x.Type == type)
                ?.Value;
         }
-
-        
     }
 }
