@@ -10,41 +10,51 @@
         <div class="menu">
             <span class="catalog">Фильтры</span>
             <div class="catalog-filter-item">
-                <span class="catalog-filter-subtitle"> Тип кофе </span>
-                <div class="catalog-filter-block">
-                    <ul class="tags">
-                        <li>
-                            <input type="radio" id="latte" name="coffee-type" class="filter-radio" />
-                            <label for="latte">Latte</label>
-                        </li>
-                        <li>
-                            <input type="radio" id="americano" name="coffee-type" class="filter-radio" />
-                            <label for="americano">Americano</label>
-                        </li>
-                        <li>
-                            <input type="radio" id="raf" name="coffee-type" class="filter-radio" />
-                            <label for="raf">Raf</label>
-                        </li>
-                    </ul>
+                <div class="accordion" id="accordionPanelsStayOpenExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                Стоимость
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                            <form action="#" method="post">
+                                <div class="accordion-body">
+                                    <label for="customRange2" class="form-label">
+                                        Цена: <span id="rangeValue">50</span> $
+                                    </label>
+                                    <input type="range" name="form-range" min="1" max="100" id="customRange2" value="50" />
+                                    <button type="submit" class="btn btn-primary">C</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="catalog-filter-item">
-                <span class="catalog-filter-subtitle"> Бренд </span>
-                <div class="catalog-filter-block">
-                    <ul class="tags">
-                        <li>
-                            <input type="radio" id="breda" name="brend-type" class="filter-radio" />
-                            <label for="breda">Breda</label>
-                        </li>
-                        <li>
-                            <input type="radio" id="danesi" name="brend-type" class="filter-radio" />
-                            <label for="danesi">Danesi</label>
-                        </li>
-                        <li>
-                            <input type="radio" id="costadoro" name="brend-type" class="filter-radio" />
-                            <label for="costadoro">Costadoro</label>
-                        </li>
-                    </ul>
+        </div>
+        <div class="catalog-filter-item">
+            <div class="accordion" id="accordionPanelsStayOpenExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
+                            Бренд
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
+                            <div class="catalog-filter-block">
+                                    <ul class="tags">
+                                        @foreach (var brand in Model)
+                                        {
+                                            <li>
+                                                <input type="radio" id="@brand.Brand" name="brend-type" class="filter-radio" />
+                                                <label for="@brand.Brand">@brand.Brand</label>
+                                            </li>
+                                        }
+                                    </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
