@@ -170,7 +170,7 @@ namespace WebPortalEverthing.Controllers
             viewModel.UserName = _authService.GetName()!;
 
             var userId = _authService.GetUserId()!.Value;
-            
+
             viewModel.AvatarUrl = _userRepositryReal.GetAvatarUrl(userId);
 
             viewModel.Mangas = _mangaRepositoryReal

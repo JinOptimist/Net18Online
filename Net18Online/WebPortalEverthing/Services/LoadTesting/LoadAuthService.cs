@@ -52,6 +52,11 @@ namespace WebPortalEverthing.Services.LoadTesting
             return role;
         }
 
+        public String GetRoleStr()
+        {
+            return GetRole().ToString();
+        }
+
         public bool IsAdmin()
         {
             return IsAuthenticated() && GetRole().HasFlag(Role.Admin);

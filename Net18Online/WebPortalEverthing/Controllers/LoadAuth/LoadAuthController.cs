@@ -1,9 +1,11 @@
-﻿using Everything.Data.Repositories;
+﻿using Enums.Users;
+using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using WebPortalEverthing.Models.Auth;
 using WebPortalEverthing.Models.LoadTesting.Auth;
+using WebPortalEverthing.Services;
 using WebPortalEverthing.Services.LoadTesting;
 
 namespace WebPortalEverthing.Controllers.LoadAuth
@@ -48,6 +50,7 @@ namespace WebPortalEverthing.Controllers.LoadAuth
                 new Claim(LoadAuthService.CLAIM_TYPE_NAME, user.Login),
                 new Claim(LoadAuthService.CLAIM_TYPE_COINS, user.Coins.ToString()),
                 new Claim (ClaimTypes.AuthenticationMethod, LoadAuthService.AUTH_TYPE_KEY),
+                new Claim(LoadAuthService.CLAIM_TYPE_ROLE, ((int)user.Role).ToString()),
             };
 
             var identity = new ClaimsIdentity(claims, LoadAuthService.AUTH_TYPE_KEY);

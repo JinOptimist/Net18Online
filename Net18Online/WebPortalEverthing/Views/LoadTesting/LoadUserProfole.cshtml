@@ -1,0 +1,47 @@
+﻿@using WebPortalEverthing.Models.LoadTesting.Profile
+@model LoadUserProfileViewModel
+
+@{
+    Layout = "~/Views/Shared/LoadTesting/_LayoutLoadTesting.cshtml";
+}
+
+<div class="content">
+    <div class="load-user-profile">
+        <div>
+            <h1>@Model.UserName</h1>
+        </div>
+        <div>
+            Avatar:
+            <img class="avatar" src="@Model.AvatarUrl" />
+        </div>
+        <div>
+            <form action="/AnimeGirl/UpdateAvatar" method="post" enctype="multipart/form-data">
+                <input type="file" name="avatar" />
+                <button type="submit">Обновить аватар</button>
+            </form>
+        </div>
+
+        <div class="mangas">
+            My Manga:
+            @foreach( var manga in Model.Mangas )
+            {
+                <span class="@(manga.IsCreatedWithСharacter ? "special" : "")">@manga.Name</span>
+            }
+        </div>
+        <div>
+            My Girls:
+            <div class="girls">
+                @foreach( var girl in Model.Girls )
+                {
+                    <div class="girl">
+                        <div class="name">@girl.Name</div>
+                        <div class="image-container">
+                            <img src="@girl.Url" alt="girl" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>

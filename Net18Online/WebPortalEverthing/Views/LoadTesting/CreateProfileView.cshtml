@@ -9,7 +9,7 @@
     Layout = "~/Views/Shared/LoadTesting/_LayoutLoadTesting.cshtml";
 }
 
-@if( !User.Identity?.IsAuthenticated ?? false )
+@if( User.Identity?.IsAuthenticated ?? false )
 {
     <form method="post">
         <div class="create-profile-form">
@@ -23,6 +23,8 @@
 
                 @Html.TextBoxFor(m => m.AverageInput, new { placeholder = "Average ", @type = "text", })
                 @Html.ValidationMessageFor(x => x.AverageInput)
+
+                @Html.DropDownListFor(m => m.LoadVolumeId, Model.LoadVolumes)
 
                 <button type="submit">Создать</button>
             </div>

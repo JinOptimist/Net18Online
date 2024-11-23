@@ -7,24 +7,29 @@ using Everything.Data.Repositories;
 using System.Globalization;
 using WebPortalEverthing.Services.LoadTesting;
 using WebPortalEverthing.Services;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using WebPortalEverthing.Controllers.AuthAttributes;
+
 
 namespace WebPortalEverthing.Controllers.LoadTesting
 {
     public class LoadTestingController : Controller
     {
         private ILoadTestingRepositoryReal _loadTestingRepository;
+        private ILoadVolumeTestingRepositoryReal _loadVolumeTestingRepositoryReal;
         private WebDbContext _webDbContext;
         protected const int DEFAULT_METRICS_COUNT = 6;
 
         private ILoadUserRepositryReal _loadUserRepositryReal;
         private LoadAuthService _loadAuthService;
 
-        public LoadTestingController(ILoadTestingRepositoryReal loadTestingRepository, WebDbContext webDbContext, ILoadUserRepositryReal loadUserRepositryReal, LoadAuthService loadAuthService)
+        public LoadTestingController(ILoadTestingRepositoryReal loadTestingRepository, WebDbContext webDbContext, ILoadUserRepositryReal loadUserRepositryReal, LoadAuthService loadAuthService, ILoadVolumeTestingRepositoryReal loadVolumeTestingRepositoryReal)
         {
             _loadTestingRepository = loadTestingRepository;
             _webDbContext = webDbContext;
             _loadUserRepositryReal = loadUserRepositryReal;
             _loadAuthService = loadAuthService;
+            _loadVolumeTestingRepositoryReal = loadVolumeTestingRepositoryReal;
         }
 
         public IActionResult ContenMetricsListView()
@@ -99,9 +104,13 @@ namespace WebPortalEverthing.Controllers.LoadTesting
         [HttpGet]
         public IActionResult CreateProfileView()
         {
-            var currentUserName = _loadAuthService.GetName();
-            if (!currentUserName.Contains("Admin")) { RedirectToAction("/LoadTesting/ContenMetricsListView", "LoadTesting"); }
-            return View();
+            var viewModel = new MetricCreationViewModel();
+            viewModel.LoadVolumes = _loadVolumeTestingRepositoryReal.GetAll()
+                .Select(loadVolume =>
+                new SelectListItem(loadVolume.Title, loadVolume.Id.ToString()))
+                .ToList();
+
+            return View(viewModel);
         }
 
         /* HttpPost  нужен, чтобы послать данные заполненные пользователем в экшен т.е. метрику (metric)  */
@@ -114,8 +123,6 @@ namespace WebPortalEverthing.Controllers.LoadTesting
             {
                 return View(metric);
             }
-            var currentUserName = _loadAuthService.GetName();
-            if (!currentUserName.Contains("Admin")) { RedirectToAction("/LoadTesting/ContenMetricsListView", "LoadTesting"); }
 
             var currentUserId = _loadAuthService.GetUserId();
 
@@ -132,6 +139,11 @@ namespace WebPortalEverthing.Controllers.LoadTesting
             return Redirect("/LoadTesting/ContenMetricsListView");
         }
 
+        public IActionResult LoadUserProfile()
+        {
+            
+            return RedirectToAction("ContenMetricsListView");
+        }
 
 
         public IActionResult UpdateNameById(int id, string newName)

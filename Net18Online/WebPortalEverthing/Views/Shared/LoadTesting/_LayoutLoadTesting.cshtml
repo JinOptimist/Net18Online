@@ -36,6 +36,7 @@
             </div>
             <div class="name-user-auth">
                 Привет, @loadAuthService.GetName()
+                <div> Role: @loadAuthService.GetRoleStr()</div>
                 <div class="name-user-auth-coins">
                     Количество монет
                     <div class="coin-icon">@loadAuthService.GetUserCoins() </div>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebPortalEverthing.Models.LoadTesting
 {
@@ -42,6 +43,7 @@ namespace WebPortalEverthing.Models.LoadTesting
             }
         }
 
-        public int LoadVolumeId { get; set; }
+        public int LoadVolumeId { get; set; } // значение, которое выбрал пользователь
+        public List<SelectListItem>? LoadVolumes { get; set; }  //тут будет все значения Load volumes и Id
     }
 }
