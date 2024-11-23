@@ -41,6 +41,7 @@
                             </div>
                         </div>
                         <div class="survey-actions">
+                            <a href="Edit?idSurvey=@survey.Id">Редактировать</a>
                             @if (survey.Action is not null)
                             {
                                 <button class="action-take">@survey.Action.Title</button>

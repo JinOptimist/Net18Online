@@ -1,5 +1,6 @@
 ﻿using Everything.Data.Interface.Repositories;
 using Everything.Data.Models.Surveys;
+using Microsoft.EntityFrameworkCore;
 
 namespace Everything.Data.Repositories.Surveys
 {
@@ -11,6 +12,14 @@ namespace Everything.Data.Repositories.Surveys
     {
         public SurveysRepository(WebDbContext webDbContext) : base(webDbContext)
         {
+        }
+
+        public SurveyData GetWithGroupAndQuestions(int id)
+        {
+            return _dbSet
+                .Include(x => x.SurveyGroup)
+                .Include(x => x.Questions)
+                .First(x => x.Id == id);
         }
 
         public void CreateSurvey(string title, int groupId, string? description)
@@ -33,11 +42,20 @@ namespace Everything.Data.Repositories.Surveys
 
         public void UpdateTitle(int id, string newTitle)
         {
-            var surveyGroup = _webDbContext
+            var survey = _webDbContext
                 .Surveys
                 .First(x => x.Id == id);
 
-            surveyGroup.Title = newTitle;
+            survey.Title = newTitle;
+
+            _webDbContext.SaveChanges();
+        }
+
+        public void UpdateDescription(int id, string? description)
+        {
+            var survey = _dbSet.First(x => x.Id == id);
+
+            survey.Description = description;
 
             _webDbContext.SaveChanges();
         }
