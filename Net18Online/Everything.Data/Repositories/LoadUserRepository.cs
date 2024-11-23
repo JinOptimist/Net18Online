@@ -1,4 +1,5 @@
-﻿using Everything.Data.Interface.Repositories;
+﻿using Enums.Users;
+using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,6 +14,8 @@ namespace Everything.Data.Repositories
     {
         LoadUserData? Login(string login, string password);
         void Register(string login, string password, string email);
+        void Register(string login, string password, string email, Role role = Role.User);
+        void UpdateRole(int userId, Role role);
     }
 
     public class LoadUserRepository : BaseRepository<LoadUserData>, ILoadUserRepositryReal
@@ -33,6 +36,11 @@ namespace Everything.Data.Repositories
             return _dbSet.FirstOrDefault(x => x.Login == login && x.Password == brokenPassword);
         }
 
+        public bool IsAdminExist()
+        {
+            return _dbSet.Any(x => x.Role.HasFlag(Role.Admin));
+        }
+
         public void Register(string login, string password, string email)
         {
 
@@ -48,6 +56,22 @@ namespace Everything.Data.Repositories
             _webDbContext.SaveChanges();
         }
 
+        public void Register(string login, string password, string email, Role role = Role.User)
+        {
+
+            var user = new LoadUserData
+            {
+                Login = login,
+                Password = BrokePassword(password),
+                Email = email,
+                Coins = 100,
+                Role = role
+            };
+
+            _dbSet.Add(user);
+            _webDbContext.SaveChanges();
+        }
+
         private string BrokePassword(string originalPassword)
         {
             // jaaaack
@@ -57,6 +81,14 @@ namespace Everything.Data.Repositories
 
             // jck
             return brokenPassword;
+        }
+
+
+        public void UpdateRole(int userId, Role role)
+        {
+            var user = _dbSet.First(x => x.Id == userId);
+            user.Role = role;
+            _webDbContext.SaveChanges();
         }
     }
 }

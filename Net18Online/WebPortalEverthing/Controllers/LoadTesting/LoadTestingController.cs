@@ -48,7 +48,8 @@ namespace WebPortalEverthing.Controllers.LoadTesting
                     {
                         Name = $"Metric {i}",
                         Throughput = i * 10.5m,
-                        Average = i * 5.0m
+                        Average = i * 5.0m,
+
                     };
 
                     var metricFromRealDB = new Everything.Data.Models.MetricData
@@ -63,7 +64,15 @@ namespace WebPortalEverthing.Controllers.LoadTesting
                     _loadTestingRepository.Add(metricFromRealDB);
                 }
             }
-            var metricsFromRealDB = _loadTestingRepository.GetAll();
+
+            var currentUserId = _loadAuthService.GetUserId();
+            if (currentUserId is null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var user = _loadUserRepositryReal.Get(currentUserId.Value);
+
+            var metricsFromRealDB = _loadTestingRepository.GetAllWithCreatorsAndLoadVolume();
 
             //Из дата моделей делаем вьюмодели (список вью моделей)
             var metricsViewModel = metricsFromRealDB
@@ -73,7 +82,11 @@ namespace WebPortalEverthing.Controllers.LoadTesting
                     Guid = metricDB.Guid,
                     Average = metricDB.Average,
                     Throughput = metricDB.Throughput,
-                    Name = metricDB.Name
+                    Name = metricDB.Name,
+                    CreatorName = metricDB.LoadUserDataCreator?.Login ?? "UnknownCreator",
+                    LoadVolumeName = metricDB.LoadVolumeTesting?.Title ?? "UnknownLoadVolume",
+                    CanDelete = metricDB.LoadUserDataCreator is null
+                    || metricDB.LoadUserDataCreator?.Id == currentUserId
                 })
                 .ToList();
 

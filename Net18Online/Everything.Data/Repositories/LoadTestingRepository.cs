@@ -1,12 +1,14 @@
 ﻿using Everything.Data.Interface.Models;
 using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Everything.Data.Repositories
 {
     public interface ILoadTestingRepositoryReal : ILoadTestingRepository<MetricData>
     {
         IEnumerable<MetricData> GetWithoutVolumeLoad();
+        IEnumerable<MetricData> GetAllWithCreatorsAndLoadVolume();
         bool HasSimilarName(string name);
         bool IsNameUniq(string name);
         void Create(MetricData metricData, int currentUserId, int LoadVolumeId);
@@ -46,6 +48,14 @@ namespace Everything.Data.Repositories
             return GetFinilizeMetric()
                 .Take(3)
                 .OrderByDescending(x => x.Average)
+                .ToList();
+        }
+
+        public IEnumerable<MetricData> GetAllWithCreatorsAndLoadVolume()
+        {
+            return _dbSet
+                .Include(x => x.LoadUserDataCreator)
+                .Include(x => x.LoadVolumeTesting)
                 .ToList();
         }
 
