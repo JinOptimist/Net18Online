@@ -55,6 +55,7 @@ namespace Everything.Data
         public DbSet<SurveyData> Surveys { get; set; }
         public DbSet<SurveyGroupData> SurveyGroups { get; set; }
         public DbSet<QuestionData> Questions { get; set; }
+        public DbSet<DocumentData> Documents { get; set; }
         #endregion
 
         public WebDbContext() { }
