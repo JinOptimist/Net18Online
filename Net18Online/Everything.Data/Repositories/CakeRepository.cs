@@ -1,7 +1,5 @@
 ﻿using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace Everything.Data.Repositories
 {

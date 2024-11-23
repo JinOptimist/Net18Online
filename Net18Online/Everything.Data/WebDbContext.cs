@@ -37,6 +37,7 @@ namespace Everything.Data
         #endregion
 
         public DbSet<CakeData> Cakes { get; set; }
+        public DbSet<MagazinData> Magazines { get; set; }
 
         public DbSet<CoffeData> Coffe { get; set; }
 
@@ -122,7 +123,20 @@ namespace Everything.Data
                 .HasMany(x => x.CoffeCompanies)
                 .WithOne(x => x.TypeOfActivity)
                 .OnDelete(DeleteBehavior.NoAction);
-                
+
+            modelBuilder.Entity<CakeData>()
+                .HasMany(x => x.Magazins)
+                .WithMany(x => x.Cakes);
+
+            modelBuilder.Entity<CakeData>()
+                .HasOne(x => x.Creator)
+                .WithMany(x => x.CreatedCakes)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<MagazinData>()
+                .HasOne(x => x.Creator)
+                .WithMany(x => x.CreatedMagazins)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<GameStudiosData>()
                 .HasMany(x => x.Games)
