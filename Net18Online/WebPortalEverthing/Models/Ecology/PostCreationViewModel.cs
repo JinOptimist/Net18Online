@@ -9,8 +9,8 @@ namespace WebPortalEverthing.Models.Ecology
         [IsUrl(ErrorMessage = "This URL is invalid")]
         public string Url { get; set; }
         
-        [EcologyText]
-        [IsCorrectLength(15)]
+        [Required(ErrorMessage = "Text is required.")]
+        [EcologyText, IsCorrectLength(15)] 
         public string Text { get; set;}
         public int PostId { get; set; }
         public List<SelectListItem>? Posts { get; set; }
@@ -18,5 +18,20 @@ namespace WebPortalEverthing.Models.Ecology
         [MaxFileSize(52428800)]
         [FileExtensions(Extensions = "jpg,jpeg,png", ErrorMessage = "Please upload a valid image file (jpg, jpeg, png).")]
         public IFormFile ImageFile { get; set; }
+        
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (string.IsNullOrEmpty(Url) && ImageFile == null)
+            {
+                yield return new ValidationResult("Please provide either an image URL or upload an image.",
+                    new[] { nameof(Url), nameof(ImageFile) });
+            }
+
+            if (!string.IsNullOrEmpty(Url) && ImageFile != null)
+            {
+                yield return new ValidationResult("Please provide either an image URL or upload an image, not both.",
+                    new[] { nameof(Url), nameof(ImageFile) });
+            }
+        }
     }
 }
