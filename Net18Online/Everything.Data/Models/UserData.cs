@@ -1,4 +1,5 @@
-﻿using Everything.Data.Interface.Models;
+﻿using Enums.Users;
+using Everything.Data.Interface.Models;
 using Everything.Data.Models.Surveys;
 
 namespace Everything.Data.Models
@@ -10,7 +11,9 @@ namespace Everything.Data.Models
         public int Age { get; set; }
         public decimal Coins { get; set; }
         public string AvatarUrl { get; set; }
-        
+
+        public Role Role {  get; set; }
+
         public IEnumerable<EcologyData>? Ecologies { get; set; }
         public IEnumerable<CommentData>? Comments { get; set; }
         
@@ -19,5 +22,6 @@ namespace Everything.Data.Models
         public virtual List<MangaData> CreatedMangas { get; set; } = new();
 
         public virtual List<GameData> Games { get; set; } = new List<GameData>(); 
+        public virtual List<CoffeData> CreatedCoffe { get; set; } = new();
     }
 }

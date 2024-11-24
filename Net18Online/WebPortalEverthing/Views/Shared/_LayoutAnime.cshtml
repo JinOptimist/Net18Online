@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using WebPortalEverthing.Services
+@inject UserService userService
+<!DOCTYPE html>
 <html>
 <head>
     <title>Anime girl</title>
@@ -14,9 +16,9 @@
         <div class="name">anime girl</div>
         <div class="profile-block">
             <a href="/AnimeGirl/Profile">
-                <img src="~/images/AnimeGirl/avatar-default.webp" alt="" class="avatar" />
+                <img src="@userService.GetAvatar()" alt="" class="avatar" />
             </a>
-            <button class="logout">L</button>
+            <a class="logout" href="/Auth/Logout">L</a>
         </div>
     </header>
     <div class="menu-plus-content">

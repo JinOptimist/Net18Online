@@ -14,8 +14,11 @@
         @foreach (var brand in Model.Brands)
         {
             <div class="brand">
+                <label class="info">Название Бренда</label>
                 <div class="name">@brand.Name</div>
+                <label class="info">Название Компании владельца</label>
                 <div class="company">@brand.Company</div>
+                <label class="info">Коффе под этим брендом</label>
                 <div class="all-coffe">
                     @foreach (var coffe in brand.CoffeList)
                     {

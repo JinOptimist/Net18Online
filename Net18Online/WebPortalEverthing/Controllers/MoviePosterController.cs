@@ -4,17 +4,25 @@ using Everything.Data.Repositories;
 using Everything.Data.Interface.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.MoviePoster;
+using WebPortalEverthing.Services;
 
 namespace WebPortalEverthing.Controllers
 {
     public class MoviePosterController : Controller
     {
         private IMoviePosterRepositoryReal _moviePosterRepository;
+        private IUserRepositryReal _userRepositryReal;
         private WebDbContext _webDbContext;
-        public MoviePosterController(IMoviePosterRepositoryReal moviePosterRepository, WebDbContext webDbContext)
+        private AuthService _authService;
+        public MoviePosterController(IMoviePosterRepositoryReal moviePosterRepository,
+            WebDbContext webDbContext,
+            IUserRepositryReal userRepositryReal,
+            AuthService authService)
         {
             _moviePosterRepository = moviePosterRepository;
             _webDbContext = webDbContext;
+            _userRepositryReal = userRepositryReal;
+            _authService = authService;
         }
 
         public IActionResult Index(string name, int age)
@@ -23,6 +31,10 @@ namespace WebPortalEverthing.Controllers
             model.Hours = DateTime.Now.Hour;
             model.Minutes = DateTime.Now.Minute;
             model.Seconds = DateTime.Now.Second;
+
+            var userName = _authService.GetName();
+            model.UserName = userName;
+
             return View(model);
         }
         
@@ -33,6 +45,14 @@ namespace WebPortalEverthing.Controllers
             {
                 GenerateDefaultMoviePoster(count - countElementInDb.Count);
             }
+
+            var id = _authService.GetUserId();
+            if (id is null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var user = _userRepositryReal.Get(id.Value);
 
             var moviesFromDb = _moviePosterRepository.GetAllInCount(count ?? countElementInDb.Count);
 
@@ -76,6 +96,18 @@ namespace WebPortalEverthing.Controllers
         [HttpPost]
         public IActionResult CreatePoster(MovieCreationViewModel viewModel)
         {
+            if (_moviePosterRepository.HasSimilarUrl(viewModel.Url))
+            {
+                ModelState.AddModelError(
+                    nameof(MovieCreationViewModel.Url),
+                    "Такой url уже есть");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
             var dataMovie = new MovieData
             {
                 Name = viewModel.Name,

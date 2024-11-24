@@ -1,6 +1,7 @@
 ﻿using Everything.Data.Models;
 using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebPortalEverthing.Models.CoffeShop;
 using WebPortalEverthing.Services;
 
@@ -10,12 +11,14 @@ namespace WebPortalEverthing.Controllers
 	{
 		private const int MINIMAL_AGE = 16;
 		private IKeyCoffeShopRepository _coffeShopRepository;
+		private IBrandRepositoryReal _brandRepositoryReal;
 		private IUserRepositryReal _userRepositryReal;
 		private AuthService _authService;
 
-		public CoffeShopController(IKeyCoffeShopRepository coffeShopRepository, IUserRepositryReal userRepositryReal, AuthService authService)
+		public CoffeShopController(IKeyCoffeShopRepository coffeShopRepository, IBrandRepositoryReal brandRepositoryReal, IUserRepositryReal userRepositryReal, AuthService authService)
 		{
 			_coffeShopRepository = coffeShopRepository;
+			_brandRepositoryReal = brandRepositoryReal;
 			_userRepositryReal = userRepositryReal;
 			_authService = authService;
 
@@ -23,11 +26,11 @@ namespace WebPortalEverthing.Controllers
 
 		public IActionResult Index()
 		{
-			var id = _authService.GetUserId();
+			var isAdmin = _authService.IsAdmin();
 
-			if (id is null)
+			if (!isAdmin)
 			{
-				return RedirectToAction("Index", "Home");
+				return RedirectToAction("Coffe");
 			}
 
 			var viewModels = CoffeView();
@@ -37,15 +40,11 @@ namespace WebPortalEverthing.Controllers
 
 		public List<CoffeViewModel> CoffeView()
 		{
-			var id = _authService.GetUserId();
+			var valuesCoffeFromDb = _coffeShopRepository.GetAllWithCreatorsAndBrand();
 
-			var user = _userRepositryReal.Get(id.Value);
+            var userId = _authService.GetUserId();
 
-			var valuesCoffeFromDb = user.Age > MINIMAL_AGE
-				? _coffeShopRepository.GetAll()
-				: _coffeShopRepository.GetDefaultCoffe();
-
-			var viewModels = valuesCoffeFromDb
+            var viewModels = valuesCoffeFromDb
 				.Select(coffeFromDb =>
 					new CoffeViewModel
 					{
@@ -53,7 +52,11 @@ namespace WebPortalEverthing.Controllers
 						Coffe = coffeFromDb.Coffe,
 						Url = coffeFromDb.Url,
 						Cost = coffeFromDb.Cost,
-					}
+						CreatorName = coffeFromDb.Creator?.Login ?? "Неизвестный",
+						Brand = coffeFromDb.Brand?.Name ?? "MaxWell",
+                        CanDeleteOrUpdate = coffeFromDb.Creator is null
+                            || coffeFromDb.Creator?.Id == userId
+                    }
 				).ToList();
 
 			return viewModels;
@@ -61,13 +64,6 @@ namespace WebPortalEverthing.Controllers
 
 		public IActionResult Coffe()
 		{
-			var id = _authService.GetUserId();
-
-			if (id is null)
-			{
-				return RedirectToAction("Index", "Home");
-			}
-
 			var viewModels = CoffeView();
 
 			return View(viewModels);
@@ -76,25 +72,37 @@ namespace WebPortalEverthing.Controllers
 		[HttpGet]
 		public IActionResult Create()
 		{
-			return View();
+			var viewModel = new CoffeCreateViewModel();
+
+			viewModel.Brands = _brandRepositoryReal
+				.GetAll()
+				.Select(x => new SelectListItem(x.Name, x.Id.ToString()))
+				.ToList();
+			return View(viewModel);
 		}
 
 		[HttpPost]
 		public IActionResult Create(CoffeCreateViewModel viewModel)
 		{
-			if (!ModelState.IsValid)
-			{
-				return View(viewModel);
-			}
+            if (!ModelState.IsValid)
+            {
+                viewModel.Brands = _brandRepositoryReal
+                .GetAll()
+                .Select(x => new SelectListItem(x.Name, x.Id.ToString()))
+                .ToList();
+                return View(viewModel);
+            }
+
+            var currentUserId = _authService.GetUserId();
 
             var coffe = new CoffeData
-            {
-                Coffe = viewModel.Coffe,
-                Url = viewModel.Url,
-                Cost = viewModel.Cost
-            };
+			{
+				Coffe = viewModel.Coffe,
+				Url = viewModel.Url,
+				Cost = viewModel.Cost
+			};
 
-            _coffeShopRepository.Add(coffe);
+			_coffeShopRepository.Create(coffe, currentUserId!.Value, viewModel.BrandId);
 
 			return RedirectToAction("Index");
 		}

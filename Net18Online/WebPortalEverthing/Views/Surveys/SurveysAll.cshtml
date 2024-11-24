@@ -19,7 +19,10 @@
                     <span class="count">@surveyGroup.Surveys.Count</span>
                 </div>
                 <div class="actions">
-                    <a href="Create?idGroup=@surveyGroup.Id">Создать новый опрос</a>
+                    @if (surveyGroup.IsAllowSurveyCreation)
+                    {
+                        <a href="Create?idGroup=@surveyGroup.Id">Создать новый опрос</a>
+                    }
                 </div>
             </div>
             <div class="survey-group-content">

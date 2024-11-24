@@ -1,4 +1,8 @@
-﻿namespace WebPortalEverthing.Services
+﻿
+using Enums.Users;
+using System.Data;
+
+namespace WebPortalEverthing.Services
 {
     public class AuthService
     {
@@ -7,6 +11,7 @@
         public const string AUTH_TYPE_KEY = "Smile";
         public const string CLAIM_TYPE_ID = "Id";
         public const string CLAIM_TYPE_NAME = "Name";
+        public const string CLAIM_TYPE_ROLE = "Role";
 
         public AuthService(IHttpContextAccessor httpContextAccessor)
         {
@@ -32,6 +37,28 @@
             }
 
             return int.Parse(isStr);
+        }
+
+        public Role GetRole()
+        {
+            var roleStr = GetClaimValue(CLAIM_TYPE_ROLE);
+            if (roleStr is null)
+            {
+                throw new Exception("Guest cant has a role");
+            }
+            var roleInt = int.Parse(roleStr);
+            var role = (Role)roleInt;
+            return role;
+        }
+
+        public bool IsAdmin()
+        {
+            return IsAuthenticated() && GetRole().HasFlag(Role.Admin);
+        }
+
+        public bool HasRole(Role role)
+        {
+            return IsAuthenticated() && GetRole().HasFlag(role);
         }
 
         private string? GetClaimValue(string type)
