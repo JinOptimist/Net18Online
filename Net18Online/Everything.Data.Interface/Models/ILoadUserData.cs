@@ -15,5 +15,6 @@ namespace Everything.Data.Interface.Models
         public decimal Coins { get; set; }
         public DateTime CreatedAt { get; set; }
         public Role Role { get; set; }
+        public string AvatarUrl { get; set; }
     }
 }

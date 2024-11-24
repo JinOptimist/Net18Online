@@ -6,7 +6,7 @@ namespace WebPortalEverthing.Models.LoadTesting.Profile
     {
         public string UserName { get; set; }
         public string AvatarUrl { get; set; }
-        public List<LoadVolumeShortInfoViewModel> LoadValues { get; set; }
+        public List<LoadVolumeShortInfoViewModel> LoadValumes { get; set; }
         public List<MetricShortInfoViewModel> Metrics { get; set; }
     }
 

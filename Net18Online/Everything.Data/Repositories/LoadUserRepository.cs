@@ -16,6 +16,7 @@ namespace Everything.Data.Repositories
         void Register(string login, string password, string email);
         void Register(string login, string password, string email, Role role = Role.User);
         void UpdateRole(int userId, Role role);
+        public string GetAvatarUrl(int userId);
     }
 
     public class LoadUserRepository : BaseRepository<LoadUserData>, ILoadUserRepositryReal
@@ -34,6 +35,10 @@ namespace Everything.Data.Repositories
             var brokenPassword = BrokePassword(password);
 
             return _dbSet.FirstOrDefault(x => x.Login == login && x.Password == brokenPassword);
+        }
+        public string GetAvatarUrl(int userId)
+        {
+            return _dbSet.First(x => x.Id == userId).AvatarUrl;
         }
 
         public bool IsAdminExist()

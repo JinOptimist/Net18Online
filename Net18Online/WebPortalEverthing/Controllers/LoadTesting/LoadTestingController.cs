@@ -9,6 +9,8 @@ using WebPortalEverthing.Services.LoadTesting;
 using WebPortalEverthing.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebPortalEverthing.Controllers.AuthAttributes;
+using WebPortalEverthing.Models.LoadTesting.Profile;
+using WebPortalEverthing.Models.AnimeGirl.Profile;
 
 
 namespace WebPortalEverthing.Controllers.LoadTesting
@@ -141,8 +143,34 @@ namespace WebPortalEverthing.Controllers.LoadTesting
 
         public IActionResult LoadUserProfile()
         {
-            
-            return RedirectToAction("ContenMetricsListView");
+            var viewModel = new LoadUserProfileViewModel();
+            viewModel.UserName = _loadAuthService.GetName()!;
+
+            var userId = _loadAuthService.GetUserId()!.Value;
+
+            viewModel.AvatarUrl = _loadUserRepositryReal.GetAvatarUrl(userId);
+
+            viewModel.LoadValumes = _loadVolumeTestingRepositoryReal
+                            .GetLoadValueWithInfoAboutAuthors(userId)
+                            .Select(x => new LoadVolumeShortInfoViewModel
+                            {
+                                Name = x.Name,
+                                IsCreatedWithСharacter = x.HasCharaterWithSpecialAuthor
+                            })
+                            .ToList();
+
+            viewModel.Metrics = _loadTestingRepository
+                .GetAllByAuthorId(userId)
+                .Select(x => new MetricShortInfoViewModel
+                {
+                    Name = x.Name,
+                    Throughput = x.Throughput,
+                    Average = x.Average
+
+                })
+                .ToList();
+
+            return View(viewModel);
         }
 
 

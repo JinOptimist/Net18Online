@@ -9,6 +9,7 @@ namespace Everything.Data.Repositories
     {
         IEnumerable<MetricData> GetWithoutVolumeLoad();
         IEnumerable<MetricData> GetAllWithCreatorsAndLoadVolume();
+        IEnumerable<MetricData> GetAllByAuthorId(int userId);
         bool HasSimilarName(string name);
         bool IsNameUniq(string name);
         void Create(MetricData metricData, int currentUserId, int LoadVolumeId);
@@ -136,5 +137,13 @@ namespace Everything.Data.Repositories
             return !_dbSet.Any(x => x.Name == name);
         }
 
+        public IEnumerable<MetricData> GetAllByAuthorId(int userId)
+        {
+
+            return _dbSet
+                .Where(x => x.LoadUserDataCreator != null
+                    && x.LoadUserDataCreator.Id == userId)
+                .ToList();
+        }
     }
 }

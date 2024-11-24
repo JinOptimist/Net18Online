@@ -16,6 +16,8 @@ namespace Everything.Data.Models
         public string Email { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
+        public string AvatarUrl { get; set; }
+
         public decimal Coins { get; set; }
         public Role Role { get; set; } = Role.Observer;
 
