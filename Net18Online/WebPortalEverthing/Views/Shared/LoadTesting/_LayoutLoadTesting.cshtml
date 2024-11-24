@@ -24,6 +24,7 @@
     <link href="~/css/LoadTesting/login-form.css" rel="stylesheet" />
     <link href="~/css/LoadTesting/registration-form.css" rel="stylesheet" />
     <link href="~/css/LoadTesting/name-user-auth-and-coins.css" rel="stylesheet" />
+    <link href="~/css/LoadTesting/loadUserProfile.css" rel="stylesheet" />
 
 </head>
 <body>
@@ -47,15 +48,15 @@
                     <div class="coin-icon">@loadAuthService.GetUserCoins() </div>
 
                 </div>
-                
+
             </div>
             <div class="login-button">
                 <a class="login-button-registration" asp-area="" asp-controller="LoadAuth" asp-action="RegistrationLoadUserView">Registration</a>
                 <a class="login-button-login" asp-area="" asp-controller="LoadAuth" asp-action="LoginLoadUserView">Login</a>
-                
+
             </div>
 
-            
+
         </div>
     </div>
 

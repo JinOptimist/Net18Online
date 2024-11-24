@@ -1,5 +1,9 @@
 @using WebPortalEverthing.Models.LoadTesting
 @model List<MetricViewModel>
+@using WebPortalEverthing.Services
+@using WebPortalEverthing.Services.LoadTesting
+@inject LoadAuthService loadAuthService
+@inject LoadUserService loadUserService
 
 @{
     Layout = "~/Views/Shared/LoadTesting/_LayoutLoadTesting.cshtml";
@@ -10,7 +14,10 @@
         @foreach( var metric in Model )
         {
             <div class="discription-type">
-                <div class="type-name">@metric.Name</div>
+                <span class="@(metric.CreatorName == LoadAuthService.CLAIM_TYPE_NAME ? "special-load-volume" : "special")">
+
+                    <div class="type-name">@metric.Name</div>
+                </span> @*класс стиля*@
                 @*Указать экшен, который будет вызван при отправке формы*@
                 <form action="/LoadTesting/UpdateMetric" method="post">
                     <input type="hidden" name="id" value="@metric.Id" />
