@@ -1,5 +1,7 @@
-﻿@using WebPortalEverthing.Services.LoadTesting
+﻿@using WebPortalEverthing.Services
+@using WebPortalEverthing.Services.LoadTesting
 @inject LoadAuthService loadAuthService
+@inject LoadUserService loadUserService
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -32,7 +34,10 @@
         <div class="name">LOAD TESTING</div>
         <div class="profile-blok">
             <div class="avatar">
-                <img src="~/images/LoadTesting/avatar.jpg" alt="avatar" class="avatar-image" />
+                <a href="/LoadTesting/LoadUserProfile">
+                    <img src="@loadUserService.GetAvatar()" alt="avatar-img" class="avatar-image" />
+                </a>
+
             </div>
             <div class="name-user-auth">
                 Привет, @loadAuthService.GetName()
@@ -42,12 +47,15 @@
                     <div class="coin-icon">@loadAuthService.GetUserCoins() </div>
 
                 </div>
-
+                
             </div>
             <div class="login-button">
                 <a class="login-button-registration" asp-area="" asp-controller="LoadAuth" asp-action="RegistrationLoadUserView">Registration</a>
                 <a class="login-button-login" asp-area="" asp-controller="LoadAuth" asp-action="LoginLoadUserView">Login</a>
+                
             </div>
+
+            
         </div>
     </div>
 
