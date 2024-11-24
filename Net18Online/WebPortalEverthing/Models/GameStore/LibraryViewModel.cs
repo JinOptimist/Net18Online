@@ -2,6 +2,6 @@
 {
     public class LibraryViewModel
     {
-        public List<GameViewModel> Games { get; set; }
+        public List<GameViewModel>? GamesInTheLibrary { get; set; }
     }
 }

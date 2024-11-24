@@ -180,9 +180,8 @@ namespace Everything.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<GameData>()
-                .HasOne(x => x.Buyer)
-                .WithMany(x => x.Games)
-                .OnDelete(DeleteBehavior.NoAction);
+                .HasMany(x => x.Buyers)
+                .WithMany(x => x.Games);                
 
             modelBuilder.Entity<FilmDirectorData>()
                 .HasMany(x => x.Movies)

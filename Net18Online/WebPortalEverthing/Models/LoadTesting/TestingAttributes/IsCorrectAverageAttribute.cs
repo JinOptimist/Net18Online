@@ -20,15 +20,15 @@ namespace WebPortalEverthing.Models.LoadTesting.TestingAttributes
 
         public IsCorrectAverageAttribute(double min, double max)
         {
-            _min = min;
-            _max = max;
+            _min = (decimal)min;
+            _max = (decimal)max;
             _option = UnitLoad.Seconds;
         }
 
         public IsCorrectAverageAttribute(double min, double max, UnitLoad option, LoadLevel level)
         {
-            _min = min;
-            _max = max;
+            _min = (decimal)min;
+            _max = (decimal)max;
             _option = option;
         }
 

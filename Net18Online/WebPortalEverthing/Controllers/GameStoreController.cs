@@ -9,6 +9,7 @@ using Everything.Data.Repositories;
 using WebPortalEverthing.Models.AnimeGirl;
 using WebPortalEverthing.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace WebPortalEverthing.Controllers
 {
@@ -38,13 +39,35 @@ namespace WebPortalEverthing.Controllers
         }
 
         public IActionResult Shop()
-        {            
-            return View();
+        {
+            var gameFromDb = _gameStoreRepository.GetAll();
+
+            if (!_gameStoreRepository.Any())
+            {                
+                //GenerateDefaultGame();
+            }
+
+            var shopViewModels = gameFromDb.Select(dbGame =>
+            new ShopViewModel
+            {
+                Id = dbGame.Id,
+                NameGame = dbGame.NameGame,
+                ImageSrc = dbGame.ImageSrc,
+                Cost = dbGame.Cost,                
+            }).ToList();
+
+            var shopListViewModel = new ShopListViewModel
+            {
+                Games = shopViewModels,
+            };
+
+            return View(shopListViewModel);
         }
+        [HttpGet]
         public IActionResult Library()
         {
-            var gameFromDb = _gameStoreRepository.AllBuyersGames();
-            //var gameFromDb = _webDbContext.Games.ToList();
+            var buyerId = _authService.GetUserId();
+            var gameFromDb = _gameStoreRepository.GetGameWithBuyer((int)buyerId!);            
             if (!_gameStoreRepository.Any())
             {
                 //GenerateDefaultGame();
@@ -52,16 +75,20 @@ namespace WebPortalEverthing.Controllers
 
             var gameViewModels = gameFromDb.Select(dbGame =>
             new GameViewModel
-            {
-                Id = dbGame.Id,
-                NameGame = dbGame.NameGame,
+            {              
+                NameGame = dbGame.Name,
                 ImageSrc = dbGame.ImageSrc,
                 Tags = new(),
             }
             ).ToList();
-            return View(gameViewModels);
-           
-            
+
+            var libraryViewModel = new LibraryViewModel
+            {
+                GamesInTheLibrary = gameViewModels,
+            };
+            return View(libraryViewModel);
+
+
         }
 
         private void GenerateDefaultGame()
@@ -109,33 +136,34 @@ namespace WebPortalEverthing.Controllers
             {
                 NameGame = viewModel.Name,
                 ImageSrc = viewModel.Url,
+                Cost = viewModel.Cost,
                 //Tags = new()
             };
-            
+
 
             _gameStoreRepository.Add(dataGame);
 
-            return RedirectToAction("Library");
+            return RedirectToAction("Shop");
         }
         public IActionResult UpdateName(string newName, int id)
         {
             _gameStoreRepository.UpdateName(id, newName);
-            return RedirectToAction("Library");
+            return RedirectToAction("Shop");
         }
 
         public IActionResult UpdateImage(int id, string url)
         {
             _gameStoreRepository.UpdateImage(id, url);
-            return RedirectToAction("Library");
+            return RedirectToAction("Shop");
         }
-      
-        [HttpPost]
+
+        
         public IActionResult Purchases(int buyerId, int gameId)
-        {                      
-           
-                _gameStoreRepository.LinkGame(buyerId, gameId);
-                return RedirectToAction("Library");
-            
+        {
+
+            _gameStoreRepository.LinkGame(buyerId, gameId);
+            return RedirectToAction("Shop");
+
         }
         public IActionResult Remove(int id)
         {

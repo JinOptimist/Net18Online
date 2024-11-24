@@ -26,7 +26,7 @@ namespace Everything.Data.Repositories
 
         public IEnumerable<GameData> AllBuyersGames()
         {
-            return _dbSet.Include(x => x.Buyer);
+            return _dbSet.Include(x => x.Buyers);
         }
 
         public IEnumerable<GameData> GetWithoutOwner()
@@ -68,28 +68,33 @@ namespace Everything.Data.Repositories
         }
         public void LinkGame(int buyerId, int gameId)
         {
-            var game = _webDbContext.Games.First(x => x.Id == gameId);
-            var buyer = _dbSet.First(x => x.Id == buyerId);
+            var buyer = _webDbContext.Users.Include(u => u.Games).FirstOrDefault(x => x.Id == buyerId);
+            if (buyer == null)
+                throw new InvalidOperationException($"Buyer with ID {buyerId} not found.");
 
-            buyer.Buyer?.Games.Add(game);
+            var game = _webDbContext.Games.FirstOrDefault(x => x.Id == gameId);
+            if (game == null)
+                throw new InvalidOperationException($"Game with ID {gameId} not found.");
+
+            if (buyer.Games.Contains(game))
+            {
+                throw new InvalidOperationException($"The buyer {buyerId} already has the game {gameId}");
+            }
+            buyer.Games.Add(game);
             _webDbContext.SaveChanges();
         }
 
         public IEnumerable<GameWithInfoAboutAuthor> GetGameWithBuyer(int buyerId)
         {
             var games = _dbSet
-                .Where(user => user
-                .Buyer
-                .Games
-                .Any(game => game.Buyer != null
-                && game.Buyer.Id == buyerId))
+                .Where(game => game.Buyers.Any(buyer => buyer.Id == buyerId))
                 .Select(x => new GameWithInfoAboutAuthor
-                { 
+                {
                     Name = x.NameGame,
                     ImageSrc = x.ImageSrc,
                 }).ToList();
 
-            return game;
+            return games;
         }
     }
 

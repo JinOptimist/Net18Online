@@ -11,9 +11,10 @@ namespace Everything.Data.Models
     {
         public string NameGame { get; set; }
         public string ImageSrc { get; set; }
-
-        public virtual UserData? Buyer { get; set; }
+        public int Cost { get; set; }
+        public virtual List<UserData>? Buyers { get; set; } = new List<UserData>();
         public virtual GameStudiosData? Studios { get; set; }
+        
         //public List<string> Tags { get; set; }
     }
 }
