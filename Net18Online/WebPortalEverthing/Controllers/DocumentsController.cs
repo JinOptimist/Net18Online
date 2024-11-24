@@ -74,6 +74,16 @@ namespace WebPortalEverthing.Controllers
 
         public IActionResult Delete(int id)
         {
+            var document = _documentRepository.Get(id);
+
+            if (!_fileProvider.Delete(document.StorageFileName))
+            {
+                // Пока что не умеем пушить уведомления
+                // "Не удалось удалить файл, обратитесь к администратору портала";
+
+                return RedirectToAction(nameof(Index));
+            }
+
             _documentRepository.Delete(id);
 
             return RedirectToAction(nameof(Index));

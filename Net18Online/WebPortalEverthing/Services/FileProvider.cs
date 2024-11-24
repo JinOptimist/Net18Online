@@ -19,7 +19,7 @@
             }
 
             var extension = Path.GetExtension(oldFileName);
-            newFileName = newFileName + extension;
+            newFileName += extension;
 
             return newFileName;
         }
@@ -34,11 +34,26 @@
                 return false;
             }
 
-            var path = Path.Combine(folderPath, fileName);
-            using var fileStream = new FileStream(path, FileMode.Create);
+            var filePath = Path.Combine(folderPath, fileName);
+            using var fileStream = new FileStream(filePath, FileMode.Create);
             formFile
                 .CopyToAsync(fileStream)
                 .Wait();
+
+            return true;
+        }
+
+        public bool Delete(string fileName)
+        {
+            var webRootPath = _webHostEnvironment.WebRootPath;
+            var filePath = Path.Combine(webRootPath, "files", fileName);
+
+            if (!File.Exists(filePath))
+            {
+                return false;
+            }
+
+            File.Delete(filePath);
 
             return true;
         }
