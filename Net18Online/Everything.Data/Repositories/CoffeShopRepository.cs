@@ -7,7 +7,8 @@ namespace Everything.Data.Repositories
     public interface IKeyCoffeShopRepository : ICoffeShopRepository<CoffeData>
     {
         void Create(CoffeData dataCoffe, int currentUserId, int brandId);
-        public IEnumerable<CoffeData> GetAllWithCreatorsAndBrand();
+        IEnumerable<CoffeData> GetAllWithCreatorsAndBrand();
+        IEnumerable<CoffeData> GetAllByCreatorId(int creatorId);
 
     }
 
@@ -26,6 +27,14 @@ namespace Everything.Data.Repositories
             dataCoffe.Brand = brand;
 
             Add(dataCoffe);
+        }
+
+        public IEnumerable<CoffeData> GetAllByCreatorId(int creatorId)
+        {
+            return _dbSet
+                .Where(x => x.Creator != null 
+                         && x.Creator.Id == creatorId)
+                .ToList();
         }
 
         public IEnumerable<CoffeData> GetAllWithCreatorsAndBrand()

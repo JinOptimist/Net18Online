@@ -11,5 +11,11 @@ namespace WebPortalEverthing.Models.Ecology
         public string UserName { get; set; }
         //public EcologyUserViewModel User { get; set; }
         public ICollection<CommentViewModel> Comments { get; set; }
+        
+        public bool CanMove { get; set; }
+    
+        public bool CanDelete { get; set; }
+        
+        public bool PostsForMainPage { get; set; }
     }
 }

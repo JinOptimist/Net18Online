@@ -1,0 +1,26 @@
+﻿@model WebPortalEverthing.Models.CakeLink.CakeAndMagazinLinkViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutCake.cshtml";
+}
+
+<form method="post">
+    <table>
+        <tr>
+            <th>Cakes</th>
+            <th>Magazins</th>
+            <th>Button link</th>
+        </tr>
+        <tr>
+            <td>
+                @Html.DropDownListFor(x => x.CakeId, Model.Cakes)
+            </td>
+            <td>
+                @Html.DropDownListFor(x => x.MagazinId, Model.Magazins)
+            </td>
+            <td>
+                <button type="submit">Link</button>
+            </td>
+        </tr>
+    </table>
+</form>

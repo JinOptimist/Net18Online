@@ -14,6 +14,7 @@ using GameStoreRepository = Everything.Data.Repositories.GameStoreRepository;
 using LoadTestingRepository = Everything.Data.Repositories.LoadTestingRepository;
 using AnimeCatalogRepository = Everything.Data.Repositories.AnimeCatalogRepository;
 using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRepository;
+using WebPortalEverthing.Services.LoadTesting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +23,7 @@ builder.Services
     .AddCookie(AuthService.AUTH_TYPE_KEY, config =>
     {
         config.LoginPath = "/Auth/Login";
-        config.AccessDeniedPath = "/Auth/Deny";
+        config.AccessDeniedPath = "/Home/Forbidden";
     });
 
 // Add services to the container.
@@ -43,6 +44,7 @@ builder.Services.AddScoped<IMoviePosterRepositoryReal, MoviePosterRepository>();
 builder.Services.AddScoped<IAnimeCatalogRepositoryReal, AnimeCatalogRepository>();
 builder.Services.AddScoped<IAnimeReviewRepositoryReal, AnimeReviewsRepository>();
 builder.Services.AddScoped<IEcologyRepositoryReal, EcologyRepository>();
+builder.Services.AddScoped<ICommentRepositoryReal, CommentRepository>();
 builder.Services.AddScoped<IKeyCoffeShopRepository, CoffeShopRepository>();
 builder.Services.AddScoped<IMangaRepositoryReal, MangaRepository>();
 builder.Services.AddScoped<IBrandRepositoryReal, BrandRepository>();
@@ -51,18 +53,25 @@ builder.Services.AddScoped<IAnimeGirlRepositoryReal, AnimeGirlRepository>();
 builder.Services.AddScoped<ISurveyGroupRepositoryReal, SurveyGroupRepository>();
 builder.Services.AddScoped<IStatusRepositoryReal, StatusRepository>();
 builder.Services.AddScoped<ISurveysRepositoryReal, SurveysRepository>();
+builder.Services.AddScoped<IDocumentRepositoryReal, DocumentRepository>();
 builder.Services.AddScoped<IGameStoreRepositoryReal, GameStoreRepository>();
 builder.Services.AddScoped<IGameStudiosRepositoryReal, GameStudiosRepository>();
 builder.Services.AddScoped<ICakeRepositoryReal, CakeRepository>();
+builder.Services.AddScoped<IMagazinRepositoryReal, MagazinRepository>();
 
 builder.Services.AddScoped<ILoadTestingRepositoryReal, LoadTestingRepository>();
 builder.Services.AddScoped<ILoadVolumeTestingRepositoryReal, LoadVolumeTestingRepository>();
 builder.Services.AddScoped<ILoadUserRepositryReal, LoadUserRepository>();
 builder.Services.AddScoped<IUserRepositryReal, UserRepository>();
 
+builder.Services.AddScoped<HelperForValidatingCake>();
 builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<LoadAuthService>();
+builder.Services.AddScoped<EnumHelper>();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<FileProvider>();
 
 builder.Services.AddSingleton<IGameLifeRepository, GameLifeRepository>();
 
@@ -77,6 +86,9 @@ using (var scope = scopeFactory.CreateScope())
     var jsonFilePath = Path.Combine(app.Environment.ContentRootPath, "Data", "ServiceCenter", "typeOfAppliance.json");
     typeOfApplianceRepo.LoadDataFromJson(jsonFilePath);
 }
+
+var seed = new Seed();
+seed.Fill(app.Services);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

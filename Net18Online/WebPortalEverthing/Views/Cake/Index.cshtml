@@ -4,42 +4,28 @@
     Layout = "~/Views/Shared/_LayoutCake.cshtml";
 }
 
-<div class="menu">
-    <ul class="filter">
-        <li><button class="filter">Products</button></li>
-        <li><button class="filter">Price</button></li>
-        <li><button class="filter">Weight</button></li>
-        <li><button class="filter">Size</button></li>
-        <li><button class="filter">Rating</button></li>
-    </ul>
-</div>
-<div class="cakes">
-    @foreach (var cake in Model)
-    {
-        <div class="cake">
-            <div class="image-cake">
-                <img src="@cake.ImageSrc" alt="cake" />
-            </div>
-            <div name="description">
-                <form method="post" action="/Cake/UpdateDescription">
-                    <input name="id" value="@cake.Id" type="hidden" />
-                    <input name="newDescription" value="@cake.Description" />
-                    <button type="submit">upd</button>
-                </form>
-            </div>
-            <div class="price-rating">
-                <div class="rating">@cake.Rating/5</div>
-                <div class="price">@cake.Price BYN</div>
-            </div>
-            <div name="delete">
-                <form method="post" action="/Cake/Remove">
-                    <input name="id" value="@cake.Id" type="hidden" />
-                    <button type="submit">Del</button>
-                </form>
-            </div>
+@foreach (var cake in Model)
+{
+    <div class="card">
+        <img src="@cake.ImageSrc" alt="cake">
+        <div class="text-wrapper">
+            <h1 class="name">@cake.Name</h1>
+            <p class="cake_desc">@cake.Description</p>
+            <h1 class="magazins">Magazins</h1>
+            @{
+                if (cake.Magazins.Count == 0)
+                {
+                    <p class="list-magazins">Not in stores</p>
+                }
+                else
+                {
+                    foreach (var magazin in cake.Magazins)
+                    {
+                        <span class="list-magazins">@magazin.Name </span>
+                    }
+                }
+            }
+            <p class="price">@cake.Price BYN</p>
         </div>
-    }
-    <div class="create">
-        <a href="/Cake/Create">create</a>
     </div>
-</div>
+}

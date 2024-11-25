@@ -14,6 +14,8 @@
     <div>
         @Html.TextBoxFor(x => x.Url, new { placeholder = "Path for Game" })
     </div>
-    
+    <div>
+        @Html.TextBoxFor(x => x.Cost, new { @type = "number", placeholder = "Cost" })
+    </div>    
     <button type="submit">Add</button>
 </form>

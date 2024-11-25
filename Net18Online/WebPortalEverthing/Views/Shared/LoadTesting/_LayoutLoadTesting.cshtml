@@ -1,4 +1,5 @@
-﻿@using WebPortalEverthing.Models.LoadTesting
+﻿@using WebPortalEverthing.Services.LoadTesting
+@inject LoadAuthService loadAuthService
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -20,6 +21,7 @@
     <link href="~/css/LoadTesting/createLoadVolume.css" rel="stylesheet" />
     <link href="~/css/LoadTesting/login-form.css" rel="stylesheet" />
     <link href="~/css/LoadTesting/registration-form.css" rel="stylesheet" />
+    <link href="~/css/LoadTesting/name-user-auth-and-coins.css" rel="stylesheet" />
 
 </head>
 <body>
@@ -30,11 +32,19 @@
         <div class="name">LOAD TESTING</div>
         <div class="profile-blok">
             <div class="avatar">
-                <img src="~/images/LoadTesting/avatar.jpg" alt="avatar" class="avatar-image" />
+            </div>
+            <div class="name-user-auth">
+                Привет, @loadAuthService.GetName()
+                <div class="name-user-auth-coins">
+                    Количество монет
+                    <div class="coin-icon">@loadAuthService.GetUserCoins() </div>
+
+                </div>
+
             </div>
             <div class="login-button">
-                <a class="login-button-registration" asp-area="" asp-controller="LoadAuth" asp-action="RegistrationLoadUserView">Регистрация</a>
-                <a href="LoginLoadUserView" class="login-button-login">Логин</a>
+                <a class="login-button-registration" asp-area="" asp-controller="LoadAuth" asp-action="RegistrationLoadUserView">Registration</a>
+                <a class="login-button-login" asp-area="" asp-controller="LoadAuth" asp-action="LoginLoadUserView">Login</a>
             </div>
         </div>
     </div>

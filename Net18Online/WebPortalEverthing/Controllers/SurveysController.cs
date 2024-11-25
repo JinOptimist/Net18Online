@@ -4,6 +4,9 @@ using WebPortalEverthing.Models.Surveys;
 using Everything.Data.Interface.Models.Surveys;
 using Everything.Data.Repositories.Surveys;
 using Everything.Data.Interface.Enums;
+using Enums.Users;
+using WebPortalEverthing.Controllers.AuthAttributes;
+using WebPortalEverthing.Services;
 
 namespace WebPortalEverthing.Controllers
 {
@@ -12,12 +15,14 @@ namespace WebPortalEverthing.Controllers
         private ISurveyGroupRepositoryReal _surveyGroupRepository;
         private IStatusRepositoryReal _statusRepository;
         private ISurveysRepositoryReal _surveysRepository;
+        private AuthService _authService;
 
-        public SurveysController(ISurveyGroupRepositoryReal surveyGroupRepository, IStatusRepositoryReal statusRepository, ISurveysRepositoryReal surveysRepository)
+        public SurveysController(ISurveyGroupRepositoryReal surveyGroupRepository, IStatusRepositoryReal statusRepository, ISurveysRepositoryReal surveysRepository, AuthService authService)
         {
             _statusRepository = statusRepository;
             _surveyGroupRepository = surveyGroupRepository;
             _surveysRepository = surveysRepository;
+            _authService = authService;
         }
 
         public ActionResult Index()
@@ -53,12 +58,14 @@ namespace WebPortalEverthing.Controllers
 
         private SurveyGroupViewModel GetSurveyGroupViewModelFromData(ISurveyGroupData surveyGroup)
         {
+            var isAllowSurveyCreation = _authService.HasRole(Role.SurveysCreatorOrEditor);
             var surveysFromDb = _surveysRepository.GetAll();
 
             return new SurveyGroupViewModel
             {
                 Id = surveyGroup.Id,
                 Title = surveyGroup.Title,
+                IsAllowSurveyCreation = isAllowSurveyCreation,
                 Surveys = surveysFromDb
                             .Where(survey => survey.SurveyGroup.Id == surveyGroup.Id)
                             .Select(GetSurveyViewModelFromData)
@@ -277,6 +284,7 @@ namespace WebPortalEverthing.Controllers
         }
 
         [HttpGet]
+        [HasRole(Role.SurveysCreatorOrEditor)]
         public ActionResult Create(int idGroup)
         {
             var surveyGroup = _surveyGroupRepository
@@ -284,6 +292,7 @@ namespace WebPortalEverthing.Controllers
 
             var surveyCreate = new SurveyCreateViewModel()
             {
+                Id = 0,
                 SurveyGroup = new SurveyGroupForListViewModel()
                 {
                     Id = surveyGroup.Id,
@@ -310,6 +319,7 @@ namespace WebPortalEverthing.Controllers
         }
 
         [HttpPost]
+        [HasRole(Role.SurveysCreatorOrEditor)]
         public ActionResult Create(SurveyCreateViewModel surveyCreate)
         {
             if (!ModelState.IsValid)
@@ -318,6 +328,51 @@ namespace WebPortalEverthing.Controllers
             }
 
             _surveysRepository.CreateSurvey(surveyCreate.Title, surveyCreate.SurveyGroup.Id, surveyCreate.Description);
+
+            return RedirectToAction(nameof(SurveysAll));
+        }
+
+        [HttpGet]
+        [HasRole(Role.SurveysCreatorOrEditor)]
+        public ActionResult Edit(int idSurvey)
+        {
+            var surveyFromDb = _surveysRepository.GetWithGroupAndQuestions(idSurvey);
+
+            var surveyCreate = new SurveyCreateViewModel()
+            {
+                Id = idSurvey,
+                Title = surveyFromDb.Title,
+                Description = surveyFromDb.Description,
+                SurveyGroup = new SurveyGroupForListViewModel()
+                {
+                    Id = surveyFromDb.SurveyGroup.Id,
+                    Title = surveyFromDb.SurveyGroup.Title,
+                },
+                Questions = surveyFromDb
+                    .Questions
+                    .Select(question => new QuestionViewModel
+                    {
+                        Title = question.Title,
+                        IsRequired = question.IsRequired,
+                        AnswerType = question.AnswerType
+                    })
+                    .ToList()
+            };
+
+            return View(nameof(Create), surveyCreate);
+        }
+
+        [HttpPost]
+        [HasRole(Role.SurveysCreatorOrEditor)]
+        public ActionResult Edit(SurveyCreateViewModel surveyCreate)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(surveyCreate);
+            }
+
+            _surveysRepository.UpdateTitle(surveyCreate.Id, surveyCreate.Title);
+            _surveysRepository.UpdateDescription(surveyCreate.Id, surveyCreate.Description);
 
             return RedirectToAction(nameof(SurveysAll));
         }

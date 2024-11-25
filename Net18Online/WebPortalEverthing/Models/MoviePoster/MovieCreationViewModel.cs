@@ -1,9 +1,25 @@
-﻿namespace WebPortalEverthing.Models.MoviePoster
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
+using WebPortalEverthing.Models.CustomValidationAttrubites;
+
+namespace WebPortalEverthing.Models.MoviePoster
 {
     public class MovieCreationViewModel
     {
+        [Required]
         public string Name { get; set; }
+
+        [IsUrl]
         public string Url { get; set; }
-        public List<string> Tags { get; set; }
+
+        [IsCorrectFilmDuration(70, 200, DurationOption.Minutes)]
+        public int FilmDuration { get; set; }
+
+        [NumberOfMusicalCompositions]
+        public int NumberOfMusicalCompositions { get; set; }
+
+        public int FilmDirectorId { get; set; }
+        public List<SelectListItem>? FilmDirectors { get; set; }
+
     }
 }

@@ -1,31 +1,20 @@
 ﻿@using WebPortalEverthing.Models.GameStore
-@model List<GameViewModel>
+@model LibraryViewModel
 @{
     Layout = "~/Views/Shared/_LayoutGameStore.cshtml";
 }
 
 <div class="content">
     <div class="title">Library</div>
-    @foreach (var game in Model)
+    @foreach (var game in Model.GamesInTheLibrary)
     {
         <div class="Library">
             <div class="game-block">
-                <div class="name">
-                    <form method="post" action="/GameStore/UpdateName">
-                        <input name="id" value="@game.Id" type="hidden" />
-                        <input name="newName" value="@game.NameGame" />
-                        <button type="submit">upd</button>
-                    </form>
-                </div>
+                <div class="name">@game.NameGame</div>
                 <div class="image-container">
                     <img src="@game.ImageSrc" alt="Game">
                 </div>
                 <div class="info">
-                    <form method="post" action="/GameStore/UpdateImage">
-                        <input name="id" value="@game.Id" type="hidden" />
-                        <input name="url" />
-                        <button type="submit">new image</button>
-                    </form>
                     @foreach (var tag in game.Tags)
                     {
                         <span class="tag">@tag</span>                        

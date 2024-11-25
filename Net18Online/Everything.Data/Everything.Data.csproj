@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Enums\Enums.csproj" />
     <ProjectReference Include="..\Everything.Data.Interface\Everything.Data.Interface.csproj" />
   </ItemGroup>
 

@@ -1,0 +1,51 @@
+﻿@using WebPortalEverthing.Models.CoffeShop.Profile
+@using WebPortalEverthing.Services
+@inject AuthService authService
+@model ProfileViewModel
+
+@{
+    Layout = "~/Views/Shared/CoffeLayout/_LayoutCoffe.cshtml";
+}
+
+<div class="profile">
+    <div>
+        <h1>@Model.UserName</h1>
+    </div>
+
+    <div>
+        Avatar:
+        <img class="avatar" src="@Model.ProfileAvatar" />
+    </div>
+    <div>
+        <form action="/CoffeShop/UpdateProfileAvatar" method="post" enctype="multipart/form-data">
+            <input type="file" name="avatar" />
+            <button type="submit">Обновить аватар</button>
+        </form>
+        <form action="/CoffeShop/SetDefaultProfileAvatar" method="post" enctype="multipart/form-data">
+            <button type="submit">Установить готовый аватар</button>
+        </form>
+    </div>
+    @if (authService.IsAdmin())
+    {
+        <div>
+            My Coffe:
+            <div class="all-coffe-user">
+                @foreach (var coffe in Model.Coffe)
+                {
+                    <div class="coffe">
+                        <div class="name">@coffe.Name</div>
+                        <div class="image-container">
+                            <img src="@coffe.Url" alt="coffe" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+    <div>
+        Моя корзина: 
+    </div>
+
+
+</div>

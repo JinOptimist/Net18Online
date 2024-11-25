@@ -1,5 +1,6 @@
 ﻿using Everything.Data.Repositories;
 using System.ComponentModel.DataAnnotations;
+using WebPortalEverthing.Services;
 
 namespace WebPortalEverthing.Models.CustomValidationAttrubites
 {
@@ -24,7 +25,7 @@ namespace WebPortalEverthing.Models.CustomValidationAttrubites
                 return new ValidationResult("Not a string");
             }
 
-            var repository = validationContext.GetRequiredService<ICakeRepositoryReal>();
+            var repository = validationContext.GetRequiredService<HelperForValidatingCake>();
             if (repository.QuantityWords(description) < _minQuantityWords)
             {
                 return new ValidationResult("The number of words is not allowed");

@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using WebPortalEverthing.Services
+@inject AuthService authService
+@inject UserService userService
+
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8" />
@@ -9,6 +13,7 @@
     <link rel="stylesheet" href="~/css/CoffeShop/style.css" />
     <link rel="stylesheet" href="~/css/CoffeShop/button.css" />
     <link rel="stylesheet" href="~/css/CoffeShop/footer.css" />
+    <link rel="stylesheet" href="~/css/CoffeShop/burger.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Play&display=swap" rel="stylesheet">
@@ -16,25 +21,42 @@
 <body>
     <header class="page-header">
         <div class="logo">
-            <img src="~/images/CoffeShop/coffeLogo.jpg" alt="logo" />
+            <a href="/CoffeShop/Coffe">
+                <img src="~/images/CoffeShop/coffeLogo.jpg" alt="logo" />
+            </a>
         </div>
-        <div class="wraper">
+        <div class="hamburger-menu">
+            <input id="menu__toggle" type="checkbox" hidden />
+            <label class="menu__btn" for="menu__toggle">
+                <span></span>
+            </label>
             <ul class="header-menu">
-                @if (User.Identity?.IsAuthenticated ?? false)
+                <li><a class="menu__item" href="/">На портал</a></li>
+                @if (authService.IsAdmin())
                 {
-                    <li><a href="/CoffeShop">Admin</a></li>
+                    <li><a class="menu__item" href="/CoffeShop">Admin</a></li>
                 }
-                <li><a href="#">Каталог</a></li>
-                <li><a href="/CoffeShop/Coffe">Кофе</a></li>
-                <li><a href="#">Пирожные</a></li>
-                <li><a href="#">Оборудование</a></li>
-                <li><a href="#">Отзывы</a></li>
+                <li><a class="menu__item" href="#">Каталог</a></li>
+                <li><a class="menu__item" href="/CoffeShop/Coffe">Кофе</a></li>
+                <li><a class="menu__item" href="#">Оборудование</a></li>
+                <li><a class="menu__item" href="#">Отзывы</a></li>
             </ul>
         </div>
         <div class="header-actions">
-			<div class="logo">
-                <a href="#"><img src="~/images/CoffeShop/default_user_profile.jpg" alt="User profile" /></a>
-			</div>
+            @if (User.Identity?.IsAuthenticated ?? false)
+            {
+                <div class="logo">
+                    <a href="/CoffeShop/UserProfile">
+                        <img src="@userService.GetAvatar()" alt="User profile" />
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="logo">
+                    <a href="#"><img src="~/images/CoffeShop/no_auth_user.png" alt="User profile" /></a>
+                </div>
+            }
         </div>
     </header>
     @RenderBody()
@@ -63,3 +85,4 @@
 </body>
 </html>
 <script src="~/js/Bootstrap/bootstrap.js"></script>
+<script src="~/js/CoffeShop/script.js"></script>

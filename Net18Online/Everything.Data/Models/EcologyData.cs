@@ -10,8 +10,8 @@ namespace Everything.Data.Models
     {
         public string ImageSrc { get; set; }
         public string Text { get; set; }
-
         public int UserId { get; set; }
+        public int ForMainPage { get; set; } = 0;
         public UserData User { get; set; }
         public IEnumerable<CommentData>? Comments { get; set; }
     }

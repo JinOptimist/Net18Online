@@ -1,4 +1,5 @@
-﻿using Everything.Data.Models;
+﻿using Enums.Users;
+using Everything.Data.Models;
 using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
@@ -47,6 +48,7 @@ namespace WebPortalEverthing.Controllers
             {
                 new Claim(AuthService.CLAIM_TYPE_ID, user.Id.ToString()),
                 new Claim(AuthService.CLAIM_TYPE_NAME, user.Login),
+                new Claim(AuthService.CLAIM_TYPE_ROLE, ((int)user.Role).ToString()),
                 new Claim (ClaimTypes.AuthenticationMethod, AuthService.AUTH_TYPE_KEY),
             };
 

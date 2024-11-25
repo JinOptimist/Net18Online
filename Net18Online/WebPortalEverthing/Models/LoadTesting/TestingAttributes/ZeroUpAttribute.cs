@@ -1,4 +1,5 @@
-﻿using Everything.Data.Repositories;
+﻿using Everything.Data.Migrations;
+using Everything.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

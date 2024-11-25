@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using WebPortalEverthing.Models.CustomValidationAttrubites;
 
 namespace WebPortalEverthing.Models.LoadTesting.TestingAttributes
@@ -10,24 +11,24 @@ namespace WebPortalEverthing.Models.LoadTesting.TestingAttributes
         private UnitLoad _option;
         private LoadLevel _level;
 
-        public IsCorrectAverageAttribute(double min, double max, UnitLoad option, LoadLevel level)
+        public IsCorrectAverageAttribute(decimal min, decimal max, UnitLoad option, LoadLevel level)
         {
             _min = 0.01m;
             _max = 20000m;
             _option = UnitLoad.Seconds;
         }
 
-        public IsCorrectAverageAttribute(decimal min, decimal max)
+        public IsCorrectAverageAttribute(double min, double max)
         {
-            _min = min;
-            _max = max;
+            _min = (decimal)min;
+            _max = (decimal)max;
             _option = UnitLoad.Seconds;
         }
 
-        public IsCorrectAverageAttribute(decimal min, decimal max, UnitLoad option)
+        public IsCorrectAverageAttribute(double min, double max, UnitLoad option, LoadLevel level)
         {
-            _min = min;
-            _max = max;
+            _min = (decimal)min;
+            _max = (decimal)max;
             _option = option;
         }
 
@@ -41,7 +42,7 @@ namespace WebPortalEverthing.Models.LoadTesting.TestingAttributes
 
         public override bool IsValid(object? value)
         {
-            if (value is not double)
+            if (value is not decimal)
             {
                 return false;
             }
