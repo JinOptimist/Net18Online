@@ -24,11 +24,16 @@
                     <input name="url" />
                     <button type="submit">new image</button>
                 </form>
+                <span class="tag">@poster.CreatorName</span>
+                <span class="tag">@poster.FilmDirector</span>
                 @foreach (var tag in poster.Tags)
                 {
                     <span class="tag">@tag</span>
                 }
-                <a href="/MoviePoster/Remove?id=@poster.Id">Delete</a>
+                @if (poster.CanDelete)
+                {
+                    <a class="tag" href=" /MoviePoster/Remove?id =@poster.Id">Delete</a>
+                }
             </div>
         </div>
     }
