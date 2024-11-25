@@ -1,6 +1,7 @@
 ﻿
 using Enums.Users;
 using System.Data;
+using WebPortalEverthing.Localizations;
 
 namespace WebPortalEverthing.Services
 {
@@ -25,7 +26,7 @@ namespace WebPortalEverthing.Services
 
         public string? GetName()
         {
-            return GetClaimValue(CLAIM_TYPE_NAME) ?? "Гость";
+            return GetClaimValue(CLAIM_TYPE_NAME) ?? Home.Home_Guest;
         }
 
         public int? GetUserId()
