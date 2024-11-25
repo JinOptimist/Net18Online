@@ -13,6 +13,9 @@ namespace Everything.Data.Models
 
         public string LastName { get; set; }
 
+        public UserData? Creator { get; set; }
+
         public virtual List<MovieData> Movies { get; set; } = new List<MovieData>();
+
     }
 }
