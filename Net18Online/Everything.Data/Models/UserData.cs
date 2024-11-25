@@ -21,5 +21,9 @@ namespace Everything.Data.Models
         public virtual List<GirlData> CreatedGirls { get; set; } = new();
         public virtual List<MangaData> CreatedMangas { get; set; } = new();
         public virtual List<CoffeData> CreatedCoffe { get; set; } = new();
+        public virtual List<MovieData> CreatedMovies { get; set; } = new();
+        public virtual List<FilmDirectorData> CreatedFilmDirectors { get; set; } = new();
+        public virtual List<CakeData> CreatedCakes { get; set; } = new();
+        public virtual List<MagazinData> CreatedMagazins { get; set; } = new();
     }
 }

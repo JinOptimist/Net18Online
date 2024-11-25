@@ -292,6 +292,7 @@ namespace WebPortalEverthing.Controllers
 
             var surveyCreate = new SurveyCreateViewModel()
             {
+                Id = 0,
                 SurveyGroup = new SurveyGroupForListViewModel()
                 {
                     Id = surveyGroup.Id,
@@ -327,6 +328,51 @@ namespace WebPortalEverthing.Controllers
             }
 
             _surveysRepository.CreateSurvey(surveyCreate.Title, surveyCreate.SurveyGroup.Id, surveyCreate.Description);
+
+            return RedirectToAction(nameof(SurveysAll));
+        }
+
+        [HttpGet]
+        [HasRole(Role.SurveysCreatorOrEditor)]
+        public ActionResult Edit(int idSurvey)
+        {
+            var surveyFromDb = _surveysRepository.GetWithGroupAndQuestions(idSurvey);
+
+            var surveyCreate = new SurveyCreateViewModel()
+            {
+                Id = idSurvey,
+                Title = surveyFromDb.Title,
+                Description = surveyFromDb.Description,
+                SurveyGroup = new SurveyGroupForListViewModel()
+                {
+                    Id = surveyFromDb.SurveyGroup.Id,
+                    Title = surveyFromDb.SurveyGroup.Title,
+                },
+                Questions = surveyFromDb
+                    .Questions
+                    .Select(question => new QuestionViewModel
+                    {
+                        Title = question.Title,
+                        IsRequired = question.IsRequired,
+                        AnswerType = question.AnswerType
+                    })
+                    .ToList()
+            };
+
+            return View(nameof(Create), surveyCreate);
+        }
+
+        [HttpPost]
+        [HasRole(Role.SurveysCreatorOrEditor)]
+        public ActionResult Edit(SurveyCreateViewModel surveyCreate)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(surveyCreate);
+            }
+
+            _surveysRepository.UpdateTitle(surveyCreate.Id, surveyCreate.Title);
+            _surveysRepository.UpdateDescription(surveyCreate.Id, surveyCreate.Description);
 
             return RedirectToAction(nameof(SurveysAll));
         }
