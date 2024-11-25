@@ -8,6 +8,8 @@ using Everything.Data;
 using Everything.Data.Repositories;
 using WebPortalEverthing.Models.AnimeGirl;
 using WebPortalEverthing.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace WebPortalEverthing.Controllers
 {
@@ -17,15 +19,19 @@ namespace WebPortalEverthing.Controllers
         private WebDbContext _webDbContext;
         private CheckingForBannedNames _checkingForBannedNames = new();
         private List<string> _bannedWords = new List<string> { "admin", "root", "test" };
-        public GameStoreController(IGameStoreRepositoryReal gameStoreRepository, WebDbContext webDbContext)
+        private AuthService _authService;
+
+        public GameStoreController(IGameStoreRepositoryReal gameStoreRepository, WebDbContext webDbContext, AuthService authService)
         {
             _gameStoreRepository = gameStoreRepository;
             _webDbContext = webDbContext;
+            _authService = authService;
         }
         public IActionResult Index()
         {
             var model = new GameViewModel();
-
+            var userName = _authService.GetName();
+            model.UserName = userName;
             model.Date = DateTime.Now;
             model.NameGame = "Dota 2";
 
@@ -33,13 +39,35 @@ namespace WebPortalEverthing.Controllers
         }
 
         public IActionResult Shop()
-        {            
-            return View();
+        {
+            var gameFromDb = _gameStoreRepository.GetAll();
+
+            if (!_gameStoreRepository.Any())
+            {                
+                //GenerateDefaultGame();
+            }
+
+            var shopViewModels = gameFromDb.Select(dbGame =>
+            new ShopViewModel
+            {
+                Id = dbGame.Id,
+                NameGame = dbGame.NameGame,
+                ImageSrc = dbGame.ImageSrc,
+                Cost = dbGame.Cost,                
+            }).ToList();
+
+            var shopListViewModel = new ShopListViewModel
+            {
+                Games = shopViewModels,
+            };
+
+            return View(shopListViewModel);
         }
+        [HttpGet]
         public IActionResult Library()
         {
-            //var gameFromDb = _gameStoreRepository.GetAll();
-            var gameFromDb = _webDbContext.Games.ToList();
+            var buyerId = _authService.GetUserId();
+            var gameFromDb = _gameStoreRepository.GetGameWithBuyer((int)buyerId!);            
             if (!_gameStoreRepository.Any())
             {
                 //GenerateDefaultGame();
@@ -47,16 +75,20 @@ namespace WebPortalEverthing.Controllers
 
             var gameViewModels = gameFromDb.Select(dbGame =>
             new GameViewModel
-            {
-                Id = dbGame.Id,
-                NameGame = dbGame.NameGame,
+            {              
+                NameGame = dbGame.Name,
                 ImageSrc = dbGame.ImageSrc,
                 Tags = new(),
             }
             ).ToList();
-            return View(gameViewModels);
-           
-            
+
+            var libraryViewModel = new LibraryViewModel
+            {
+                GamesInTheLibrary = gameViewModels,
+            };
+            return View(libraryViewModel);
+
+
         }
 
         private void GenerateDefaultGame()
@@ -104,26 +136,35 @@ namespace WebPortalEverthing.Controllers
             {
                 NameGame = viewModel.Name,
                 ImageSrc = viewModel.Url,
+                Cost = viewModel.Cost,
                 //Tags = new()
             };
-            
+
 
             _gameStoreRepository.Add(dataGame);
 
-            return RedirectToAction("Library");
+            return RedirectToAction("Shop");
         }
         public IActionResult UpdateName(string newName, int id)
         {
             _gameStoreRepository.UpdateName(id, newName);
-            return RedirectToAction("Library");
+            return RedirectToAction("Shop");
         }
 
         public IActionResult UpdateImage(int id, string url)
         {
             _gameStoreRepository.UpdateImage(id, url);
-            return RedirectToAction("Library");
+            return RedirectToAction("Shop");
         }
 
+        
+        public IActionResult Purchases(int buyerId, int gameId)
+        {
+
+            _gameStoreRepository.LinkGame(buyerId, gameId);
+            return RedirectToAction("Shop");
+
+        }
         public IActionResult Remove(int id)
         {
             _gameStoreRepository.Delete(id);

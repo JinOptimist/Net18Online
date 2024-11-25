@@ -201,6 +201,10 @@ namespace Everything.Data
                 .HasForeignKey(m => m.TypeId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<GameData>()
+                .HasMany(x => x.Buyers)
+                .WithMany(x => x.Games);                
+
             modelBuilder.Entity<FilmDirectorData>()
                 .HasMany(x => x.Movies)
                 .WithOne(x => x.FilmDirector)
