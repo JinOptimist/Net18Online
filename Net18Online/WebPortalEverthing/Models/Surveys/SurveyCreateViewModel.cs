@@ -4,6 +4,7 @@ namespace WebPortalEverthing.Models.Surveys
 {
     public class SurveyCreateViewModel
     {
+        public int Id { get; set; }
         public SurveyGroupForListViewModel SurveyGroup { get; set; }
         public string Title { get; set; }
         [IsNullOrMinLength(20)]

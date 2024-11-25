@@ -8,11 +8,12 @@
 }
 
 <div class="main-content-title">
-    <span>Создание нового опроса</span>
+    <span>@(Model.Id == 0 ? "Создание нового" : "Редактирование") опроса</span>
 </div>
 <form class="new-survey" method="post">
     <div class="round-border">
         <div>
+            @Html.HiddenFor(x => x.Id)
             @Html.HiddenFor(x => x.SurveyGroup.Id)
         </div>
         <div>

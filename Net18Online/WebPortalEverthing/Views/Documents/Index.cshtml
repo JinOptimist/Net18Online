@@ -1,0 +1,47 @@
+﻿@using WebPortalEverthing.Models.Surveys
+
+@{
+    Layout = "~/Views/Shared/_LayoutSurveys.cshtml";
+}
+
+@model DocumentIndexViewModel
+
+<div class="main-content-title">
+    Документы
+</div>
+<div class="my-2">
+    <a class="btn btn-sm btn-success" asp-controller="Documents" asp-action="Create">Добавить</a>
+</div>
+<div class="document-page">
+    @if (Model.Documents.Any())
+    {
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">Название</th>
+                    <th scope="col">Оригинальное название файла</th>
+                    <th scope="col">Размер, байт</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var document in Model.Documents)
+                {
+                    <tr>
+                        <td>@document.Title</td>
+                        <td>@document.OriginalFileName</td>
+                        <td>@document.Length</td>
+                        <td>
+                            <a href="/Documents/Delete?id=@document.Id">Удалить</a>
+                        </td>
+                    </tr>
+                }
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            <span>Документов нет</span>
+        </div>
+    }
+</div>

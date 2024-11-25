@@ -1,0 +1,13 @@
+﻿@model WebPortalEverthing.Models.Magazin.MagazinViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutCake.cshtml";
+}
+
+<form method="post">
+    <div>
+        @Html.TextBoxFor(x => x.Name, new { placeholder = "Введи имя" })
+        @Html.ValidationMessageFor(x => x.Name)
+    </div>
+    <button type="submit">Создать</button>
+</form>
