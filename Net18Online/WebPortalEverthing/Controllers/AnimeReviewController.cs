@@ -67,6 +67,10 @@ namespace WebPortalEverthing.Controllers
         {
             var currentUserId = _authService.GetUserId();
 
+            if(currentUserId == null)
+            {
+                return RedirectToAction("Register", "Auth");
+            }
             var animeReview = new AnimeReviewData
             {
                 Review = viewModel.NewReview.Review
