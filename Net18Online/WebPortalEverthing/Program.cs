@@ -56,6 +56,7 @@ builder.Services.AddScoped<ISurveysRepositoryReal, SurveysRepository>();
 builder.Services.AddScoped<IGameStoreRepositoryReal, GameStoreRepository>();
 builder.Services.AddScoped<IGameStudiosRepositoryReal, GameStudiosRepository>();
 builder.Services.AddScoped<ICakeRepositoryReal, CakeRepository>();
+builder.Services.AddScoped<IMagazinRepositoryReal, MagazinRepository>();
 
 builder.Services.AddScoped<ILoadTestingRepositoryReal, LoadTestingRepository>();
 builder.Services.AddScoped<ILoadVolumeTestingRepositoryReal, LoadVolumeTestingRepository>();
