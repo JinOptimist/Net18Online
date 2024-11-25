@@ -18,6 +18,7 @@ header.page-header {
     list-style: none;
     padding: 0;
     margin: 0;
+    margin-bottom: revert;
 }
 
 a {
@@ -59,11 +60,13 @@ input {
 .logo {
     margin-left: 20px;
     max-width: 80px;
+    max-height: 80px;
 }
 
     .logo img {
-        width: 100%;
+        width: 90%;
         height: auto;
+        border-radius: 10%;
     }
 
 .header-actions {
@@ -116,7 +119,7 @@ img.admin-img {
 
 .product {
     display: flex;
-    height: auto;
+    height: 440px;
     width: 300px;
     border-radius: 2%;
     border: 1px rgb(126, 126, 126) solid;
@@ -138,13 +141,37 @@ img.admin-img {
         margin-left: 16%;
     }
 
+.all-coffe-user {
+    display: flex;
+    height: auto;
+    width: 700px;
+    border-radius: 2%;
+    border: 1px rgb(126, 126, 126) solid;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+    .all-coffe-user .image-container {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+        .all-coffe-user .image-container img {
+            width: 100%;
+            height: auto;
+        }
+
+
+.avatar {
+    width: 200px;
+    height: auto;
+    border-radius: 10%;
+}
 .catalog-filter {
     margin-top: 20px;
     margin-left: 20px;
     margin-right: 20px;
-    max-height: 450px;
     width: 200px;
-    border-radius: 2%;
+    border-radius: 1%;
     border: 1px rgb(126, 126, 126) solid;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 15px;
@@ -237,7 +264,7 @@ img.admin-img {
     color: darkred;
 }
 
-.all-coffe {
+.all-coffe, .all-coffe-user {
     color: blueviolet;
 }
 
