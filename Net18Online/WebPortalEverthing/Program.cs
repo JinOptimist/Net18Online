@@ -64,6 +64,7 @@ builder.Services.AddScoped<ILoadVolumeTestingRepositoryReal, LoadVolumeTestingRe
 builder.Services.AddScoped<ILoadUserRepositryReal, LoadUserRepository>();
 builder.Services.AddScoped<IUserRepositryReal, UserRepository>();
 
+builder.Services.AddScoped<HelperForValidatingCake>();
 builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();
 builder.Services.AddScoped<AuthService>();

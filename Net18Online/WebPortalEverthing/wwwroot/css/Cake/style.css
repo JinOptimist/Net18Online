@@ -41,16 +41,48 @@ header {
 
     header nav {
         float: left;
-        width: 70%;
+        width: 90%;
     }
 
-        header nav ul {
-            list-style: none;
-            font-size: 20px;
-            font-weight: 800;
-            display: flex;
-            justify-content: space-between;
+.menu {
+    font-size: 20px;
+    font-weight: 800;
+    display: flex;
+    justify-content: space-between;
+}
+
+    .menu li {
+        width: 200px;
+        list-style: none;
+        position: relative;
+        background: white;
+    }
+
+    .menu a {
+        display: block;
+        text-align: center;
+        text-decoration: none;
+        padding: 0 10px;
+        height: 40px;
+        line-height: 40px;
+        transition: all .5s;
+    }
+
+        .menu a:hover {
+            opacity: 0.7;
         }
+
+    .menu ul {
+        position: absolute;
+        left: 0;
+        top: 100%;
+        display: none;
+        padding: 0;
+    }
+
+    .menu li:hover ul {
+        display: block;
+    }
 
 .profile {
     max-width: 100px;
