@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 using WebPortalEverthing.Models.CustomValidationAttrubites;
 
 namespace WebPortalEverthing.Models.MoviePoster
@@ -16,5 +17,9 @@ namespace WebPortalEverthing.Models.MoviePoster
 
         [NumberOfMusicalCompositions]
         public int NumberOfMusicalCompositions { get; set; }
+
+        public int FilmDirectorId { get; set; }
+        public List<SelectListItem>? FilmDirectors { get; set; }
+
     }
 }

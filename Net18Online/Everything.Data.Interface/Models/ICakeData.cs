@@ -2,10 +2,9 @@
 {
     public interface ICakeData : IBaseModel
     {
-        int Rating { get; set; }
         string ImageSrc { get; set; }
+        string Name { get; set; }
         string Description { get; set; }
         decimal Price { get; set; }
-
     }
 }

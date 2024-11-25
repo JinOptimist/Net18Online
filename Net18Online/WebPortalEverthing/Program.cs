@@ -53,15 +53,18 @@ builder.Services.AddScoped<IAnimeGirlRepositoryReal, AnimeGirlRepository>();
 builder.Services.AddScoped<ISurveyGroupRepositoryReal, SurveyGroupRepository>();
 builder.Services.AddScoped<IStatusRepositoryReal, StatusRepository>();
 builder.Services.AddScoped<ISurveysRepositoryReal, SurveysRepository>();
+builder.Services.AddScoped<IDocumentRepositoryReal, DocumentRepository>();
 builder.Services.AddScoped<IGameStoreRepositoryReal, GameStoreRepository>();
 builder.Services.AddScoped<IGameStudiosRepositoryReal, GameStudiosRepository>();
 builder.Services.AddScoped<ICakeRepositoryReal, CakeRepository>();
+builder.Services.AddScoped<IMagazinRepositoryReal, MagazinRepository>();
 
 builder.Services.AddScoped<ILoadTestingRepositoryReal, LoadTestingRepository>();
 builder.Services.AddScoped<ILoadVolumeTestingRepositoryReal, LoadVolumeTestingRepository>();
 builder.Services.AddScoped<ILoadUserRepositryReal, LoadUserRepository>();
 builder.Services.AddScoped<IUserRepositryReal, UserRepository>();
 
+builder.Services.AddScoped<HelperForValidatingCake>();
 builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();
 builder.Services.AddScoped<AuthService>();
@@ -69,6 +72,7 @@ builder.Services.AddScoped<LoadAuthService>();
 builder.Services.AddScoped<EnumHelper>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<LoadUserService>();
+builder.Services.AddScoped<FileProvider>();
 
 builder.Services.AddSingleton<IGameLifeRepository, GameLifeRepository>();
 

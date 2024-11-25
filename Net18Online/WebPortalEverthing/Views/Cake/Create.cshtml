@@ -6,6 +6,10 @@
 
 <form method="post">
     <div>
+        @Html.TextBoxFor(x => x.Name, new { placeholder = "Введи имя" })
+        @Html.ValidationMessageFor(x => x.Name)
+    </div>
+    <div>
         @Html.TextBoxFor(x => x.Url, new { placeholder = "Введи путь к картинке" })
         @Html.ValidationMessageFor(x => x.Url)
     </div>

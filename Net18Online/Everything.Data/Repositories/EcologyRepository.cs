@@ -5,11 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Everything.Data.Repositories
 {
-    
     public interface IEcologyRepositoryReal : IEcologyRepository<EcologyData>
     {
         void Create(EcologyData ecology, int currentUserId, int postId);
         IEnumerable<EcologyData>GetAllWithUsersAndComments();
+    
+        void PostsForMainPage(EcologyData ecology);
+    
     }
 
     public class EcologyRepository : BaseRepository<EcologyData>, IEcologyRepositoryReal
@@ -27,7 +29,13 @@ namespace Everything.Data.Repositories
                 
             _webDbContext.SaveChanges();
         }
-        
+    
+        public void PostsForMainPage(EcologyData ecology)
+        {
+            _dbSet.Update(ecology); 
+            _webDbContext.SaveChanges();
+        }
+    
         public IEnumerable<EcologyData> GetAllWithUsersAndComments()
         {
             return _dbSet
@@ -35,7 +43,7 @@ namespace Everything.Data.Repositories
                 .Include(x => x.Comments)
                 .ToList();
         }
-        
+   
         public void Create(EcologyData ecology, int currentUserId, int postId)
         {
             var creator = _webDbContext.Users.FirstOrDefault(x => x.Id == currentUserId);

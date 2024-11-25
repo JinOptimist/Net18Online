@@ -2,20 +2,27 @@
 using Everything.Data.Models;
 using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using WebPortalEverthing.Models.AnimeGirl;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebPortalEverthing.Models.Cake;
+using WebPortalEverthing.Models.CakeLink;
+using WebPortalEverthing.Models.Magazin;
+using WebPortalEverthing.Services;
 
 namespace WebPortalEverthing.Controllers
 {
     public class CakeController : Controller
     {
         private ICakeRepositoryReal _cakeRepository;
+        private IMagazinRepositoryReal _magazinRepository;
+        private AuthService _authService;
         private WebDbContext _webDbContext;
 
-        public CakeController(ICakeRepositoryReal cakeRepository, WebDbContext webDbContext)
+        public CakeController(ICakeRepositoryReal cakeRepository, IMagazinRepositoryReal magazinRepository, WebDbContext webDbContext, AuthService authService)
         {
             _cakeRepository = cakeRepository;
             _webDbContext = webDbContext;
+            _magazinRepository = magazinRepository;
+            _authService = authService;
         }
         public IActionResult Index()
         {
@@ -25,22 +32,25 @@ namespace WebPortalEverthing.Controllers
             var cakesViewModel = cakesFromDb
                 .Select(dbCake => new CakeViewModel
                 {
-                    Id = dbCake.Id,
                     ImageSrc = dbCake.ImageSrc,
+                    Name = dbCake.Name,
                     Description = dbCake.Description,
-                    Rating = dbCake.Rating,
-                    Price = dbCake.Price
+                    Price = dbCake.Price,
+                    Magazins = dbCake.Magazins
+                                .Select(dbMagazin => new MagazinViewModel
+                                {
+                                    Name = dbMagazin.Name,
+                                })
+                                .ToList(),
                 }).ToList();
 
             return View(cakesViewModel);
         }
-
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
-
         [HttpPost]
         public IActionResult Create(CakeCreationViewModel viewModel)
         {
@@ -49,28 +59,44 @@ namespace WebPortalEverthing.Controllers
                 return View(viewModel);
             }
 
-            var cake = new CakeData
+            var currentUserId = _authService.GetUserId();
+
+            var cakeData = new CakeData()
             {
-                ImageSrc = viewModel.Url,
+                Name = viewModel.Name,
                 Description = viewModel.Description,
                 Price = viewModel.Price,
-                Rating = 0,
+                ImageSrc = viewModel.Url,
             };
 
-            _cakeRepository.Add(cake);
+            _cakeRepository.Create(cakeData, currentUserId!.Value);
 
             return RedirectToAction("Index");
         }
-        public IActionResult UpdateDescription(int id, string newDescription)
+        [HttpGet]
+        public IActionResult Link()
         {
-            _cakeRepository.UpdateDescription(id, newDescription);
-            return RedirectToAction("Index");
+            var model = new CakeAndMagazinLinkViewModel()
+            {
+                Cakes = _cakeRepository.GetAll()
+                .Select(cake => new SelectListItem()
+                { Value = cake.Id.ToString(), Text = cake.Name })
+                .ToList(),
+                Magazins = _magazinRepository.GetAll()
+                .Select(magazin => new SelectListItem()
+                { Value = magazin.Id.ToString(), Text = magazin.Name })
+                .ToList()
+            };
+
+            return View(model);
         }
 
-        public IActionResult Remove(int id)
+        [HttpPost]
+        public IActionResult Link(CakeAndMagazinLinkViewModel viewModel)
         {
-            _cakeRepository.Delete(id);
-            return RedirectToAction("Index");
+            _cakeRepository.Link(viewModel.CakeId, viewModel.MagazinId);
+
+            return RedirectToAction("Link");
         }
     }
 }

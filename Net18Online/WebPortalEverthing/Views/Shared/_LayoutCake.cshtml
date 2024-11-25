@@ -1,33 +1,39 @@
 ﻿<!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Cakes</title>
-    <link rel="stylesheet" href="~/css/Cake/reset.css" />
-    <link rel="stylesheet" href="~/css/Cake/style.css" />
-    <link rel="stylesheet" href="~/css/Cake/buttons.css" />
+    <title>Cake</title>
+    <link rel="stylesheet" href="/css/Cake/style.css">
 </head>
-
 <body>
-    <header class="upper-header">
-        <div class="logo">
-            <img src="~/images/Cake/Logo.png" alt="logo" />
-        </div>
-        <div class="search">
-            <input type="text" placeholder="Search" />
-        </div>
-        <div class="course-profile">
-            <div class="course">
-                <button class="button-course">BYN</button>
-            </div>
+    <header>
+        <div class="container">
+            <nav>
+                <ul class="menu">
+                    <li><a href="/">Main</a></li>
+                    <li><a href="/Cake">All cakes</a></li>
+                    <li><a href="#">Admin</a></li>
+                    <li>
+                        <a href="/Cake/Create">Add Cake &bigtriangledown;</a>
+                        <ul>
+                            <li><a href="/Magazin/Create">Add Magazin</a></li>
+                            <li><a href="/Cake/Link">Add Link</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">View my creations</a></li>
+                </ul>
+            </nav>
             <div class="profile">
-                <img src="~/images/Cake/Profile.jpg" alt="profile" />
+                <img src="~/images/Cake/Profile.jpg" alt="profile">
             </div>
         </div>
     </header>
-    <div class="content">
-        @RenderBody()
-    </div>
-</body>
 
+    <main>
+        <section class="list-cakes">
+            <div class="container">
+                @RenderBody()
+            </div>
+        </section>
+    </main>
+</body>
 </html>

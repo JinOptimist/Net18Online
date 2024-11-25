@@ -1,0 +1,25 @@
+﻿@using WebPortalEverthing.Models.Surveys
+
+@{
+    Layout = "~/Views/Shared/_LayoutSurveys.cshtml";
+}
+
+@model DocumentCreateOrEditViewModel
+
+<div class="main-content-title">
+    <span>Новый документ</span>
+</div>
+<form method="post" enctype="multipart/form-data">
+    @Html.HiddenFor(x => x.Id)
+    <div class="mb-3">
+        @Html.LabelFor(x => x.Title, new { @class="form-label" })
+        @Html.TextBoxFor(x => x.Title, new { @class = "form-control form-control-sm" })
+        @Html.ValidationMessageFor(x => x.Title)
+    </div>
+    <div class="mb-3">
+        @Html.LabelFor(x => x.FormFile, new { @class = "form-label" })
+        <input class="form-control form-control-sm" id="FormFile" name="FormFile" type="file">
+        @Html.ValidationMessageFor(x => x.FormFile)
+    </div>
+    <button class="btn btn-sm btn-success" type="submit">Сохранить</button>
+</form>

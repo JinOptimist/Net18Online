@@ -1,101 +1,133 @@
-header.upper-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px #010101 solid;
+* {
+    padding: 0;
+    margin: 0;
 }
 
-header .logo {
-    height: 100px;
-    margin-left: 50px;
+a {
+    text-decoration: none;
+    color: black;
 }
 
-header .logo img {
-    max-height: 100px;
-    max-width: 100px;
-}
-
-header .search input {
-    font-size: 30px;
-    padding: 10px 7px;
+img {
     width: 100%;
-    outline: none;
-    background: #FFFFFF;
-    color: #505050;
-    border: 1px solid #C4D1EB;
-    border-radius: 5px;
 }
 
-header .course-profile .course {
-    margin-right: 50px;
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 800;
 }
 
-header .course-profile {
+body {
+    color: black;
+    font-weight: 400;
+}
+
+/* header */
+
+.container {
+    width: 1100px;
+    padding: 25px 0;
+    margin: 0 auto;
+}
+
+header {
+    border-bottom: 3px solid black;
+}
+
+    header .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    header nav {
+        float: left;
+        width: 90%;
+    }
+
+.menu {
+    font-size: 20px;
+    font-weight: 800;
     display: flex;
-    align-items: center;
+    justify-content: space-between;
 }
 
-header .course-profile .profile {
-    height: 100px;
-    margin-right: 50px;
-}
+    .menu li {
+        width: 200px;
+        list-style: none;
+        position: relative;
+        background: white;
+    }
 
-header .course-profile .profile img {
-    max-height: 100px;
+    .menu a {
+        display: block;
+        text-align: center;
+        text-decoration: none;
+        padding: 0 10px;
+        height: 40px;
+        line-height: 40px;
+        transition: all .5s;
+    }
+
+        .menu a:hover {
+            opacity: 0.7;
+        }
+
+    .menu ul {
+        position: absolute;
+        left: 0;
+        top: 100%;
+        display: none;
+        padding: 0;
+    }
+
+    .menu li:hover ul {
+        display: block;
+    }
+
+.profile {
     max-width: 100px;
+    max-height: 100px;
 }
 
-div.menu ul.filter {
+    .profile img {
+        border-radius: 50%;
+    }
+
+/* card */
+
+.list-cakes .container {
     display: flex;
-    justify-content: space-between;
-    width: 750px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-div.menu ul.filter li {
-    display: inline;
-    margin: 15px;
-}
-
-.content {
-    display: flex;
-    flex-direction: column;
-}
-
-.cakes {
-    display: flex;
+    justify-content: flex-start;
     flex-wrap: wrap;
-    align-items: center;
+    gap: 40px 10px;
 }
 
-.cake {
-    margin: 10px;
-    width: 100px;
+.card {
+    width: 260px;
+    overflow: hidden;
+    text-align: center;
+    background-color: bisque;
+    border-radius: 10px;
 }
 
-.cake .image-cake {
-	
-	height: 150px;
-	display: flex;
-	align-items: center;
+    .card img {
+        height: 175px;
+        object-fit: cover;
+    }
+
+.text-wrapper {
+    padding: 15px 20px;
 }
 
-.cake .image-cake img {
-	max-width: 100px;
-	max-height: 150px;
+.magazins {
+    padding-top: 5px;
 }
 
-.cake .description {
-    border: 1px #a8a8a8 solid;
+.list-magazins {
+    padding-bottom: 5px;
 }
 
-.cake .price-rating{
-    display: flex;
-    justify-content: space-between;
-    width: 100px;
-}
-
-.cakes .cake .description input.newDescription{
-    max-width: 90px;
+.price {
+    font-weight: bold;
+    font-style: italic;
 }

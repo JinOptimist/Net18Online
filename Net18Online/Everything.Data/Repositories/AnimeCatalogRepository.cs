@@ -6,19 +6,12 @@ namespace Everything.Data.Repositories
 {
     public interface IAnimeCatalogRepositoryReal : IAnimeCatalogRepository<AnimeData>
     {
-        IEnumerable<AnimeData> GetAll();
     }
 
     public class AnimeCatalogRepository : BaseRepository<AnimeData>, IAnimeCatalogRepositoryReal
     {
         public AnimeCatalogRepository(WebDbContext webDbContext) : base(webDbContext)
         {
-        }
-
-        public IEnumerable<AnimeData> GetAll()
-        {
-            return _dbSet
-                .ToList();
         }
     }
 }

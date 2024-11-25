@@ -5,6 +5,8 @@ namespace WebPortalEverthing.Models.Cake
 {
     public class CakeCreationViewModel
     {
+        [Required]
+        public string Name { get; set; }
         [UniqCakeUrl]
         public string Url { get; set; }
         [Required]

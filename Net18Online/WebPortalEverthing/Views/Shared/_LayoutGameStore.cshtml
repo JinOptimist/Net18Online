@@ -14,7 +14,10 @@
             <ul>
                 <li><a href="/GameStore">Main</a></li>
                 <li><a href="/GameStore/Shop">Shop</a></li>
-                <li><a href="/GameStore/Library">Library</a></li>
+                @if (User.Identity?.IsAuthenticated ?? true)
+                {
+                   <li><a href="/GameStore/Library">Library</a></li>
+                }                
                 <li><a href="/GameStore/Add">Add</a></li>
             </ul>
         </div>

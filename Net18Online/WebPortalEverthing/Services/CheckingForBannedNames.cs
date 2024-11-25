@@ -7,15 +7,7 @@
         {
             var namelower = name.ToLower();
 
-            foreach (var bannedWord in bannedWords)
-            {
-                if (name == bannedWord.ToLower())
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return bannedWords.Any(bannedWord => bannedWord.ToLower() == namelower);
         }
     }
 }

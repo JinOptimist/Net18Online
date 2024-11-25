@@ -5,24 +5,29 @@ using Everything.Data.Interface.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.MoviePoster;
 using WebPortalEverthing.Services;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using WebPortalEverthing.Models.MoviePoster.Profile;
 
 namespace WebPortalEverthing.Controllers
 {
     public class MoviePosterController : Controller
     {
         private IMoviePosterRepositoryReal _moviePosterRepository;
+        private IFilmDirectorRepositoryReal _filmDirectorRepository;
         private IUserRepositryReal _userRepositryReal;
         private WebDbContext _webDbContext;
         private AuthService _authService;
         public MoviePosterController(IMoviePosterRepositoryReal moviePosterRepository,
             WebDbContext webDbContext,
             IUserRepositryReal userRepositryReal,
-            AuthService authService)
+            AuthService authService,
+            IFilmDirectorRepositoryReal filmDirectorRepository)
         {
             _moviePosterRepository = moviePosterRepository;
             _webDbContext = webDbContext;
             _userRepositryReal = userRepositryReal;
             _authService = authService;
+            _filmDirectorRepository = filmDirectorRepository;
         }
 
         public IActionResult Index(string name, int age)
@@ -46,15 +51,15 @@ namespace WebPortalEverthing.Controllers
                 GenerateDefaultMoviePoster(count - countElementInDb.Count);
             }
 
-            var id = _authService.GetUserId();
-            if (id is null)
+            var currentUserId = _authService.GetUserId();
+            if (currentUserId is null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            var user = _userRepositryReal.Get(id.Value);
+            var user = _userRepositryReal.Get(currentUserId.Value);
 
-            var moviesFromDb = _moviePosterRepository.GetAllInCount(count ?? countElementInDb.Count);
+            var moviesFromDb = _moviePosterRepository.GetAllWithСreatorsAndFilmDirectors();
 
             var movieViewModels = moviesFromDb
                 //.Take(count ?? countElementInDb.Count)
@@ -64,7 +69,11 @@ namespace WebPortalEverthing.Controllers
                         Id = dbMovie.Id,
                         Name = dbMovie.Name,
                         ImageSrc = dbMovie.ImageSrc,
-                        Tags = new List<string>() //dbMovie.Tags
+                        Tags = new List<string>(), //dbMovie.Tags
+                        CreatorName = dbMovie.Creator?.Login ?? "Неизвестный автор",
+                        FilmDirector = dbMovie.FilmDirector?.LastName ?? "Неизвестный режиссер",
+                        CanDelete = dbMovie.Creator is null 
+                            || dbMovie.Creator?.Id == currentUserId 
                     }
                 )
                 .ToList();
@@ -90,7 +99,14 @@ namespace WebPortalEverthing.Controllers
         [HttpGet]
         public IActionResult CreatePoster()
         {
-            return View();
+            var viewModel = new MovieCreationViewModel();
+            
+            viewModel.FilmDirectors = _filmDirectorRepository
+                .GetAll()
+                .Select(x => new SelectListItem(x.LastName, x.Id.ToString())) // .Select(x => new SelectListItem(x.Name + " " + x.LastName, x.Id.ToString()))
+                .ToList();
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -105,8 +121,15 @@ namespace WebPortalEverthing.Controllers
 
             if (!ModelState.IsValid)
             {
+                viewModel.FilmDirectors = _filmDirectorRepository
+                    .GetAll()
+                    .Select(x => new SelectListItem(x.LastName, x.Id.ToString())) // .Select(x => new SelectListItem(x.Name + " " + x.LastName, x.Id.ToString()))
+                    .ToList();
+
                 return View(viewModel);
             }
+
+            var currentUserId = _authService.GetUserId();
 
             var dataMovie = new MovieData
             {
@@ -116,8 +139,7 @@ namespace WebPortalEverthing.Controllers
             };
             //_moviePosterRepository.Add(dataMovie);
 
-            _webDbContext.Movies.Add(dataMovie);
-            _webDbContext.SaveChanges();
+            _moviePosterRepository.Create(dataMovie, currentUserId!.Value, viewModel.FilmDirectorId);
 
             return RedirectToAction("AllPosters");
         }
@@ -138,6 +160,35 @@ namespace WebPortalEverthing.Controllers
         {
             _moviePosterRepository.Delete(id);
             return RedirectToAction("AllPosters");
+        }
+
+        public IActionResult Profile()
+        {
+            var viewModel = new ProfileViewModel();
+
+            viewModel.UserName = _authService.GetName()!;
+
+            var userId = _authService.GetUserId()!.Value;
+
+            viewModel.FilmDirectors = _filmDirectorRepository
+                .GetFilmDirectorWithInfoAboutCreator(userId)
+                .Select(x => new FilmDirectorShortInfoViewModel
+                {
+                    Name = x.Name,
+                    IsCreatedWithMovies = x.HasMoviesWithSpecialCreator
+                })
+                .ToList();
+
+            viewModel.Movies = _moviePosterRepository
+                .GetAllByCreatorId(userId)
+                .Select(x => new MovieShortInfoViewModel
+                {
+                    Name = x.Name,
+                    Url = x.ImageSrc
+                })
+                .ToList();
+
+            return View(viewModel);
         }
     }
 }
