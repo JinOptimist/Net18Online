@@ -57,6 +57,8 @@ namespace Everything.Data
         public DbSet<QuestionData> Questions { get; set; }
         #endregion
 
+        public DbSet<DndClassData> DndClasses { get; set; }
+
         public WebDbContext() { }
 
         public WebDbContext(DbContextOptions<WebDbContext> contextOptions)
