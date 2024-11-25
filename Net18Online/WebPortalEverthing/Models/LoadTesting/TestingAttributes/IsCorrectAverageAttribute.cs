@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using WebPortalEverthing.Models.CustomValidationAttrubites;
 
 namespace WebPortalEverthing.Models.LoadTesting.TestingAttributes
@@ -17,17 +18,17 @@ namespace WebPortalEverthing.Models.LoadTesting.TestingAttributes
             _option = UnitLoad.Seconds;
         }
 
-        public IsCorrectAverageAttribute(decimal min, decimal max)
+        public IsCorrectAverageAttribute(double min, double max)
         {
-            _min = min;
-            _max = max;
+            _min = (decimal)min;
+            _max = (decimal)max;
             _option = UnitLoad.Seconds;
         }
 
-        public IsCorrectAverageAttribute(decimal min, decimal max, UnitLoad option)
+        public IsCorrectAverageAttribute(double min, double max, UnitLoad option, LoadLevel level)
         {
-            _min = min;
-            _max = max;
+            _min = (decimal)min;
+            _max = (decimal)max;
             _option = option;
         }
 

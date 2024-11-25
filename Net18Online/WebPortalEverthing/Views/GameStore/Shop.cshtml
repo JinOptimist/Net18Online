@@ -1,73 +1,41 @@
-﻿@{
+﻿@using WebPortalEverthing.Models.GameStore
+@using WebPortalEverthing.Services
+@model ShopListViewModel
+@inject AuthService authService
+
+@{
     Layout = "~/Views/Shared/_LayoutGameStore.cshtml";
 }
+
 <div class="content">
-    <div class="title">Featured & Recommended</div>
-    <div class="Featured-Recommended">
-        <div class="game-block">
-            <div class="name">Baldur’s Gate III</div>
-            <div class="image-container">
-                <img src="~/images/GameStore/Game1.jpg" alt="BG 3">
-            </div>
-            <div class="info">
-                <span class="tag">RPG</span>
-                <span class="tag">100$</span>
-            </div>
-        </div>
-
-        <div class="game-block">
-            <div class="name">Borderlands 3</div>
-            <div class="image-container">
-                <img src="~/images/GameStore/Game2.jpg" alt="Borderlands">
-            </div>
-            <div class="info">
-                <span class="tag">Shuter</span>
-                <span class="tag">60$</span>
-            </div>
-        </div>
-        <div class="game-block">
-            <div class="name">Silent Hill 2</div>
-            <div class="image-container">
-                <img src="~/images/GameStore/Game3.jpg" alt="Silent Hill">
-            </div>
-            <div class="info">
-                <span class="tag">Action</span>
-                <span class="tag">70$</span>
+    <div class="title">Library</div>
+    @foreach (var game in Model.Games)
+    {
+        <div class="shop">
+            <div class="game-block">
+                <div class="name">
+                    <form method="post" action="/GameStore/UpdateName">
+                        <input name="id" value="@game.Id" type="hidden" />
+                        <input name="newName" value="@game.NameGame" />
+                        <button type="submit">upd</button>
+                    </form>
+                </div>
+                <div class="image-container">
+                    <img src="@game.ImageSrc" alt="Game">
+                </div>
+                <div class="info">
+                    <form method="post" action="/GameStore/UpdateImage">
+                        <input name="id" value="@game.Id" type="hidden" />
+                        <input name="url" />
+                        <button type="submit">new image</button>
+                    </form>
+                    <span>Cost <strong>@game.Cost</strong></span>
+                    <a href="/GameStore/Remove?id=@game.Id">Delete</a>
+                    <a href="/GameStore/Purchases?buyerId=@authService.GetUserId()&gameId=@game.Id">Buy</a>
             </div>
         </div>
     </div>
-    <div class="title">Special Offers</div>
-    <div class="Special-Offers">
-        <div class="game-block">
-            <div class="name">Dota 2</div>
-            <div class="image-container">
-                <img src="~/images/GameStore/Game4.jpg" alt="DOTA">
-            </div>
-            <div class="info">
-                <span class="tag">MMO</span>
-                <span class="tag">Free</span>
-            </div>
-        </div>
+    }
 
-        <div class="game-block">
-            <div class="name">Counter-Strike 2</div>
-            <div class="image-container">
-                <img src="~/images/GameStore/Game5.jpg" alt="CS">
-            </div>
-            <div class="info">
-                <span class="tag">Shuter</span>
-                <span class="tag">Free</span>
-            </div>
-        </div>
-        <div class="game-block">
-            <div class="name">Warcraft III</div>
-            <div class="image-container">
-                <img src="~/images/GameStore/Game6.jpg" alt="Warcraft">
-            </div>
-            <div class="info">
-                <span class="tag">Action</span>
-                <span class="tag">10$</span>
-            </div>
-        </div>
-    </div>
+
 </div>
