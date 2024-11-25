@@ -4,6 +4,7 @@ using Everything.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Everything.Data.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    partial class WebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241123220552_AddDocuments")]
+    partial class AddDocuments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace Everything.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("CakeDataMagazinData", b =>
-                {
-                    b.Property<int>("CakesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MagazinsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CakesId", "MagazinsId");
-
-                    b.HasIndex("MagazinsId");
-
-                    b.ToTable("CakeDataMagazinData");
-                });
 
             modelBuilder.Entity("Everything.Data.Models.AnimeData", b =>
                 {
@@ -113,9 +101,6 @@ namespace Everything.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CreatorId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -124,16 +109,13 @@ namespace Everything.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("Id");
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
 
-                    b.HasIndex("CreatorId");
+                    b.HasKey("Id");
 
                     b.ToTable("Cakes");
                 });
@@ -328,9 +310,6 @@ namespace Everything.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CreatorId")
-                        .HasColumnType("int");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -340,8 +319,6 @@ namespace Everything.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CreatorId");
 
                     b.ToTable("FilmDirectors");
                 });
@@ -481,28 +458,6 @@ namespace Everything.Data.Migrations
                     b.ToTable("LoadVolumeTestingMetrics");
                 });
 
-            modelBuilder.Entity("Everything.Data.Models.MagazinData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("CreatorId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatorId");
-
-                    b.ToTable("Magazines");
-                });
-
             modelBuilder.Entity("Everything.Data.Models.MangaData", b =>
                 {
                     b.Property<int>("Id")
@@ -600,9 +555,6 @@ namespace Everything.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CreatorId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("FilmDirectorId")
                         .HasColumnType("int");
 
@@ -615,8 +567,6 @@ namespace Everything.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CreatorId");
 
                     b.HasIndex("FilmDirectorId");
 
@@ -826,21 +776,6 @@ namespace Everything.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("CakeDataMagazinData", b =>
-                {
-                    b.HasOne("Everything.Data.Models.CakeData", null)
-                        .WithMany()
-                        .HasForeignKey("CakesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Everything.Data.Models.MagazinData", null)
-                        .WithMany()
-                        .HasForeignKey("MagazinsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Everything.Data.Models.AnimeReviewData", b =>
                 {
                     b.HasOne("Everything.Data.Models.AnimeData", "Anime")
@@ -849,16 +784,6 @@ namespace Everything.Data.Migrations
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Anime");
-                });
-
-            modelBuilder.Entity("Everything.Data.Models.CakeData", b =>
-                {
-                    b.HasOne("Everything.Data.Models.UserData", "Creator")
-                        .WithMany("CreatedCakes")
-                        .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Creator");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.CoffeCompanyData", b =>
@@ -925,16 +850,6 @@ namespace Everything.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Everything.Data.Models.FilmDirectorData", b =>
-                {
-                    b.HasOne("Everything.Data.Models.UserData", "Creator")
-                        .WithMany("CreatedFilmDirectors")
-                        .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Creator");
-                });
-
             modelBuilder.Entity("Everything.Data.Models.GameData", b =>
                 {
                     b.HasOne("Everything.Data.Models.GameStudiosData", "Studios")
@@ -967,16 +882,6 @@ namespace Everything.Data.Migrations
                     b.HasOne("Everything.Data.Models.LoadUserData", null)
                         .WithMany("LoadVolumeTestingParts")
                         .HasForeignKey("LoadUserDataId");
-                });
-
-            modelBuilder.Entity("Everything.Data.Models.MagazinData", b =>
-                {
-                    b.HasOne("Everything.Data.Models.UserData", "Creator")
-                        .WithMany("CreatedMagazins")
-                        .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Creator");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.MangaData", b =>
@@ -1020,17 +925,10 @@ namespace Everything.Data.Migrations
 
             modelBuilder.Entity("Everything.Data.Models.MovieData", b =>
                 {
-                    b.HasOne("Everything.Data.Models.UserData", "Creator")
-                        .WithMany("CreatedMovies")
-                        .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.HasOne("Everything.Data.Models.FilmDirectorData", "FilmDirector")
                         .WithMany("Movies")
                         .HasForeignKey("FilmDirectorId")
                         .OnDelete(DeleteBehavior.NoAction);
-
-                    b.Navigation("Creator");
 
                     b.Navigation("FilmDirector");
                 });
@@ -1133,19 +1031,11 @@ namespace Everything.Data.Migrations
                 {
                     b.Navigation("Comments");
 
-                    b.Navigation("CreatedCakes");
-
                     b.Navigation("CreatedCoffe");
-
-                    b.Navigation("CreatedFilmDirectors");
 
                     b.Navigation("CreatedGirls");
 
-                    b.Navigation("CreatedMagazins");
-
                     b.Navigation("CreatedMangas");
-
-                    b.Navigation("CreatedMovies");
 
                     b.Navigation("Ecologies");
 
