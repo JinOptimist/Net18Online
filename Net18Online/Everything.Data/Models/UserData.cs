@@ -23,6 +23,7 @@ namespace Everything.Data.Models
 
         public virtual List<GameData> Games { get; set; } = new List<GameData>(); 
         public virtual List<CoffeData> CreatedCoffe { get; set; } = new();
+        public virtual List<AnimeReviewData> CreatedAnimeReviews { get; set; } = new();
         public virtual List<MovieData> CreatedMovies { get; set; } = new();
         public virtual List<FilmDirectorData> CreatedFilmDirectors { get; set; } = new();
         public virtual List<CakeData> CreatedCakes { get; set; } = new();
