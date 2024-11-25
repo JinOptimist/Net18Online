@@ -2,9 +2,6 @@
 {
     public class LibraryViewModel
     {
-        public string ImageName { get; set; }
-
-        public List<string> Tags { get; set; }
-        public string Name { get; set; }
+        public List<GameViewModel>? GamesInTheLibrary { get; set; }
     }
 }

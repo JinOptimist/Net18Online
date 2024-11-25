@@ -5,18 +5,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Everything.Data.DataLayerModels;
 
 namespace Everything.Data.Repositories
 {
     public interface IGameStoreRepositoryReal : IGameStoreRepository<GameData>
     {
+        IEnumerable<GameData> AllBuyersGames();
         IEnumerable<GameData> GetWithoutOwner();
+        IEnumerable<GameWithInfoAboutAuthor> GetGameWithBuyer(int buyerId);
+        void LinkGame(int buyerId, int gameId);
         bool HasSimilarName(string name);
     }
     public class GameStoreRepository : BaseRepository<GameData>, IGameStoreRepositoryReal
     {
         public GameStoreRepository(WebDbContext webDbContext) : base(webDbContext)
         {
+        }
+
+        public IEnumerable<GameData> AllBuyersGames()
+        {
+            return _dbSet.Include(x => x.Buyers);
         }
 
         public IEnumerable<GameData> GetWithoutOwner()
@@ -55,6 +65,36 @@ namespace Everything.Data.Repositories
                 .Games
                 .Where(x => !string.IsNullOrEmpty(x.ImageSrc))
                 .OrderBy(x => x.Id);
+        }
+        public void LinkGame(int buyerId, int gameId)
+        {
+            var buyer = _webDbContext.Users.Include(u => u.Games).FirstOrDefault(x => x.Id == buyerId);
+            if (buyer == null)
+                throw new InvalidOperationException($"Buyer with ID {buyerId} not found.");
+
+            var game = _webDbContext.Games.FirstOrDefault(x => x.Id == gameId);
+            if (game == null)
+                throw new InvalidOperationException($"Game with ID {gameId} not found.");
+
+            if (buyer.Games.Contains(game))
+            {
+                throw new InvalidOperationException($"The buyer {buyerId} already has the game {gameId}");
+            }
+            buyer.Games.Add(game);
+            _webDbContext.SaveChanges();
+        }
+
+        public IEnumerable<GameWithInfoAboutAuthor> GetGameWithBuyer(int buyerId)
+        {
+            var games = _dbSet
+                .Where(game => game.Buyers.Any(buyer => buyer.Id == buyerId))
+                .Select(x => new GameWithInfoAboutAuthor
+                {
+                    Name = x.NameGame,
+                    ImageSrc = x.ImageSrc,
+                }).ToList();
+
+            return games;
         }
     }
 

@@ -92,6 +92,11 @@ namespace Everything.Data
                 .WithMany(x => x.CreatedGirls)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<AnimeReviewData>()
+                .HasOne(x => x.Creator)
+                .WithMany(x => x.CreatedAnimeReviews)
+                .OnDelete(DeleteBehavior.NoAction);
+                
             modelBuilder.Entity<MovieData>()
                 .HasOne(x => x.Creator)
                 .WithMany(x => x.CreatedMovies)
@@ -136,6 +141,7 @@ namespace Everything.Data
                 .HasMany(x => x.Magazins)
                 .WithMany(x => x.Cakes);
 
+                
             modelBuilder.Entity<CakeData>()
                 .HasOne(x => x.Creator)
                 .WithMany(x => x.CreatedCakes)
@@ -200,6 +206,10 @@ namespace Everything.Data
                 .WithMany()
                 .HasForeignKey(m => m.TypeId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<GameData>()
+                .HasMany(x => x.Buyers)
+                .WithMany(x => x.Games);                
 
             modelBuilder.Entity<FilmDirectorData>()
                 .HasMany(x => x.Movies)
