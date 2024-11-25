@@ -140,7 +140,7 @@ namespace Everything.Data
             modelBuilder.Entity<CakeData>()
                 .HasMany(x => x.Magazins)
                 .WithMany(x => x.Cakes);
-                .OnDelete(DeleteBehavior.NoAction);
+
                 
             modelBuilder.Entity<CakeData>()
                 .HasOne(x => x.Creator)
