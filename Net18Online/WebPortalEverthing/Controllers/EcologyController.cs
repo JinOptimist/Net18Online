@@ -166,7 +166,7 @@ public class EcologyController : Controller
             {
                 imageFile.CopyTo(fileStream);
             }
-            imageUrl = $"/images/uploads/{newFileName}";
+            imageUrl = $"/images/Ecology/ecologyPosts/{newFileName}";
         }
         else if (!string.IsNullOrEmpty(viewModel.Url))
         {
