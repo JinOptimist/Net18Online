@@ -44,9 +44,7 @@ namespace WebPortalEverthing.Services
             var roleStr = GetClaimValue(CLAIM_TYPE_ROLE);
             if (roleStr is null)
             {
-              
-                    return Role.Observer;
-           //         throw new Exception("Guest cant has a role");
+                throw new Exception("Guest cant has a role");
             }
             var roleInt = int.Parse(roleStr);
             var role = (Role)roleInt;

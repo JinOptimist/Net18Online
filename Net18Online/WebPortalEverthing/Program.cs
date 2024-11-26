@@ -91,6 +91,10 @@ using (var scope = scopeFactory.CreateScope())
 var seed = new Seed();
 seed.Fill(app.Services);
 
+var loadTestingseed = new LoadTestingSeed();
+loadTestingseed.Fill(app.Services);
+
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

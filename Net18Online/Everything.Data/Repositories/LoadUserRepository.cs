@@ -17,6 +17,7 @@ namespace Everything.Data.Repositories
         void Register(string login, string password, string email, Role role = Role.User);
         void UpdateRole(int userId, Role role);
         public string GetAvatarUrl(int userId);
+        public bool IsAdminExist();
     }
 
     public class LoadUserRepository : BaseRepository<LoadUserData>, ILoadUserRepositryReal
