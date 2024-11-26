@@ -62,32 +62,24 @@ public class EcologyController : Controller
     }
     
     [HttpPost]
-    public IActionResult SetForMainPage(int postId)
+    public IActionResult SetForMainPage(Type postId)
     {
-        var post = _ecologyRepository.Get(postId);
-
-        if (post != null)
-        {
-            post.ForMainPage = 1;
-            _ecologyRepository.PostsForMainPage(post);
-        }
-
+        _ecologyRepository.SetForMainPage(postId);
         return RedirectToAction("Index");
     }
-    
-    [HttpGet]
     
     [HttpGet]
     public IActionResult EcologyProfile()
     {
         var viewModel = new EcologyProfileViewModel();
         var userId = _authService.GetUserId();
-        viewModel.AvatarUrl = _userRepositryReal.GetAvatarUrl(userId!.Value);
         
         if (userId is null)
         {
             throw new Exception("User is not authenticated");
         }
+        
+        viewModel.AvatarUrl = _userRepositryReal.GetAvatarUrl(userId!.Value);
 
         var info = _commentRepositoryReal.GetCommentAuthors((int)userId);
         
@@ -96,6 +88,7 @@ public class EcologyController : Controller
             CommentId = dbComment.Id,
             CommentText = dbComment.CommentText
         });
+        
         viewModel.Posts = info
             .Posts
             .Select(dbPost => new EcologyForProfileViewModel
@@ -104,6 +97,7 @@ public class EcologyController : Controller
                 Texts = dbPost.Text,
             })
             .ToList();
+        
         return View(viewModel);
     }
     
@@ -146,21 +140,19 @@ public class EcologyController : Controller
     [HttpPost]
     public IActionResult EcologyChat(PostCreationViewModel viewModel, IFormFile imageFile)
     {
-        if (CalcCountWorldRepeat.IsEclogyTextHas(viewModel.Text)>=4)
+        if (CalcCountWorldRepeat.IsEclogyTextHas(viewModel.Text) >= 4)
         {
-            ModelState.AddModelError(
-                nameof(PostCreationViewModel.Text),
-                "so similar texts");
+            ModelState.AddModelError(nameof(PostCreationViewModel.Text), "so similar texts");
         }
 
         if (!ModelState.IsValid)
         {
             return View("EcologyChat");
         }
-        
+
         var currentUserId = _authService.GetUserId();
         
-        string imageUrl = viewModel.Url;
+        string imageUrl = null;
         
         if (imageFile != null && imageFile.Length > 0)
         {
@@ -169,21 +161,27 @@ public class EcologyController : Controller
             var extension = Path.GetExtension(imageFile.FileName); 
             var newFileName = $"{fileName}-{currentUserId}{extension}";
             var path = Path.Combine(webRootPath, "images", "uploads", newFileName);
-            
+        
             using (var fileStream = new FileStream(path, FileMode.Create))
             {
                 imageFile.CopyTo(fileStream);
-            } 
-            imageUrl = $"/images/ecologyPosts/{newFileName}";
+            }
+            imageUrl = $"/images/uploads/{newFileName}";
         }
-        
+        else if (!string.IsNullOrEmpty(viewModel.Url))
+        {
+            imageUrl = viewModel.Url;
+        }
+
         var ecology = new EcologyData
         {
-            ImageSrc = viewModel.Url,
+            ImageSrc = imageUrl,
             Text = viewModel.Text
         };
+
         _ecologyRepository.Create(ecology, currentUserId!.Value, viewModel.PostId);
-            
+        //_ecologyRepository.Add(ecology);
+
         return RedirectToAction("EcologyChat");
     }
         

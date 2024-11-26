@@ -6,6 +6,9 @@ namespace WebPortalEverthing.Models.Ecology
 {
     public class PostCreationViewModel
     {
+        /*[IsUrl(
+            ErrorMessageResourceType = typeof(Localizations.Ecology),
+            ErrorMessageResourceName = nameof(Ecology.ValidationMessage_IsInvalidUrl))]*/
         [IsUrl(ErrorMessage = "This URL is invalid")]
         public string Url { get; set; }
         
@@ -19,19 +22,5 @@ namespace WebPortalEverthing.Models.Ecology
         [FileExtensions(Extensions = "jpg,jpeg,png", ErrorMessage = "Please upload a valid image file (jpg, jpeg, png).")]
         public IFormFile ImageFile { get; set; }
         
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            if (string.IsNullOrEmpty(Url) && ImageFile == null)
-            {
-                yield return new ValidationResult("Please provide either an image URL or upload an image.",
-                    new[] { nameof(Url), nameof(ImageFile) });
-            }
-
-            if (!string.IsNullOrEmpty(Url) && ImageFile != null)
-            {
-                yield return new ValidationResult("Please provide either an image URL or upload an image, not both.",
-                    new[] { nameof(Url), nameof(ImageFile) });
-            }
-        }
     }
 }
