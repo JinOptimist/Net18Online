@@ -1,7 +1,8 @@
-using Microsoft.AspNetCore.Authentication;
+using Enums.Users;
+using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using WebPortalEverthing.Models;
+using System.Globalization;
+using WebPortalEverthing.Controllers.AuthAttributes;
 using WebPortalEverthing.Models.Home;
 using WebPortalEverthing.Services;
 
@@ -10,10 +11,12 @@ namespace WebPortalEverthing.Controllers
     public class HomeController : Controller
     {
         private AuthService _authService;
+        private IUserRepositryReal _userRepositryReal;
 
-        public HomeController(AuthService authService)
+        public HomeController(AuthService authService, IUserRepositryReal userRepositryReal)
         {
             _authService = authService;
+            _userRepositryReal = userRepositryReal;
         }
 
         public IActionResult Index()
@@ -35,6 +38,15 @@ namespace WebPortalEverthing.Controllers
         public IActionResult Forbidden()
         {
             return View();
+        }
+
+        [IsAuthenticated]
+        public IActionResult UpdateLocale(Language language)
+        {
+            var userId = _authService.GetUserId()!.Value;
+            _userRepositryReal.UpdateLocal(userId, language);
+
+            return RedirectToAction("Index");
         }
     }
 }

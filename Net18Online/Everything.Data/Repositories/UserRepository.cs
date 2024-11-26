@@ -12,6 +12,7 @@ namespace Everything.Data.Repositories
         UserData? Login(string login, string password);
         void Register(string login, string password, int age, Role role = Role.User);
         void UpdateAvatarUrl(int userId, string avatarUrl);
+        void UpdateLocal(int userId, Language language);
         void UpdateRole(int userId, Role role);
     }
 
@@ -52,7 +53,8 @@ namespace Everything.Data.Repositories
                 Age = age,
                 Coins = 100,
                 AvatarUrl = "/images/AnimeGirl/avatar-default.webp",
-                Role = role
+                Role = role,
+                Language = Language.Ru
             };
 
             _dbSet.Add(user);
@@ -63,6 +65,15 @@ namespace Everything.Data.Repositories
         {
             var user = _dbSet.First(x => x.Id == userId);
             user.AvatarUrl = avatarUrl;
+            _webDbContext.SaveChanges();
+        }
+
+        public void UpdateLocal(int userId, Language language)
+        {
+            var user = _dbSet.First(x => x.Id == userId);
+
+            user.Language = language;
+
             _webDbContext.SaveChanges();
         }
 

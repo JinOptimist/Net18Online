@@ -15,6 +15,7 @@ using LoadTestingRepository = Everything.Data.Repositories.LoadTestingRepository
 using AnimeCatalogRepository = Everything.Data.Repositories.AnimeCatalogRepository;
 using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRepository;
 using WebPortalEverthing.Services.LoadTesting;
+using WebPortalEverthing.CustomMiddlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -106,6 +107,8 @@ app.UseRouting();
 
 app.UseAuthentication(); // Who Am I?
 app.UseAuthorization(); // May I?
+
+app.UseMiddleware<CustomLocalizationMiddleware>();
 
 app.MapControllerRoute(
     name: "default",
