@@ -4,6 +4,7 @@ using Everything.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Everything.Data.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    partial class WebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241125175907_AddLanguageForUser")]
+    partial class AddLanguageForUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,8 +72,9 @@ namespace Everything.Data.Migrations
                     b.Property<int?>("AnimeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CreatorId")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Review")
                         .IsRequired()
@@ -79,8 +83,6 @@ namespace Everything.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AnimeId");
-
-                    b.HasIndex("CreatorId");
 
                     b.ToTable("AnimeReviews");
                 });
@@ -378,9 +380,6 @@ namespace Everything.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Cost")
-                        .HasColumnType("int");
 
                     b.Property<string>("ImageSrc")
                         .IsRequired()
@@ -872,21 +871,6 @@ namespace Everything.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("GameDataUserData", b =>
-                {
-                    b.Property<int>("BuyersId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GamesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("BuyersId", "GamesId");
-
-                    b.HasIndex("GamesId");
-
-                    b.ToTable("GameDataUserData");
-                });
-
             modelBuilder.Entity("Everything.Data.Models.AnimeReviewData", b =>
                 {
                     b.HasOne("Everything.Data.Models.AnimeData", "Anime")
@@ -894,14 +878,7 @@ namespace Everything.Data.Migrations
                         .HasForeignKey("AnimeId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Everything.Data.Models.UserData", "Creator")
-                        .WithMany("CreatedAnimeReviews")
-                        .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.Navigation("Anime");
-
-                    b.Navigation("Creator");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.CakeData", b =>
@@ -1077,14 +1054,14 @@ namespace Everything.Data.Migrations
                         .WithMany("CreatedMovies")
                         .HasForeignKey("CreatorId")
                         .OnDelete(DeleteBehavior.NoAction);
-                    
-                    b.Navigation("Creator");
 
                     b.HasOne("Everything.Data.Models.FilmDirectorData", "FilmDirector")
                         .WithMany("Movies")
                         .HasForeignKey("FilmDirectorId")
                         .OnDelete(DeleteBehavior.NoAction);
-                        
+
+                    b.Navigation("Creator");
+
                     b.Navigation("FilmDirector");
                 });
 
@@ -1118,21 +1095,6 @@ namespace Everything.Data.Migrations
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("СreatorUser");
-                });
-
-            modelBuilder.Entity("GameDataUserData", b =>
-                {
-                    b.HasOne("Everything.Data.Models.UserData", null)
-                        .WithMany()
-                        .HasForeignKey("BuyersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Everything.Data.Models.GameData", null)
-                        .WithMany()
-                        .HasForeignKey("GamesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Everything.Data.Models.AnimeData", b =>
@@ -1200,8 +1162,6 @@ namespace Everything.Data.Migrations
             modelBuilder.Entity("Everything.Data.Models.UserData", b =>
                 {
                     b.Navigation("Comments");
-
-                    b.Navigation("CreatedAnimeReviews");
 
                     b.Navigation("CreatedCakes");
 

@@ -1,4 +1,6 @@
-﻿@using WebPortalEverthing.Services
+﻿@using Enums.Users
+@using WebPortalEverthing.Localizations
+@using WebPortalEverthing.Services
 @inject AuthService authService
 
 <!DOCTYPE html>
@@ -27,28 +29,33 @@
                             Привет, @authService.GetName()
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@Home.Home_HomePage</a>
                         </li>
                         @if (!User.Identity?.IsAuthenticated ?? false)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login">Логин</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login">@Home.Home_Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Register">Регистрация</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Register">@Home.Home_Registration</a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout">Выйти</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout">@Home.Home_Logout</a>
                             </li>
                         }
                         @if (authService.IsAdmin())
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Users">Users</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Users">@Home.Home_Users</a>
                             </li>
+                        }
+                        @if (User.Identity?.IsAuthenticated ?? false)
+                        {
+                            <a class="nav-link text-dark" href="/Home/UpdateLocale?language=@Language.Ru">Ру</a>
+                            <a class="nav-link text-dark" href="/Home/UpdateLocale?language=@Language.En">En</a>
                         }
                     </ul>
                 </div>
