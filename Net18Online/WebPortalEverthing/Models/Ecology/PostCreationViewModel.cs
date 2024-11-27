@@ -6,10 +6,10 @@ namespace WebPortalEverthing.Models.Ecology
 {
     public class PostCreationViewModel
     {
-        /*[IsUrl(
-            ErrorMessageResourceType = typeof(Localizations.Ecology),
-            ErrorMessageResourceName = nameof(Ecology.ValidationMessage_IsInvalidUrl))]*/
-        [IsUrl(ErrorMessage = "This URL is invalid")]
+        [IsUrl(
+            ErrorMessageResourceType = typeof(Localizations.Ecology), 
+            ErrorMessageResourceName = "ValidationMessage_IsInvalidUrl")]
+        //[IsUrl(ErrorMessage = "This URL is invalid")]
         public string Url { get; set; }
         
         [Required(ErrorMessage = "Text is required.")]
