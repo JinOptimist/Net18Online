@@ -1,5 +1,6 @@
 ﻿@using WebPortalEverthing.Models.CoffeShop.Profile
 @using WebPortalEverthing.Services
+@using WebPortalEverthing.Localizations
 @inject AuthService authService
 @model ProfileViewModel
 
@@ -13,16 +14,16 @@
     </div>
 
     <div>
-        Avatar:
+        @Coffe.Profile_Avatar:
         <img class="avatar" src="@Model.ProfileAvatar" />
     </div>
     <div>
         <form action="/CoffeShop/UpdateProfileAvatar" method="post" enctype="multipart/form-data">
             <input type="file" name="avatar" />
-            <button type="submit">Обновить аватар</button>
+            <button type="submit">@Coffe.Profile_Update_Avatar</button>
         </form>
         <form action="/CoffeShop/SetDefaultProfileAvatar" method="post" enctype="multipart/form-data">
-            <button type="submit">Установить готовый аватар</button>
+            <button type="submit">@Coffe.Profile_Default_Avatar</button>
         </form>
     </div>
     @if (authService.IsAdmin())
@@ -44,7 +45,7 @@
     }
 
     <div>
-        Моя корзина: 
+        @Coffe.Profile_Cart: 
     </div>
 
 

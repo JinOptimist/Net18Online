@@ -45,6 +45,11 @@
 
 
   <ItemGroup>
+    <Compile Update="Localizations\Coffe.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Coffe.resx</DependentUpon>
+    </Compile>
     <Compile Update="Localizations\Girl.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -65,6 +70,10 @@
 
 
   <ItemGroup>
+    <EmbeddedResource Update="Localizations\Coffe.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Coffe.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Localizations\Girl.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Girl.Designer.cs</LastGenOutput>

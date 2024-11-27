@@ -1,4 +1,5 @@
-﻿@using WebPortalEverthing.Models.CoffeShop;
+﻿@using WebPortalEverthing.Models.CoffeShop
+@using WebPortalEverthing.Localizations
 @model List<CoffeViewModel>
 @{
     Layout = "~/Views/Shared/CoffeLayout/_LayoutCoffe.cshtml";
@@ -8,20 +9,20 @@
 <div class="content">
     <div class="catalog-filter">
         <div class="menu">
-            <span class="catalog">Фильтры</span>
+            <span class="catalog">@Coffe.Coffe_Filter</span>
             <div class="catalog-filter-item">
                 <div class="accordion" id="accordionPanelsStayOpenExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                                Стоимость
+                                @Coffe.Coffe_Filter_Cost
                             </button>
                         </h2>
                         <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
                             <form action="#" method="post">
                                 <div class="accordion-body">
                                     <label for="customRange2" class="form-label">
-                                        Цена: <span id="rangeValue">30</span> $
+                                        @Coffe.Coffe_Filter_Price: <span id="rangeValue">30</span> $
                                     </label>
                                     <input type="range" name="form-range" min="1" max="100" id="customRange2" value="50" />
                                     <button type="submit" class="btn btn-primary">C</button>
@@ -37,7 +38,7 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
-                            Бренд
+                            @Coffe.Coffe_Brand
                         </button>
                     </h2>
                     <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show">
@@ -47,8 +48,8 @@
                                         @foreach (var brand in Model)
                                         {
                                             <li>
-                                                <input type="radio" id="@brand.Brand" name="brend-type" class="filter-radio" />
-                                                <label for="@brand.Brand">@brand.Brand</label>
+                                                <input type="radio" id="@brand.Id" name="brend-type" class="filter-radio" />
+                                                <label for="@brand.Id">@brand.Brand</label>
                                             </li>
                                         }
                                     </ul>
@@ -73,10 +74,10 @@
                     </div>
                     <div class="product-bottom">
                         <button type="submit" class="product-button">
-                            Купить
+                            @Coffe.Coffe_Buy
                         </button>
                         <button type="submit" class="bag-product-button">
-                            В корзину
+                            @Coffe.Coffe_Cart
                         </button>
                     </div>
                     <div class="sales">      

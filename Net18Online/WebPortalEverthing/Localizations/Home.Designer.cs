@@ -70,11 +70,29 @@ namespace WebPortalEverthing.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Сюда.
+        /// </summary>
+        public static string Coffe_Link_Text {
+            get {
+                return ResourceManager.GetString("Coffe_Link_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Если вам хочется полюбоваться на аниме девочек то вас.
         /// </summary>
         public static string Home_AnimeGirlDesc {
             get {
                 return ResourceManager.GetString("Home_AnimeGirlDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Если вы хотите заказать кофе, и всё что для него прилагается, то вам.
+        /// </summary>
+        public static string Home_CoffeShopDesc {
+            get {
+                return ResourceManager.GetString("Home_CoffeShopDesc", resourceCulture);
             }
         }
         
