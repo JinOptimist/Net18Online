@@ -14,4 +14,10 @@
     <data name="ValidationMessage_IsInvalidUrl" xml:space="preserve">
         <value>This URL is invalid</value>
     </data>
+    <data name="ValidationMessage_RequiredText" xml:space="preserve">
+        <value>Text is required</value>
+    </data>
+    <data name="ValidationMessage_UploadFile" xml:space="preserve">
+        <value>Please upload a valid image file (jpg, jpeg, png)</value>
+    </data>
 </root>
