@@ -44,6 +44,7 @@ namespace WebPortalEverthing.Controllers.LoadAdmin
 
         public IActionResult UpdateRole(Role role, int userId)
         {
+            //авторизация проверяется через атрибут isLoadAdmin
             _loadUserRepositryReal.UpdateRole(userId, role);
             return RedirectToAction("LoadUsersView", "LoadAdmin");
         }

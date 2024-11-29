@@ -63,6 +63,13 @@ builder.Services.AddScoped<ILoadTestingRepositoryReal, LoadTestingRepository>();
 builder.Services.AddScoped<ILoadVolumeTestingRepositoryReal, LoadVolumeTestingRepository>();
 builder.Services.AddScoped<ILoadUserRepositryReal, LoadUserRepository>();
 builder.Services.AddScoped<IUserRepositryReal, UserRepository>();
+builder.Services
+    .AddAuthentication(LoadAuthService.AUTH_TYPE_KEY)
+    .AddCookie(LoadAuthService.AUTH_TYPE_KEY, config =>
+    {
+        config.LoginPath = "/LoadAuth/LoginLoadUserView";
+        config.AccessDeniedPath = "/Home/Forbidden";
+    });
 
 builder.Services.AddScoped<HelperForValidatingCake>();
 builder.Services.AddScoped<TextProvider>();
