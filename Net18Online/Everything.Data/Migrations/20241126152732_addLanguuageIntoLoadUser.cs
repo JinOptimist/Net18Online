@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Enums.Users;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -15,7 +16,7 @@ namespace Everything.Data.Migrations
                 table: "LoadUsers",
                 type: "int",
                 nullable: false,
-                defaultValue: 1);
+                defaultValue: Language.Ru);
         }
 
         /// <inheritdoc />
