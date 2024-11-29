@@ -141,6 +141,7 @@ namespace WebPortalEverthing.Controllers.LoadTesting
             return Redirect("/LoadTesting/ContenMetricsListView");
         }
 
+        [IsAuthenticatedAttribute]
         public IActionResult LoadUserProfile()
         {
             var viewModel = new LoadUserProfileViewModel();
