@@ -1,6 +1,7 @@
 ﻿using Everything.Data.Interface.Models;
 using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
+using Everything.Data.Models.SqlRawModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Everything.Data.Repositories
@@ -13,6 +14,7 @@ namespace Everything.Data.Repositories
         bool HasSimilarName(string name);
         bool IsNameUniq(string name);
         IEnumerable<GirlData> GetAllByAuthorId(int userId);
+        IEnumerable<GirlsWithDuplicateInfo> GetGirlsWithDuplicateInfo();
     }
 
     public class AnimeGirlRepository : BaseRepository<GirlData>, IAnimeGirlRepositoryReal
@@ -95,7 +97,35 @@ namespace Everything.Data.Repositories
             return _dbSet
                 .Where(x => x.Creator != null
                     && x.Creator.Id == userId)
+                .OrderBy(x => x.Name)
                 .ToList();
+        }
+
+        public IEnumerable<GirlsWithDuplicateInfo> GetGirlsWithDuplicateInfo()
+        {
+            var sql = @"
+SELECT G.Id
+	,G.Name
+	,G.ImageSrc
+	,CASE WHEN OriginId IS NULL THEN 'Uniq' ELSE 'NotUniq' END as UniqStatus
+	,CASE WHEN OriginId IS NULL OR OriginId = G.Id THEN 'Original' ELSE 'Duplicate' END as DuplicateStatus
+	,CASE WHEN OriginId IS NOT NULL AND OriginId <> G.Id THEN OriginId ELSE NULL END as OriginId
+	,CASE WHEN OriginId IS NOT NULL AND OriginId <> G.Id THEN G2.Name ELSE NULL END as OriginName
+FROM Girls G
+	LEFT JOIN (
+		SELECT MIN(Id) OriginId, ImageSrc, COUNT(*) CountOfDuplication
+		FROM Girls
+		GROUP BY ImageSrc
+		HAVING COUNT(*) > 1
+	) DI ON G.ImageSrc = DI.ImageSrc
+	LEFT JOIN Girls G2 ON DI.OriginId = G2.Id";
+
+            var result = _webDbContext
+                .Database
+                .SqlQueryRaw<GirlsWithDuplicateInfo>(sql)
+                .ToList();
+
+            return result;
         }
     }
 }

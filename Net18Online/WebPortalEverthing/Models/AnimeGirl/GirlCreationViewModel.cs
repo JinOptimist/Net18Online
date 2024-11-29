@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using WebPortalEverthing.Localizations;
 using WebPortalEverthing.Models.CustomValidationAttrubites;
 
 namespace WebPortalEverthing.Models.AnimeGirl
@@ -8,7 +9,9 @@ namespace WebPortalEverthing.Models.AnimeGirl
         [UniqGirlName]
         public string Name { get; set; }
 
-        [IsUrl(ErrorMessage = "Очень специальное сообщение об ошибки")]
+        [IsUrl(
+            ErrorMessageResourceType = typeof(Girl), 
+            ErrorMessageResourceName = nameof(Girl.ValidationMessage_IsNotUrl))]
         public string Url { get; set; }
 
         [IsCorrectHeight(110, 270, HeightOption.Sm)]

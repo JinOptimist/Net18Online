@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Resources;
+using WebPortalEverthing.Localizations;
 
 namespace WebPortalEverthing.Models.CustomValidationAttrubites
 {
@@ -6,9 +8,18 @@ namespace WebPortalEverthing.Models.CustomValidationAttrubites
     {
         public override string FormatErrorMessage(string name)
         {
-            return string.IsNullOrEmpty(ErrorMessage)
-                ? "Не правильный урл"
-                : ErrorMessage;
+            if (!string.IsNullOrEmpty(ErrorMessage)) {
+                return ErrorMessage;
+            }
+
+            if (ErrorMessageResourceType is not null && !string.IsNullOrEmpty(ErrorMessageResourceName))
+            {
+                var resourceManager = new ResourceManager(ErrorMessageResourceType.FullName,
+                    ErrorMessageResourceType.Assembly);
+                return resourceManager.GetString(ErrorMessageResourceName);
+            }
+
+            return "Не правильный урл";
         }
 
         public override bool IsValid(object? value)

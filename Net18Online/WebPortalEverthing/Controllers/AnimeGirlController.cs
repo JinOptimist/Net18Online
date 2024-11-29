@@ -216,5 +216,24 @@ namespace WebPortalEverthing.Controllers
 
             return RedirectToAction("Profile");
         }
+
+        public IActionResult DuplicateInfo()
+        {
+            var viewModels = _animeGirlRepository
+                .GetGirlsWithDuplicateInfo()
+                .Select(db => new DuplicateInfoViewModel
+                {
+                    Id = db.Id,
+                    Name = db.Name,
+                    ImageSrc = db.ImageSrc,
+                    DuplicateStatus = db.DuplicateStatus,
+                    OriginId = db.OriginId,
+                    OriginName = db.OriginName,
+                    UniqStatus = db.UniqStatus
+                })
+                .ToList();
+
+            return View(viewModels);
+        }
     }
 }

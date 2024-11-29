@@ -22,6 +22,7 @@
     <Folder Include="wwwroot\css\ServiceCenter\" />
     <Folder Include="wwwroot\images\avatars\" />
     <Folder Include="wwwroot\files\" />
+    <Folder Include="wwwroot\images\Ecology\eccologyPosts\" />
   </ItemGroup>
 
 
@@ -39,6 +40,52 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+
+
+  <ItemGroup>
+    <Compile Update="Localizations\Coffe.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Coffe.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Localizations\Girl.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Girl.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Localizations\Home.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Home.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Localizations\Ecology.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Ecology.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+
+
+  <ItemGroup>
+    <EmbeddedResource Update="Localizations\Coffe.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Coffe.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localizations\Girl.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Girl.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localizations\Home.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Home.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localizations\Ecology.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Ecology.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 
