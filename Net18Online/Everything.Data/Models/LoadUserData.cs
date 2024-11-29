@@ -21,6 +21,8 @@ namespace Everything.Data.Models
         public decimal Coins { get; set; }
         public Role Role { get; set; } = Role.Observer;
 
+        public Language Language { get; set; } = Language.Ru;
+
         public virtual List<MetricData> Metrics { get; set; } = new();
         public virtual List<LoadVolumeTestingData> LoadVolumeTestingParts { get; set; } = new();
     }

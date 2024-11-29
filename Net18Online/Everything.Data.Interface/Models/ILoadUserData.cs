@@ -16,5 +16,6 @@ namespace Everything.Data.Interface.Models
         public DateTime CreatedAt { get; set; }
         public Role Role { get; set; }
         public string AvatarUrl { get; set; }
+        public Language Language { get; set; }
     }
 }
