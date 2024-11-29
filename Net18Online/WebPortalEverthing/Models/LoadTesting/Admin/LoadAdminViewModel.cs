@@ -1,9 +1,12 @@
-﻿namespace WebPortalEverthing.Models.LoadTesting.Admin
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using WebPortalEverthing.Models.Admin;
+
+namespace WebPortalEverthing.Models.LoadTesting.Admin
 {
     public class LoadAdminViewModel
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public List<string> Roles { get; set; } = new List<string> { "Admin" };
+        public List<LoadUserVewModel> LoadUsers { get; set; }
+
+        public List<SelectListItem> Roles { get; set; }
     }
 }

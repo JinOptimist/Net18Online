@@ -3,6 +3,7 @@ using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Controllers.LoadAdmin.LoadAdminAttrobute;
 using WebPortalEverthing.Models.Admin;
+using WebPortalEverthing.Models.LoadTesting.Admin;
 using WebPortalEverthing.Services;
 
 namespace WebPortalEverthing.Controllers.LoadAdmin
@@ -21,20 +22,20 @@ namespace WebPortalEverthing.Controllers.LoadAdmin
             _enumHelper = enumHelper;
         }
 
-        public IActionResult Users()
+        public IActionResult LoadUsersView()
         {
-            var users = _loadUserRepositryReal
+            var loadUsers = _loadUserRepositryReal
                 .GetAll()
-                .Select(x => new UserViewModel
+                .Select(x => new LoadUserVewModel
                 {
                     Id = x.Id,
-                    Name = x.Login,
+                    Login = x.Login,
                     Roles = _enumHelper.GetNames(x.Role)
                 })
                 .ToList();
 
-            var viewModel = new AdminUserViewModel();
-            viewModel.Users = users;
+            var viewModel = new LoadAdminViewModel();
+            viewModel.LoadUsers = loadUsers;
 
             viewModel.Roles = _enumHelper.GetSelectListItems<Role>();
 
@@ -44,7 +45,7 @@ namespace WebPortalEverthing.Controllers.LoadAdmin
         public IActionResult UpdateRole(Role role, int userId)
         {
             _loadUserRepositryReal.UpdateRole(userId, role);
-            return RedirectToAction("LoadUsers");
+            return RedirectToAction("LoadUsersView", "LoadAdmin");
         }
     }
 }

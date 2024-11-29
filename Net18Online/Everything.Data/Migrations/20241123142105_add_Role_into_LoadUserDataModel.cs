@@ -15,7 +15,7 @@ namespace Everything.Data.Migrations
                 table: "LoadUsers",
                 type: "int",
                 nullable: false,
-                defaultValue: 1);
+                defaultValue: 1);// или (int)Role.Observer
         }
 
         /// <inheritdoc />

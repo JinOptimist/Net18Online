@@ -25,6 +25,7 @@
     <link href="~/css/LoadTesting/registration-form.css" rel="stylesheet" />
     <link href="~/css/LoadTesting/name-user-auth-and-coins.css" rel="stylesheet" />
     <link href="~/css/LoadTesting/loadUserProfile.css" rel="stylesheet" />
+    <link href="~/css/LoadTesting/load-users.css" rel="stylesheet" />
 
 </head>
 <body>
@@ -90,6 +91,12 @@
                 <li>
                     <a href="/LoadVolumeTesting/CreateloadVolumeView" class="button"><span>Create LoadVolume</span></a>
                 </li>
+                @if( loadAuthService.IsAdmin() )
+                {
+                    <li>
+                        <a href="/LoadAdmin/LoadUsersView" class="button"><span>Load Users</span></a>
+                    </li>
+                }
             </ul>
 
 
