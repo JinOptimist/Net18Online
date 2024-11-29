@@ -1,5 +1,7 @@
-﻿using Everything.Data.Models;
+﻿using Enums.Users;
+using Everything.Data.Models;
 using Everything.Data.Repositories;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebPortalEverthing.Controllers.AuthAttributes;
@@ -188,6 +190,14 @@ namespace WebPortalEverthing.Controllers
             _userRepositryReal.UpdateAvatarUrl(userId, avatarUrl);
 
             return RedirectToAction("UserProfile");
+        }
+
+        public IActionResult UpdateLocale(Language language)
+        {
+            var userId = _authService.GetUserId()!.Value;
+            _userRepositryReal.UpdateLocal(userId, language);
+
+            return RedirectToAction("Coffe");
         }
     }
 }

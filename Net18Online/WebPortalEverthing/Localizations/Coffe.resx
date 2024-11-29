@@ -117,37 +117,52 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Anime_Link_Text" xml:space="preserve">
-    <value>Тык</value>
+  <data name="Coffe_Language" xml:space="preserve">
+    <value>Язык</value>
   </data>
-  <data name="Home_AnimeGirlDesc" xml:space="preserve">
-    <value>Если вам хочется полюбоваться на аниме девочек то вас</value>
+  <data name="Coffe_Buy" xml:space="preserve">
+    <value>Купить</value>
   </data>
-  <data name="Home_Greatings" xml:space="preserve">
-    <value>Привет</value>
+  <data name="Coffe_Cart" xml:space="preserve">
+    <value>Корзина</value>
   </data>
-  <data name="Home_Guest" xml:space="preserve">
-    <value>Гость</value>
+  <data name="Coffe_Filter" xml:space="preserve">
+    <value>Фильтры</value>
   </data>
-  <data name="Home_HomePage" xml:space="preserve">
-    <value>Главная</value>
+  <data name="Layout_ToPortal" xml:space="preserve">
+    <value>На портал</value>
   </data>
-  <data name="Home_Login" xml:space="preserve">
-    <value>Залогиниться</value>
+  <data name="Layout_Coffe" xml:space="preserve">
+    <value>Кофе</value>
   </data>
-  <data name="Home_Logout" xml:space="preserve">
-    <value>Выйти</value>
+  <data name="Layout_Catalog" xml:space="preserve">
+    <value>Каталог</value>
   </data>
-  <data name="Home_Registration" xml:space="preserve">
-    <value>Зарегестироваться</value>
+  <data name="Layout_Equipment" xml:space="preserve">
+    <value>Оборудование</value>
   </data>
-  <data name="Home_Users" xml:space="preserve">
-    <value>Пользователи</value>
+  <data name="Layout_Reviews" xml:space="preserve">
+    <value>Отзывы</value>
   </data>
-  <data name="Home_CoffeShopDesc" xml:space="preserve">
-    <value>Если вы хотите заказать кофе, и всё что для него прилагается, то вам</value>
+  <data name="Coffe_Filter_Price" xml:space="preserve">
+    <value>Цена</value>
   </data>
-  <data name="Coffe_Link_Text" xml:space="preserve">
-    <value>Сюда</value>
+  <data name="Coffe_Filter_Cost" xml:space="preserve">
+    <value>Стоимость</value>
+  </data>
+  <data name="Coffe_Brand" xml:space="preserve">
+    <value>Бренд</value>
+  </data>
+  <data name="Profile_Avatar" xml:space="preserve">
+    <value>Аватар</value>
+  </data>
+  <data name="Profile_Cart" xml:space="preserve">
+    <value>Моя корзина</value>
+  </data>
+  <data name="Profile_Update_Avatar" xml:space="preserve">
+    <value>Обновить аватар</value>
+  </data>
+  <data name="Profile_Default_Avatar" xml:space="preserve">
+    <value>Установить готовый аватар</value>
   </data>
 </root>
