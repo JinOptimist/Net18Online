@@ -170,7 +170,7 @@ namespace WebPortalEverthing.Controllers
             viewModel.UserName = _authService.GetName()!;
 
             var userId = _authService.GetUserId()!.Value;
-            
+
             viewModel.AvatarUrl = _userRepositryReal.GetAvatarUrl(userId);
 
             viewModel.Mangas = _mangaRepositoryReal
@@ -215,6 +215,25 @@ namespace WebPortalEverthing.Controllers
             _userRepositryReal.UpdateAvatarUrl(userId, avatarUrl);
 
             return RedirectToAction("Profile");
+        }
+
+        public IActionResult DuplicateInfo()
+        {
+            var viewModels = _animeGirlRepository
+                .GetGirlsWithDuplicateInfo()
+                .Select(db => new DuplicateInfoViewModel
+                {
+                    Id = db.Id,
+                    Name = db.Name,
+                    ImageSrc = db.ImageSrc,
+                    DuplicateStatus = db.DuplicateStatus,
+                    OriginId = db.OriginId,
+                    OriginName = db.OriginName,
+                    UniqStatus = db.UniqStatus
+                })
+                .ToList();
+
+            return View(viewModels);
         }
     }
 }

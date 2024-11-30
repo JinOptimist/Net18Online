@@ -122,3 +122,13 @@ header .name {
     color: darkred;
     font-size: 30px;
 }
+
+.girl.Uniq.Original{
+    border: 3px solid green;
+}
+.girl.NotUniq.Original {
+    border: 3px solid orange;
+}
+.girl.NotUniq.Duplicate {
+    border: 3px solid red;
+}

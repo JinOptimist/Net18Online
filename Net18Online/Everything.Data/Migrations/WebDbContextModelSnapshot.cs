@@ -857,21 +857,6 @@ namespace Everything.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("CakeDataMagazinData", b =>
-                {
-                    b.HasOne("Everything.Data.Models.CakeData", null)
-                        .WithMany()
-                        .HasForeignKey("CakesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Everything.Data.Models.MagazinData", null)
-                        .WithMany()
-                        .HasForeignKey("MagazinsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("GameDataUserData", b =>
                 {
                     b.Property<int>("BuyersId")
@@ -885,6 +870,21 @@ namespace Everything.Data.Migrations
                     b.HasIndex("GamesId");
 
                     b.ToTable("GameDataUserData");
+                });
+
+            modelBuilder.Entity("CakeDataMagazinData", b =>
+                {
+                    b.HasOne("Everything.Data.Models.CakeData", null)
+                        .WithMany()
+                        .HasForeignKey("CakesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Everything.Data.Models.MagazinData", null)
+                        .WithMany()
+                        .HasForeignKey("MagazinsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Everything.Data.Models.AnimeReviewData", b =>
@@ -1077,14 +1077,14 @@ namespace Everything.Data.Migrations
                         .WithMany("CreatedMovies")
                         .HasForeignKey("CreatorId")
                         .OnDelete(DeleteBehavior.NoAction);
-                    
-                    b.Navigation("Creator");
 
                     b.HasOne("Everything.Data.Models.FilmDirectorData", "FilmDirector")
                         .WithMany("Movies")
                         .HasForeignKey("FilmDirectorId")
                         .OnDelete(DeleteBehavior.NoAction);
-                        
+
+                    b.Navigation("Creator");
+
                     b.Navigation("FilmDirector");
                 });
 
