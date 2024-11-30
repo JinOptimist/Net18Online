@@ -1,8 +1,11 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using WebPortalEverthing.Services
+@inject AuthService authService
+<!DOCTYPE html>
+<html>
 <head>
     <title>Cake</title>
-    <link rel="stylesheet" href="/css/Cake/style.css">
+    <link rel="stylesheet" href="~/css/Cake/style.css" />
+    <link rel="stylesheet" href="~/css/Cake/table.css" />
 </head>
 <body>
     <header>
@@ -11,15 +14,26 @@
                 <ul class="menu">
                     <li><a href="/">Main</a></li>
                     <li><a href="/Cake">All cakes</a></li>
-                    <li><a href="#">Admin</a></li>
-                    <li>
-                        <a href="/Cake/Create">Add Cake &bigtriangledown;</a>
-                        <ul>
-                            <li><a href="/Magazin/Create">Add Magazin</a></li>
-                            <li><a href="/Cake/Link">Add Link</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">View my creations</a></li>
+                    @if (authService.IsAdmin())
+                    {
+                        <li>
+                            <a href="/Cake/Admin">Admin</a>
+                        </li>
+                    }
+                    @if (authService.IsAuthenticated())
+                    {
+                        <li>
+                            <a href="/Cake/Create">Add Cake &bigtriangledown;</a>
+                            <ul>
+                                <li><a href="/Magazin/Create">Add Magazin</a></li>
+                                <li><a href="/Cake/Link">Add Link</a></li>
+                            </ul>
+                        </li>
+                    }
+                    @if (!authService.IsAdmin() && authService.IsAuthenticated())
+                    {
+                        <li><a href="/Cake/MyCreation">View my creations</a></li>
+                    }
                 </ul>
             </nav>
             <div class="profile">
