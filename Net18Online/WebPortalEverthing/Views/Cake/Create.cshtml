@@ -4,13 +4,13 @@
     Layout = "~/Views/Shared/_LayoutCake.cshtml";
 }
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     <div>
         @Html.TextBoxFor(x => x.Name, new { placeholder = "Введи имя" })
         @Html.ValidationMessageFor(x => x.Name)
     </div>
     <div>
-        @Html.TextBoxFor(x => x.Url, new { placeholder = "Введи путь к картинке" })
+        @Html.TextBoxFor(x => x.Url, new { @type = "file", accept = ".jpg" })
         @Html.ValidationMessageFor(x => x.Url)
     </div>
     <div>

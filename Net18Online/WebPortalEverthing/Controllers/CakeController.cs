@@ -1,6 +1,7 @@
 ﻿using Everything.Data;
 using Everything.Data.Models;
 using Everything.Data.Repositories;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebPortalEverthing.Controllers.AuthAttributes;
@@ -16,15 +17,27 @@ namespace WebPortalEverthing.Controllers
     {
         private ICakeRepositoryReal _cakeRepository;
         private IMagazinRepositoryReal _magazinRepository;
+        private IUserRepositryReal _userRepository;
         private AuthService _authService;
         private WebDbContext _webDbContext;
+        private IWebHostEnvironment _webHostEnvironment;
+        private HelperForFile _helperForFile;
 
-        public CakeController(ICakeRepositoryReal cakeRepository, IMagazinRepositoryReal magazinRepository, WebDbContext webDbContext, AuthService authService)
+        public CakeController(ICakeRepositoryReal cakeRepository, 
+            IMagazinRepositoryReal magazinRepository, 
+            IUserRepositryReal userRepository, 
+            WebDbContext webDbContext, 
+            AuthService authService,
+            IWebHostEnvironment webHostEnvironment,
+            HelperForFile helperForFile)
         {
             _cakeRepository = cakeRepository;
             _webDbContext = webDbContext;
             _magazinRepository = magazinRepository;
             _authService = authService;
+            _userRepository = userRepository;
+            _webHostEnvironment = webHostEnvironment;
+            _helperForFile = helperForFile;
         }
         public IActionResult Index()
         {
@@ -65,19 +78,21 @@ namespace WebPortalEverthing.Controllers
                 return View(viewModel);
             }
 
-            var currentUserId = _authService.GetUserId();
+            var imageUrl = _helperForFile.CreateImageFileForCake(viewModel.Url);
+
+            var userId = _authService.GetUserId();
 
             var cakeData = new CakeData()
             {
                 Name = viewModel.Name,
                 Description = viewModel.Description,
                 Price = viewModel.Price,
-                ImageSrc = viewModel.Url,
+                ImageSrc = imageUrl,
             };
 
-            _cakeRepository.Create(cakeData, currentUserId!.Value);
+            _cakeRepository.Create(cakeData, userId!.Value);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Create");
         }
         [HttpGet]
         [IsAuthenticated]
@@ -97,7 +112,41 @@ namespace WebPortalEverthing.Controllers
 
             return View(model);
         }
+        [IsAuthenticated]
+        public IActionResult Profile()
+        {
+            var userId = _authService.GetUserId();
 
+            var profileViewModel = new CakeProfileViewModel()
+            {
+                ImageUrl = _userRepository.GetAvatarUrl(userId!.Value),
+                Name = _authService.GetName(),
+            };
+
+            return View(profileViewModel);
+        }
+        [HttpPost]
+        [IsAuthenticated]
+        public IActionResult UpdateAvatar(IFormFile avatar)
+        {
+            var webRootPath = _webHostEnvironment.WebRootPath;
+
+            var userId = _authService.GetUserId()!.Value;
+            var avatarFileName = $"avatar-{userId}.jpg";
+
+            var path = Path.Combine(webRootPath, "images", "avatars", avatarFileName);
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                avatar
+                    .CopyToAsync(fileStream)
+                    .Wait();
+            }
+
+            var pathImage = $"/images/avatars/{avatarFileName}";
+            _userRepository.UpdateAvatarUrl(userId, pathImage);
+
+            return RedirectToAction("Profile");
+        }
         [HttpPost]
         [IsAuthenticated]
         public IActionResult Link(CakeAndMagazinLinkViewModel viewModel)
@@ -170,9 +219,13 @@ namespace WebPortalEverthing.Controllers
         }
         [HttpPost]
         [IsAuthenticated]
-        public IActionResult UpdateImage(int id, string newImage)
+        public IActionResult UpdateImage(int id,string pathOldImage, IFormFile newImage)
         {
-            _cakeRepository.UpdateImage(id, newImage);
+            _helperForFile.DeleteImageFileForCake(pathOldImage);
+
+            var newImageUrl = _helperForFile.CreateImageFileForCake(newImage);
+
+            _cakeRepository.UpdateImage(id, newImageUrl);
             
             if (_authService.IsAdmin())
             {
@@ -205,8 +258,10 @@ namespace WebPortalEverthing.Controllers
             return RedirectToAction("MyCreation");
         }
         [IsAuthenticated]
-        public IActionResult Remove(int id)
+        public IActionResult Remove(int id, string pathOldImage)
         {
+            _helperForFile.DeleteImageFileForCake(pathOldImage);
+
             _cakeRepository.Delete(id);
 
             if (_authService.IsAdmin())

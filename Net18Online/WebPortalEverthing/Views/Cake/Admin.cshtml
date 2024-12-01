@@ -30,12 +30,13 @@
             <td>
                 <form method="post" action="/Cake/UpdateImage">
                     <input name="id" value="@cake.Id" type="hidden" />
+                    <input name="pathOldImage" value="@cake.ImageSrc" type="hidden" />
                     <input name="newImage" value="@cake.ImageSrc" />
                     <button type="submit">upd</button>
                 </form>
             </td>
             <td>
-                <form method="post" action="/Cake/UpdateDescription">
+                <form method="post" action="/Cake/UpdateDescription" enctype="multipart/form-data">
                     <input name="id" value="@cake.Id" type="hidden" />
                     <input name="newDescription" value="@cake.Description" />
                     <button type="submit">upd</button>
@@ -49,7 +50,7 @@
                 </form>
             </td>
             <td>
-                <a class="tag" href="/Cake/Remove?id=@cake.Id">Delete</a>
+                <a class="tag" href="/Cake/Remove?id=@cake.Id?pathOldImage=@cake.ImageSrc">Delete</a>
             </td>
         </tr>
     }
