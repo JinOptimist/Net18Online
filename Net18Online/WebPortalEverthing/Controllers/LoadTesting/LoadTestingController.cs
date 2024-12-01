@@ -188,7 +188,7 @@ namespace WebPortalEverthing.Controllers.LoadTesting
             var userId = _loadAuthService.GetUserId()!.Value;
             var avatarFileName = $"avatar-{userId}.jpg";
 
-            var path = Path.Combine(webRootPath, "images/LoadTesting", "avatars", avatarFileName);
+            var path = Path.Combine(webRootPath, "images","LoadTesting", "avatars", avatarFileName);
             using (var fileStream = new FileStream(path, FileMode.Create))
             {
                 avatar
