@@ -1,0 +1,26 @@
+﻿@model List<WebPortalEverthing.Models.AnimeGirl.DuplicateInfoViewModel>
+
+@{
+    Layout = "~/Views/Shared/_LayoutAnime.cshtml";
+}
+
+<h1>Информация про дубликаты</h1>
+<div class="girls">
+    @foreach (var girlInfo in Model)
+    {
+        <div class="girl @girlInfo.UniqStatus @girlInfo.DuplicateStatus">
+            <div class="name">
+                @girlInfo.Name
+            </div>
+            <div class="image-container">
+                <img src="@girlInfo.ImageSrc" />
+            </div>
+            @if (!string.IsNullOrEmpty(girlInfo.OriginName))
+            {
+                <div>
+                    Original girl name: @girlInfo.OriginName
+                </div>
+            }
+        </div>
+    }
+</div>

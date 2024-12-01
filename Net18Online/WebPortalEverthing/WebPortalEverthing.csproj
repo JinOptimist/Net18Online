@@ -22,6 +22,7 @@
     <Folder Include="wwwroot\css\ServiceCenter\" />
     <Folder Include="wwwroot\images\avatars\" />
     <Folder Include="wwwroot\files\" />
+    <Folder Include="wwwroot\images\Ecology\eccologyPosts\" />
   </ItemGroup>
 
 
@@ -45,6 +46,12 @@
 
   <ItemGroup>
     <Compile Update="Localizations\LocalizationForGame\GameShop.Designer.cs">
+    <Compile Update="Localizations\Coffe.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Coffe.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Localizations\Girl.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>GameShop.resx</DependentUpon>
@@ -53,6 +60,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>HomeGame.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Localizations\Ecology.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Ecology.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -67,11 +79,20 @@
       <LastGenOutput>GameShop.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Localizations\LocalizationForGame\HomeGame.En.resx">
+    <EmbeddedResource Update="Localizations\Coffe.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Coffe.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localizations\Girl.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Localizations\LocalizationForGame\HomeGame.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>HomeGame.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localizations\Ecology.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Ecology.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 
