@@ -82,3 +82,25 @@ header .navigation ul{
     .content .studios {
         margin: 10px;
     }
+.profile-block {
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
+}
+    .profile-block .avatar {
+        max-height: 50px
+    }
+
+ .profile .avatar {
+     max-width: 300px;
+     max-height: 300px;
+ }
+.profile .username {
+    font-family: 'Arial', sans-serif; 
+    font-size: 24px; 
+    font-weight: bold; 
+    color: #4CAF50; 
+    letter-spacing: 1.5px; 
+
+}
+ 

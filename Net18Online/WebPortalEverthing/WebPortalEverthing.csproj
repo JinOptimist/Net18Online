@@ -46,6 +46,10 @@
 
   <ItemGroup>
     <Compile Update="Localizations\LocalizationForGame\GameShop.Designer.cs">
+		<DesignTime>True</DesignTime>
+		<AutoGen>True</AutoGen>
+		<DependentUpon>GameShop.resx</DependentUpon>
+	</Compile>
     <Compile Update="Localizations\Coffe.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -54,7 +58,7 @@
     <Compile Update="Localizations\Girl.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>GameShop.resx</DependentUpon>
+      <DependentUpon>Girl.resx</DependentUpon>
     </Compile>
     <Compile Update="Localizations\LocalizationForGame\HomeGame.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -79,12 +83,15 @@
       <LastGenOutput>GameShop.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Localizations\LocalizationForGame\HomeGame.En.resx">
+		<Generator>PublicResXFileCodeGenerator</Generator>
+	</EmbeddedResource>
     <EmbeddedResource Update="Localizations\Coffe.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Coffe.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Localizations\Girl.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Girl.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Localizations\LocalizationForGame\HomeGame.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

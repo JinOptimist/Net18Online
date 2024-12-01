@@ -1,0 +1,23 @@
+﻿@using WebPortalEverthing.Models.GameStore
+@using WebPortalEverthing.Services
+@model List<PopularGamesViewModel>
+@inject AuthService authService
+@{
+    Layout = "~/Views/Shared/_LayoutGameStore.cshtml";
+}
+<div>
+    <h1>Популярные игры на сайте</h1>
+</div>
+<div class="gamesinfo">
+    @foreach (var gameInfo in Model)
+    {
+        <div class="gameinfo">
+            <div>Игра: @gameInfo.GameTitle</div>
+            <div>Играющих в нее игроков: @gameInfo.PlayersCount</div>
+            <div>Их средний возраст: @gameInfo.AverageAge</div>
+        </div>
+
+    }
+
+</div>
+

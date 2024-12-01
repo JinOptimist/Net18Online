@@ -1,0 +1,35 @@
+﻿@using WebPortalEverthing.Models.GameStore
+@using WebPortalEverthing.Services
+@model ProfileViewModel
+@inject AuthService authService
+@{
+    Layout = "~/Views/Shared/_LayoutGameStore.cshtml"; 
+}
+<div class="profile">
+    <div class="username">
+        <h1>@Model.UserName</h1>
+    </div>
+
+    <div>
+        Avatar:
+        <img class="avatar" src="@Model.AvatarUrl" />
+    </div>
+    <div>
+        <form action="/GameStore/UpdateAvatar" method="post" enctype="multipart/form-data">
+            <input type="file" name="avatar" />
+            <button type="submit">Обновить аватар</button>
+        </form>
+        <a href="/GameStore/DeleteAvatar?userId=@authService.GetUserId()&oldAvatar=@Model.AvatarUrl">Delete</a>
+    </div>
+
+    <div class="Info">
+        <div>Role: @Model.Role</div>
+        <div>Balance: @Model.Balance </div>        
+    </div>    
+    @if (authService.IsAdmin())
+    {
+        <div>
+            <a href="/GameStore/PopularGame">Популярные игры на сайте</a>
+        </div>        
+    }
+</div>
