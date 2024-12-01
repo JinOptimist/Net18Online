@@ -17,6 +17,7 @@ namespace Everything.Data.Repositories
         void Register(string login, string password, string email, Role role = Role.User);
         void UpdateRole(int userId, Role role);
         public string GetAvatarUrl(int userId);
+        void UpdateAvatarUrl(int userId, string avatarUrl);
         public bool IsAdminExist();
     }
 
@@ -94,6 +95,22 @@ namespace Everything.Data.Repositories
         {
             var user = _dbSet.First(x => x.Id == userId);
             user.Role = role;
+            _webDbContext.SaveChanges();
+        }
+
+        public void UpdateAvatarUrl(int userId, string avatarUrl)
+        {
+            var user = _dbSet.First(x => x.Id == userId);
+            user.AvatarUrl = avatarUrl;
+            _webDbContext.SaveChanges();
+        }
+
+        public void UpdateLocal(int userId, Language language)
+        {
+            var user = _dbSet.First(x => x.Id == userId);
+
+            user.Language = language;
+
             _webDbContext.SaveChanges();
         }
     }

@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using WebPortalEverthing.Controllers.AuthAttributes;
 using WebPortalEverthing.Models.LoadTesting.Profile;
 using WebPortalEverthing.Models.AnimeGirl.Profile;
+using Microsoft.AspNetCore.Hosting;
+using WebPortalEverthing.Controllers.LoadTesting.Attribute;
 
 
 namespace WebPortalEverthing.Controllers.LoadTesting
@@ -22,11 +24,14 @@ namespace WebPortalEverthing.Controllers.LoadTesting
         private WebDbContext _webDbContext;
         protected const int DEFAULT_METRICS_COUNT = 6;
 
+        private IWebHostEnvironment _webHostEnvironment;
+
         private ILoadUserRepositryReal _loadUserRepositryReal;
         private LoadAuthService _loadAuthService;
 
-        public LoadTestingController(ILoadTestingRepositoryReal loadTestingRepository, WebDbContext webDbContext, ILoadUserRepositryReal loadUserRepositryReal, LoadAuthService loadAuthService, ILoadVolumeTestingRepositoryReal loadVolumeTestingRepositoryReal)
+        public LoadTestingController(IWebHostEnvironment webHostEnvironment, ILoadTestingRepositoryReal loadTestingRepository, WebDbContext webDbContext, ILoadUserRepositryReal loadUserRepositryReal, LoadAuthService loadAuthService, ILoadVolumeTestingRepositoryReal loadVolumeTestingRepositoryReal)
         {
+            _webHostEnvironment = webHostEnvironment;
             _loadTestingRepository = loadTestingRepository;
             _webDbContext = webDbContext;
             _loadUserRepositryReal = loadUserRepositryReal;
@@ -172,6 +177,29 @@ namespace WebPortalEverthing.Controllers.LoadTesting
                 .ToList();
 
             return View(viewModel);
+        }
+
+        [IsLoadAuthenticated]
+        [HttpPost]
+        public IActionResult UpdateAvatar(IFormFile avatar)
+        {
+            var webRootPath = _webHostEnvironment.WebRootPath;
+
+            var userId = _loadAuthService.GetUserId()!.Value;
+            var avatarFileName = $"avatar-{userId}.jpg";
+
+            var path = Path.Combine(webRootPath, "images/LoadTesting", "avatars", avatarFileName);
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                avatar
+                    .CopyToAsync(fileStream)
+                    .Wait();
+            }
+
+            var avatarUrl = $"/images/LoadTesting/avatars/{avatarFileName}";
+            _loadUserRepositryReal.UpdateAvatarUrl(userId, avatarUrl);
+
+            return RedirectToAction("LoadUserProfile");
         }
 
 
