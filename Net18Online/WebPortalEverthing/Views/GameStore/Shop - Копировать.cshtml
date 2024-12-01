@@ -1,6 +1,5 @@
 ﻿@using WebPortalEverthing.Models.GameStore
 @using WebPortalEverthing.Services
-@using WebPortalEverthing.Localizations.LocalizationForGame
 @model ShopListViewModel
 @inject AuthService authService
 
@@ -9,7 +8,7 @@
 }
 
 <div class="content">
-    <div class="title">@GameShop.Shop_Header</div>
+    <div class="title">Shop</div>
     @foreach (var game in Model.Games)
     {
         <div class="shop">
@@ -43,8 +42,8 @@
                     }
                     else
                     {
-                        <span>@GameShop.Shop_Cost <strong>@game.Cost</strong></span>
-                        <a href="/GameStore/Purchases?buyerId=@authService.GetUserId()&gameId=@game.Id">@GameShop.Shop_Buy</a>
+                        <span>Cost <strong>@game.Cost</strong></span>
+                        <a href="/GameStore/Purchases?buyerId=@authService.GetUserId()&gameId=@game.Id">Buy</a>
                     }                    
             </div>
         </div>

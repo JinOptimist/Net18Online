@@ -10,6 +10,7 @@ using WebPortalEverthing.Models.AnimeGirl;
 using WebPortalEverthing.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using WebPortalEverthing.Controllers.AuthAttributes;
 
 namespace WebPortalEverthing.Controllers
 {
@@ -107,11 +108,13 @@ namespace WebPortalEverthing.Controllers
         }
 
         [HttpGet]
+        [IsAdmin]
         public IActionResult Add()
         {
             return View();
         }
         [HttpPost]
+        [IsAdmin]
         public IActionResult Add(AddGameViewModel viewModel)
         {
             if (_gameStoreRepository.HasSimilarName(viewModel.Name))
