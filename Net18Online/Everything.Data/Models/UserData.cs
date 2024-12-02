@@ -11,6 +11,7 @@ namespace Everything.Data.Models
         public int Age { get; set; }
         public decimal Coins { get; set; }
         public string AvatarUrl { get; set; }
+        public int NumberOfImagesCreated { get; set; }
 
         public Language Language {  get; set; }
         public Role Role {  get; set; }

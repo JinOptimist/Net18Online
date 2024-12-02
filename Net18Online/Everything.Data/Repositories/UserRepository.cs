@@ -14,10 +14,12 @@ namespace Everything.Data.Repositories
         void UpdateAvatarUrl(int userId, string avatarUrl);
         void UpdateLocal(int userId, Language language);
         void UpdateRole(int userId, Role role);
+        int GetNewIdForImage(int userId);
     }
 
     public class UserRepository : BaseRepository<UserData>, IUserRepositryReal
     {
+        public const int DEFAULT_VALUE_FOR_NUMBER_OF_IMAGES_CREATED = 0;
         public UserRepository(WebDbContext webDbContext) : base(webDbContext)
         {
         }
@@ -30,6 +32,21 @@ namespace Everything.Data.Repositories
         public string GetAvatarUrl(int userId)
         {
             return _dbSet.First(x => x.Id == userId).AvatarUrl;
+        }
+
+        public int GetNewIdForImage(int userId)
+        {
+            var user = _dbSet.FirstOrDefault(x => x.Id == userId);
+
+            if (user == null)
+            {
+                return DEFAULT_VALUE_FOR_NUMBER_OF_IMAGES_CREATED;
+            }
+
+            var newIdForImage = ++user.NumberOfImagesCreated;
+            _webDbContext.SaveChanges();
+
+            return newIdForImage;
         }
 
         public bool IsAdminExist()
@@ -54,7 +71,8 @@ namespace Everything.Data.Repositories
                 Coins = 100,
                 AvatarUrl = "/images/AnimeGirl/avatar-default.webp",
                 Role = role,
-                Language = Language.Ru
+                Language = Language.Ru,
+                NumberOfImagesCreated = DEFAULT_VALUE_FOR_NUMBER_OF_IMAGES_CREATED,
             };
 
             _dbSet.Add(user);

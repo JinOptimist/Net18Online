@@ -1,13 +1,17 @@
-﻿namespace WebPortalEverthing.Services.LoadTesting
+﻿
+using Enums.Users;
+
+namespace WebPortalEverthing.Services.LoadTesting
 {
     public class LoadAuthService
     {
         private IHttpContextAccessor _httpContextAccessor;
 
-        public const string AUTH_TYPE_KEY = "Smile";
+        public const string AUTH_TYPE_KEY = "ByPass";
         public const string CLAIM_TYPE_ID = "Id";
         public const string CLAIM_TYPE_NAME = "Name";
         public const string CLAIM_TYPE_COINS = "Coins";
+        public const string CLAIM_TYPE_ROLE = "Role";
 
         public LoadAuthService(IHttpContextAccessor httpContextAccessor)
         {
@@ -35,6 +39,38 @@
             return int.Parse(isStr);
         }
 
+        public Role GetRole()
+        {
+            var roleStr = GetClaimValue(CLAIM_TYPE_ROLE);
+            if (roleStr is null)
+            {
+                return Role.Observer;
+                // throw new Exception("Guest cant has a role");
+            }
+            var roleInt = int.Parse(roleStr);
+            var role = (Role)roleInt;
+            return role;
+        }
+
+        public String GetRoleStr()
+        {
+            return GetRole().ToString();
+        }
+
+        public bool IsAdmin()
+        {
+            return IsAuthenticated()
+                   && (GetRole().HasFlag(Role.Admin)
+                   || (GetName()?.Contains("admin") ?? false)
+                   || (GetName()?.Contains("Admin") ?? false));
+        }
+
+
+        public bool HasRole(Role role)
+        {
+            return IsAuthenticated() && GetRole().HasFlag(role);
+        }
+
         public decimal? GetUserCoins()
         {
             var isStr = GetClaimValue(CLAIM_TYPE_COINS);
@@ -46,6 +82,8 @@
             return decimal.Parse(isStr);
         }
 
+
+
         private string? GetClaimValue(string type)
         {
             return _httpContextAccessor
@@ -55,5 +93,6 @@
                .FirstOrDefault(x => x.Type == type)
                ?.Value;
         }
+
     }
 }

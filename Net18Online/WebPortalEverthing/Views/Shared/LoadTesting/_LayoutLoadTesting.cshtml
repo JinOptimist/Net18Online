@@ -1,5 +1,7 @@
-﻿@using WebPortalEverthing.Services.LoadTesting
+﻿@using WebPortalEverthing.Services
+@using WebPortalEverthing.Services.LoadTesting
 @inject LoadAuthService loadAuthService
+@inject LoadUserService loadUserService
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -22,6 +24,8 @@
     <link href="~/css/LoadTesting/login-form.css" rel="stylesheet" />
     <link href="~/css/LoadTesting/registration-form.css" rel="stylesheet" />
     <link href="~/css/LoadTesting/name-user-auth-and-coins.css" rel="stylesheet" />
+    <link href="~/css/LoadTesting/loadUserProfile.css" rel="stylesheet" />
+    <link href="~/css/LoadTesting/load-users.css" rel="stylesheet" />
 
 </head>
 <body>
@@ -32,9 +36,14 @@
         <div class="name">LOAD TESTING</div>
         <div class="profile-blok">
             <div class="avatar">
+                <a href="/LoadTesting/LoadUserProfile">
+                    <img src="@loadUserService.GetAvatar()" alt="avatar-img" class="avatar-image" />
+                </a>
+
             </div>
             <div class="name-user-auth">
                 Привет, @loadAuthService.GetName()
+                <div> Role: @loadAuthService.GetRoleStr()</div>
                 <div class="name-user-auth-coins">
                     Количество монет
                     <div class="coin-icon">@loadAuthService.GetUserCoins() </div>
@@ -45,7 +54,10 @@
             <div class="login-button">
                 <a class="login-button-registration" asp-area="" asp-controller="LoadAuth" asp-action="RegistrationLoadUserView">Registration</a>
                 <a class="login-button-login" asp-area="" asp-controller="LoadAuth" asp-action="LoginLoadUserView">Login</a>
+
             </div>
+
+
         </div>
     </div>
 
@@ -79,6 +91,12 @@
                 <li>
                     <a href="/LoadVolumeTesting/CreateloadVolumeView" class="button"><span>Create LoadVolume</span></a>
                 </li>
+                @if( loadAuthService.IsAdmin() )
+                {
+                    <li>
+                        <a href="/LoadAdmin/LoadUsersView" class="button"><span>Load Users</span></a>
+                    </li>
+                }
             </ul>
 
 

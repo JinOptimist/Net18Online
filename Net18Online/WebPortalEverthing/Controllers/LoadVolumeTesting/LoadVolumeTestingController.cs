@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.AnimeGirl;
 using WebPortalEverthing.Models.LoadTesting;
 using WebPortalEverthing.Models.Manga;
+using WebPortalEverthing.Services;
+using WebPortalEverthing.Services.LoadTesting;
 
 namespace WebPortalEverthing.Controllers.LoadVolumeTesting
 {
@@ -12,18 +14,20 @@ namespace WebPortalEverthing.Controllers.LoadVolumeTesting
     {
         private ILoadVolumeTestingRepositoryReal _loadVolumeTestingRepositoryReal;
         private ILoadTestingRepositoryReal _metricRepositoryReal; // ILoadTestingRepositoryReal это репозиторий для метрик
+        private LoadAuthService _loadAuthService;
 
-        public LoadVolumeTestingController(ILoadVolumeTestingRepositoryReal loadVolumeTestingRepositoryReal, ILoadTestingRepositoryReal metricRepositoryReal)
+        public LoadVolumeTestingController(ILoadVolumeTestingRepositoryReal loadVolumeTestingRepositoryReal, ILoadTestingRepositoryReal metricRepositoryReal, LoadAuthService loadAuthService)
         {
             _loadVolumeTestingRepositoryReal = loadVolumeTestingRepositoryReal;
             _metricRepositoryReal = metricRepositoryReal;
+            _loadAuthService = loadAuthService;
         }
 
         public IActionResult IndexLoadVolumeView()
         {
             var loadVolumeViewModels = _loadVolumeTestingRepositoryReal
                 .GetAllWithVolumeMetrics()
-                .Select(x => new LoadVolumeShortInfoViewModel
+                .Select(x => new LoadVolumeWithMetricsListShortInfoViewModel
                 {
                     Id = x.Id,
                     Title = x.Title,
@@ -64,13 +68,14 @@ namespace WebPortalEverthing.Controllers.LoadVolumeTesting
         [HttpPost]
         public IActionResult CreateloadVolumeView(CreateLoadVolumeModel viewModel)
         {
+            var currentUserId = _loadAuthService.GetUserId();
             var loadVolumeData = new LoadVolumeTestingData
             {
                 Title = viewModel.Title,
                 Description = viewModel.Description
             };
 
-            _loadVolumeTestingRepositoryReal.Add(loadVolumeData);
+            _loadVolumeTestingRepositoryReal.Create(loadVolumeData, currentUserId!.Value);
 
             return RedirectToAction("IndexLoadVolumeView");
         }

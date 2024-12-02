@@ -1,32 +1,49 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using System;
+using System.Globalization;
 using System.ComponentModel.DataAnnotations;
-using WebPortalEverthing.Models.LoadTesting.TestingAttributes;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace WebPortalEverthing.Models.LoadTesting
 {
     public class MetricCreationViewModel
     {
-        //    [UniqMetricId]
         public int Id { get; set; }
 
         [Required]
-        [StringLength(100), MinLength(3, ErrorMessage = "Name must be between 3 and 100 characters")]
-        [UniqMetricName]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "Name must be between 3 and 100 characters")]
         public string Name { get; set; }
 
         [Required]
-        public Guid Guid { get; set; } = Guid.NewGuid(); // Инициализация Guid при создании новой метрики, вместо описания в конструкторе
+        public string ThroughputInput { get; set; } // Получение из формы в строковом виде
 
         [Required]
-        [ZeroUpAttribute]
-        public decimal Throughput { get; set; }
+        public string AverageInput { get; set; } // Получение из формы в строковом виде
 
+        // GUID метрики, инициализируется при создании
         [Required]
-        [ZeroUpAttribute]
-        /*Почему нельзя использовать decimal в атрибутах? Это ограничение платформы .NET. Атрибуты должны быть сериализуемы в метаданные,
-          а тип decimal не является простым типом (primitive) и поэтому не поддерживается.
-           Почему double? Тип double является допустимым для атрибутов и может использоваться для хранения чисел с плавающей точкой.
-         * [IsCorrectAverage(0.01m, 10000.00m, UnitLoad.Seconds, LoadLevel.Medium)] */
-        public decimal Average { get; set; }
+        public Guid Guid { get; set; } = Guid.NewGuid();
+
+        public double Throughput
+        {
+            get
+            {
+                return double.TryParse(ThroughputInput.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out var value)
+                    ? value
+                    : 0;
+            }
+        }
+
+        public double Average
+        {
+            get
+            {
+                return double.TryParse(AverageInput.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out var value)
+                    ? value
+                    : 0;
+            }
+        }
+
+        public int LoadVolumeId { get; set; } // значение, которое выбрал пользователь
+        public List<SelectListItem>? LoadVolumes { get; set; }  //тут будет все значения Load volumes и Id
     }
 }

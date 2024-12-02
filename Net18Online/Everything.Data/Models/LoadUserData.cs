@@ -1,4 +1,5 @@
-﻿using Everything.Data.Interface.Models;
+﻿using Enums.Users;
+using Everything.Data.Interface.Models;
 using Everything.Data.Models.Surveys;
 using System;
 using System.Collections.Generic;
@@ -15,8 +16,12 @@ namespace Everything.Data.Models
         public string Email { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        public decimal Coins { get; set; }
+        public string AvatarUrl { get; set; } = "/images/LoadTesting/avatar.jpg";
 
+        public decimal Coins { get; set; }
+        public Role Role { get; set; } = Role.Observer;
+
+        public Language Language { get; set; } = Language.Ru;
 
         public virtual List<MetricData> Metrics { get; set; } = new();
         public virtual List<LoadVolumeTestingData> LoadVolumeTestingParts { get; set; } = new();

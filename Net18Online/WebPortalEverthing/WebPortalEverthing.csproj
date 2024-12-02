@@ -23,6 +23,7 @@
     <Folder Include="wwwroot\images\avatars\" />
     <Folder Include="wwwroot\files\" />
     <Folder Include="wwwroot\images\Ecology\eccologyPosts\" />
+    <Folder Include="wwwroot\images\LoadTesting\avatars\" />
   </ItemGroup>
 
 

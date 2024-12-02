@@ -64,6 +64,13 @@ builder.Services.AddScoped<ILoadTestingRepositoryReal, LoadTestingRepository>();
 builder.Services.AddScoped<ILoadVolumeTestingRepositoryReal, LoadVolumeTestingRepository>();
 builder.Services.AddScoped<ILoadUserRepositryReal, LoadUserRepository>();
 builder.Services.AddScoped<IUserRepositryReal, UserRepository>();
+builder.Services
+    .AddAuthentication(LoadAuthService.AUTH_TYPE_KEY)
+    .AddCookie(LoadAuthService.AUTH_TYPE_KEY, config =>
+    {
+        config.LoginPath = "/LoadAuth/LoginLoadUserView";
+        config.AccessDeniedPath = "/Home/Forbidden";
+    });
 
 builder.Services.AddScoped<HelperForValidatingCake>();
 builder.Services.AddScoped<TextProvider>();
@@ -72,7 +79,9 @@ builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<LoadAuthService>();
 builder.Services.AddScoped<EnumHelper>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<LoadUserService>();
 builder.Services.AddScoped<FileProvider>();
+builder.Services.AddScoped<HelperForFile>();
 
 builder.Services.AddSingleton<IGameLifeRepository, GameLifeRepository>();
 
@@ -90,6 +99,10 @@ using (var scope = scopeFactory.CreateScope())
 
 var seed = new Seed();
 seed.Fill(app.Services);
+
+var loadTestingseed = new LoadTestingSeed();
+loadTestingseed.Fill(app.Services);
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

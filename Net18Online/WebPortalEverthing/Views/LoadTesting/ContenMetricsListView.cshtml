@@ -1,5 +1,9 @@
 @using WebPortalEverthing.Models.LoadTesting
 @model List<MetricViewModel>
+@using WebPortalEverthing.Services
+@using WebPortalEverthing.Services.LoadTesting
+@inject LoadAuthService loadAuthService
+@inject LoadUserService loadUserService
 
 @{
     Layout = "~/Views/Shared/LoadTesting/_LayoutLoadTesting.cshtml";
@@ -10,7 +14,10 @@
         @foreach( var metric in Model )
         {
             <div class="discription-type">
-                <div class="type-name">@metric.Name</div>
+                <span class="@(metric.CreatorName == LoadAuthService.CLAIM_TYPE_NAME ? "special-load-volume" : "special")">
+
+                    <div class="type-name">@metric.Name</div>
+                </span> @*класс стиля*@
                 @*Указать экшен, который будет вызван при отправке формы*@
                 <form action="/LoadTesting/UpdateMetric" method="post">
                     <input type="hidden" name="id" value="@metric.Id" />
@@ -33,9 +40,14 @@
                         <span class="tag">Данные отсутствуют</span>
                     }
                     <span class="tag">среднее время отклика (Average): @metric.Average</span>
+                    <span class="tag">Creator: @metric.CreatorName</span>
+                    <span class="tag">Type of Load: @metric.LoadVolumeName</span>
                 </div>
-                <a href="/LoadTesting/RemoveByGuid?Guid=@metric.Guid">Delete Guid</a>
-                <a href="/LoadTesting/RemoveById?id=@metric.Id">Delete Id</a>
+                @if( metric.CanDelete )
+                {
+                    <a href="/LoadTesting/RemoveByGuid?Guid=@metric.Guid">Delete Guid</a>
+                    <a href="/LoadTesting/RemoveById?id=@metric.Id">Delete Id</a>
+                }
             </div>
         }
 
