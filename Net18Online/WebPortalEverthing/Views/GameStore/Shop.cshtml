@@ -1,5 +1,6 @@
 ﻿@using WebPortalEverthing.Models.GameStore
 @using WebPortalEverthing.Services
+@using WebPortalEverthing.Localizations.LocalizationForGame
 @model ShopListViewModel
 @inject AuthService authService
 
@@ -8,30 +9,43 @@
 }
 
 <div class="content">
-    <div class="title">Library</div>
+    <div class="title">@GameShop.Shop_Header</div>
     @foreach (var game in Model.Games)
     {
         <div class="shop">
             <div class="game-block">
                 <div class="name">
-                    <form method="post" action="/GameStore/UpdateName">
-                        <input name="id" value="@game.Id" type="hidden" />
-                        <input name="newName" value="@game.NameGame" />
-                        <button type="submit">upd</button>
-                    </form>
+                    @if (authService.IsAdmin())
+                    {
+                        <form method="post" action="/GameStore/UpdateName">
+                            <input name="id" value="@game.Id" type="hidden" />
+                            <input name="newName" value="@game.NameGame" />
+                            <button type="submit">upd</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <div class="name">@game.NameGame</div>
+                    }
                 </div>
                 <div class="image-container">
                     <img src="@game.ImageSrc" alt="Game">
                 </div>
                 <div class="info">
-                    <form method="post" action="/GameStore/UpdateImage">
-                        <input name="id" value="@game.Id" type="hidden" />
-                        <input name="url" />
-                        <button type="submit">new image</button>
-                    </form>
-                    <span>Cost <strong>@game.Cost</strong></span>
-                    <a href="/GameStore/Remove?id=@game.Id">Delete</a>
-                    <a href="/GameStore/Purchases?buyerId=@authService.GetUserId()&gameId=@game.Id">Buy</a>
+                    @if (authService.IsAdmin())
+                    {
+                        <form method="post" action="/GameStore/UpdateImage">
+                            <input name="id" value="@game.Id" type="hidden" />
+                            <input name="url" />
+                            <button type="submit">new image</button>
+                        </form>
+                        <a href="/GameStore/Remove?id=@game.Id">Delete</a>
+                    }
+                    else
+                    {
+                        <span>@GameShop.Shop_Cost <strong>@game.Cost</strong></span>
+                        <a href="/GameStore/Purchases?buyerId=@authService.GetUserId()&gameId=@game.Id">@GameShop.Shop_Buy</a>
+                    }                    
             </div>
         </div>
     </div>

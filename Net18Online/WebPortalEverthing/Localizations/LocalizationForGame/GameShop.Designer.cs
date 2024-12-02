@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebPortalEverthing.Localizations {
+namespace WebPortalEverthing.Localizations.LocalizationForGame {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace WebPortalEverthing.Localizations {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Girl {
+    public class GameShop {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Girl() {
+        internal GameShop() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace WebPortalEverthing.Localizations {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WebPortalEverthing.Localizations.Girl", typeof(Girl).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WebPortalEverthing.Localizations.LocalizationForGame.GameShop", typeof(GameShop).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,29 @@ namespace WebPortalEverthing.Localizations {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Очень специальное сообщение об ошибки.
+        ///   Ищет локализованную строку, похожую на Купить.
         /// </summary>
-        public static string ValidationMessage_IsNotUrl {
+        public static string Shop_Buy {
             get {
-                return ResourceManager.GetString("ValidationMessage_IsNotUrl", resourceCulture);
+                return ResourceManager.GetString("Shop_Buy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Цена.
+        /// </summary>
+        public static string Shop_Cost {
+            get {
+                return ResourceManager.GetString("Shop_Cost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Магазин.
+        /// </summary>
+        public static string Shop_Header {
+            get {
+                return ResourceManager.GetString("Shop_Header", resourceCulture);
             }
         }
     }
