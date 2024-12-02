@@ -1,7 +1,7 @@
 ﻿
 namespace WebPortalEverthing.Models.LoadTesting
 {
-    public class LoadVolumeShortInfoViewModel
+    public class LoadVolumeWithMetricsListShortInfoViewModel
     {
         public int Id { get; set; }
 

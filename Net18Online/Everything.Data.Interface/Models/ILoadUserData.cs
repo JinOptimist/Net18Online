@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Enums.Users;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,8 @@ namespace Everything.Data.Interface.Models
         public string Email { get; set; }
         public decimal Coins { get; set; }
         public DateTime CreatedAt { get; set; }
+        public Role Role { get; set; }
+        public string AvatarUrl { get; set; }
+        public Language Language { get; set; }
     }
 }

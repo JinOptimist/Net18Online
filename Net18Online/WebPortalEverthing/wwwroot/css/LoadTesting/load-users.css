@@ -1,0 +1,81 @@
+﻿.load-users {
+    margin: 20px auto;
+    padding: 20px;
+    background: rgba(35, 38, 39, 0.9); /* Полупрозрачный фон */
+    border-radius: 15px;
+    max-width: 800px;
+    color: white; /* Цвет текста */
+    box-shadow: 0px 15px 30px rgba(245, 154, 119, 0.6), 0px -10px 15px rgba(192, 243, 7, 0.4);
+    text-align: center;
+}
+
+    .load-users h1 {
+        font-size: 32px;
+        margin-bottom: 20px;
+        color: rgb(245, 154, 119); /* Яркий заголовок */
+        text-shadow: 0px 5px 15px rgb(245, 154, 119), 0px -2px 8px rgb(192, 243, 7);
+    }
+
+    .load-users div {
+        margin-bottom: 20px;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.6); /* Тёмный фон для каждого пользователя */
+        border-radius: 10px;
+    }
+
+    .load-users .role {
+        display: inline-block;
+        margin: 5px;
+        padding: 5px 10px;
+        background: rgb(245, 154, 119);
+        color: black; /* Контрастный текст */
+        border-radius: 8px;
+        font-size: 14px;
+        box-shadow: 0px 5px 10px rgba(255, 215, 0, 0.8);
+    }
+
+    .load-users form {
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .load-users .roles {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+        .load-users .roles .role {
+            margin: 5px;
+            padding: 5px 10px;
+            background: rgba(255, 255, 255, 0.8); /* Светлый фон для роли */
+            border-radius: 8px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.4);
+        }
+
+    .load-users button {
+        margin-top: 15px;
+        padding: 10px 20px;
+        background: rgb(245, 154, 119); /* Яркий цвет кнопки */
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0px 5px 15px rgba(245, 154, 119, 0.8);
+        transition: all 0.3s ease-in-out;
+    }
+
+        .load-users button:hover {
+            background: rgb(192, 243, 7);
+            box-shadow: 0px 10px 20px rgba(192, 243, 7, 0.9);
+            transform: scale(1.05);
+        }
+
+    .load-users input[type="checkbox"] {
+        margin-left: 5px;
+        transform: scale(1.2); /* Увеличение размера чекбоксов */
+        cursor: pointer;
+    }

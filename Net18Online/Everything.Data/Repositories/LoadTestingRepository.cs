@@ -1,14 +1,18 @@
 ﻿using Everything.Data.Interface.Models;
 using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Everything.Data.Repositories
 {
     public interface ILoadTestingRepositoryReal : ILoadTestingRepository<MetricData>
     {
         IEnumerable<MetricData> GetWithoutVolumeLoad();
+        IEnumerable<MetricData> GetAllWithCreatorsAndLoadVolume();
+        IEnumerable<MetricData> GetAllByAuthorId(int userId);
         bool HasSimilarName(string name);
         bool IsNameUniq(string name);
+        void Create(MetricData metricData, int currentUserId, int LoadVolumeId);
     }
     public class LoadTestingRepository : BaseRepository<MetricData>, ILoadTestingRepositoryReal
     {
@@ -16,6 +20,17 @@ namespace Everything.Data.Repositories
 
         public LoadTestingRepository(WebDbContext webDbContext) : base(webDbContext)
         {
+        }
+
+        public void Create(MetricData metricData, int currentUserId, int LoadVolumeId)
+        {
+            var creator = _webDbContext.LoadUsers.First(x => x.Id == currentUserId);
+            var LoadVolume = _webDbContext.LoadVolumeTestingMetrics.First(x => x.Id == LoadVolumeId);
+
+            metricData.LoadUserDataCreator = creator;
+            metricData.LoadVolumeTesting = LoadVolume;
+
+            Add(metricData);
         }
 
         public void DeleteByGuid(Guid Guid)
@@ -34,6 +49,14 @@ namespace Everything.Data.Repositories
             return GetFinilizeMetric()
                 .Take(3)
                 .OrderByDescending(x => x.Average)
+                .ToList();
+        }
+
+        public IEnumerable<MetricData> GetAllWithCreatorsAndLoadVolume()
+        {
+            return _dbSet
+                .Include(x => x.LoadUserDataCreator)
+                .Include(x => x.LoadVolumeTesting)
                 .ToList();
         }
 
@@ -114,5 +137,13 @@ namespace Everything.Data.Repositories
             return !_dbSet.Any(x => x.Name == name);
         }
 
+        public IEnumerable<MetricData> GetAllByAuthorId(int userId)
+        {
+
+            return _dbSet
+                .Where(x => x.LoadUserDataCreator != null
+                    && x.LoadUserDataCreator.Id == userId)
+                .ToList();
+        }
     }
 }

@@ -7,6 +7,7 @@
         Admin = 2,          // x 0000 0010
         AnimeModerator = 4, // x 0000 0100
         AnimeAuthor = 8,    // x 0000 1000
-        SurveysCreatorOrEditor = 16
+        SurveysCreatorOrEditor = 16,
+        Observer = 32,
     }
 }

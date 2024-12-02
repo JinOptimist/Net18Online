@@ -5,19 +5,38 @@ using Everything.Data.Interface.Repositories;
 using Everything.Data;
 using Everything.Data.Repositories;
 using System.Globalization;
+using WebPortalEverthing.Services.LoadTesting;
+using WebPortalEverthing.Services;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using WebPortalEverthing.Controllers.AuthAttributes;
+using WebPortalEverthing.Models.LoadTesting.Profile;
+using WebPortalEverthing.Models.AnimeGirl.Profile;
+using Microsoft.AspNetCore.Hosting;
+using WebPortalEverthing.Controllers.LoadTesting.Attribute;
+
 
 namespace WebPortalEverthing.Controllers.LoadTesting
 {
     public class LoadTestingController : Controller
     {
         private ILoadTestingRepositoryReal _loadTestingRepository;
+        private ILoadVolumeTestingRepositoryReal _loadVolumeTestingRepositoryReal;
         private WebDbContext _webDbContext;
         protected const int DEFAULT_METRICS_COUNT = 6;
 
-        public LoadTestingController(ILoadTestingRepositoryReal loadTestingRepository, WebDbContext webDbContext)
+        private IWebHostEnvironment _webHostEnvironment;
+
+        private ILoadUserRepositryReal _loadUserRepositryReal;
+        private LoadAuthService _loadAuthService;
+
+        public LoadTestingController(IWebHostEnvironment webHostEnvironment, ILoadTestingRepositoryReal loadTestingRepository, WebDbContext webDbContext, ILoadUserRepositryReal loadUserRepositryReal, LoadAuthService loadAuthService, ILoadVolumeTestingRepositoryReal loadVolumeTestingRepositoryReal)
         {
+            _webHostEnvironment = webHostEnvironment;
             _loadTestingRepository = loadTestingRepository;
             _webDbContext = webDbContext;
+            _loadUserRepositryReal = loadUserRepositryReal;
+            _loadAuthService = loadAuthService;
+            _loadVolumeTestingRepositoryReal = loadVolumeTestingRepositoryReal;
         }
 
         public IActionResult ContenMetricsListView()
@@ -41,7 +60,8 @@ namespace WebPortalEverthing.Controllers.LoadTesting
                     {
                         Name = $"Metric {i}",
                         Throughput = i * 10.5m,
-                        Average = i * 5.0m
+                        Average = i * 5.0m,
+
                     };
 
                     var metricFromRealDB = new Everything.Data.Models.MetricData
@@ -56,7 +76,15 @@ namespace WebPortalEverthing.Controllers.LoadTesting
                     _loadTestingRepository.Add(metricFromRealDB);
                 }
             }
-            var metricsFromRealDB = _loadTestingRepository.GetAll();
+
+            var currentUserId = _loadAuthService.GetUserId();
+            if (currentUserId is null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var user = _loadUserRepositryReal.Get(currentUserId.Value);
+
+            var metricsFromRealDB = _loadTestingRepository.GetAllWithCreatorsAndLoadVolume();
 
             //Из дата моделей делаем вьюмодели (список вью моделей)
             var metricsViewModel = metricsFromRealDB
@@ -66,7 +94,11 @@ namespace WebPortalEverthing.Controllers.LoadTesting
                     Guid = metricDB.Guid,
                     Average = metricDB.Average,
                     Throughput = metricDB.Throughput,
-                    Name = metricDB.Name
+                    Name = metricDB.Name,
+                    CreatorName = metricDB.LoadUserDataCreator?.Login ?? "UnknownCreator",
+                    LoadVolumeName = metricDB.LoadVolumeTesting?.Title ?? "UnknownLoadVolume",
+                    CanDelete = metricDB.LoadUserDataCreator is null
+                    || metricDB.LoadUserDataCreator?.Id == currentUserId
                 })
                 .ToList();
 
@@ -79,31 +111,95 @@ namespace WebPortalEverthing.Controllers.LoadTesting
         [HttpGet]
         public IActionResult CreateProfileView()
         {
-            return View();
+            var viewModel = new MetricCreationViewModel();
+            viewModel.LoadVolumes = _loadVolumeTestingRepositoryReal.GetAll()
+                .Select(loadVolume =>
+                new SelectListItem(loadVolume.Title, loadVolume.Id.ToString()))
+                .ToList();
+
+            return View(viewModel);
         }
 
         /* HttpPost  нужен, чтобы послать данные заполненные пользователем в экшен т.е. метрику (metric)  */
         [HttpPost]
-        // public IActionResult CreateProfileView(MetricViewModel metric) модель без валидации
         public IActionResult CreateProfileView(MetricCreationViewModel metric)
         {
-            //ModelState.IsValid это метод в самом контроллере, предоставляется фреймворком
+
+            // Проверка модели
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(metric);
             }
 
+            var currentUserId = _loadAuthService.GetUserId();
+
+            // Создание объекта данных
             var metricData = new Everything.Data.Models.MetricData
             {
                 Name = metric.Name,
-                Throughput = metric.Throughput * 1.0m,
-                Average = metric.Average * 1.0m
+                Throughput = (decimal)metric.Throughput,
+                Average = (decimal)metric.Average
             };
-            // _webDbContext.Metrics.Add(metricData);
-            //_webDbContext.SaveChanges();
-            _loadTestingRepository.Add(metricData);
+
+            _loadTestingRepository.Create(metricData, currentUserId!.Value, metric.LoadVolumeId);
 
             return Redirect("/LoadTesting/ContenMetricsListView");
+        }
+
+        [IsAuthenticatedAttribute]
+        public IActionResult LoadUserProfile()
+        {
+            var viewModel = new LoadUserProfileViewModel();
+            viewModel.UserName = _loadAuthService.GetName()!;
+
+            var userId = _loadAuthService.GetUserId()!.Value;
+
+            viewModel.AvatarUrl = _loadUserRepositryReal.GetAvatarUrl(userId);
+
+            viewModel.LoadValumes = _loadVolumeTestingRepositoryReal
+                            .GetLoadValueWithInfoAboutAuthors(userId)
+                            .Select(x => new LoadVolumeShortInfoViewModel
+                            {
+                                Name = x.Name,
+                                IsCreatedWithСharacter = x.HasCharaterWithSpecialAuthor
+                            })
+                            .ToList();
+
+            viewModel.Metrics = _loadTestingRepository
+                .GetAllByAuthorId(userId)
+                .Select(x => new MetricShortInfoViewModel
+                {
+                    Name = x.Name,
+                    Throughput = x.Throughput,
+                    Average = x.Average
+
+                })
+                .ToList();
+
+            return View(viewModel);
+        }
+
+        [IsLoadAuthenticated]
+        [HttpPost]
+        public IActionResult UpdateAvatar(IFormFile avatar)
+        {
+            var webRootPath = _webHostEnvironment.WebRootPath;
+
+            var userId = _loadAuthService.GetUserId()!.Value;
+            var avatarFileName = $"avatar-{userId}.jpg";
+
+            var path = Path.Combine(webRootPath, "images","LoadTesting", "avatars", avatarFileName);
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                avatar
+                    .CopyToAsync(fileStream)
+                    .Wait();
+            }
+
+            var avatarUrl = $"/images/LoadTesting/avatars/{avatarFileName}";
+            _loadUserRepositryReal.UpdateAvatarUrl(userId, avatarUrl);
+
+            return RedirectToAction("LoadUserProfile");
         }
 
 
@@ -136,8 +232,8 @@ namespace WebPortalEverthing.Controllers.LoadTesting
         public IActionResult UpdateMetric(MetricCreationViewModel metric)
         {
             _loadTestingRepository.UpdateNameByGuid(metric.Guid, metric.Name);
-            _loadTestingRepository.UpdateThroughputByGuid(metric.Guid, metric.Throughput);
-            _loadTestingRepository.UpdateAverageByGuid(metric.Guid, metric.Average);
+            _loadTestingRepository.UpdateThroughputByGuid(metric.Guid, (decimal)metric.Throughput);
+            _loadTestingRepository.UpdateAverageByGuid(metric.Guid, (decimal)metric.Average);
 
             return RedirectToAction("ContenMetricsListView");
             /*

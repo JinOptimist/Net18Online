@@ -23,6 +23,7 @@ namespace WebPortalEverthing.CustomMiddlewares
             {
                 var user = userRepositryReal.Get(authService.GetUserId()!.Value)!;
                 CultureInfo culture;
+
                 switch (user.Language)
                 {
                     case Language.Ru:
