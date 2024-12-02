@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Everything.Data.DataLayerModels;
+using Everything.Data.Models.SqlRawModels;
 
 namespace Everything.Data.Repositories
 {
@@ -17,6 +18,8 @@ namespace Everything.Data.Repositories
         IEnumerable<GameWithInfoAboutAuthor> GetGameWithBuyer(int buyerId);
         void LinkGame(int buyerId, int gameId);
         bool HasSimilarName(string name);
+        UserData GetInfoAboutUser(int? userId);
+        IEnumerable<MostPopularGames> GetMostPopularGames();
     }
     public class GameStoreRepository : BaseRepository<GameData>, IGameStoreRepositoryReal
     {
@@ -96,8 +99,39 @@ namespace Everything.Data.Repositories
 
             return games;
         }
-    }
 
+        public UserData GetInfoAboutUser(int? userId)
+        {
+            var user = _webDbContext.Users.FirstOrDefault(x => x.Id == userId);
+
+            return user;
+
+        }
+        public IEnumerable<MostPopularGames> GetMostPopularGames()
+        {
+            var sql = @"
+SELECT 
+    g.NameGame AS GameTitle,          
+    COUNT(udgd.BuyersId) AS PlayersCount, 
+    AVG(u.Age) AS AverageAge
+FROM 
+    GameDataUserData udgd
+JOIN 
+    Games g ON udgd.GamesId = g.Id   
+JOIN
+    Users u ON udgd.BuyersId = u.Id
+GROUP BY 
+    g.NameGame                         
+ORDER BY 
+    PlayersCount DESC, g.NameGame; ";
+            var result = _webDbContext
+                .Database
+                .SqlQueryRaw<MostPopularGames>(sql)
+                .ToList();
+
+            return result;
+        }
+    }
 
 }
 

@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using WebPortalEverthing.Localizations.LocalizationForGame
+@using WebPortalEverthing.Services
+@inject UserService userService
+
+<!DOCTYPE html>
 <html>
 <head>
     <title>Game Store</title>
@@ -12,16 +16,21 @@
         </div>
         <div class="navigation">
             <ul>
-                <li><a href="/GameStore">Main</a></li>
-                <li><a href="/GameStore/Shop">Shop</a></li>
+                <li><a href="/">@HomeGame.Home_Main</a></li>
+                <li><a href="/GameStore/Shop">@HomeGame.Home_Shop</a></li>
                 @if (User.Identity?.IsAuthenticated ?? true)
                 {
-                   <li><a href="/GameStore/Library">Library</a></li>
+                    <li><a href="/GameStore/Library">@HomeGame.Home_Library</a></li>
                 }                
-                <li><a href="/GameStore/Add">Add</a></li>
+                <li><a href="/GameStore/Add">@HomeGame.Home_Add</a></li>
             </ul>
         </div>
-        <button>logout</button>
+        <div class="profile-block">
+            <a href="/GameStore/Profile">
+                <img src="@userService.GetAvatar()" alt="" class="avatar" />
+            </a>
+            <a class="logout" href="/Auth/Logout">L</a>
+        </div>
     </header>
     <div class="menu-plus-content">
         <div class="menu">

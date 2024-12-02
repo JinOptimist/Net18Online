@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebPortalEverthing.Localizations {
+namespace WebPortalEverthing.Localizations.LocalizationForGame {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace WebPortalEverthing.Localizations {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Girl {
+    public class HomeGame {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Girl() {
+        internal HomeGame() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace WebPortalEverthing.Localizations {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WebPortalEverthing.Localizations.Girl", typeof(Girl).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WebPortalEverthing.Localizations.LocalizationForGame.HomeGame", typeof(HomeGame).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,38 @@ namespace WebPortalEverthing.Localizations {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Очень специальное сообщение об ошибки.
+        ///   Ищет локализованную строку, похожую на Добавить.
         /// </summary>
-        public static string ValidationMessage_IsNotUrl {
+        public static string Home_Add {
             get {
-                return ResourceManager.GetString("ValidationMessage_IsNotUrl", resourceCulture);
+                return ResourceManager.GetString("Home_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Библиотека.
+        /// </summary>
+        public static string Home_Library {
+            get {
+                return ResourceManager.GetString("Home_Library", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Главная.
+        /// </summary>
+        public static string Home_Main {
+            get {
+                return ResourceManager.GetString("Home_Main", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Магазин.
+        /// </summary>
+        public static string Home_Shop {
+            get {
+                return ResourceManager.GetString("Home_Shop", resourceCulture);
             }
         }
     }
