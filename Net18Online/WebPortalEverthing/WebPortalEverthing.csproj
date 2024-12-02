@@ -60,6 +60,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Girl.resx</DependentUpon>
     </Compile>
+	<Compile Update="Localizations\Home.Designer.cs">
+		  <DependentUpon>Home.resx</DependentUpon>
+	</Compile>
     <Compile Update="Localizations\LocalizationForGame\HomeGame.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -93,6 +96,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Girl.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+	<EmbeddedResource Update="Localizations\Home.resx">
+		<LastGenOutput>Home.Designer.cs</LastGenOutput>
+	</EmbeddedResource>	
     <EmbeddedResource Update="Localizations\LocalizationForGame\HomeGame.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>HomeGame.Designer.cs</LastGenOutput>
