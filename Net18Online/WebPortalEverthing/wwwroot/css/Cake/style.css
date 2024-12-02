@@ -131,3 +131,8 @@ header {
     font-weight: bold;
     font-style: italic;
 }
+
+.avatar {
+    height: 200px;
+    width: 200px;
+}

@@ -73,6 +73,7 @@ builder.Services.AddScoped<LoadAuthService>();
 builder.Services.AddScoped<EnumHelper>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<FileProvider>();
+builder.Services.AddScoped<HelperForFile>();
 
 builder.Services.AddSingleton<IGameLifeRepository, GameLifeRepository>();
 

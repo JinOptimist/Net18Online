@@ -1,0 +1,17 @@
+﻿@using WebPortalEverthing.Models.Cake
+@model CakeProfileViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutCake.cshtml";
+}
+
+<div>
+    <h1>Avatar:</h1>
+    <img src="@Model.ImageUrl" class="avatar" />
+</div>
+<div>
+    <form action="/Cake/UpdateAvatar" method="post" enctype="multipart/form-data">
+        <input type="file" name="avatar" />
+        <button type="submit">Send</button>
+    </form>
+</div>

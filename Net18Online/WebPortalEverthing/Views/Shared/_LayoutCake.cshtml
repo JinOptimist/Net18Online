@@ -1,5 +1,6 @@
 ﻿@using WebPortalEverthing.Services
 @inject AuthService authService
+@inject UserService userService
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,7 +38,9 @@
                 </ul>
             </nav>
             <div class="profile">
-                <img src="~/images/Cake/Profile.jpg" alt="profile">
+                <a href="/Cake/Profile">
+                    <img src="@userService.GetAvatar()" alt="profile">
+                </a>
             </div>
         </div>
     </header>
