@@ -1,0 +1,57 @@
+﻿@using WebPortalEverthing.Models.Cake
+@model List<CakeViewModel>
+
+@{
+    Layout = "~/Views/Shared/_LayoutCake.cshtml";
+}
+
+<table>
+    <tr>
+        <th>CreatorName</th>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Delete</th>
+    </tr>
+    @foreach (var cake in Model)
+    {
+        <tr>
+            <td>
+                <span>@cake.CreatorName</span>
+            </td>
+            <td>
+                <form method="post" action="/Cake/UpdateName">
+                    <input name="id" value="@cake.Id" type="hidden" />
+                    <input name="newName" value="@cake.Name" />
+                    <button type="submit">upd</button>
+                </form>
+            </td>
+            <td>
+                <form method="post" action="/Cake/UpdateImage">
+                    <input name="id" value="@cake.Id" type="hidden" />
+                    <input name="pathOldImage" value="@cake.ImageSrc" type="hidden" />
+                    <input name="newImage" value="@cake.ImageSrc" />
+                    <button type="submit">upd</button>
+                </form>
+            </td>
+            <td>
+                <form method="post" action="/Cake/UpdateDescription" enctype="multipart/form-data">
+                    <input name="id" value="@cake.Id" type="hidden" />
+                    <input name="newDescription" value="@cake.Description" />
+                    <button type="submit">upd</button>
+                </form>
+            </td>
+            <td>
+                <form method="post" action="/Cake/UpdatePrice">
+                    <input name="id" value="@cake.Id" type="hidden" />
+                    <input name="newPrice" value="@cake.Price" />
+                    <button type="submit">upd</button>
+                </form>
+            </td>
+            <td>
+                <a class="tag" href="/Cake/Remove?id=@cake.Id?pathOldImage=@cake.ImageSrc">Delete</a>
+            </td>
+        </tr>
+    }
+</table>
