@@ -59,6 +59,14 @@ header .name {
     flex-wrap: wrap;
 }
 
+    .girls.highlight-is-active .girl {
+        opacity: 0.2;
+    }
+
+        .girls.highlight-is-active .girl.highlighted {
+            opacity: 1;
+        }
+
 .girl {
     margin: 10px;
     width: 200px;
@@ -84,10 +92,30 @@ header .name {
             max-height: 200px;
         }
 
+        .girl .image-container.full {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: antiquewhite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+            .girl .image-container.full img {
+                max-width: 100%;
+                max-height: 100%;
+            }
+
+
     .girl .additional-info {
         border-top: 1px #ccc solid;
         display: flex;
         flex-wrap: wrap;
+        position: relative;
     }
 
         .girl .additional-info .tag {
@@ -96,6 +124,7 @@ header .name {
             border-radius: 5px;
             margin: 3px;
             padding: 3px;
+            cursor: pointer;
         }
 
 .mangas {
@@ -123,12 +152,22 @@ header .name {
     font-size: 30px;
 }
 
-.girl.Uniq.Original{
+.girl.Uniq.Original {
     border: 3px solid green;
 }
+
 .girl.NotUniq.Original {
     border: 3px solid orange;
 }
+
 .girl.NotUniq.Duplicate {
     border: 3px solid red;
+}
+
+.tag-container {
+    display: none;
+    position: absolute;
+    background: antiquewhite;
+    top: 47px;
+    z-index: 100;
 }

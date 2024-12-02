@@ -4,6 +4,10 @@
     Layout = "~/Views/Shared/_LayoutAnime.cshtml";
 }
 
+@section Scripts {
+    <script src="~/js/AnimeGirl/AllGirls.js"></script>
+}
+
 <div class="girls">
     @foreach (var girl in Model)
     {
@@ -23,17 +27,20 @@
                     <input name="id" value="@girl.Id" type="hidden" />
                     <input name="url" />
                     <button type="submit">new image</button>
+                    <button type="button" class="toggle-tags">toggle tags</button>
                 </form>
-                <span class="tag">@girl.CreatorName</span>
-                <span class="tag">@girl.MangaName</span>
-                @foreach (var tag in girl.Tags)
-                {
-                    <span class="tag">@tag</span>
-                }
-                @if (girl.CanDelete)
-                {
-                    <a class="tag" href="/AnimeGirl/Remove?id=@girl.Id">Delete</a>
-                }
+                <div class="tag-container">
+                    <span class="tag">@girl.CreatorName</span>
+                    <span class="tag">@girl.MangaName</span>
+                    @foreach (var tag in girl.Tags)
+                    {
+                        <span class="tag">@tag</span>
+                    }
+                    @if (girl.CanDelete)
+                    {
+                        <a class="tag" href="/AnimeGirl/Remove?id=@girl.Id">Delete</a>
+                    }
+                </div>
             </div>
         </div>
     }
