@@ -20,8 +20,9 @@ header .logotip {
 header .logotip img {
 	margin-left: 10px;
 	max-height: 50px;
-    border-radius: 50px;
+	border-radius: 50px;
 	border: 2px solid rgb(168, 225, 81);
+	width: 70px;
 }
 
 .block-of-profile {
@@ -31,26 +32,30 @@ header .logotip img {
 .block-of-profile .defaltavatar {
 	margin-left: 10px;
 	max-height: 50px;
-    border-radius: 50px;
+	border-radius: 50px;
 }
 .block-of-profile .log-sing {
 	margin-left: 20px;
 	display: block;
 	height: 20px;
 	width: 30px;
+	margin-top: -26px;
 }
 .block-of-profile .log-sing{
+	content: "L/S";
 	box-shadow: inset 0px 1px 3px 0px #91b8b3;
 	background: linear-gradient(to bottom, #14a404 5%, #049c20 100%);
 	background-color: #768d87;
 	border-radius: 13px;
 	border: 1px solid #695e56;
-	display: block;
 	cursor: pointer;
+	display: inline-block;
 	color: #ffffff;
 	font-family: Arial;
 	text-decoration: none;
 	text-shadow: 0px -1px 0px #19a63d;
+	justify-content: center;
+	text-align: center;
 }
 .block-of-profile .log-sing:hover {
 	background: linear-gradient(to bottom, #5bfb49 5%, #43d83d 100%);
@@ -75,6 +80,7 @@ header .logotip img {
 .menu.custom-list {
 	display: inline-block;
 	width: 40px;
+	margin: 10px;
 }
 
 .advices {
@@ -110,91 +116,125 @@ header .logotip img {
 }
 
 .post.ul.custom-list {
-    list-style-type: none;
-    padding: 0;
+	list-style-type: none;
+	padding: 0;
 }
 
 .post.ul.custom-list li {
-    margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 
 .post.ul.custom-list img {
-    max-width: 200px;
-    max-height: 200px;
+	max-width: 200px;
+	max-height: 200px;
 }
 
 .post.ul.custom-list p {
-    margin: 0;
+	margin: 0;
 }
 
-.post-actions { 
-	position: relative; 
-	display: inline-block; 
-	cursor: pointer; 
-} 
-.post-actions .dots { 
-	font-size: 18px; 
-} 
-.post-actions .actions-menu { 
-	display: none; 
-	position: absolute; 
-	background-color: #f9f9f9; 
-	box-shadow: 0px 8px 16px rgba(0,0,0,0.2); 
-	z-index: 1; 
-	right: 0; 
-	top: 20px; 
-	border-radius: 8px; 
-} 
-.post-actions:hover .actions-menu { 
-	display: block; 
+.post-actions {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
 }
-.post-actions .actions-menu a { 
-	color: black; 
-	padding: 12px 16px; 
-	text-decoration: none; 
-	display: block; 
-} 
-.post-actions .actions-menu a:hover { 
-	background-color: #f1f1f1; 
-} 
+.post-actions .dots {
+	font-size: 18px;
+}
+.post-actions .actions-menu {
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+	box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+	z-index: 1;
+	right: 0;
+	top: 20px;
+	border-radius: 8px;
+}
+.post-actions:hover .actions-menu {
+	display: block;
+}
+.post-actions .actions-menu a {
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+}
+.post-actions .actions-menu a:hover {
+	background-color: #f1f1f1;
+}
 
-#editForm { 
-	background-color: #fff; 
-	padding: 20px; 
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
-	border-radius: 8px; 
-	display: flex; 
-	flex-direction: column; 
-	gap: 10px; 
-	position: fixed; 
-	top: 50%; 
-	left: 50%; 
-	transform: translate(-50%, -50%); 
-	z-index: 2; 
-} 
-#editForm input[type="text"] { 
-	width: 100%; 
-	padding: 10px; 
-	margin-bottom: 10px; 
-	border: 1px solid #ddd; 
-	border-radius: 4px; 
+#editForm {
+	background-color: #fff;
+	padding: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 2;
 }
-#editForm button { 
-	background-color: #007bff; 
-	color: #fff; 
-	border: none; 
+#editForm input[type="text"] {
+	width: 100%;
 	padding: 10px;
-	border-radius: 4px; 
-	cursor: pointer; 
-	font-size: 16px; 
-	align-self: flex-end; 
-} 
-#editForm button:hover { 
-	background-color: #0056b3; 
+	margin-bottom: 10px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+}
+#editForm button {
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	padding: 10px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 16px;
+	align-self: flex-end;
+}
+#editForm button:hover {
+	background-color: #0056b3;
 }
 
-.container { 
-	width: 80%; 
-	margin: 0 auto; 
-	padding: 20px; 
+.container {
+	width: 80%;
+	margin: 0 auto;
+	padding: 20px;
+}
+
+
+/* Стили для всплывающего окна и формы */
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0,0.4);
+}
+.modal-content {
+	background-color: #fefefe;
+	margin: 15% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%;
+}
+.close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+.close:hover,
+.close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
 }
