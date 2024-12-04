@@ -73,30 +73,35 @@ public class EcologyController : Controller
     {
         var viewModel = new EcologyProfileViewModel();
         var userId = _authService.GetUserId();
-        
-        if (userId is null)
-        {
-            throw new Exception("User is not authenticated");
-        }
-        
-        viewModel.AvatarUrl = _userRepositryReal.GetAvatarUrl(userId!.Value);
 
-        var info = _commentRepositoryReal.GetCommentAuthors((int)userId);
-        
-        info.Comments.Select(dbComment => new CommentForProfileViewModel()
+        if (userId != null)
         {
-            CommentId = dbComment.Id,
-            CommentText = dbComment.CommentText
-        });
+            viewModel.AvatarUrl = _userRepositryReal.GetAvatarUrl(userId!.Value);
+
+            var info = _commentRepositoryReal.GetCommentAuthors((int)userId);
         
-        viewModel.Posts = info
-            .Posts
-            .Select(dbPost => new EcologyForProfileViewModel
+            info.Comments.Select(dbComment => new CommentForProfileViewModel()
             {
-                ImageSrc = dbPost.ImageSrc,
-                Texts = dbPost.Text,
-            })
-            .ToList();
+                CommentId = dbComment.Id,
+                CommentText = dbComment.CommentText
+            });
+        
+            viewModel.Posts = info
+                .Posts
+                .Select(dbPost => new EcologyForProfileViewModel
+                {
+                    ImageSrc = dbPost.ImageSrc,
+                    Texts = dbPost.Text,
+                })
+                .ToList();
+        }
+        else 
+        {
+            viewModel.UserName = "Guest";
+            viewModel.AvatarUrl = "~/images/Ecology/defaltavatar.JPG";
+            viewModel.Posts = new List<EcologyForProfileViewModel>();
+            viewModel.Comments = new List<CommentViewModel>();
+        }
         
         return View(viewModel);
     }

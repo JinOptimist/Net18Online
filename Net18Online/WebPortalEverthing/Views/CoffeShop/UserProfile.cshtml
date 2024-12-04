@@ -8,6 +8,10 @@
     Layout = "~/Views/Shared/CoffeLayout/_LayoutCoffe.cshtml";
 }
 
+@section Scripts {
+    <script src="~/js/CoffeShop/Profile.js"></script>
+}
+
 <div class="profile">
     <div>
         <h1>@Model.UserName</h1>
@@ -29,7 +33,10 @@
     @if (authService.IsAdmin())
     {
         <div>
-            My Coffe:
+            <button type="button" class="list-of-coffe">
+                My Coffe
+            </button>
+            :
             <div class="all-coffe-user">
                 @foreach (var coffe in Model.Coffe)
                 {

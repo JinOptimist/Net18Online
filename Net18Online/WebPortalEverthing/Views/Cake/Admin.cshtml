@@ -1,4 +1,5 @@
 ﻿@using WebPortalEverthing.Models.Cake
+@using WebPortalEverthing.Localizations
 @model List<CakeViewModel>
 
 @{
@@ -7,12 +8,12 @@
 
 <table>
     <tr>
-        <th>CreatorName</th>
-        <th>Name</th>
-        <th>Image</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>Delete</th>
+        <th>@Cake.Admin_Creator_Name</th>
+        <th>@Cake.Admin_Name_Cake</th>
+        <th>@Cake.Admin_Image</th>
+        <th>@Cake.Admin_Description</th>
+        <th>@Cake.Admin_Price</th>
+        <th>@Cake.Admin_Delete</th>
     </tr>
     @foreach (var cake in Model)
     {
@@ -36,7 +37,7 @@
                 </form>
             </td>
             <td>
-                <form method="post" action="/Cake/UpdateDescription" enctype="multipart/form-data">
+                <form method="post" action="/Cake/UpdateDescription">
                     <input name="id" value="@cake.Id" type="hidden" />
                     <input name="newDescription" value="@cake.Description" />
                     <button type="submit">upd</button>

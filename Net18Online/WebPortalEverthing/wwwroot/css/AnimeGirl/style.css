@@ -77,6 +77,17 @@ header .name {
         justify-content: center;
     }
 
+        .girl .name .edit-mode {
+            display: none;
+        }
+        .girl.create .name .edit-mode {
+            display: block;
+        }
+
+        .girl .name .view-mode {
+            cursor: pointer;
+        }
+
         .girl .name input {
             width: 140px;
         }
@@ -170,4 +181,8 @@ header .name {
     background: antiquewhite;
     top: 47px;
     z-index: 100;
+}
+
+.template{
+    display: none;
 }

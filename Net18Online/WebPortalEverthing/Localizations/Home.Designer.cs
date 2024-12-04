@@ -70,6 +70,15 @@ namespace WebPortalEverthing.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to За тортиками.
+        /// </summary>
+        public static string Cake_Link_Text {
+            get {
+                return ResourceManager.GetString("Cake_Link_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Сюда.
         /// </summary>
         public static string Coffe_Link_Text {

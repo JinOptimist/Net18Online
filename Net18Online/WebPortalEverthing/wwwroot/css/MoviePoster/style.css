@@ -31,9 +31,18 @@ header .name {
 	margin-right: 5px;
 }
 
-.profile-block .logout {
-	height: 40px;
-	width: 50px;
+	.profile-block .avatar {
+		max-height: 50px;
+	}
+
+	.profile-block .logout {
+		height: 40px;
+		width: 21px;
+	}
+
+.profile .avatar {
+	max-width: 300px;
+	max-height: 300px;
 }
 
 .menu {

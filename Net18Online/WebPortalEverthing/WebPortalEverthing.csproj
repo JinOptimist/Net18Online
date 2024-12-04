@@ -45,6 +45,11 @@
 
 
   <ItemGroup>
+    <Compile Update="Localizations\Cake.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Cake.resx</DependentUpon>
+    </Compile>
     <Compile Update="Localizations\LoadStuffs.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -83,6 +88,13 @@
 
 
   <ItemGroup>
+    <EmbeddedResource Update="Localizations\Cake.En.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localizations\Cake.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Cake.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Localizations\LoadStuffs.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LoadStuffs.Designer.cs</LastGenOutput>
