@@ -79,7 +79,20 @@ namespace WebPortalEverthing.Controllers
                 )
                 .ToList();
 
-            return View(girlsViewModels);
+            var viewModel = new AllGirlsViewModel
+            {
+                Girls = girlsViewModels,
+                Mangas = _mangaRepositoryReal
+                    .GetAll()
+                    .Select(x => new MangaNameAndIdViewModel
+                    {
+                        Id = x.Id,
+                        Name = x.Title
+                    })
+                    .ToList()
+            };
+
+            return View(viewModel);
         }
 
         private void GenerateDefaultAnimeGirl()
@@ -144,21 +157,9 @@ namespace WebPortalEverthing.Controllers
             return RedirectToAction("AllGirls");
         }
 
-        public IActionResult UpdateName(string newName, int id)
-        {
-            _animeGirlRepository.UpdateName(id, newName);
-            return RedirectToAction("AllGirls");
-        }
-
         public IActionResult UpdateImage(int id, string url)
         {
             _animeGirlRepository.UpdateImage(id, url);
-            return RedirectToAction("AllGirls");
-        }
-
-        public IActionResult Remove(int id)
-        {
-            _animeGirlRepository.Delete(id);
             return RedirectToAction("AllGirls");
         }
 

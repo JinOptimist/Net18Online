@@ -27,7 +27,7 @@ namespace Everything.Data.Repositories
         {
         }
 
-        public override void Add(LoadUserData data)
+        public override int Add(LoadUserData data)
         {
             throw new NotImplementedException("User method Register to create a new User");
         }

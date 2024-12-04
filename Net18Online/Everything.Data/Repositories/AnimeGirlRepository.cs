@@ -1,5 +1,4 @@
-﻿using Everything.Data.Interface.Models;
-using Everything.Data.Interface.Repositories;
+﻿using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
 using Everything.Data.Models.SqlRawModels;
 using Microsoft.EntityFrameworkCore;
@@ -8,9 +7,10 @@ namespace Everything.Data.Repositories
 {
     public interface IAnimeGirlRepositoryReal : IAnimeGirlRepository<GirlData>
     {
-        void Create(GirlData dataGirl, int currentUserId, int mangaId);
+        int Create(GirlData dataGirl, int currentUserId, int mangaId);
         IEnumerable<GirlData> GetWithoutManga();
         IEnumerable<GirlData> GetAllWithCreatorsAndManga();
+        GirlData GetWithCreatorsAndManga(int id);
         bool HasSimilarName(string name);
         bool IsNameUniq(string name);
         IEnumerable<GirlData> GetAllByAuthorId(int userId);
@@ -23,7 +23,7 @@ namespace Everything.Data.Repositories
         {
         }
 
-        public void Create(GirlData dataGirl, int currentUserId, int mangaId)
+        public int Create(GirlData dataGirl, int currentUserId, int mangaId)
         {
             var creator = _webDbContext.Users.First(x => x.Id == currentUserId);
             var manga = _webDbContext.Mangas.First(x => x.Id == mangaId);
@@ -31,7 +31,7 @@ namespace Everything.Data.Repositories
             dataGirl.Creator = creator;
             dataGirl.Manga = manga;
 
-            Add(dataGirl);
+            return Add(dataGirl);
         }
 
         public IEnumerable<GirlData> GetMostPopular()
@@ -51,10 +51,14 @@ namespace Everything.Data.Repositories
 
         public IEnumerable<GirlData> GetAllWithCreatorsAndManga()
         {
-            return _dbSet
-                .Include(x => x.Creator)
-                .Include(x => x.Manga)
+            return WithCreatorsAndManga()
                 .ToList();
+        }
+
+        public GirlData GetWithCreatorsAndManga(int id)
+        {
+            return WithCreatorsAndManga()
+                .First(x => x.Id == id);
         }
 
         public bool HasSimilarName(string name)
@@ -126,6 +130,13 @@ FROM Girls G
                 .ToList();
 
             return result;
+        }
+
+        private IQueryable<GirlData> WithCreatorsAndManga()
+        {
+            return _dbSet
+                .Include(x => x.Creator)
+                .Include(x => x.Manga);
         }
     }
 }

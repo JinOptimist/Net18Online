@@ -12,10 +12,12 @@ namespace Everything.Data.Repositories
             _webDbContext = webDbContext;
         }
 
-        public void Add(ClientData data)
+        public int Add(ClientData data)
         {
             _webDbContext.Clients.Add(data);
             _webDbContext.SaveChanges();
+
+            return data.Id;
         }
 
         public bool Any()

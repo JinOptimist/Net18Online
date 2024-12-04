@@ -1,5 +1,5 @@
 ﻿@using WebPortalEverthing.Models.AnimeGirl
-@model List<GirlViewModel>
+@model AllGirlsViewModel
 @{
     Layout = "~/Views/Shared/_LayoutAnime.cshtml";
 }
@@ -9,15 +9,46 @@
 }
 
 <div class="girls">
-    @foreach (var girl in Model)
+    <div class="girl template">
+        <div class="name">
+            <div class="view-mode">
+                ***
+            </div>
+            <div class="edit-mode">
+                <input class="girl-id" name="id" value="0" type="hidden" />
+                <input class="new-girl-name" name="newName" value="***" />
+                <button class="update-girl-name-button" type="button">upd</button>
+            </div>
+        </div>
+        <div class="image-container">
+            <img src="***" alt="girl" />
+        </div>
+        <div class="additional-info">
+            <form method="post" action="/AnimeGirl/UpdateImage">
+                <input name="id" value="0" type="hidden" />
+                <input name="url" />
+                <button type="submit">new image</button>
+                <button type="button" class="toggle-tags">toggle tags</button>
+            </form>
+            <div class="tag-container">
+                <span class="tag creator">***</span>
+                <span class="tag manga">***</span>
+                <a class="tag delete" href="#" data-id="***">Delete</a>
+            </div>
+        </div>
+    </div>
+    @foreach (var girl in Model.Girls)
     {
         <div class="girl">
             <div class="name">
-                <form method="post" action="/AnimeGirl/UpdateName">
-                    <input name="id" value="@girl.Id" type="hidden" />
-                    <input name="newName" value="@girl.Name" />
-                    <button type="submit">upd</button>
-                </form>
+                <div class="view-mode">
+                    @girl.Name
+                </div>
+                <div class="edit-mode">
+                    <input class="girl-id" name="id" value="@girl.Id" type="hidden" />
+                    <input class="new-girl-name" name="newName" value="@girl.Name" />
+                    <button class="update-girl-name-button" type="button">upd</button>
+                </div>
             </div>
             <div class="image-container">
                 <img src="@girl.ImageSrc" alt="girl" />
@@ -38,10 +69,31 @@
                     }
                     @if (girl.CanDelete)
                     {
-                        <a class="tag" href="/AnimeGirl/Remove?id=@girl.Id">Delete</a>
+                        <a class="tag delete" href="#" data-id="@girl.Id">Delete</a>
                     }
                 </div>
             </div>
         </div>
     }
+
+    <div class="girl create">
+        <div class="name">
+            <div class="edit-mode">
+                <input class="new-girl-name" name="newName" placeholder="girl name" />
+            </div>
+        </div>
+        <div class="image-container">
+            <img src="/images/AnimeGirl/avatar-default.webp" alt="girl" />
+        </div>
+        <div class="additional-info">
+            <input class="new-girl-url" name="url" placeholder="girl url" />
+            <select class="manga-id">
+                @foreach (var manga in Model.Mangas)
+                {
+                    <option value="@manga.Id">@manga.Name</option>
+                }
+            </select>
+            <button class="create-girl-button" type="button">create new girl</button>
+        </div>
+    </div>
 </div>
