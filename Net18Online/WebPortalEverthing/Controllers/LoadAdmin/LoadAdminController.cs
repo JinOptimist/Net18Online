@@ -67,5 +67,19 @@ ILoadUserRepositryReal loadUserRepositryReal, LoadAuthService authService, WebDb
 
             return RedirectToAction("LoadUsersView");
         }
+
+        public IActionResult LoadUsersByRolsView()
+        {
+            var loadUsers = _loadUserRepositryReal
+                .GetUsersGroupedByRole()
+                .Select(x => new LoadUserByRoleViewModel
+                {
+                    Login = x.Login,
+                    Role = x.Role
+                })
+                .ToList();
+
+            return View(loadUsers);
+        }
     }
 }

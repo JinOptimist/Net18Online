@@ -13,15 +13,16 @@
 }
 
 <div class="load-users">
-    <h1>Users</h1>
+    <div class="users">Users</div>
     @foreach( var user in Model.LoadUsers )
     {
         @if( User.Identity?.IsAuthenticated ?? false )
         {
-            <h1>
-                <a class="nav-link text-dark" href="/LoadAdmin/UpdateLocale?language=@Language.Ru">Руc</a>
-                <a class="nav-link text-dark" href="/LoadAdmin/UpdateLocale?language=@Language.En">Eng</a>
-            </h1>
+            <div class="language">
+                <div class="title">Сменить язык пользователя</div>
+                <a class="nav-link" href="/LoadAdmin/UpdateLocale?language=@Language.Ru">Рус</a>
+                <a class="nav-link" href="/LoadAdmin/UpdateLocale?language=@Language.En">Eng</a>
+            </div>
         }
         <div>
             Login: @user.Login

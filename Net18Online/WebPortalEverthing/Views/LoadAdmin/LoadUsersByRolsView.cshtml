@@ -1,0 +1,30 @@
+﻿@using WebPortalEverthing.Models.LoadTesting
+@using WebPortalEverthing.Services
+@using WebPortalEverthing.Services.LoadTesting
+@using Enums.Users
+@inject LoadAuthService loadAuthService
+@inject LoadUserService loadUserService
+@using WebPortalEverthing.Models.LoadTesting.Admin
+@model List<LoadUserByRoleViewModel>
+
+
+@{
+    Layout = "~/Views/Shared/LoadTesting/_LayoutLoadTesting.cshtml";
+}
+
+<div class="load-users">
+    <div class="users">Users</div>
+
+    @foreach( var group in Model.GroupBy(user => user.Role) )
+    {
+        <h2>@group.Key.ToString()</h2> <!-- Отображение роли -->
+        <p>Number of users: @group.Count()</p> <!-- Общее количество пользователей с этой ролью -->
+        @foreach( var user in group )
+        {
+            <div class="@user.Role">
+                <strong>Login:</strong> @user.Login <br />
+                <strong>User Role:</strong> @user.Role <br />
+            </div>
+        }
+    }
+</div>

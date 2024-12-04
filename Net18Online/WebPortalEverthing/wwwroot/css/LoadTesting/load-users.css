@@ -1,81 +1,136 @@
-﻿.load-users {
-    margin: 20px auto;
-    padding: 20px;
-    background: rgba(35, 38, 39, 0.9); /* Полупрозрачный фон */
-    border-radius: 15px;
-    max-width: 800px;
-    color: white; /* Цвет текста */
-    box-shadow: 0px 15px 30px rgba(245, 154, 119, 0.6), 0px -10px 15px rgba(192, 243, 7, 0.4);
-    text-align: center;
+﻿/* Общий стиль для контейнера пользователей */
+.load-users {
+    font-size: 18px; /* Увеличенный базовый шрифт */
+    line-height: 1.6;
+    margin: auto;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-    .load-users h1 {
-        font-size: 32px;
-        margin-bottom: 20px;
-        color: rgb(245, 154, 119); /* Яркий заголовок */
-        text-shadow: 0px 5px 15px rgb(245, 154, 119), 0px -2px 8px rgb(192, 243, 7);
+
+
+    /* Стили для ролей */
+    .load-users h2 {
+        margin: 0 auto; /*Если нужно центрировать не только текст, но и сам контейнер*/
+        font-size: 24px; /* Увеличенный размер для названия роли */
+        color: rgb(245, 154, 119); /* Яркий цвет для заголовков */
+        text-shadow: 0px 5px 10px rgba(245, 154, 119, 0.8);
+        margin: 15px auto; /* Центрирование контейнера */
+        padding: 10px; /* Внутренний отступ */
+        width: 60%; /* Устанавливаем ширину блока */
+        background: rgba(0, 0, 0, 0.6); /* Полупрозрачный фон */
+        border: 2px solid rgb(245, 154, 119); /* Яркий бордюр */
+        border-radius: 10px; /* Скругленные углы */
+        box-shadow: 0px 5px 10px rgba(245, 154, 119, 0.8); /* Тень для объема */
+        text-align: center; /* Центрирование текста внутри */
     }
 
+
+
+    /* Карточки пользователей */
     .load-users div {
-        margin-bottom: 20px;
-        padding: 10px;
-        background: rgba(0, 0, 0, 0.6); /* Тёмный фон для каждого пользователя */
+        font-size: 20px; /* Увеличенный шрифт в карточках */
+        margin-bottom: 10px;
+        padding: 15px;
         border-radius: 10px;
-    }
-
-    .load-users .role {
-        display: inline-block;
-        margin: 5px;
-        padding: 5px 10px;
-        background: rgb(245, 154, 119);
-        color: black; /* Контрастный текст */
-        border-radius: 8px;
-        font-size: 14px;
-        box-shadow: 0px 5px 10px rgba(255, 215, 0, 0.8);
-    }
-
-    .load-users form {
-        margin-top: 10px;
-        text-align: center;
-    }
-
-    .load-users .roles {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-    }
-
-        .load-users .roles .role {
-            margin: 5px;
-            padding: 5px 10px;
-            background: rgba(255, 255, 255, 0.8); /* Светлый фон для роли */
-            border-radius: 8px;
-            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.4);
-        }
-
-    .load-users button {
-        margin-top: 15px;
-        padding: 10px 20px;
-        background: rgb(245, 154, 119); /* Яркий цвет кнопки */
+        text-align: left;
         color: white;
-        border: none;
-        border-radius: 10px;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        box-shadow: 0px 5px 15px rgba(245, 154, 119, 0.8);
-        transition: all 0.3s ease-in-out;
     }
 
-        .load-users button:hover {
-            background: rgb(192, 243, 7);
-            box-shadow: 0px 10px 20px rgba(192, 243, 7, 0.9);
-            transform: scale(1.05);
+    .load-users .users {
+        margin: 0 auto; /* Центрирование контейнера */
+        font-size: 24px; /* Увеличенный размер для названия */
+        color: rgb(138, 43, 226); /* Фиолетовый цвет для заголовков */
+        text-shadow: 0px 5px 10px rgba(138, 43, 226, 0.8); /* Фиолетовая тень */
+        margin: 15px auto; /* Центрирование контейнера */
+        padding: 10px; /* Внутренний отступ */
+        width: 60%; /* Устанавливаем ширину блока */
+        background: rgba(0, 0, 0, 0.6); /* Полупрозрачный фон */
+        border: 2px solid rgb(138, 43, 226); /* Фиолетовый бордюр */
+        border-radius: 10px; /* Скругленные углы */
+        box-shadow: 0px 5px 10px rgba(138, 43, 226, 0.8); /* Тень для объема */
+        text-align: center; /* Центрирование текста внутри */
+    }
+
+
+    /* Индивидуальные стили для ролей (сохранено из предыдущего примера) */
+    .load-users .User {
+        background: rgba(0, 123, 255, 0.1); /* Светло-синий */
+        border: 2px solid rgba(0, 123, 255, 0.5);
+    }
+
+    .load-users .Admin {
+        background: rgba(220, 53, 69, 0.1); /* Светло-красный */
+        border: 2px solid rgba(220, 53, 69, 0.5);
+    }
+
+    .load-users .AnimeModerator {
+        background: rgba(255, 193, 7, 0.1); /* Светло-жёлтый */
+        border: 2px solid rgba(255, 193, 7, 0.5);
+    }
+
+    .load-users .AnimeAuthor {
+        background: rgba(40, 167, 69, 0.1); /* Светло-зелёный */
+        border: 2px solid rgba(40, 167, 69, 0.5);
+    }
+
+    .load-users .SurveysCreatorOrEditor {
+        background: rgba(108, 117, 125, 0.1); /* Светло-серый */
+        border: 2px solid rgba(108, 117, 125, 0.5);
+    }
+
+    .load-users .Observer {
+        background: rgba(23, 162, 184, 0.1); /* Светло-бирюзовый */
+        border: 2px solid rgba(23, 162, 184, 0.5);
+    }
+
+    /* Выделение роли в карточке */
+    .load-users .role-title {
+        font-weight: bold;
+        font-size: 22px;
+        margin-bottom: 5px;
+        color: rgb(255, 215, 0);
+    }
+
+.language {
+    margin: 0 auto; /* Центрирование контейнера */
+    font-size: 22px; /* Умеренный размер текста */
+    color: rgb(180, 90, 255); /* Насыщенный фиолетовый цвет */
+    text-shadow: 0px 6px 12px rgba(180, 90, 255, 0.8); /* Усиленная тень для яркости */
+    margin: 15px auto; /* Центрирование контейнера */
+    padding: 15px; /* Увеличенный внутренний отступ */
+    width: 60%; /* Ширина блока */
+    background: rgba(20, 20, 50, 0.8); /* Глубокий темно-фиолетовый полупрозрачный фон */
+    border: 2px solid rgb(180, 90, 255); /* Яркий бордюр */
+    border-radius: 12px; /* Скругленные углы */
+    box-shadow: 0px 8px 16px rgba(180, 90, 255, 0.8); /* Усиленная тень */
+    text-align: center; /* Центрирование текста внутри */
+}
+
+    .language a {
+        font-size: 20px; /* Размер текста ссылок */
+        font-weight: bold; /* Полужирный текст */
+        color: rgb(220, 200, 255); /* Светло-фиолетовый текст */
+        text-shadow: 0px 4px 10px rgba(180, 90, 255, 0.7); /* Легкая тень для текста */
+        text-decoration: none; /* Убираем подчёркивание */
+        margin: 0 10px; /* Отступы между ссылками */
+        padding: 8px 16px; /* Внутренние отступы для ссылок */
+        background: linear-gradient(90deg, rgba(140, 70, 255, 1) 0%, rgba(190, 120, 255, 1) 100%); /* Градиентный фон */
+        border-radius: 8px; /* Скруглённые углы */
+        transition: all 0.3s ease; /* Анимация при наведении */
+    }
+
+        .language a:hover {
+            color: black; /* Чёрный текст при наведении */
+            background: rgba(255, 255, 255, 0.9); /* Светлый фон */
+            text-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5); /* Меняем тень */
+            transform: scale(1.05); /* Увеличение размера */
         }
 
-    .load-users input[type="checkbox"] {
-        margin-left: 5px;
-        transform: scale(1.2); /* Увеличение размера чекбоксов */
-        cursor: pointer;
+    .language .title {
+        font-size: 24px; /* Чуть больший размер для заголовка */
+        font-weight: bold;
+        color: rgb(200, 150, 255); /* Мягкий светло-фиолетовый */
+        text-shadow: 0px 5px 10px rgba(200, 150, 255, 0.7); /* Эффект объема */
+        margin-bottom: 10px;
     }
