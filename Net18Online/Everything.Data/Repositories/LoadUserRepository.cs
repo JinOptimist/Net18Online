@@ -19,6 +19,7 @@ namespace Everything.Data.Repositories
         public string GetAvatarUrl(int userId);
         void UpdateAvatarUrl(int userId, string avatarUrl);
         public bool IsAdminExist();
+        void UpdateLocal(int userId, Language language);
     }
 
     public class LoadUserRepository : BaseRepository<LoadUserData>, ILoadUserRepositryReal
