@@ -1,7 +1,6 @@
 ﻿using Everything.Data;
 using Everything.Data.Models;
 using Everything.Data.Repositories;
-using Everything.Data.Interface.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.MoviePoster;
 using WebPortalEverthing.Services;
@@ -189,6 +188,21 @@ namespace WebPortalEverthing.Controllers
                 .ToList();
 
             return View(viewModel);
+        }
+
+        public IActionResult ShowCountWithFirstAndLastElementInDb()
+        {
+            var viewModels = _moviePosterRepository
+                .GetCountOfElementsInDbAndShowFirstAndLastPosterInfo()
+                .Select(db => new MoviePosterCountElementInDbAndFirstAndLastElementViewModel
+                {
+                    Count = db.Count,
+                    Name = db.Name,
+                    ImageSrc = db.ImageSrc
+                })
+                .ToList();
+
+            return View(viewModels);
         }
     }
 }
