@@ -99,7 +99,6 @@ header .logo img {
 .survey-group .title-and-actions {
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px #ccc solid;
 }
 
 .survey-group .title {
@@ -121,9 +120,17 @@ header .logo img {
     align-items: center;
 }
 
+.title-and-actions .expander {
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 .survey-group-content {
     max-height: 300px;
     overflow-y: auto;
+    border-top: 1px #ccc solid;
+    display: none;
 }
 
 .survey-content {

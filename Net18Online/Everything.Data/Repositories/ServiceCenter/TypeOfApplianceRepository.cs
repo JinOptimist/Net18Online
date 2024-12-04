@@ -17,10 +17,12 @@ namespace Everything.Data.Repositories
             _webDbContext = webDbContext;
         }
 
-        public void Add(TypeOfApplianceData data)
+        public int Add(TypeOfApplianceData data)
         {
             _webDbContext.TypeOfAppliances.Add(data);
             _webDbContext.SaveChanges();
+
+            return data.Id;
         }
 
         public bool Any()

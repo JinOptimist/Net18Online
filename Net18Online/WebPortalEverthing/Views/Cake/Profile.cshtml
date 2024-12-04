@@ -1,4 +1,5 @@
 ﻿@using WebPortalEverthing.Models.Cake
+@using WebPortalEverthing.Localizations
 @model CakeProfileViewModel
 
 @{
@@ -6,12 +7,12 @@
 }
 
 <div>
-    <h1>Avatar:</h1>
+    <h1>@Cake.Profile_Avatar:</h1>
     <img src="@Model.ImageUrl" class="avatar" />
 </div>
 <div>
     <form action="/Cake/UpdateAvatar" method="post" enctype="multipart/form-data">
         <input type="file" name="avatar" />
-        <button type="submit">Send</button>
+        <button type="submit">@Cake.Profile_Send</button>
     </form>
 </div>

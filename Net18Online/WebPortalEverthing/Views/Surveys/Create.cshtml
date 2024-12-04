@@ -7,47 +7,82 @@
     Layout = "~/Views/Shared/_LayoutSurveys.cshtml";
 }
 
+@section Scripts {
+    <script src="~/js/Surveys/EditSurvey.js"></script>
+}
+
 <div class="main-content-title">
     <span>@(Model.Id == 0 ? "Создание нового" : "Редактирование") опроса</span>
 </div>
-<form class="new-survey" method="post">
-    <div class="round-border">
-        <div>
-            @Html.HiddenFor(x => x.Id)
-            @Html.HiddenFor(x => x.SurveyGroup.Id)
+<div class="question-template">
+    <div class="question round-border">
+        <div class="answer-option">
+            <div>
+                <select name="AnswerType">
+                    <option value="@AnswerType.TextString">Текст (строка)</option>
+                    <option value="@AnswerType.TextParagraph">Текст (абзац)</option>
+                </select>
+            </div>
+            <div>
+                <label>
+                    Обязательный вопрос
+                    @Html.CheckBox("check-box")
+                </label>
+            </div>
+            <div>
+                <button class="del-button" type="button">Удалить вопрос</button>
+            </div>
+        </div>
+        <hr>
+        <div class="title">
+            @Html.TextBox("title")
         </div>
         <div>
-            <label>
-                Группа:
-                @Html.HiddenFor(x => x.SurveyGroup.Title)
-                @Html.DisplayTextFor(x => x.SurveyGroup.Title)
-            </label>
-        </div>
-        <div>
-            <label>
-                Название опроса
-                @Html.TextBoxFor(x => x.Title)
-                @Html.ValidationMessageFor(x => x.Title)
-            </label>
-        </div>
-        <div>
-            <label>
-                Описание
-                @Html.TextAreaFor(x => x.Description)
-                @Html.ValidationMessageFor(x => x.Description)
-            </label>
+            <input id="ctrl-@AnswerType.TextString-template" type="text" value="Краткий ответ" />
+            <textarea id="ctrl-@AnswerType.TextParagraph-template" value="Развёрнутый ответ"></textarea>
         </div>
     </div>
-    <div class="questions">
-        @foreach (var question in Model.Questions)
-        {
-            @Html.Partial("Question", question)
-        }
-    </div>
-    <div class="add-question round-border">
-        <button type="submit" asp-action="AddQuestion">Добавить вопрос</button>
-    </div>
-    <div class="actions">
-        <button class="save-button" type="submit">Сохранить</button>
-    </div>
-</form>
+</div>
+<div>
+    <form class="new-survey" method="post">
+        <div class="round-border">
+            <div>
+                @Html.HiddenFor(x => x.Id)
+                @Html.HiddenFor(x => x.SurveyGroup.Id)
+            </div>
+            <div>
+                <label>
+                    Группа:
+                    @Html.HiddenFor(x => x.SurveyGroup.Title)
+                    @Html.DisplayTextFor(x => x.SurveyGroup.Title)
+                </label>
+            </div>
+            <div>
+                <label>
+                    Название опроса
+                    @Html.TextBoxFor(x => x.Title)
+                    @Html.ValidationMessageFor(x => x.Title)
+                </label>
+            </div>
+            <div>
+                <label>
+                    Описание
+                    @Html.TextAreaFor(x => x.Description)
+                    @Html.ValidationMessageFor(x => x.Description)
+                </label>
+            </div>
+        </div>
+        <div class="questions">
+            @foreach (var question in Model.Questions)
+            {
+                @Html.Partial("Question", question)
+            }
+        </div>
+        <div class="add-question round-border">
+            <button id="add-button" type="button">Добавить вопрос</button>
+        </div>
+        <div class="actions">
+            <button class="save-button" type="submit">Сохранить</button>
+        </div>
+    </form>
+</div>
