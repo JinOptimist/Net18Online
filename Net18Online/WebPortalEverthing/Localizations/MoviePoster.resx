@@ -117,46 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Anime_Link_Text" xml:space="preserve">
-    <value>Here</value>
+  <data name="Adventures_Text" xml:space="preserve">
+    <value>Приключения</value>
   </data>
-  <data name="Home_AnimeGirlDesc" xml:space="preserve">
-    <value>If wana see anime girl, you can do it</value>
+  <data name="Animation_Text" xml:space="preserve">
+    <value>Анимационный</value>
   </data>
-  <data name="Home_Greatings" xml:space="preserve">
-    <value>Hi</value>
+  <data name="Comedy_Text" xml:space="preserve">
+    <value>Комедия</value>
   </data>
-  <data name="Home_Guest" xml:space="preserve">
-    <value>Guest</value>
+  <data name="Documentary_Text" xml:space="preserve">
+    <value>Документальный</value>
   </data>
-  <data name="Home_HomePage" xml:space="preserve">
-    <value>Home</value>
+  <data name="Drama_Text" xml:space="preserve">
+    <value>Драма</value>
   </data>
-  <data name="Home_Login" xml:space="preserve">
-    <value>Login</value>
+  <data name="Horror_Text" xml:space="preserve">
+    <value>Ужасы</value>
   </data>
-  <data name="Home_Logout" xml:space="preserve">
-    <value>Logout</value>
+  <data name="Romantic_Сomedy_Text" xml:space="preserve">
+    <value>Романтическая комедия</value>
   </data>
-  <data name="Home_Registration" xml:space="preserve">
-    <value>Registration</value>
+  <data name="Science_Fiction_Text" xml:space="preserve">
+    <value>Научная фантастика</value>
   </data>
-  <data name="Home_Users" xml:space="preserve">
-    <value>Users</value>
+  <data name="The_Whole_Poster_Text" xml:space="preserve">
+    <value>Вся афиша</value>
   </data>
-  <data name="Home_CoffeShopDesc" xml:space="preserve">
-    <value>If you want to order coffee and everything that comes with it, then you</value>
-  </data>
-  <data name="Coffe_Link_Text" xml:space="preserve">
-    <value>Here</value>
-  </data>
-  <data name="Cake_Link_Text" xml:space="preserve">
-    <value>For the cakes</value>
-  </data>
-  <data name="Home_MoviePosterDesc" xml:space="preserve">
-    <value>Don't know what to watch on the weekend? Then this is the place for</value>
-  </data>
-  <data name="MoviePoster_Link_Text" xml:space="preserve">
-    <value>you</value>
+  <data name="Thriller_Text" xml:space="preserve">
+    <value>Триллер</value>
   </data>
 </root>
