@@ -150,4 +150,7 @@
   <data name="Coffe_Link_Text" xml:space="preserve">
     <value>Сюда</value>
   </data>
+  <data name="Cake_Link_Text" xml:space="preserve">
+    <value>За тортиками</value>
+  </data>
 </root>
