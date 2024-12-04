@@ -1,0 +1,15 @@
+﻿using Enums.Users;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Everything.Data.Models.SqlRawModels.LoadTesting
+{
+    public class LoadUserByRoleData
+    {
+        public string Login { get; set; }
+        public Role Role { get; set; }
+    }
+}

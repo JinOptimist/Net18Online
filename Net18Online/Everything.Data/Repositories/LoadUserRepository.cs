@@ -1,6 +1,8 @@
 ﻿using Enums.Users;
 using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
+using Everything.Data.Models.SqlRawModels;
+using Everything.Data.Models.SqlRawModels.LoadTesting;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -20,6 +22,7 @@ namespace Everything.Data.Repositories
         void UpdateAvatarUrl(int userId, string avatarUrl);
         public bool IsAdminExist();
         void UpdateLocal(int userId, Language language);
+        public IEnumerable<LoadUserByRoleData> GetUsersGroupedByRole();
     }
 
     public class LoadUserRepository : BaseRepository<LoadUserData>, ILoadUserRepositryReal
@@ -113,6 +116,24 @@ namespace Everything.Data.Repositories
             user.Language = language;
 
             _webDbContext.SaveChanges();
+        }
+
+        public IEnumerable<LoadUserByRoleData> GetUsersGroupedByRole()
+        {
+            var sql = @"SELECT 
+                        Login
+                        ,Role
+                    FROM 
+                        [dbo].[LoadUsers]
+                    ORDER BY 
+                        Role;";
+
+            var result = _webDbContext
+                .Database
+                .SqlQueryRaw<LoadUserByRoleData>(sql)
+                .ToList();
+
+            return result;
         }
     }
 }
