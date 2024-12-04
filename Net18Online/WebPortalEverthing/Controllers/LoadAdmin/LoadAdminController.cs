@@ -14,15 +14,23 @@ using WebPortalEverthing.Services.LoadTesting;
 namespace WebPortalEverthing.Controllers.LoadAdmin
 {
     [IsLoadAdmin]
-    public class LoadAdminController(
-        ILoadUserRepositryReal loadUserRepositryReal,
-        EnumHelper enumHelper) : Controller
+    public class LoadAdminController : Controller
     {
-        private ILoadUserRepositryReal _loadUserRepositryReal = loadUserRepositryReal;
+        private ILoadUserRepositryReal _loadUserRepositryReal;
         private LoadAuthService _authService;
         private WebDbContext _webDbContext;
-        private EnumHelper _enumHelper = enumHelper;
+        private EnumHelper _enumHelper;
         private IWebHostEnvironment _webHostEnvironment;
+
+        public LoadAdminController(
+ILoadUserRepositryReal loadUserRepositryReal, LoadAuthService authService, WebDbContext webDbContext, EnumHelper enumHelper, IWebHostEnvironment webHostEnvironment)
+        {
+            _loadUserRepositryReal = loadUserRepositryReal;
+            _authService = authService;
+            _webDbContext = webDbContext;
+            _enumHelper = enumHelper;
+            _webHostEnvironment = webHostEnvironment;
+        }
 
         public IActionResult LoadUsersView()
         {
@@ -51,6 +59,13 @@ namespace WebPortalEverthing.Controllers.LoadAdmin
             return RedirectToAction("LoadUsersView", "LoadAdmin");
         }
 
-        
+        [IsLoadAuthenticated]
+        public IActionResult UpdateLocale(Language language)
+        {
+            var userId = _authService.GetUserId()!.Value;
+            _loadUserRepositryReal.UpdateLocal(userId, language);
+
+            return RedirectToAction("LoadUsersView");
+        }
     }
 }

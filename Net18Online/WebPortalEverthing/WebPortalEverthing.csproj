@@ -45,6 +45,11 @@
 
 
   <ItemGroup>
+    <Compile Update="Localizations\LoadStuffs.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LoadStuffs.resx</DependentUpon>
+    </Compile>
     <Compile Update="Localizations\LocalizationForGame\GameShop.Designer.cs">
 		<DesignTime>True</DesignTime>
 		<AutoGen>True</AutoGen>
@@ -78,6 +83,13 @@
 
 
   <ItemGroup>
+    <EmbeddedResource Update="Localizations\LoadStuffs.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LoadStuffs.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localizations\LoadStuffs.Ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Localizations\LocalizationForGame\GameShop.En.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>

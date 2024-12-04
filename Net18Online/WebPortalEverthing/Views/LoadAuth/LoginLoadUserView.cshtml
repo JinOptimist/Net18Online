@@ -1,14 +1,15 @@
 ﻿@using WebPortalEverthing.Models.LoadTesting.Auth
+@using WebPortalEverthing.Localizations
 @model LoginLoadUserViewModel
 
 <div class="login-form">
 
     <form method="post">
         <div>
-            @Html.TextBoxFor(x => x.Login, new { placeholder = "login" })
+            @Html.TextBoxFor(x => x.Login, new { placeholder = @LoadStuffs.Login })
         </div>
         <div>
-            @Html.TextBoxFor(x => x.Password, new { @type = "password", placeholder = "password" })
+            @Html.TextBoxFor(x => x.Password, new { @type = "password", placeholder = @LoadStuffs.Password })
         </div>
         <div>
             <button type="submit">Sign in</button>

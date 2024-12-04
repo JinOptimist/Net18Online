@@ -1,5 +1,7 @@
 ﻿
 using Enums.Users;
+using System.Globalization;
+using WebPortalEverthing.Localizations;
 
 namespace WebPortalEverthing.Services.LoadTesting
 {
@@ -25,7 +27,7 @@ namespace WebPortalEverthing.Services.LoadTesting
 
         public string? GetName()
         {
-            return GetClaimValue(CLAIM_TYPE_NAME) ?? "Гость";
+            return GetClaimValue(CLAIM_TYPE_NAME) ?? LoadStuffs.Guest;
         }
 
         public int? GetUserId()
@@ -79,8 +81,20 @@ namespace WebPortalEverthing.Services.LoadTesting
                 return null;
             }
 
-            return decimal.Parse(isStr);
+            // Попробуем привести строку в корректный формат и распарсить её
+            if (decimal.TryParse(
+                isStr.Replace(',', '.'), // Заменяем запятую на точку, если нужно
+                NumberStyles.Any,
+                CultureInfo.InvariantCulture,
+                out var value))
+            {
+                return value;
+            }
+
+            // Если парсинг не удался, возвращаем null или бросаем исключение
+            return null;
         }
+
 
 
 

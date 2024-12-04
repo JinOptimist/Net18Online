@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using WebPortalEverthing.Models.CustomValidationAttrubites;
+using WebPortalEverthing.Localizations;
 
 namespace WebPortalEverthing.Models.LoadTesting.TestingAttributes
 {
@@ -67,13 +68,17 @@ namespace WebPortalEverthing.Models.LoadTesting.TestingAttributes
             switch (_option)
             {
                 case UnitLoad.Seconds:
-                    return "Секунды";
+                    return LoadStuffs.Seconds;
+                //  return "Секунды";
                 case UnitLoad.Milliseconds:
-                    return "Миллисекунды";
+                    return LoadStuffs.MilliSeconds;
+                //   return "Миллисекунды";
                 case UnitLoad.Minutes:
-                    return "Минуты";
+                    return LoadStuffs.Minutes;
+                //   return "Минуты";
                 case UnitLoad.Hours:
-                    return "Часы";
+                    return LoadStuffs.Hours;
+                    //   return "Часы";
             }
 
             throw new NotImplementedException();

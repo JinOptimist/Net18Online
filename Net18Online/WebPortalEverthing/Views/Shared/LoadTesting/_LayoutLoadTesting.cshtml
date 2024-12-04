@@ -1,5 +1,6 @@
 ﻿@using WebPortalEverthing.Services
 @using WebPortalEverthing.Services.LoadTesting
+@using WebPortalEverthing.Localizations
 @inject LoadAuthService loadAuthService
 @inject LoadUserService loadUserService
 
@@ -52,12 +53,9 @@
 
             </div>
             <div class="login-button">
-                <a class="login-button-registration" asp-area="" asp-controller="LoadAuth" asp-action="RegistrationLoadUserView">Registration</a>
-                <a class="login-button-login" asp-area="" asp-controller="LoadAuth" asp-action="LoginLoadUserView">Login</a>
-
+                <a class="login-button-registration" asp-area="" asp-controller="LoadAuth" asp-action="RegistrationLoadUserView">@LoadStuffs.Registration</a>
+                <a class="login-button-login" asp-area="" asp-controller="LoadAuth" asp-action="LoginLoadUserView">@LoadStuffs.Login</a>
             </div>
-
-
         </div>
     </div>
 
