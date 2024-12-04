@@ -1,4 +1,5 @@
 ﻿@using WebPortalEverthing.Services
+@using WebPortalEverthing.Localizations
 @inject AuthService authService
 @inject UserService userService
 <!DOCTYPE html>
@@ -13,27 +14,27 @@
         <div class="container">
             <nav>
                 <ul class="menu">
-                    <li><a href="/">Main</a></li>
-                    <li><a href="/Cake">All cakes</a></li>
+                    <li><a href="/">@Cake.Layout_Cake_Main</a></li>
+                    <li><a href="/Cake">@Cake.Layout_Cake_All_Cakes</a></li>
                     @if (authService.IsAdmin())
                     {
                         <li>
-                            <a href="/Cake/Admin">Admin</a>
+                            <a href="/Cake/Admin">@Cake.Layout_Cake_Admin</a>
                         </li>
                     }
                     @if (authService.IsAuthenticated())
                     {
                         <li>
-                            <a href="/Cake/Create">Add Cake &bigtriangledown;</a>
+                            <a href="/Cake/Create">@Cake.Layout_Cake_Add_Cake &bigtriangledown;</a>
                             <ul>
-                                <li><a href="/Magazin/Create">Add Magazin</a></li>
-                                <li><a href="/Cake/Link">Add Link</a></li>
+                                <li><a href="/Magazin/Create">@Cake.Layout_Cake_Add_Magazin</a></li>
+                                <li><a href="/Cake/Link">@Cake.Layout_Cake_Add_Link</a></li>
                             </ul>
                         </li>
                     }
                     @if (!authService.IsAdmin() && authService.IsAuthenticated())
                     {
-                        <li><a href="/Cake/MyCreation">View my creations</a></li>
+                        <li><a href="/Cake/MyCreation">@Cake.Layout_Cake_My_Creation</a></li>
                     }
                 </ul>
             </nav>

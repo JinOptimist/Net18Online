@@ -117,46 +117,76 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Anime_Link_Text" xml:space="preserve">
-    <value>Here</value>
+  <data name="Admin_Creator_Name" xml:space="preserve">
+    <value>NameCreator</value>
   </data>
-  <data name="Home_AnimeGirlDesc" xml:space="preserve">
-    <value>If wana see anime girl, you can do it</value>
+  <data name="Admin_Delete" xml:space="preserve">
+    <value>Delete</value>
   </data>
-  <data name="Home_Greatings" xml:space="preserve">
-    <value>Hi</value>
+  <data name="Admin_Description" xml:space="preserve">
+    <value>Description</value>
   </data>
-  <data name="Home_Guest" xml:space="preserve">
-    <value>Guest</value>
+  <data name="Admin_Image" xml:space="preserve">
+    <value>Image</value>
   </data>
-  <data name="Home_HomePage" xml:space="preserve">
-    <value>Home</value>
+  <data name="Admin_Name_Cake" xml:space="preserve">
+    <value>Name</value>
   </data>
-  <data name="Home_Login" xml:space="preserve">
-    <value>Login</value>
+  <data name="Admin_Price" xml:space="preserve">
+    <value>Price</value>
   </data>
-  <data name="Home_Logout" xml:space="preserve">
-    <value>Logout</value>
+  <data name="Layout_Cake_Add_Cake" xml:space="preserve">
+    <value>Add cake</value>
   </data>
-  <data name="Home_Registration" xml:space="preserve">
-    <value>Registration</value>
+  <data name="Layout_Cake_Add_Link" xml:space="preserve">
+    <value>Add link</value>
   </data>
-  <data name="Home_Users" xml:space="preserve">
-    <value>Users</value>
+  <data name="Layout_Cake_Add_Magazin" xml:space="preserve">
+    <value>Add magazin</value>
   </data>
-  <data name="Home_CoffeShopDesc" xml:space="preserve">
-    <value>If you want to order coffee and everything that comes with it, then you</value>
+  <data name="Layout_Cake_Admin" xml:space="preserve">
+    <value>Admin</value>
   </data>
-  <data name="Coffe_Link_Text" xml:space="preserve">
-    <value>Here</value>
+  <data name="Layout_Cake_All_Cakes" xml:space="preserve">
+    <value>All cakes</value>
   </data>
-  <data name="Cake_Link_Text" xml:space="preserve">
-    <value>For the cakes</value>
+  <data name="Layout_Cake_Main" xml:space="preserve">
+    <value>Main</value>
   </data>
-  <data name="Home_MoviePosterDesc" xml:space="preserve">
-    <value>Don't know what to watch on the weekend? Then this is the place for</value>
+  <data name="Layout_Cake_My_Creation" xml:space="preserve">
+    <value>My creation</value>
   </data>
-  <data name="MoviePoster_Link_Text" xml:space="preserve">
-    <value>you</value>
+  <data name="Link_Cakes" xml:space="preserve">
+    <value>Cakes</value>
+  </data>
+  <data name="Link_Link" xml:space="preserve">
+    <value>Link</value>
+  </data>
+  <data name="Link_Magazins" xml:space="preserve">
+    <value>Magazins</value>
+  </data>
+  <data name="My_Creation_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="My_Creation_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="My_Creation_Image" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="My_Creation_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="My_Creation_Price" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="My_Creation_Update" xml:space="preserve">
+    <value>Upd</value>
+  </data>
+  <data name="Profile_Avatar" xml:space="preserve">
+    <value>Avatar</value>
+  </data>
+  <data name="Profile_Send" xml:space="preserve">
+    <value>Send</value>
   </data>
 </root>

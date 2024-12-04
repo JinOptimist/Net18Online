@@ -1,5 +1,9 @@
 @model WebPortalEverthing.Models.Ecology.PostCreationViewModel
 
+@section Scripts {
+<script src="~/js/Ecology/PostCreationForm.js"></script>
+}
+
 <form method="post" action="/Ecology/EcologyChat" onsubmit="closeModal()">
     <div>
         <label for="imageUrl">Enter image URL:</label>

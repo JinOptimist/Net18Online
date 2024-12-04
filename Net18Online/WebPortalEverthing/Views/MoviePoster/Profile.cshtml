@@ -5,29 +5,41 @@
 @{
     Layout = "~/Views/Shared/_LayoutMoviePoster.cshtml";
 }
+<div class="profile">
+    <div>
+        <h1>@Model.UserName</h1>
+    </div>
 
-<div>
-    <h1>@Model.UserName</h1>
-</div>
+    <div>
+        Avatar:
+        <img class="avatar" src="@Model.AvatarUrl" />
+    </div>
+    <div>
+        <form action="/MoviePoster/UpdateAvatar" method="post" enctype="multipart/form-data">
+            <input type="file" name="avatar" />
+            <button type="submit">Обновить аватар</button>
+        </form>
+    </div>
 
-<div class="filmDirectors">
-    FilmDirector:
-    @foreach (var filmDirector in Model.FilmDirectors)
-    {
-        <span class="@(filmDirector.IsCreatedWithMovies ? "special" : "")">@filmDirector.Name</span>
-    }
-</div>
-<div>
-    Movies:
-    <div class="movies">
-        @foreach (var movie in Model.Movies)
+    <div class="filmDirectors">
+        FilmDirector:
+        @foreach (var filmDirector in Model.FilmDirectors)
         {
-            <div class="movie">
-                <div class="name">@movie.Name</div>
-                <div class="image-container">
-                    <img src="@movie.Url" alt="movie" />
-                </div>
-            </div>
+            <span class="@(filmDirector.IsCreatedWithMovies ? "special" : "")">@filmDirector.Name</span>
         }
+    </div>
+    <div>
+        Movies:
+        <div class="movies">
+            @foreach (var movie in Model.Movies)
+            {
+                <div class="movie">
+                    <div class="name">@movie.Name</div>
+                    <div class="image-container">
+                        <img src="@movie.Url" alt="movie" />
+                    </div>
+                </div>
+            }
+        </div>
     </div>
 </div>

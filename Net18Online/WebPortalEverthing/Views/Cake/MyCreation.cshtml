@@ -1,4 +1,5 @@
 ﻿@using WebPortalEverthing.Models.Cake.MyCreation
+@using WebPortalEverthing.Localizations
 @model MyCreationViewModel
 
 @{
@@ -7,11 +8,11 @@
 
 <table>
     <tr>
-        <th>Name</th>
-        <th>Image</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>Delete</th>
+        <th>@Cake.My_Creation_Name</th>
+        <th>@Cake.My_Creation_Image</th>
+        <th>@Cake.My_Creation_Description</th>
+        <th>@Cake.My_Creation_Price</th>
+        <th>@Cake.My_Creation_Delete</th>
     </tr>
     @foreach (var cake in Model.Cakes)
     {
@@ -20,7 +21,7 @@
                 <form method="post" action="/Cake/UpdateName">
                     <input name="id" value="@cake.Id" type="hidden" />
                     <input name="newName" value="@cake.Name" />
-                    <button type="submit">upd</button>
+                    <button type="submit">@Cake.My_Creation_Update</button>
                 </form>
             </td>
             <td>
@@ -28,33 +29,33 @@
                     <input name="id" value="@cake.Id" type="hidden" />
                     <input name="pathOldImage" value="@cake.ImageSrc" type="hidden" />
                     <input name="newImage" type="file"  />
-                    <button type="submit">upd</button>
+                    <button type="submit">@Cake.My_Creation_Update</button>
                 </form>
             </td>
             <td>
                 <form method="post" action="/Cake/UpdateDescription">
                     <input name="id" value="@cake.Id" type="hidden" />
                     <input name="newDescription" value="@cake.Description" />
-                    <button type="submit">upd</button>
+                    <button type="submit">@Cake.My_Creation_Update</button>
                 </form>
             </td>
             <td>
                 <form method="post" action="/Cake/UpdatePrice">
                     <input name="id" value="@cake.Id" type="hidden" />
                     <input name="newPrice" value="@cake.Price" />
-                    <button type="submit">upd</button>
+                    <button type="submit">@Cake.My_Creation_Update</button>
                 </form>
             </td>
             <td>
-                <a class="tag" href="/Cake/Remove?id=@cake.Id&pathOldImage=@cake.ImageSrc">Delete</a>
+                <a class="tag" href="/Cake/Remove?id=@cake.Id&pathOldImage=@cake.ImageSrc">@Cake.My_Creation_Delete</a>
             </td>
         </tr>
     }
 </table>
 <table>
     <tr>
-        <th>Name</th>
-        <th>Delete</th>
+        <th>@Cake.My_Creation_Name</th>
+        <th>@Cake.My_Creation_Delete</th>
     </tr>
     @foreach (var magazin in Model.Magazins)
     {
@@ -63,11 +64,11 @@
                 <form method="post" action="/Magazin/UpdateName">
                     <input name="id" value="@magazin.Id" type="hidden" />
                     <input name="newName" value="@magazin.Name" />
-                    <button type="submit">upd</button>
+                    <button type="submit">@Cake.My_Creation_Update</button>
                 </form>
             </td>
             <td>
-                <a class="tag" href="/Magazin/Remove?id=@magazin.Id">Delete</a>
+                <a class="tag" href="/Magazin/Remove?id=@magazin.Id">@Cake.My_Creation_Delete</a>
             </td>
         </tr>
     }
