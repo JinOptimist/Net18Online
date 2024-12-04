@@ -77,7 +77,15 @@ namespace WebPortalEverthing.Localizations {
                 return ResourceManager.GetString("Coffe_Link_Text", resourceCulture);
             }
         }
-        
+
+        public static string MoviePoster_Link_Text
+        {
+            get
+            {
+                return ResourceManager.GetString("MoviePoster_Link_Text", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Если вам хочется полюбоваться на аниме девочек то вас.
         /// </summary>
@@ -86,7 +94,15 @@ namespace WebPortalEverthing.Localizations {
                 return ResourceManager.GetString("Home_AnimeGirlDesc", resourceCulture);
             }
         }
-        
+
+        public static string Home_MoviePosterDesc
+        {
+            get
+            {
+                return ResourceManager.GetString("Home_MoviePosterDesc", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Если вы хотите заказать кофе, и всё что для него прилагается, то вам.
         /// </summary>
