@@ -6,6 +6,8 @@ using WebPortalEverthing.Models.MoviePoster;
 using WebPortalEverthing.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebPortalEverthing.Models.MoviePoster.Profile;
+using WebPortalEverthing.Controllers.AuthAttributes;
+using Microsoft.AspNetCore.Hosting;
 
 namespace WebPortalEverthing.Controllers
 {
@@ -16,17 +18,20 @@ namespace WebPortalEverthing.Controllers
         private IUserRepositryReal _userRepositryReal;
         private WebDbContext _webDbContext;
         private AuthService _authService;
+        private IWebHostEnvironment _webHostEnvironment;
         public MoviePosterController(IMoviePosterRepositoryReal moviePosterRepository,
             WebDbContext webDbContext,
             IUserRepositryReal userRepositryReal,
             AuthService authService,
-            IFilmDirectorRepositoryReal filmDirectorRepository)
+            IFilmDirectorRepositoryReal filmDirectorRepository,
+            IWebHostEnvironment webHostEnvironment)
         {
             _moviePosterRepository = moviePosterRepository;
             _webDbContext = webDbContext;
             _userRepositryReal = userRepositryReal;
             _authService = authService;
             _filmDirectorRepository = filmDirectorRepository;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index(string name, int age)
@@ -161,6 +166,7 @@ namespace WebPortalEverthing.Controllers
             return RedirectToAction("AllPosters");
         }
 
+        [IsAuthenticated]
         public IActionResult Profile()
         {
             var viewModel = new ProfileViewModel();
@@ -168,6 +174,8 @@ namespace WebPortalEverthing.Controllers
             viewModel.UserName = _authService.GetName()!;
 
             var userId = _authService.GetUserId()!.Value;
+
+            viewModel.AvatarUrl = _userRepositryReal.GetAvatarUrl(userId);
 
             viewModel.FilmDirectors = _filmDirectorRepository
                 .GetFilmDirectorWithInfoAboutCreator(userId)
@@ -188,6 +196,29 @@ namespace WebPortalEverthing.Controllers
                 .ToList();
 
             return View(viewModel);
+        }
+
+        [IsAuthenticated]
+        [HttpPost]
+        public IActionResult UpdateAvatar(IFormFile avatar)
+        {
+            var webRootPath = _webHostEnvironment.WebRootPath;
+
+            var userId = _authService.GetUserId()!.Value;
+            var avatarFileName = $"avatar-{userId}.jpg";
+
+            var path = Path.Combine(webRootPath, "images", "avatars", avatarFileName);
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                avatar
+                    .CopyToAsync(fileStream)
+                    .Wait();
+            }
+
+            var avatarUrl = $"/images/avatars/{avatarFileName}";
+            _userRepositryReal.UpdateAvatarUrl(userId, avatarUrl);
+
+            return RedirectToAction("Profile");
         }
 
         public IActionResult ShowCountWithFirstAndLastElementInDb()

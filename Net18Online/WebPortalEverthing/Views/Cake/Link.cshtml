@@ -1,4 +1,5 @@
-﻿@model WebPortalEverthing.Models.CakeLink.CakeAndMagazinLinkViewModel
+﻿@using WebPortalEverthing.Localizations
+@model WebPortalEverthing.Models.CakeLink.CakeAndMagazinLinkViewModel
 
 @{
     Layout = "~/Views/Shared/_LayoutCake.cshtml";
@@ -7,9 +8,9 @@
 <form method="post">
     <table>
         <tr>
-            <th>Cakes</th>
-            <th>Magazins</th>
-            <th>Button link</th>
+            <th>@Cake.Link_Cakes</th>
+            <th>@Cake.Link_Magazins</th>
+            <th>@Cake.Link_Link</th>
         </tr>
         <tr>
             <td>
@@ -19,7 +20,7 @@
                 @Html.DropDownListFor(x => x.MagazinId, Model.Magazins)
             </td>
             <td>
-                <button type="submit">Link</button>
+                <button type="submit">@Cake.Link_Link</button>
             </td>
         </tr>
     </table>

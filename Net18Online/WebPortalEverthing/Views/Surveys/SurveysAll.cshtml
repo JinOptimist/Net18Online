@@ -6,6 +6,10 @@
     Layout = "~/Views/Shared/_LayoutSurveys.cshtml";
 }
 
+@section Scripts {
+    <script src="~/js/Surveys/SurveysAll.js"></script>
+}
+
 <div class="main-content-title">
     <span>Шаблоны опросов</span>
 </div>
@@ -15,6 +19,7 @@
         <div class="survey-group">
             <div class="title-and-actions">
                 <div class="title">
+                    <span class="expander">+</span>
                     <span>@surveyGroup.Title</span>
                     <span class="count">@surveyGroup.Surveys.Count</span>
                 </div>
