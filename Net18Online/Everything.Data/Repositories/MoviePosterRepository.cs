@@ -1,6 +1,7 @@
 ﻿using Everything.Data.Interface.Models;
 using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
+using Everything.Data.Models.SqlRawModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Everything.Data.Repositories
@@ -12,6 +13,7 @@ namespace Everything.Data.Repositories
         IEnumerable<MovieData> GetAllWithoutDirector();
         IEnumerable<MovieData> GetAllWithСreatorsAndFilmDirectors();
         IEnumerable<MovieData> GetAllByCreatorId(int userId);
+        IEnumerable<MoviePosterCountElementInDbAndFirstAndLastElement> GetCountOfElementsInDbAndShowFirstAndLastPosterInfo();
     }
 
     public class MoviePosterRepository : BaseRepository<MovieData>, IMoviePosterRepositoryReal
@@ -59,6 +61,48 @@ namespace Everything.Data.Repositories
                 .Include(x => x.Creator)
                 .Include(x => x.FilmDirector)
                 .ToList();
+        }
+
+        public IEnumerable<MoviePosterCountElementInDbAndFirstAndLastElement> GetCountOfElementsInDbAndShowFirstAndLastPosterInfo()
+        {
+            var sql = @"
+WITH RankedItems AS (
+    SELECT 
+        Name,
+        ImageSrc,
+        ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS RowNum,
+        COUNT(*) OVER () AS [Count] -- Общее количество элементов
+    FROM 
+        Movies
+)
+
+SELECT 
+    [Count],
+    Name,
+    ImageSrc
+FROM 
+    RankedItems
+WHERE 
+    RowNum = 1 -- Первый элемент
+
+UNION ALL
+
+SELECT 
+    [Count],
+    Name,
+    ImageSrc
+FROM 
+    RankedItems
+WHERE 
+    RowNum = (SELECT COUNT(*) FROM RankedItems); -- Последний элемент
+";
+
+            var result = _webDbContext
+                .Database
+                .SqlQueryRaw<MoviePosterCountElementInDbAndFirstAndLastElement>(sql)
+                .ToList();
+
+            return result;
         }
 
         public bool HasSimilarUrl(string url)
