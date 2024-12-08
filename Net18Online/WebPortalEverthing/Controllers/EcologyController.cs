@@ -139,10 +139,17 @@ public class EcologyController : Controller
                 }
             )
             .ToList();
-        return View(ecologyViewModels);
+
+        var viewModel = new PostViewModel
+        {
+            Ecologies = ecologyViewModels,
+            Posts = new List<PostCreationViewModel>()
+        };
+        
+        return View(viewModel);
     }
     
-    [HttpPost]
+    [HttpPost] //Это и есть создание 
     public IActionResult EcologyChat(PostCreationViewModel viewModel, IFormFile imageFile)
     {
         if (CalcCountWorldRepeat.IsEclogyTextHas(viewModel.Text) >= 4)
@@ -157,7 +164,7 @@ public class EcologyController : Controller
 
         var currentUserId = _authService.GetUserId();
         
-        string imageUrl = null;
+        string imageUrl = null; //изначально null для того, чтобы затем получить либо URL, либо путь к загруженному изображению с компьютера. Для того, чтобы  использовать одно из значений в объекте EcologyData
         
         if (imageFile != null && imageFile.Length > 0)
         {
@@ -177,6 +184,11 @@ public class EcologyController : Controller
         {
             imageUrl = viewModel.Url;
         }
+        else
+        {
+            ModelState.AddModelError("", "Please provide either an image URL or upload an image."); 
+            return View("EcologyChat");
+        }
 
         var ecology = new EcologyData
         {
@@ -189,31 +201,7 @@ public class EcologyController : Controller
 
         return RedirectToAction("EcologyChat");
     }
-        
-    [HttpPost]
-    public IActionResult UpdatePost(int id, string url, string text)
-    {
-        _ecologyRepository.UpdatePost(id, url, text);
-        return RedirectToAction("EcologyChat");
-    }
-
-    [HttpPost]
-    public IActionResult Remove(int postId)
-    {
-        var ecology = _ecologyRepository.Get(postId);
-        if (ecology != null)
-        {
-            // Удаление изображения с диска
-            var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, ecology.ImageSrc.TrimStart('/'));
-            if (System.IO.File.Exists(imagePath))
-            {
-                System.IO.File.Delete(imagePath);
-            } 
-            _ecologyRepository.Delete(ecology);
-        } 
-        return RedirectToAction("EcologyChat");
-    }
-
+    
     [HttpPost]
     public IActionResult AddComment(int postId, string commentText)
     {
@@ -232,6 +220,7 @@ public class EcologyController : Controller
     public IActionResult CommentsForPost(int postId)
     {
         var comm = _commentRepositoryReal.GetCommentsByPostId(postId);
+        
         return View(comm);
     }
     
