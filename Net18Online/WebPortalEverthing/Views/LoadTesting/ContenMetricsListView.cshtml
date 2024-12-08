@@ -9,6 +9,10 @@
     Layout = "~/Views/Shared/LoadTesting/_LayoutLoadTesting.cshtml";
 }
 
+@section Scripts {
+    <script src="~/js/LoadTesting/metrics.js"></script>
+}
+
 <div class="content">
     <div class="discription-tipes">
         @foreach( var metric in Model )
@@ -31,6 +35,7 @@
                 <div class="type-container">
                     <img src="~/images/LoadTesting/photo_2024-07-15_09-13-16.jpg" alt="type1" />
                 </div>
+                <button type="button" class="toggle-button-tag-additional-info">Развернуть параметры (toggle)</button>
                 <div class="additional-info">
                     @if( Model != null && Model.Count > 0 )
                     {
