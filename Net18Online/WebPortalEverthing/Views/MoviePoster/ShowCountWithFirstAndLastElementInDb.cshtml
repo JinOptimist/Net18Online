@@ -1,0 +1,22 @@
+﻿@model List<WebPortalEverthing.Models.MoviePoster.MoviePosterCountElementInDbAndFirstAndLastElementViewModel>
+
+@{
+    Layout = "~/Views/Shared/_LayoutMoviePoster.cshtml";
+}
+
+<h>
+    Количество фильмов на сайте: @Model.First().Count
+</h>
+<div class="movies">
+    @foreach (var movie in Model)
+    {
+        <div class="movie">
+            <div class="name">
+                @movie.Name
+            </div>
+            <div class="image-container">
+                <img src="@movie.ImageSrc" />
+            </div>
+        </div>
+    }
+</div>
