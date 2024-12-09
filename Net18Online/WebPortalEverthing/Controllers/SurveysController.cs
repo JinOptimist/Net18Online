@@ -352,6 +352,7 @@ namespace WebPortalEverthing.Controllers
                     .Questions
                     .Select(question => new QuestionViewModel
                     {
+                        Id = question.Id,
                         Title = question.Title,
                         IsRequired = question.IsRequired,
                         AnswerType = question.AnswerType
@@ -375,24 +376,6 @@ namespace WebPortalEverthing.Controllers
             _surveysRepository.UpdateDescription(surveyCreate.Id, surveyCreate.Description);
 
             return RedirectToAction(nameof(SurveysAll));
-        }
-
-        [HttpPost]
-        public ActionResult AddQuestion(SurveyCreateViewModel surveyCreate)
-        {
-            surveyCreate.Questions.Add(new QuestionViewModel()
-            {
-                Title = string.Empty,
-                AnswerType = AnswerType.TextString
-            });
-
-            return View(surveyCreate);
-        }
-
-        [HttpPost]
-        public ActionResult DeleteQuestion(SurveyCreateViewModel surveyCreate)
-        {
-            return View(surveyCreate);
         }
     }
 }
