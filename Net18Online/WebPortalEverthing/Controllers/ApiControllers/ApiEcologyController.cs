@@ -1,19 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
-using Everything.Data.Models.Ecology;
 using Everything.Data.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Everything.Localizations;
 using WebPortalEverthing.Models.Ecology;
 using WebPortalEverthing.Services;
-using Microsoft.AspNetCore.Mvc;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace WebPortalEverthing.ApiControllers
 {
