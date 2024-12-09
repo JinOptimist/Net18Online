@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $('#add-button').click(function () {
         let surveyId = $("#survey-id").val();
-        const url = `/api/ApiSurvey/Create?surveyId=${surveyId}`;
+        const url = `/api/ApiQuestion/Create?surveyId=${surveyId}`;
         $.get(url).then(function (questionId) {
             const questionTemplateBlock = $(".question.template").clone();
             questionTemplateBlock.removeClass("template");
@@ -25,7 +25,7 @@ $(document).ready(function () {
         let value = $(this).val();
         const questionBlock = $(this).closest('.question');
         let questionId = questionBlock.find('.question-id').val();
-        const url = `/api/ApiSurvey/UpdateTitle?id=${questionId}&value=${value}`;
+        const url = `/api/ApiQuestion/UpdateTitle?id=${questionId}&value=${value}`;
         $.get(url);
     }
 
@@ -33,7 +33,7 @@ $(document).ready(function () {
         let value = this.checked;
         const questionBlock = $(this).closest('.question');
         let questionId = questionBlock.find('.question-id').val();
-        const url = `/api/ApiSurvey/UpdateRequired?id=${questionId}&value=${value}`;
+        const url = `/api/ApiQuestion/UpdateRequired?id=${questionId}&value=${value}`;
         $.get(url);
     }
 
@@ -41,14 +41,14 @@ $(document).ready(function () {
         let value = $(this).val();
         const questionBlock = $(this).closest('.question');
         let questionId = questionBlock.find('.question-id').val();
-        const url = `/api/ApiSurvey/UpdateAnswerType?id=${questionId}&value=${value}`;
+        const url = `/api/ApiQuestion/UpdateAnswerType?id=${questionId}&value=${value}`;
         $.get(url);
     }
 
     function onDeleteButtonClick() {
         const questionBlock = $(this).closest('.question');
         let questionId = questionBlock.find('.question-id').val();
-        const url = `/api/ApiSurvey/Delete?id=${questionId}`;
+        const url = `/api/ApiQuestion/Delete?id=${questionId}`;
         $.get(url).then(function (response) {
             if (response) {
                 questionBlock.remove();

@@ -6,11 +6,11 @@ namespace WebPortalEverthing.Controllers.ApiControllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class ApiSurveyController : ControllerBase
+    public class ApiQuestionController : ControllerBase
     {
         private IQuestionRepositoryReal _questionRepository;
 
-        public ApiSurveyController(IQuestionRepositoryReal questionRepository)
+        public ApiQuestionController(IQuestionRepositoryReal questionRepository)
         {
             _questionRepository = questionRepository;
         }
