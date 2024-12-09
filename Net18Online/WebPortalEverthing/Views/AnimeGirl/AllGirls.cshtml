@@ -39,8 +39,9 @@
     </div>
     @foreach (var girl in Model.Girls)
     {
-        <div class="girl">
+        <div class="girl" data-id="@girl.Id">
             <div class="name">
+                <div><i class="icon @(girl.IsLiked ? "like-pushed" : "like")"></i></div>
                 <div class="view-mode">
                     @girl.Name
                 </div>
@@ -67,6 +68,7 @@
                     {
                         <span class="tag">@tag</span>
                     }
+                    <span class="tag">@girl.LikeCount Likes</span>
                     @if (girl.CanDelete)
                     {
                         <a class="tag delete" href="#" data-id="@girl.Id">Delete</a>
