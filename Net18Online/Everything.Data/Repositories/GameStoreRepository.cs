@@ -20,6 +20,7 @@ namespace Everything.Data.Repositories
         bool HasSimilarName(string name);
         UserData GetInfoAboutUser(int? userId);
         IEnumerable<MostPopularGames> GetMostPopularGames();
+        IEnumerable<GameData> GetAllWithStudio();
     }
     public class GameStoreRepository : BaseRepository<GameData>, IGameStoreRepositoryReal
     {
@@ -127,6 +128,15 @@ ORDER BY
             var result = _webDbContext
                 .Database
                 .SqlQueryRaw<MostPopularGames>(sql)
+                .ToList();
+
+            return result;
+        }
+
+        public IEnumerable<GameData> GetAllWithStudio()
+        {
+            var result = _webDbContext.Games
+                .Include(game => game.Studios) 
                 .ToList();
 
             return result;

@@ -52,7 +52,7 @@ namespace WebPortalEverthing.Controllers
 
         public IActionResult Shop()
         {
-            var gameFromDb = _gameStoreRepository.GetAll();
+            var gameFromDb = _gameStoreRepository.GetAllWithStudio();
 
             if (!_gameStoreRepository.Any())
             {
@@ -66,6 +66,7 @@ namespace WebPortalEverthing.Controllers
                 NameGame = dbGame.NameGame,
                 ImageSrc = dbGame.ImageSrc,
                 Cost = dbGame.Cost,
+                Studios = dbGame.Studios?.Name 
             }).ToList();
 
             var shopListViewModel = new ShopListViewModel
@@ -159,18 +160,12 @@ namespace WebPortalEverthing.Controllers
 
             return RedirectToAction("Shop");
         }
-        public IActionResult UpdateName(string newName, int id)
-        {
-            _gameStoreRepository.UpdateName(id, newName);
-            return RedirectToAction("Shop");
-        }
 
         public IActionResult UpdateImage(int id, string url)
         {
             _gameStoreRepository.UpdateImage(id, url);
             return RedirectToAction("Shop");
         }
-
 
         public IActionResult Purchases(int buyerId, int gameId)
         {
@@ -179,11 +174,7 @@ namespace WebPortalEverthing.Controllers
             return RedirectToAction("Shop");
 
         }
-        public IActionResult Remove(int id)
-        {
-            _gameStoreRepository.Delete(id);
-            return RedirectToAction("Library");
-        }
+
         [IsAuthenticated]
         public IActionResult Profile()
         {

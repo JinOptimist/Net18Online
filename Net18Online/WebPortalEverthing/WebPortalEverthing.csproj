@@ -23,6 +23,7 @@
     <Folder Include="wwwroot\images\avatars\" />
     <Folder Include="wwwroot\files\" />
     <Folder Include="wwwroot\images\Ecology\eccologyPosts\" />
+    <Folder Include="wwwroot\images\LoadTesting\avatars\" />
   </ItemGroup>
 
 
@@ -45,21 +46,6 @@
 
 
   <ItemGroup>
-    <Compile Update="Localizations\Cake.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Cake.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Localizations\LoadStuffs.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>LoadStuffs.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Localizations\LocalizationForGame\GameShop.Designer.cs">
-		<DesignTime>True</DesignTime>
-		<AutoGen>True</AutoGen>
-		<DependentUpon>GameShop.resx</DependentUpon>
-	</Compile>
     <Compile Update="Localizations\Coffe.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -70,13 +56,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Girl.resx</DependentUpon>
     </Compile>
-	<Compile Update="Localizations\Home.Designer.cs">
-	    <DependentUpon>Home.resx</DependentUpon>
-	</Compile>
-    <Compile Update="Localizations\LocalizationForGame\HomeGame.Designer.cs">
+    <Compile Update="Localizations\Home.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>HomeGame.resx</DependentUpon>
+      <DependentUpon>Home.resx</DependentUpon>
     </Compile>
     <Compile Update="Localizations\Ecology.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -88,30 +71,6 @@
 
 
   <ItemGroup>
-    <EmbeddedResource Update="Localizations\Cake.En.resx">
-      <Generator></Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Localizations\Cake.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Cake.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Localizations\LoadStuffs.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>LoadStuffs.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Localizations\LoadStuffs.Ru.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Localizations\LocalizationForGame\GameShop.En.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Localizations\LocalizationForGame\GameShop.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>GameShop.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Localizations\LocalizationForGame\HomeGame.En.resx">
-		<Generator>PublicResXFileCodeGenerator</Generator>
-	</EmbeddedResource>
     <EmbeddedResource Update="Localizations\Coffe.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Coffe.Designer.cs</LastGenOutput>
@@ -120,12 +79,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Girl.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-	<EmbeddedResource Update="Localizations\Home.resx">
-		  <LastGenOutput>Home.Designer.cs</LastGenOutput>
-	</EmbeddedResource>
-	  <EmbeddedResource Update="Localizations\LocalizationForGame\HomeGame.resx">
+    <EmbeddedResource Update="Localizations\Home.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>HomeGame.Designer.cs</LastGenOutput>
+      <LastGenOutput>Home.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Localizations\Ecology.resx">
       <Generator>ResXFileCodeGenerator</Generator>
