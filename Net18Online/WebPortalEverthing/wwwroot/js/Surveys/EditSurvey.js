@@ -1,25 +1,9 @@
 $(document).ready(function () {
-    $('#add-button').click(function () {
-        let surveyId = $("#survey-id").val();
-        const url = `/api/ApiQuestion/Create?surveyId=${surveyId}`;
-        $.get(url).then(function (questionId) {
-            const questionTemplateBlock = $(".question.template").clone();
-            questionTemplateBlock.removeClass("template");
-            questionTemplateBlock.find('.question-id').val(questionId);
-            questionTemplateBlock.find('.question-title').change(onSetTitleEvent);
-            questionTemplateBlock.find('.question-required').change(onSetRequiredEvent);
-            questionTemplateBlock.find('.answer-type').change(onSetAnswerTypeEvent);
-            questionTemplateBlock.find('.del-button').click(onDeleteButtonClick);
-
-            let questionsBlock = $('.questions');
-            questionsBlock.append(questionTemplateBlock);
-        });
-    });
-
     $('.question-title').change(onSetTitleEvent);
     $('.question-required').change(onSetRequiredEvent);
     $('.answer-type').change(onSetAnswerTypeEvent);
     $('.del-button').click(onDeleteButtonClick);
+    $('#add-button').click(onAddButtonClick);
 
     function onSetTitleEvent() {
         let value = $(this).val();
@@ -53,6 +37,23 @@ $(document).ready(function () {
             if (response) {
                 questionBlock.remove();
             }
+        });
+    }
+
+    function onAddButtonClick() {
+        let surveyId = $("#survey-id").val();
+        const url = `/api/ApiQuestion/Create?surveyId=${surveyId}`;
+        $.get(url).then(function (questionId) {
+            const questionTemplateBlock = $(".question.template").clone();
+            questionTemplateBlock.removeClass("template");
+            questionTemplateBlock.find('.question-id').val(questionId);
+            questionTemplateBlock.find('.question-title').change(onSetTitleEvent);
+            questionTemplateBlock.find('.question-required').change(onSetRequiredEvent);
+            questionTemplateBlock.find('.answer-type').change(onSetAnswerTypeEvent);
+            questionTemplateBlock.find('.del-button').click(onDeleteButtonClick);
+
+            let questionsBlock = $('.questions');
+            questionsBlock.append(questionTemplateBlock);
         });
     }
 });
