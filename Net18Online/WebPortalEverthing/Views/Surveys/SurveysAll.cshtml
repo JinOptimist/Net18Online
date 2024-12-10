@@ -19,9 +19,11 @@
         <div class="survey-group">
             <div class="title-and-actions">
                 <div class="title">
-                    <span class="expander">+</span>
+                    <span>
+                        <i class="icon arrow-right"></i>
+                    </span>
                     <span>@surveyGroup.Title</span>
-                    <span class="count">@surveyGroup.Surveys.Count</span>
+                    <span class="badge rounded-pill text-bg-primary mx-1">@surveyGroup.Surveys.Count</span>
                 </div>
                 <div class="actions">
                     @if (surveyGroup.IsAllowSurveyCreation)

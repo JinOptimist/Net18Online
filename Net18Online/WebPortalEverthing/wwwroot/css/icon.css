@@ -15,3 +15,11 @@
 .icon.like-pushed::before {
     background-image: url('/images/icon/favorite_24_pushed.svg');
 }
+
+.icon.arrow-down::before {
+    background-image: url('/images/icon/keyboard_arrow_down_24.svg');
+}
+
+.icon.arrow-right::before {
+    background-image: url('/images/icon/keyboard_arrow_right_24.svg');
+}
