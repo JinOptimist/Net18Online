@@ -53,7 +53,17 @@ namespace WebPortalEverthing.Controllers
                 .Select(GetSurveyGroupViewModelFromData)
                 .ToList();
 
-            return View(surveyGroupsViewModels);
+            var surveyExpandGroups = HttpContext.Request.Cookies["survey-expand-groups"];
+            var isExpandGroups = false;
+            bool.TryParse(surveyExpandGroups, out isExpandGroups);
+
+            var viewModel = new SurveysAllViewModel()
+            {
+                SurveyGroups = surveyGroupsViewModels,
+                IsExpandGroups = isExpandGroups
+            };
+
+            return View(viewModel);
         }
 
         private SurveyGroupViewModel GetSurveyGroupViewModelFromData(ISurveyGroupData surveyGroup)
