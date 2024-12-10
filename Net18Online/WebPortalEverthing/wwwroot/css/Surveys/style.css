@@ -121,7 +121,6 @@ header .logo img {
     max-height: 300px;
     overflow-y: auto;
     border-top: 1px #ccc solid;
-    display: none;
 }
 
 .survey-content {
