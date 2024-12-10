@@ -14,6 +14,11 @@ namespace Everything.Data.Repositories.Surveys
         {
         }
 
+        public override int Add(QuestionData data)
+        {
+            throw new NotImplementedException($"Use method {nameof(Create)} to create a new Question");
+        }
+
         public int Create(int surveyId)
         {
             var survey = _webDbContext.Surveys.First(x => x.Id == surveyId);
@@ -26,7 +31,10 @@ namespace Everything.Data.Repositories.Surveys
                 Survey = survey
             };
 
-            return Add(data);
+            _dbSet.Add(data);
+            _webDbContext.SaveChanges();
+            
+            return data.Id;
         }
 
         public void UpdateTitle(int id, string value)
