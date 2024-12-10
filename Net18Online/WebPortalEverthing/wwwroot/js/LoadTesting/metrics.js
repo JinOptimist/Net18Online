@@ -1,6 +1,9 @@
 ﻿//alert("Hellow Russian");
 $(".discription-type .type-container img").click(function () {
-  console.log("Hellow/==== Russian");
+  console.log("Image click/ Hellow/==== Russian");
+  $(this) //элемент, по которому кликнули
+    .closest(".type-container")
+    .toggleClass("full");
 });
 
 $(".toggle-button-tag-additional-info").click(function () {
