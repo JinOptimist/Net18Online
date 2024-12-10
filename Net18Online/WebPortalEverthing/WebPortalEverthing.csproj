@@ -66,6 +66,16 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Ecology.resx</DependentUpon>
     </Compile>
+    <Compile Update="Localizations\MoviePoster.En.Designer.cs">
+      <DependentUpon>MoviePoster.En.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Localizations\MoviePoster.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MoviePoster.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 
@@ -86,6 +96,14 @@
     <EmbeddedResource Update="Localizations\Ecology.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Ecology.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localizations\MoviePoster.En.resx">
+      <LastGenOutput>MoviePoster.En.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localizations\MoviePoster.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MoviePoster.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

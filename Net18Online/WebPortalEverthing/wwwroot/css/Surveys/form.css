@@ -3,7 +3,7 @@
 }
 
 input {
-    margin: 3px;
+    margin: 3px 0px;
     border-color: #6d797678;
     border-radius: 5px;
 }
@@ -24,14 +24,9 @@ input {
     padding: 10px;
 }
 
-.question-template {
+.question.template {
     display: none;
 }
-
-    .question-template .answer-option {
-        display: flex;
-        justify-content: space-between;
-    }
 
 .question .answer-option {
     display: flex;

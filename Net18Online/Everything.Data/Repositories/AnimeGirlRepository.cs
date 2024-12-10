@@ -15,6 +15,14 @@ namespace Everything.Data.Repositories
         bool IsNameUniq(string name);
         IEnumerable<GirlData> GetAllByAuthorId(int userId);
         IEnumerable<GirlsWithDuplicateInfo> GetGirlsWithDuplicateInfo();
+
+        /// <summary>
+        /// Return true if girl wasn't like. And now she is
+        /// Return false if girl was liked but not is not
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        bool LikeGirl(int girlId, int userId);
     }
 
     public class AnimeGirlRepository : BaseRepository<GirlData>, IAnimeGirlRepositoryReal
@@ -52,6 +60,7 @@ namespace Everything.Data.Repositories
         public IEnumerable<GirlData> GetAllWithCreatorsAndManga()
         {
             return WithCreatorsAndManga()
+                .Include(x => x.UsersWhoLikeIt)
                 .ToList();
         }
 
@@ -137,6 +146,29 @@ FROM Girls G
             return _dbSet
                 .Include(x => x.Creator)
                 .Include(x => x.Manga);
+        }
+
+        public bool LikeGirl(int girlId, int userId)
+        {
+            var girl = _dbSet
+                .Include(x => x.UsersWhoLikeIt)
+                .First(x => x.Id == girlId);
+            var user = _webDbContext.Users.First(x => x.Id == userId);
+
+            var isUserAlreadyLikeTheGirl = girl
+                .UsersWhoLikeIt
+                .Any(u => u.Id == userId);
+
+            if (isUserAlreadyLikeTheGirl)
+            {
+                girl.UsersWhoLikeIt.Remove(user);
+                _webDbContext.SaveChanges();
+                return false;
+            }
+
+            girl.UsersWhoLikeIt.Add(user);
+            _webDbContext.SaveChanges();
+            return true;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
 using Everything.Data.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Localizations;
@@ -30,7 +31,7 @@ namespace WebPortalEverthing.Controllers.ApiControllers
             {
                 return false;
             }
-            
+
             _animeGirlRepository.UpdateName(id, newName);
             return true;
         }
@@ -69,6 +70,14 @@ namespace WebPortalEverthing.Controllers.ApiControllers
             };
 
             return viewModel;
+        }
+
+        [Authorize]
+        public bool Like(int girlId)
+        {
+            var userId = _authService.GetUserId()!.Value;
+
+            return _animeGirlRepository.LikeGirl(girlId, userId);
         }
     }
 }
