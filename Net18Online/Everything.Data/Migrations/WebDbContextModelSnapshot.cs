@@ -1279,23 +1279,23 @@ namespace Everything.Data.Migrations
                 });
 
             modelBuilder.Entity("Everything.Data.Models.UserEcologyLikesData", b =>
-                {
-                    b.HasOne("Everything.Data.Models.EcologyData", "EcologyData")
-                        .WithMany("UsersWhoLikeIt")
-                        .HasForeignKey("EcologyDataId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            {
+                b.HasOne("Everything.Data.Models.EcologyData", "EcologyData")
+                    .WithMany("UsersWhoLikeIt")
+                    .HasForeignKey("EcologyDataId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("Everything.Data.Models.UserData", "User")
-                        .WithMany("PostsWhichUsersLike")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.HasOne("Everything.Data.Models.UserData", "User")
+                    .WithMany("PostsWhichUsersLike")
+                    .HasForeignKey("UserId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("EcologyData");
+                b.Navigation("EcologyData");
 
-                    b.Navigation("User");
-                });
+                b.Navigation("User");
+            });
 
             modelBuilder.Entity("Everything.Data.Models.Surveys.TakingUserSurveyData", b =>
                 {
@@ -1465,6 +1465,10 @@ namespace Everything.Data.Migrations
                     b.Navigation("CreatedMovies");
 
                     b.Navigation("Ecologies");
+
+                    b.Navigation("PassingSurveys");
+
+                    b.Navigation("PostsWhichUsersLike");
 
                     b.Navigation("СreatorSurveyGroups");
                 });
