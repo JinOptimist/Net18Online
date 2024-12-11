@@ -111,18 +111,6 @@ namespace WebPortalEverthing.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Delete(int id)
-        {
-            _coffeShopRepository.Delete(id);
-            return RedirectToAction("Index");
-        }
-
-        public IActionResult UpdateCoffe(int id, string name)
-        {
-            _coffeShopRepository.UpdateCoffeName(id, name);
-            return RedirectToAction("Index");
-        }
-
         public IActionResult UpdateCost(int id, decimal cost)
         {
             _coffeShopRepository.UpdateCost(id, cost);
