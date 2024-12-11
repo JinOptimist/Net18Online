@@ -198,6 +198,19 @@ namespace Everything.Data
                 .WithMany(x => x.Comments)
                 .OnDelete(DeleteBehavior.NoAction)
                 .HasForeignKey(x => x.UserId);
+            
+            modelBuilder.Entity<UserEcologyLikesData>().HasKey(ue => new { ue.UserId, ue.EcologyDataId });
+            modelBuilder.Entity<UserEcologyLikesData>()
+                .HasOne(ue => ue.User)
+                .WithMany(u => u.PostsWhichUsersLike)
+                .HasForeignKey(ue => ue.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<UserEcologyLikesData>()
+                .HasOne(ue => ue.EcologyData)
+                .WithMany(ec => ec.UsersWhoLikeIt)
+                .HasForeignKey(ue => ue.EcologyDataId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<AnimeData>()
                 .HasMany(x => x.Reviews)

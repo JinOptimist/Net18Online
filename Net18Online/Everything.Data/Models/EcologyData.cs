@@ -14,5 +14,6 @@ namespace Everything.Data.Models
         public int ForMainPage { get; set; } = 0;
         public UserData User { get; set; }
         public IEnumerable<CommentData>? Comments { get; set; }
+        public ICollection<UserEcologyLikesData> UsersWhoLikeIt { get; set; } = new List<UserEcologyLikesData>();
     }
 }
