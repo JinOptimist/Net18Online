@@ -1,6 +1,6 @@
 ﻿@using WebPortalEverthing.Models.Surveys
 
-@model List<SurveyGroupViewModel>
+@model SurveysAllViewModel
 
 @{
     Layout = "~/Views/Shared/_LayoutSurveys.cshtml";
@@ -13,14 +13,20 @@
 <div class="main-content-title">
     <span>Шаблоны опросов</span>
 </div>
-@foreach (var surveyGroup in Model)
+<div>
+    <div class="form-check form-switch">
+        <input class="check-expand-groups form-check-input" type="checkbox" checked="@Model.IsExpandGroups">
+        <label class="form-check-label">Разворачивать содержимое всех групп</label>
+    </div>
+</div>
+@foreach (var surveyGroup in Model.SurveyGroups)
 {
     <div class="survey-groups">
         <div class="survey-group">
             <div class="title-and-actions">
                 <div class="title">
                     <span>
-                        <i class="icon arrow-right"></i>
+                        <i class="icon @(@Model.IsExpandGroups ? "arrow-down" : "arrow-right")"></i>
                     </span>
                     <span>@surveyGroup.Title</span>
                     <span class="badge rounded-pill text-bg-primary mx-1">@surveyGroup.Surveys.Count</span>
@@ -32,7 +38,7 @@
                     }
                 </div>
             </div>
-            <div class="survey-group-content">
+            <div class="survey-group-content d-@(Model.IsExpandGroups ? "block" : "none")">
                 @foreach (var survey in surveyGroup.Surveys)
                 {
                     <div class="survey-content">
