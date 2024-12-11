@@ -55,5 +55,12 @@ namespace Everything.Data.Repositories.Surveys
 
             _webDbContext.SaveChanges();
         }
+
+        public List<QuestionData> GetQuestionsForSurvey(int surveyId)
+        {
+            return _dbSet
+                .Where(q => q.Survey.Id == surveyId)
+                .ToList();
+        }
     }
 }
