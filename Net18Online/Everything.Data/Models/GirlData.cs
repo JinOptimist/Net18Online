@@ -9,5 +9,7 @@ namespace Everything.Data.Models
         
         public virtual UserData? Creator { get; set; }
         public virtual MangaData? Manga { get; set; }
+
+        public virtual List<UserData> UsersWhoLikeIt { get; set; }
     }
 }

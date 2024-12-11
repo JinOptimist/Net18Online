@@ -46,6 +46,7 @@ namespace WebPortalEverthing.Controllers
             return View(model);
         }
 
+        [IsAuthenticated]
         public IActionResult AllGirls()
         {
             if (!_animeGirlRepository.Any())
@@ -53,13 +54,9 @@ namespace WebPortalEverthing.Controllers
                 GenerateDefaultAnimeGirl();
             }
 
-            var currentUserId = _authService.GetUserId();
-            if (currentUserId is null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            var currentUserId = _authService.GetUserId()!;
 
-            var user = _userRepositryReal.Get(currentUserId.Value);
+            var user = _userRepositryReal.Get(currentUserId.Value)!;
 
             var girlsFromDb = _animeGirlRepository.GetAllWithCreatorsAndManga();
 
@@ -74,7 +71,9 @@ namespace WebPortalEverthing.Controllers
                         CreatorName = dbGirl.Creator?.Login ?? "Неизвестный",
                         MangaName = dbGirl.Manga?.Title ?? "Из фанфика",
                         CanDelete = dbGirl.Creator is null
-                            || dbGirl.Creator?.Id == currentUserId
+                            || dbGirl.Creator?.Id == currentUserId,
+                        LikeCount = dbGirl.UsersWhoLikeIt.Count(),
+                        IsLiked = dbGirl.UsersWhoLikeIt.Any(x => x.Id == user.Id)
                     }
                 )
                 .ToList();
