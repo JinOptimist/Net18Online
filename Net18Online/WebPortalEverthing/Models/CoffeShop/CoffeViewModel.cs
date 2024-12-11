@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
 
-        public string Brand { get; set; }
+        public List<UsedBrandsWithoutDuplicatesViewModel> Brand { get; set; }
 
         public string Url { get; set; }
 

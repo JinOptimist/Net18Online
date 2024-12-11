@@ -46,6 +46,16 @@ namespace WebPortalEverthing.Controllers
         {
             var valuesCoffeFromDb = _coffeShopRepository.GetAllWithCreatorsAndBrand();
 
+            var coffeBrands = _coffeShopRepository
+                .GetUsedBrandsWithoutDuplicates()
+                .Select(db => new UsedBrandsWithoutDuplicatesViewModel
+                {
+                    Id = db.Id,
+                    Brand = db.Brand,
+                    CoffeCount = db.CoffeCount,
+                })
+                .ToList();
+
             var userId = _authService.GetUserId();
 
             var viewModels = valuesCoffeFromDb
@@ -57,7 +67,7 @@ namespace WebPortalEverthing.Controllers
                         Url = coffeFromDb.Url,
                         Cost = coffeFromDb.Cost,
                         CreatorName = coffeFromDb.Creator?.Login ?? "Неизвестный",
-                        Brand = coffeFromDb.Brand?.Name ?? "MaxWell",
+                        Brand = coffeBrands,
                         CanDeleteOrUpdate = coffeFromDb.Creator is null
                             || coffeFromDb.Creator?.Id == userId
                     }

@@ -6,7 +6,7 @@ namespace Everything.Data.Models
     {
         public string Name { get; set; }
 
-        public string Company { get; set; }
+        public string? Company { get; set; }
 
         public virtual List<CoffeData> Coffe { get; set; } = new List<CoffeData>();
     }

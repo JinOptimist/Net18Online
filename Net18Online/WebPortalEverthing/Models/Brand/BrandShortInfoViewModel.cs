@@ -8,7 +8,7 @@ namespace WebPortalEverthing.Models.Brand
 
         public string Name { get; set; }
 
-        public string Company { get; set; }
+        public string? Company { get; set; }
 
         public List<CoffeNameAndIdViewModel> CoffeList { get; set; } = new();
     }

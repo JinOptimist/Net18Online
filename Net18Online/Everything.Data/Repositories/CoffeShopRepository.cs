@@ -1,5 +1,6 @@
 ﻿using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
+using Everything.Data.Models.SqlRawModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Everything.Data.Repositories
@@ -9,7 +10,7 @@ namespace Everything.Data.Repositories
         void Create(CoffeData dataCoffe, int currentUserId, int brandId);
         IEnumerable<CoffeData> GetAllWithCreatorsAndBrand();
         IEnumerable<CoffeData> GetAllByCreatorId(int creatorId);
-
+        public IEnumerable<GetUsedBrandsWithoutDuplicates> GetUsedBrandsWithoutDuplicates();
     }
 
     public class CoffeShopRepository : BaseRepository<CoffeData>, IKeyCoffeShopRepository
@@ -27,6 +28,26 @@ namespace Everything.Data.Repositories
             dataCoffe.Brand = brand;
 
             Add(dataCoffe);
+        }
+
+        public IEnumerable<GetUsedBrandsWithoutDuplicates> GetUsedBrandsWithoutDuplicates()
+        {
+            var sql = @"
+SELECT 
+    B.Id,
+    B.[Name] AS Brand,
+    COUNT(C.Id) AS CoffeCount
+FROM Brands B
+RIGHT JOIN Coffe C 
+    ON B.Id = C.BrandId
+GROUP BY B.Id, B.[Name];";
+
+            var result = _webDbContext
+                .Database
+                .SqlQueryRaw<GetUsedBrandsWithoutDuplicates>(sql)
+                .ToList();
+
+            return result;
         }
 
         public IEnumerable<CoffeData> GetAllByCreatorId(int creatorId)
