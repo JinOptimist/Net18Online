@@ -117,6 +117,16 @@ namespace Everything.Data
                 .WithOne(x => x.Survey)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<TakingUserSurveyData>()
+                .HasOne(x => x.User)
+                .WithMany(x => x.PassingSurveys)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<TakingUserSurveyData>()
+                .HasOne(x => x.Survey)
+                .WithMany(x => x.PassingUsers)
+                .OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<UserData>()
                 .HasMany(x => x.СreatorSurveyGroups)
                 .WithOne(x => x.СreatorUser)
