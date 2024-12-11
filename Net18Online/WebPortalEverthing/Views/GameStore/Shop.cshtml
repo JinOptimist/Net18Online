@@ -3,6 +3,9 @@
 @using WebPortalEverthing.Localizations.LocalizationForGame
 @model ShopListViewModel
 @inject AuthService authService
+@section Scripts {
+    <script src="~/js/GameShop/Shop.js"></script>
+}
 
 @{
     Layout = "~/Views/Shared/_LayoutGameStore.cshtml";
@@ -10,46 +13,115 @@
 
 <div class="content">
     <div class="title">@GameShop.Shop_Header</div>
-    @foreach (var game in Model.Games)
-    {
-        <div class="shop">
-            <div class="game-block">
-                <div class="name">
-                    @if (authService.IsAdmin())
-                    {
-                        <form method="post" action="/GameStore/UpdateName">
-                            <input name="id" value="@game.Id" type="hidden" />
-                            <input name="newName" value="@game.NameGame" />
-                            <button type="submit">upd</button>
-                        </form>
-                    }
-                    else
-                    {
-                        <div class="name">@game.NameGame</div>
-                    }
-                </div>
-                <div class="image-container">
-                    <img src="@game.ImageSrc" alt="Game">
-                </div>
-                <div class="info">
-                    @if (authService.IsAdmin())
-                    {
-                        <form method="post" action="/GameStore/UpdateImage">
-                            <input name="id" value="@game.Id" type="hidden" />
-                            <input name="url" />
-                            <button type="submit">new image</button>
-                        </form>
-                        <a href="/GameStore/Remove?id=@game.Id">Delete</a>
-                    }
-                    else
-                    {
-                        <span>@GameShop.Shop_Cost <strong>@game.Cost</strong></span>
-                        <a href="/GameStore/Purchases?buyerId=@authService.GetUserId()&gameId=@game.Id">@GameShop.Shop_Buy</a>
-                    }                    
+
+
+   @if(authService.IsAdmin()){
+        <div class="game-block template">
+            <div class="name">
+                    <div class="view-mode">
+                        #
+                    </div>
+                    <div class="edit-mode">
+                        <input class="game-id" name="id" value="0" type="hidden" />
+                        <input class="new-game-name" name="newName" value="#" />
+                        <button class="update-game-name-button" type="button">upd</button>
+                    </div>
+               
+            </div>
+            <div class="image-container">
+                <img src="#" alt="Game">
+            </div>
+            <button type="button" class="toggle-tags">...</button>
+            <div class="info">
+
+                    <form method="post" action="/GameStore/UpdateImage">
+                        <input name="id" value="#" type="hidden" />
+                        <input name="url" />
+                        <button type="submit">new image</button>
+                    </form>
+                    <a class="tag delete" href="#" data-id="#">Delete</a>
+
+                    <span class="tag cost">@GameShop.Shop_Cost <strong>#</strong></span>
+                    <span class="tag studios">Studios:<strong>#</strong></span>
+                    <a class="tag" href="/GameStore/Purchases?buyerId=@authService.GetUserId()&gameId=#">@GameShop.Shop_Buy</a>
+                
             </div>
         </div>
-    </div>
+   }
+
+
+    @foreach (var game in Model.Games)
+    {
+        <div class="game-block">
+            <div class="name">
+                @if (authService.IsAdmin())
+                {
+                    <div class="view-mode">
+                        @game.NameGame
+                    </div>
+                    <div class="edit-mode">
+                        <input class="game-id" name="id" value="@game.Id" type="hidden" />
+                        <input class="new-game-name" name="newName" value="@game.NameGame" />
+                        <button class="update-game-name-button" type="button">upd</button>
+                    </div>
+                }
+                else
+                {
+                    <div class="name">@game.NameGame</div>
+                }
+            </div>
+            <div class="image-container">
+                <img src="@game.ImageSrc" alt="Game">
+            </div>
+            <button type="button" class="toggle-tags">...</button>
+            <div class="info">
+                @if (authService.IsAdmin())
+                {
+                    <form method="post" action="/GameStore/UpdateImage">
+                        <input name="id" value="@game.Id" type="hidden" />
+                        <input name="url" />
+                        <button type="submit">new image</button>
+                    </form>
+                    <a class="tag delete" href="#" data-id="@game.Id">Delete</a>
+                }
+                else
+                {
+                    <span class="tag">@GameShop.Shop_Cost <strong>@game.Cost</strong></span>
+                    <span class="tag">Studios:<strong>@game.Studios</strong></span>
+                    <a class="tag" href="/GameStore/Purchases?buyerId=@authService.GetUserId()&gameId=@game.Id">@GameShop.Shop_Buy</a>
+                }
+            </div>
+        </div>
     }
+
+    @if (authService.IsAdmin())
+    {
+        <div class="game-block create">
+            <div class="name">                
+                <div class="edit-mode">                   
+                    <input class="new-game-name" name="newName" placeholder="game name" />                    
+                </div>                
+            </div>
+            <div class="image-container">
+                <img src="/images/GameStore/defaultgame.jpg" alt="Game">
+            </div>            
+            <div class="info create">
+                <form method="post" action="/GameStore/UpdateImage">
+                    <input class="new-game-url" name="url" placeholder="game url"/>
+                    
+                </form>              
+                @* <span class="tag">@GameShop.Shop_Cost <strong>@game.Cost</strong></span> *@
+                <select class="cost">
+                    <option value="1">10</option>
+                    <option value="2">20</option>
+                    <option value="3">30</option>
+                    <option value="4">40</option>
+                </select>                
+                <button class="create-game-button" type="button">create new game</button>
+            </div>
+        </div>
+    }
+
 
 
 </div>
