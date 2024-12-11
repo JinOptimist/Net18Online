@@ -110,15 +110,28 @@ namespace WebPortalEverthing.Controllers
 
         private SurveyActionViewModel? GetSurveyActionModelFromData(ISurveyData survey)
         {
-            // Пока что придумана одна кнопка, в будующем будет несколько
-            var buttonTakeSurvey = new SurveyActionViewModel()
+            if (!_authService.IsAuthenticated())
             {
-                Title = "Пройти"
+                return null;
+            }
+
+            var buttonEdit = new SurveyActionViewModel()
+            {
+                Title = "Редактировать",
+                Href = $"Edit?idSurvey={survey.Id}"
             };
 
+            var buttonTakeSurvey = new SurveyActionViewModel()
+            {
+                Title = "Пройти",
+                Href = $"/TakingSurvey/Index?surveyId={survey.Id}"
+            };
+
+            // Хак с id-шниками статусов, позже будет сделано правильно
             return survey.IdStatus switch
             {
-                0 => buttonTakeSurvey,
+                1 => buttonEdit,
+                2 => buttonTakeSurvey,
                 _ => null
             };
         }

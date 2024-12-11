@@ -31,7 +31,7 @@ namespace Everything.Data.Models
         public virtual List<FilmDirectorData> CreatedFilmDirectors { get; set; } = new();
         public virtual List<CakeData> CreatedCakes { get; set; } = new();
         public virtual List<MagazinData> CreatedMagazins { get; set; } = new();
-
+        public virtual List<TakingUserSurveyData> PassingSurveys { get; set; } = new();
         public virtual List<GirlData> GirlsWhichUsersLike { get; set; }
 
         public virtual List<GameData> GameWhichUsersLike { get; set; }

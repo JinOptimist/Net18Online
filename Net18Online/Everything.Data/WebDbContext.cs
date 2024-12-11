@@ -57,6 +57,7 @@ namespace Everything.Data
         public DbSet<SurveyGroupData> SurveyGroups { get; set; }
         public DbSet<QuestionData> Questions { get; set; }
         public DbSet<DocumentData> Documents { get; set; }
+        public DbSet<TakingUserSurveyData> TakingUserSurveys { get; set; }
         #endregion
 
         public DbSet<DndClassData> DndClasses { get; set; }
@@ -116,6 +117,16 @@ namespace Everything.Data
             modelBuilder.Entity<SurveyData>()
                 .HasMany(x => x.Questions)
                 .WithOne(x => x.Survey)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<TakingUserSurveyData>()
+                .HasOne(x => x.User)
+                .WithMany(x => x.PassingSurveys)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<TakingUserSurveyData>()
+                .HasOne(x => x.Survey)
+                .WithMany(x => x.PassingUsers)
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<UserData>()
