@@ -52,12 +52,15 @@ namespace WebPortalEverthing.Controllers
 
         public IActionResult Shop()
         {
-            var gameFromDb = _gameStoreRepository.GetAll();
+            var gameFromDb = _gameStoreRepository.GetAllWithStudio();
 
             if (!_gameStoreRepository.Any())
             {
                 //GenerateDefaultGame();
             }
+
+            var userId = _authService.GetUserId()!;
+            var user = _userRepositryReal.Get(userId.Value)!;
 
             var shopViewModels = gameFromDb.Select(dbGame =>
             new ShopViewModel
@@ -66,6 +69,11 @@ namespace WebPortalEverthing.Controllers
                 NameGame = dbGame.NameGame,
                 ImageSrc = dbGame.ImageSrc,
                 Cost = dbGame.Cost,
+                Studios = dbGame.Studios?.Name, 
+                LikeCount = dbGame.UsersWhoLikedGame.Count(),
+                IsLiked = dbGame.UsersWhoLikedGame.Any(x => x.Id == user.Id),
+                DislikeCount = dbGame.UsersWhoDislikedGame.Count(),
+                IsDisliked = dbGame.UsersWhoDislikedGame.Any(x => x.Id == user.Id),
             }).ToList();
 
             var shopListViewModel = new ShopListViewModel
@@ -159,18 +167,12 @@ namespace WebPortalEverthing.Controllers
 
             return RedirectToAction("Shop");
         }
-        public IActionResult UpdateName(string newName, int id)
-        {
-            _gameStoreRepository.UpdateName(id, newName);
-            return RedirectToAction("Shop");
-        }
 
         public IActionResult UpdateImage(int id, string url)
         {
             _gameStoreRepository.UpdateImage(id, url);
             return RedirectToAction("Shop");
         }
-
 
         public IActionResult Purchases(int buyerId, int gameId)
         {
@@ -179,11 +181,7 @@ namespace WebPortalEverthing.Controllers
             return RedirectToAction("Shop");
 
         }
-        public IActionResult Remove(int id)
-        {
-            _gameStoreRepository.Delete(id);
-            return RedirectToAction("Library");
-        }
+
         [IsAuthenticated]
         public IActionResult Profile()
         {

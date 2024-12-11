@@ -11,7 +11,8 @@ namespace Everything.Data.Repositories
         IEnumerable<EcologyData>GetAllWithUsersAndComments();
     
         void SetForMainPage(Type postId);
-    
+        
+        bool LikeEcology(int ecologyId, int userId);
     }
 
     public class EcologyRepository : BaseRepository<EcologyData>, IEcologyRepositoryReal
@@ -45,6 +46,7 @@ namespace Everything.Data.Repositories
             return _dbSet
                 .Include(x => x.User)
                 .Include(x => x.Comments)
+                .Include(x => x.UsersWhoLikeIt)
                 .ToList();
         }
    
@@ -58,6 +60,36 @@ namespace Everything.Data.Repositories
             ecology.Comments = comments;
 
             Add(ecology);
+        }
+        
+        public bool LikeEcology(int ecologyId, int userId)
+        {
+            var ecology = _dbSet
+                .Include(x => x.UsersWhoLikeIt)
+                .First(x => x.Id == ecologyId);
+            var user = _webDbContext.Users.First(x => x.Id == userId);
+
+            var isUserAlreadyLikeTheEcology = ecology
+                .UsersWhoLikeIt
+                .Any(ue => ue.UserId == userId);
+
+            if (isUserAlreadyLikeTheEcology)
+            {
+                var userEcology = ecology.UsersWhoLikeIt.First(ue => ue.UserId == userId);
+                ecology.UsersWhoLikeIt.Remove(userEcology); // Удаляем объект UserEcologyLikesData
+                _webDbContext.SaveChanges();
+                return false;
+            }
+
+            ecology.UsersWhoLikeIt
+                .Add(new UserEcologyLikesData
+                {
+                    UserId = userId,
+                    EcologyDataId = ecologyId, 
+                    User = user
+                });
+            _webDbContext.SaveChanges();
+            return true;
         }
     }
 }    

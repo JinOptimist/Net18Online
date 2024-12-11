@@ -17,6 +17,7 @@ namespace Everything.Data.Models
         public Role Role { get; set; }
 
         public IEnumerable<EcologyData>? Ecologies { get; set; }
+        public ICollection<UserEcologyLikesData> PostsWhichUsersLike { get; set; } = new List<UserEcologyLikesData>();
         public IEnumerable<CommentData>? Comments { get; set; }
 
         public virtual List<SurveyGroupData> СreatorSurveyGroups { get; set; } = new();
@@ -32,5 +33,9 @@ namespace Everything.Data.Models
         public virtual List<MagazinData> CreatedMagazins { get; set; } = new();
         public virtual List<TakingUserSurveyData> PassingSurveys { get; set; } = new();
         public virtual List<GirlData> GirlsWhichUsersLike { get; set; }
+
+        public virtual List<GameData> GameWhichUsersLike { get; set; }
+        public virtual List<GameData> GameWhichUsersDislike { get; set; }
+        public virtual List<ChatMessageData> ChatMessages { get; set;} = new();
     }
 }

@@ -62,6 +62,8 @@ namespace Everything.Data
 
         public DbSet<DndClassData> DndClasses { get; set; }
 
+        public DbSet<ChatMessageData> ChatMessages { get; set; }
+
         public WebDbContext() { }
 
         public WebDbContext(DbContextOptions<WebDbContext> contextOptions)
@@ -131,6 +133,11 @@ namespace Everything.Data
                 .HasMany(x => x.СreatorSurveyGroups)
                 .WithOne(x => x.СreatorUser)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<UserData>()
+                .HasMany(x => x.ChatMessages)
+                .WithOne(x => x.User)
+                .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<CoffeData>()
                 .HasOne(x => x.Creator)
@@ -210,6 +217,19 @@ namespace Everything.Data
                 .OnDelete(DeleteBehavior.NoAction)
                 .HasForeignKey(x => x.UserId);
 
+            modelBuilder.Entity<UserEcologyLikesData>().HasKey(ue => new { ue.UserId, ue.EcologyDataId });
+            modelBuilder.Entity<UserEcologyLikesData>()
+                .HasOne(ue => ue.User)
+                .WithMany(u => u.PostsWhichUsersLike)
+                .HasForeignKey(ue => ue.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<UserEcologyLikesData>()
+                .HasOne(ue => ue.EcologyData)
+                .WithMany(ec => ec.UsersWhoLikeIt)
+                .HasForeignKey(ue => ue.EcologyDataId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<AnimeData>()
                 .HasMany(x => x.Reviews)
                 .WithOne(x => x.Anime)
@@ -235,6 +255,14 @@ namespace Everything.Data
             modelBuilder.Entity<GameData>()
                 .HasMany(x => x.Buyers)
                 .WithMany(x => x.Games);
+
+            modelBuilder.Entity<GameData>()
+                .HasMany(x => x.UsersWhoLikedGame)
+                .WithMany(x => x.GameWhichUsersLike);
+
+            modelBuilder.Entity<GameData>()
+                .HasMany(x => x.UsersWhoDislikedGame)
+                .WithMany(x => x.GameWhichUsersDislike);
 
             modelBuilder.Entity<FilmDirectorData>()
                 .HasMany(x => x.Movies)

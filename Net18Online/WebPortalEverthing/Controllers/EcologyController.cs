@@ -80,11 +80,14 @@ public class EcologyController : Controller
 
             var info = _commentRepositoryReal.GetCommentAuthors((int)userId);
         
-            info.Comments.Select(dbComment => new CommentForProfileViewModel()
-            {
-                CommentId = dbComment.Id,
-                CommentText = dbComment.CommentText
-            });
+            viewModel.Comments = info
+                .Comments
+                .Select(dbComment => new CommentForProfileViewModel()
+                {
+                    CommentId = dbComment.Id,
+                    CommentText = dbComment.CommentText
+                })
+                .ToList();
         
             viewModel.Posts = info
                 .Posts
@@ -100,7 +103,7 @@ public class EcologyController : Controller
             viewModel.UserName = "Guest";
             viewModel.AvatarUrl = "~/images/Ecology/defaltavatar.JPG";
             viewModel.Posts = new List<EcologyForProfileViewModel>();
-            viewModel.Comments = new List<CommentViewModel>();
+            viewModel.Comments = new List<CommentForProfileViewModel>();
         }
         
         return View(viewModel);
@@ -136,7 +139,9 @@ public class EcologyController : Controller
                     //Text = dbEcology.Comments?.CommentText ?? "Without comments",
                     CanDelete = dbEcology.User?.Id == currentUserId || isAdmin,
                     CanMove = isAdmin,
-                    PostsForMainPage = dbEcology.ForMainPage == 1
+                    PostsForMainPage = dbEcology.ForMainPage == 1,
+                    LikeCount = dbEcology.UsersWhoLikeIt.Count(),                                                                                                     
+                    IsLiked = dbEcology.UsersWhoLikeIt.Any(x => x.UserId == user.Id)
                 }
             )
             .ToList();

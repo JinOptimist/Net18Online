@@ -2,56 +2,75 @@
 @using WebPortalEverthing.Models.Home
 @model IndexViewModel
 
-<div class="text-center">
-    <div>@Home.Home_Greatings @(string.IsNullOrEmpty(Model.UserName) ? "Гость" : Model.UserName)</div>
-    <div>
-        @Home.Home_AnimeGirlDesc <a href="/AnimeGirl/Index">@Home.Anime_Link_Text</a>
-    </div>
-    <div>
-        @Home.Home_MoviePosterDesc <a href="/MoviePoster/Index">@Home.MoviePoster_Link_Text</a>
-    </div>
-    <div>
-        If you are interested in ecology click <a href="/Ecology/Index">here</a>
-    </div>
-    <div>
-        <a href="/Surveys/Index">Создать и пройти опрос</a>
-    </div>
-    <div>
-        @Home.Home_CoffeShopDesc <a href="/CoffeShop/Coffe">@Home.Coffe_Link_Text</a>
-    </div>
-    <div>
-        <a href="/Cake/Index">@Home.Cake_Link_Text</a>
-    </div>
-    <div>
-        Если вам нужно посмотреть все типы устройств, переходите <a href="/TypeOfAppliance/AllTypeOfAppliances">сюда</a>!
-        Хотите создать новый тип устройства, нажмите <a href="/TypeOfAppliance/CreateTypeOfAppliance">здесь</a>!
-    </div>
-    <div>
-        If u wanna see anime catalog -> <a href="/AnimeCatalog/Index"> go here</a>
-    </div>
-    <div>
-        А если хотите узанть про классы в ДНД, то сюда <a href="/DND/Index">сюда</a>
-    </div>
-    <div>Load Testing</div>
-    <div>
-        Load Testing
-        <a href="/LoadTesting/ContenMetricsListView">  ʕ •ᴥ•ʔゝ☆ </a>
-    </div>
-    <div>
-        Game "Life"
-        <a href="/GameLife/GameLifeDefault"> ʕʘ̅͜ʘ̅ʔ</a>
-    </div>
-    <div>
-        Посмотреть на лабиринт можно <a href="/Maze"> тут </a>
-    </div>
+@section Scripts {
+    <script src="~/js/chat.js"></script>
+}
 
-    <div>
-        Simulator of printing <a href="/SimulatorOfPrinting/TextToTypping"> here </a>
+@section Styles {
+    <link rel="stylesheet" href="~/css/chat.css" />
+}
+
+<div class="main-page">
+    <div class="chat-container">
+        <div class="messages">
+            <div class="message template">***</div>
+        </div>
+        <div>
+            <input class="new-message" />
+            <button class="send-new-message" type="button">Отправить</button>
+        </div>
     </div>
-    <div> 
-        Выгодно приобрести игру можно <a href="/GameStore/Index"> тут</a>
-    </div>
-    <div>
-        Поиграть в Быки и Коровы можно <a href="/BullsAndCows"> тут </a>   
+    <div class="links-container">
+        <div>@Home.Home_Greatings @(string.IsNullOrEmpty(Model.UserName) ? "Гость" : Model.UserName)</div>
+        <div>
+            @Home.Home_AnimeGirlDesc <a href="/AnimeGirl/Index">@Home.Anime_Link_Text</a>
+        </div>
+        <div>
+            @Home.Home_MoviePosterDesc <a href="/MoviePoster/Index">@Home.MoviePoster_Link_Text</a>
+        </div>
+        <div>
+            If you are interested in ecology click <a href="/Ecology/Index">here</a>
+        </div>
+        <div>
+            <a href="/Surveys/Index">Создать и пройти опрос</a>
+        </div>
+        <div>
+            @Home.Home_CoffeShopDesc <a href="/CoffeShop/Coffe">@Home.Coffe_Link_Text</a>
+        </div>
+        <div>
+            <a href="/Cake/Index">@Home.Cake_Link_Text</a>
+        </div>
+        <div>
+            Если вам нужно посмотреть все типы устройств, переходите <a href="/TypeOfAppliance/AllTypeOfAppliances">сюда</a>!
+            Хотите создать новый тип устройства, нажмите <a href="/TypeOfAppliance/CreateTypeOfAppliance">здесь</a>!
+        </div>
+        <div>
+            If u wanna see anime catalog -> <a href="/AnimeCatalog/Index"> go here</a>
+        </div>
+        <div>
+            А если хотите узанть про классы в ДНД, то сюда <a href="/DND/Index">сюда</a>
+        </div>
+        <div>Load Testing</div>
+        <div>
+            Load Testing
+            <a href="/LoadTesting/ContenMetricsListView">  ʕ •ᴥ•ʔゝ☆ </a>
+        </div>
+        <div>
+            Game "Life"
+            <a href="/GameLife/GameLifeDefault"> ʕʘ̅͜ʘ̅ʔ</a>
+        </div>
+        <div>
+            Посмотреть на лабиринт можно <a href="/Maze"> тут </a>
+        </div>
+
+        <div>
+            Simulator of printing <a href="/SimulatorOfPrinting/TextToTypping"> here </a>
+        </div>
+        <div>
+            Выгодно приобрести игру можно <a href="/GameStore/Index"> тут</a>
+        </div>
+        <div>
+            Поиграть в Быки и Коровы можно <a href="/BullsAndCows"> тут </a>
+        </div>
     </div>
 </div>

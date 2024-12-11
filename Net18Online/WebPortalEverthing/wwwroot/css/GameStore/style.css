@@ -55,10 +55,27 @@ header .navigation ul{
     align-items: center;
     display: flex;
 }
-.game-block .image-container img{
-    max-height: 200px;
-    max-width: 200px;
-}
+    .game-block .image-container.full{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: gray;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+    .game-block .image-container img {
+        max-height: 200px;
+        max-width: 200px;
+    }
+    .game-block .image-container.full img {
+        max-height: 100%;
+        max-width: 100%;
+    }
+
 .game-block{
     margin: 100px;
 }
@@ -66,6 +83,18 @@ header .navigation ul{
     display: flex;
     justify-content: center;
 }
+    .game-block .name .edit-mode {
+        display:none;
+    }
+        .game-block.create .name .edit-mode{
+            display:block;
+        }
+        .game-block .name .view-mode {
+            cursor: pointer;
+        }
+        .game-block .name .icon{
+            cursor: pointer;
+        }
 .content .title{
     margin: 10px;
 }
@@ -78,10 +107,15 @@ header .navigation ul{
     display:flex;
     flex-wrap: wrap;
 }
-
-    .content .studios {
-        margin: 10px;
+    .content .highlight-is-active .game-block{
+        opacity: 0.2;
     }
+        .content .highlight-is-active .game-block.highlighted {
+            opacity: 1;
+        }
+        .content .studios {
+            margin: 10px;
+        }
 .profile-block {
     display: flex;
     align-items: center;
@@ -103,4 +137,17 @@ header .navigation ul{
     letter-spacing: 1.5px; 
 
 }
- 
+.info {
+    display: none;
+    position: absolute;    
+}
+    .info.create {
+        display: block;
+        position: absolute;
+    }
+.info .tag{
+    cursor: pointer;
+}
+.template{
+    display: none;
+}
