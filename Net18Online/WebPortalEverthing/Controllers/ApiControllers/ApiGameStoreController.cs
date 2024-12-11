@@ -1,8 +1,10 @@
 ﻿using Everything.Data.Models;
 using Everything.Data.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.GameStore;
+using WebPortalEverthing.Services;
 
 namespace WebPortalEverthing.Controllers.ApiControllers
 {
@@ -11,10 +13,12 @@ namespace WebPortalEverthing.Controllers.ApiControllers
     public class ApiGameStoreController : ControllerBase
     {
         public IGameStoreRepositoryReal _gameStoreRepository;
+        public AuthService _authService;
 
-        public ApiGameStoreController(IGameStoreRepositoryReal gameStoreRepository)
+        public ApiGameStoreController(IGameStoreRepositoryReal gameStoreRepository, AuthService authService)
         {
             _gameStoreRepository = gameStoreRepository;
+            _authService = authService;
         }
         public bool UpdateName(string newName, int id)
         {
@@ -55,6 +59,20 @@ namespace WebPortalEverthing.Controllers.ApiControllers
             };
 
             return viewModel;
+        }
+        [Authorize]
+        public bool Like(int gameId)
+        {
+            var userId = _authService.GetUserId()!.Value;            
+
+            return _gameStoreRepository.LikeGame(gameId, userId);
+        }
+        [Authorize]
+        public bool Dislike(int gameId)
+        {
+            var userId = _authService.GetUserId()!.Value;
+
+            return _gameStoreRepository.DislikeGame(gameId, userId);
         }
     }
 }

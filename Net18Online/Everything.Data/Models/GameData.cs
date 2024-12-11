@@ -14,7 +14,10 @@ namespace Everything.Data.Models
         public int Cost { get; set; }
         public virtual List<UserData>? Buyers { get; set; } = new List<UserData>();
         public virtual GameStudiosData? Studios { get; set; }
-        
+
+        public virtual List<UserData>? UsersWhoLikedGame {  get; set; } = new List<UserData>();
+        public virtual List<UserData>? UsersWhoDislikedGame { get; set; } = new List<UserData>();
+
         //public List<string> Tags { get; set; }
     }
 }

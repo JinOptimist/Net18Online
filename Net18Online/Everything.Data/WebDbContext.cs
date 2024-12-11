@@ -225,6 +225,14 @@ namespace Everything.Data
                 .HasMany(x => x.Buyers)
                 .WithMany(x => x.Games);
 
+            modelBuilder.Entity<GameData>()
+                .HasMany(x => x.UsersWhoLikedGame)
+                .WithMany(x => x.GameWhichUsersLike);
+
+            modelBuilder.Entity<GameData>()
+                .HasMany(x => x.UsersWhoDislikedGame)
+                .WithMany(x => x.GameWhichUsersDislike);
+
             modelBuilder.Entity<FilmDirectorData>()
                 .HasMany(x => x.Movies)
                 .WithOne(x => x.FilmDirector)
