@@ -107,4 +107,18 @@ $(document).ready(function (){
                 gameBlock.insertBefore($(".game-block.create"))
             });
     });
+    $(".game-block .name .icon.like").click(function (){
+        $(this).toggleClass('like');
+        $(this).toggleClass('like-pushed');
+        const gameId = $(this).closest('.game-block').data('id');
+        const url = `/api/ApiGameStore/Like?gameId=${gameId}`;
+        $.get(url);
+    });
+    $(".game-block .name .icon.dislike").click(function (){
+        $(this).toggleClass('dislike');
+        $(this).toggleClass('dislike-pushed');
+        const gameId = $(this).closest('.game-block').attr('data-id');
+        const url = `/api/ApiGameStore/Dislike?gameId=${gameId}`;
+        $.get(url);
+    });
 });

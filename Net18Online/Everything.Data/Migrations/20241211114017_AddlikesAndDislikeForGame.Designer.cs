@@ -4,6 +4,7 @@ using Everything.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Everything.Data.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    partial class WebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241211114017_AddlikesAndDislikeForGame")]
+    partial class AddlikesAndDislikeForGame
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -875,21 +878,6 @@ namespace Everything.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Everything.Data.Models.UserEcologyLikesData", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EcologyDataId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserId", "EcologyDataId");
-
-                    b.HasIndex("EcologyDataId");
-
-                    b.ToTable("UserEcologyLikesData");
-                });
-
             modelBuilder.Entity("GameDataUserData", b =>
                 {
                     b.Property<int>("BuyersId")
@@ -1211,25 +1199,6 @@ namespace Everything.Data.Migrations
                     b.Navigation("СreatorUser");
                 });
 
-            modelBuilder.Entity("Everything.Data.Models.UserEcologyLikesData", b =>
-                {
-                    b.HasOne("Everything.Data.Models.EcologyData", "EcologyData")
-                        .WithMany("UsersWhoLikeIt")
-                        .HasForeignKey("EcologyDataId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Everything.Data.Models.UserData", "User")
-                        .WithMany("PostsWhichUsersLike")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("EcologyData");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("GameDataUserData", b =>
                 {
                     b.HasOne("Everything.Data.Models.UserData", null)
@@ -1313,8 +1282,6 @@ namespace Everything.Data.Migrations
             modelBuilder.Entity("Everything.Data.Models.EcologyData", b =>
                 {
                     b.Navigation("Comments");
-
-                    b.Navigation("UsersWhoLikeIt");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.FilmDirectorData", b =>
@@ -1375,8 +1342,6 @@ namespace Everything.Data.Migrations
                     b.Navigation("CreatedMovies");
 
                     b.Navigation("Ecologies");
-
-                    b.Navigation("PostsWhichUsersLike");
 
                     b.Navigation("СreatorSurveyGroups");
                 });

@@ -59,6 +59,9 @@ namespace WebPortalEverthing.Controllers
                 //GenerateDefaultGame();
             }
 
+            var userId = _authService.GetUserId()!;
+            var user = _userRepositryReal.Get(userId.Value)!;
+
             var shopViewModels = gameFromDb.Select(dbGame =>
             new ShopViewModel
             {
@@ -66,7 +69,11 @@ namespace WebPortalEverthing.Controllers
                 NameGame = dbGame.NameGame,
                 ImageSrc = dbGame.ImageSrc,
                 Cost = dbGame.Cost,
-                Studios = dbGame.Studios?.Name 
+                Studios = dbGame.Studios?.Name, 
+                LikeCount = dbGame.UsersWhoLikedGame.Count(),
+                IsLiked = dbGame.UsersWhoLikedGame.Any(x => x.Id == user.Id),
+                DislikeCount = dbGame.UsersWhoDislikedGame.Count(),
+                IsDisliked = dbGame.UsersWhoDislikedGame.Any(x => x.Id == user.Id),
             }).ToList();
 
             var shopListViewModel = new ShopListViewModel

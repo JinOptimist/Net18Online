@@ -52,8 +52,10 @@
 
     @foreach (var game in Model.Games)
     {
-        <div class="game-block">
-            <div class="name">
+        <div class="game-block" data-id="@game.Id">
+            <div class="name" >
+                <div><i class="icon @(game.IsLiked ? "like-pushed" : "like")"></i></div>
+                <div><i class="icon @(game.IsLiked ? "dislike-pushed" : "dislike")"></i></div>
                 @if (authService.IsAdmin())
                 {
                     <div class="view-mode">
@@ -88,6 +90,8 @@
                 {
                     <span class="tag">@GameShop.Shop_Cost <strong>@game.Cost</strong></span>
                     <span class="tag">Studios:<strong>@game.Studios</strong></span>
+                    <span class="tag">Likes <strong>@game.LikeCount</strong></span>
+                    <span class="tag">Dislike <strong>@game.DislikeCount</strong></span>
                     <a class="tag" href="/GameStore/Purchases?buyerId=@authService.GetUserId()&gameId=@game.Id">@GameShop.Shop_Buy</a>
                 }
             </div>

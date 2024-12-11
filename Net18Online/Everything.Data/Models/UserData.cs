@@ -33,5 +33,8 @@ namespace Everything.Data.Models
         public virtual List<MagazinData> CreatedMagazins { get; set; } = new();
 
         public virtual List<GirlData> GirlsWhichUsersLike { get; set; }
+
+        public virtual List<GameData> GameWhichUsersLike { get; set; }
+        public virtual List<GameData> GameWhichUsersDislike { get; set; }
     }
 }

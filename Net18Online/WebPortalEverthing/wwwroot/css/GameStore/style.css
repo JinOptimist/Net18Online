@@ -92,6 +92,9 @@ header .navigation ul{
         .game-block .name .view-mode {
             cursor: pointer;
         }
+        .game-block .name .icon{
+            cursor: pointer;
+        }
 .content .title{
     margin: 10px;
 }
