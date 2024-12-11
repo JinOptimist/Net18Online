@@ -61,6 +61,8 @@ namespace Everything.Data
 
         public DbSet<DndClassData> DndClasses { get; set; }
 
+        public DbSet<ChatMessageData> ChatMessages { get; set; }
+
         public WebDbContext() { }
 
         public WebDbContext(DbContextOptions<WebDbContext> contextOptions)
@@ -120,6 +122,11 @@ namespace Everything.Data
                 .HasMany(x => x.СreatorSurveyGroups)
                 .WithOne(x => x.СreatorUser)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<UserData>()
+                .HasMany(x => x.ChatMessages)
+                .WithOne(x => x.User)
+                .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<CoffeData>()
                 .HasOne(x => x.Creator)
@@ -198,7 +205,7 @@ namespace Everything.Data
                 .WithMany(x => x.Comments)
                 .OnDelete(DeleteBehavior.NoAction)
                 .HasForeignKey(x => x.UserId);
-            
+
             modelBuilder.Entity<UserEcologyLikesData>().HasKey(ue => new { ue.UserId, ue.EcologyDataId });
             modelBuilder.Entity<UserEcologyLikesData>()
                 .HasOne(ue => ue.User)

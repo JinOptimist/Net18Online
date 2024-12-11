@@ -4,7 +4,9 @@ using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.SignalR;
 using System.Security.Claims;
+using WebPortalEverthing.Hubs;
 using WebPortalEverthing.Models.Auth;
 using WebPortalEverthing.Services;
 
@@ -13,10 +15,13 @@ namespace WebPortalEverthing.Controllers
     public class AuthController : Controller
     {
         public IUserRepositryReal _userRepositryReal;
+        public IHubContext<ChatHub, IChatHub> _chatHub;
 
-        public AuthController(IUserRepositryReal userRepositryReal)
+        public AuthController(IUserRepositryReal userRepositryReal, 
+            IHubContext<ChatHub, IChatHub> chatHub)
         {
             _userRepositryReal = userRepositryReal;
+            _chatHub = chatHub;
         }
 
         [HttpGet]
@@ -76,6 +81,9 @@ namespace WebPortalEverthing.Controllers
                 viewModel.UserName,
                 viewModel.Password,
                 viewModel.Age);
+
+            // TODO Notify chat about new user
+            _chatHub.Clients.All.NewMessageAdded($"Новый пользователь зарегестировался у нас на сайте. Его зовут {viewModel.UserName}");
 
             return RedirectToAction("Login");
         }
