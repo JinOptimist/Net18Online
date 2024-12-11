@@ -17,5 +17,9 @@ namespace WebPortalEverthing.Models.Ecology
         public bool CanDelete { get; set; }
         
         public bool PostsForMainPage { get; set; }
+        
+        public bool IsLiked { get; set; }
+    
+        public int LikeCount { get; set; }
     }
 }

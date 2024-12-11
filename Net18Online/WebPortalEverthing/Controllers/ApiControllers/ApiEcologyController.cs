@@ -1,5 +1,6 @@
 using Everything.Data.Models;
 using Everything.Data.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.Ecology;
 using WebPortalEverthing.Services;
@@ -111,6 +112,14 @@ namespace WebPortalEverthing.ApiControllers
 
             // return RedirectToAction("EcologyChat");
             return Ok();
+        }
+        
+        [Authorize]
+        public bool Like(int ecologyId)
+        {
+            var userId = _authService.GetUserId()!.Value;
+
+            return _ecologyRepository.LikeEcology(ecologyId, userId);
         }
     }
 }
