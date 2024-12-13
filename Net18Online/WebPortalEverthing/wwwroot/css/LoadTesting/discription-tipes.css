@@ -84,24 +84,30 @@ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 -2px 8px rgba(255, 165, 0, 0.6
         }
 
             .discription-type .type-container.full img {
-                max-width: 90%;
-                max-height: 90%;
+                max-width: 70%;
+                max-height: 70%;
                 border-radius: 30px; /* Радиус скругления углов */
             }
 
     .discription-type .additional-info {
         /*  display: grid; */
+        width: 200px;
         border-top: 1px #ccc solid;
-        /* display: flex;*/
+        display: none;
         flex-wrap: wrap; /*разрешаешь детей переносить на след. строку*/
+        position: absolute;
+        background: linear-gradient( 45deg, rgba(98, 0, 255, 1), rgba(225, 0, 255,1), rgba(43, 1, 14,1), rgba(255, 69, 0, 1) ) !important; /* Фиксируем фон, чтобы он не наследовался */
+        z-index: 100;
     }
 
         .discription-type .additional-info .tag {
+            width: 100%; /* Ширина равна ширине родителя */
+            box-sizing: border-box; /* Включает padding и border в общую ширину */
             border: 3px rgb(243, 9, 204);
             border: radius 2px;
             margin: 3px;
-            display: none;
-            /* display: inline-block;*/
+        /*    display: none; */
+             display: inline-block;
         }
 
 /*Для кнопки параметров (скрытых сначала) */

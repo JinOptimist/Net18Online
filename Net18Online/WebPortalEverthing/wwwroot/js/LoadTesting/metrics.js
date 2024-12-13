@@ -10,8 +10,8 @@ $(".toggle-button-tag-additional-info").click(function () {
   console.log("toggle metrics");
   $(this) //элемент, по которому кликнули
     .closest(".discription-type") //родителя нашли
-    .find(".additional-info .tag") //у родителя нашли по селектору элемент
-    .slideToggle(); // Используем slideToggle для плавного появления/скрытия элементов
+    .find(".additional-info") //у родителя нашли по селектору элемент
+    .slideToggle(1000); // Используем slideToggle для плавного появления/скрытия элементов
 });
 
 // $(".discription-type .type-container img").click(function () {
