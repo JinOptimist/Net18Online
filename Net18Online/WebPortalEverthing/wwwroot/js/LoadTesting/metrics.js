@@ -14,6 +14,29 @@ $(".toggle-button-tag-additional-info").click(function () {
     .slideToggle(1000); // Используем slideToggle для плавного появления/скрытия элементов
 });
 
+$(".additional-info .tag").click(function () {
+  console.log("click on tag");
+  const tagValue = $(this).text();
+  console.log("finded text of tag");
+  //  const theSameTags = $(`.tag:contains('${tagValue}')`);
+  const theSameTags = $(".tag").filter(function () {
+    return $(this).text().includes(tagValue);
+  });
+  if (theSameTags.length > 0) {
+    $(".discription-type").removeClass("highlighted");
+
+    theSameTags.each((index, elem) => {
+      $(elem).closest(".discription-type").addClass("highlighted");
+    });
+
+    $(".discription-type").addClass("highlight-is-active");
+  } else {
+    console.error("Element not finded.");
+  }
+});
+
+//среднее время отклика (Average): 20,00
+
 // $(".discription-type .type-container img").click(function () {
 // .css("display", "inline-block"); //сменили у найденного элемента скрытое(none) отображение на видимое
 //покажи// .show();

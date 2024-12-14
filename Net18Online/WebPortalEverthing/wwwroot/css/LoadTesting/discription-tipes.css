@@ -40,10 +40,20 @@ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 -2px 8px rgba(255, 165, 0, 0.6
     }
 }
 
-.discription-type {
-    margin: 10px;
-    width: 200px;
+
+
+.discription-tipes.highlight-is-active .discription-type {
+    opacity: 0.2;
 }
+
+    .discription-tipes.highlight-is-active .discription-type.highlighted {
+        opacity: 1;
+    }
+    
+    .discription-type {
+        margin: 10px;
+        width: 200px;
+    }
 
     .discription-type .type-name {
         display: flex;
