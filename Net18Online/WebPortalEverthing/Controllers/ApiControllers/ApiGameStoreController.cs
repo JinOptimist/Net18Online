@@ -3,6 +3,8 @@ using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using WebPortalEverthing.Hubs;
 using WebPortalEverthing.Models.GameStore;
 using WebPortalEverthing.Services;
 
@@ -14,11 +16,13 @@ namespace WebPortalEverthing.Controllers.ApiControllers
     {
         public IGameStoreRepositoryReal _gameStoreRepository;
         public AuthService _authService;
+        private IHubContext<GameAlertHub, IGameAlertHub> _hubContext;
 
-        public ApiGameStoreController(IGameStoreRepositoryReal gameStoreRepository, AuthService authService)
+        public ApiGameStoreController(IGameStoreRepositoryReal gameStoreRepository, AuthService authService, IHubContext<GameAlertHub, IGameAlertHub> hubContext)
         {
             _gameStoreRepository = gameStoreRepository;
             _authService = authService;
+            _hubContext = hubContext;
         }
         public bool UpdateName(string newName, int id)
         {
@@ -57,6 +61,8 @@ namespace WebPortalEverthing.Controllers.ApiControllers
                 Cost = dbGame.Cost,
                 Studios = dbGame.Studios?.Name
             };
+
+            _hubContext.Clients.All.Alert($"Игра {viewModel.NameGame} добавлена на сайт");
 
             return viewModel;
         }

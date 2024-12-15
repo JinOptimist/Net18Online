@@ -129,6 +129,7 @@ app.UseMiddleware<CustomLocalizationMiddleware>();
 app.UseMiddleware<CustomThemeMiddleware>();
 
 app.MapHub<ChatHub>("/hub/chatMainPage");
+app.MapHub<GameAlertHub>("/hub/alertGamePage");
 
 app.MapControllerRoute(
     name: "default",
