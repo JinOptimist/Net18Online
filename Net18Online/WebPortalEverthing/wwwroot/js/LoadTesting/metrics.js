@@ -40,8 +40,28 @@ $(".update-metric-button").click(function () {
   const metricId = editModeBlock.find(".update-metric-id").val();
   const metricName = editModeBlock.find(".update-metric-name").val();
   const metricGuid = editModeBlock.find(".update-metric-guid").val();
-  const metricThrough = editModeBlock.find(".update-metric-through").val();
+  const metricThrough = editModeBlock.find(".update-metric-throughput").val();
   const metricAverage = editModeBlock.find(".update-metric-average").val();
+
+  const url = `/LoadTesting/UpdateMetric?
+  id=${metricId}&
+  name=${metricName}&
+  guid=${metricGuid}&
+  ThroughputInput=${metricThrough}&
+  AverageInput=${metricAverage}`;
+
+    $.get(url).then(function (response) {
+      if (response) {
+        nameBlock.find(".view-mode").text(metricName);
+      } else {
+        const oldName = nameBlock.find(".view-mode").text();
+        nameBlock.find(".update-metric-name").val(oldName);
+      }
+
+      nameBlock.find(".view-mode").show();
+      nameBlock.find(".edit-mode").hide();
+      updateButton.removeAttr("disabled");
+      nameBlock.find(".update-metric-name").removeAttr("disabled");
 });
 
 // $(".discription-type .type-container img").click(function () {
