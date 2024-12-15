@@ -49,17 +49,26 @@ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 -2px 8px rgba(255, 165, 0, 0.6
     .discription-type.highlight-is-active.highlighted {
         opacity: 1;
     }
-    
-    .discription-type {
-        margin: 10px;
-        width: 200px;
-    }
+
+.discription-type {
+    margin: 10px;
+    width: 200px;
+}
+
 
     .discription-type .type-name {
         display: flex;
         justify-content: center;
         font-size: 40px; /* Устанавливает размер шрифта 24 пикселя */
         margin: 10px;
+    }
+
+    .discription-type .edit-mode {
+        display: block;
+    }
+
+    .discription-type .view-mode {
+        cursor: pointer;
     }
 
     .discription-type .type-guid {
@@ -116,8 +125,8 @@ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 -2px 8px rgba(255, 165, 0, 0.6
             border: 3px rgb(243, 9, 204);
             border: radius 2px;
             margin: 3px;
-        /*    display: none; */
-             display: inline-block;
+            /*    display: none; */
+            display: inline-block;
         }
 
 /*Для кнопки параметров (скрытых сначала) */

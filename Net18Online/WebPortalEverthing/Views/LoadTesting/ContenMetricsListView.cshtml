@@ -23,14 +23,26 @@
                     <div class="type-name">@metric.Name</div>
                 </span> @*класс стиля*@
                 @*Указать экшен, который будет вызван при отправке формы*@
-                <form action="/LoadTesting/UpdateMetric" method="post">
-                    <input type="hidden" name="id" value="@metric.Id" />
-                    <input type="text" name="name" value="@metric.Name" />
-                    <input type="hidden" name="guid" value="@metric.Guid" />
-                    <input type="text" name="throughput" value="@metric.Throughput" />
-                    <input type="text" name="average" value="@metric.Average" />
-                    <input type="submit" value="Update" />
-                </form>
+
+                @*      <form action="/LoadTesting/UpdateMetric" method="post">
+            <input type="hidden" name="id" value="@metric.Id" />
+            <input type="text" name="name" value="@metric.Name" />
+            <input type="hidden" name="guid" value="@metric.Guid" />
+            <input type="text" name="throughput" value="@metric.Throughput" />
+            <input type="text" name="average" value="@metric.Average" />
+            <input type="submit" value="Update" />
+            </form> *@
+                <div class="view-mode">
+                </div>
+
+                <div class="edit-mode">
+                    <input class="update-metric-id" type="hidden" name="id" value="@metric.Id" />
+                    <input class="update-metric-name" type="text" name="name" value="@metric.Name" />
+                    <input class="update-metric-guid" type="hidden" name="guid" value="@metric.Guid" />
+                    <input class="update-metric-throughput" type="text" name="throughput" value="@metric.Throughput" />
+                    <input class="update-metric-average" type="text" name="average" value="@metric.Average" />
+                    <button class="update-metric-button" type="button" value="Update" />
+                </div>
                 <div class="type-guid">GUID : @metric.Guid</div>
                 <div class="type-container">
                     <img src="~/images/LoadTesting/photo_2024-07-15_09-13-16.jpg" alt="type1" />

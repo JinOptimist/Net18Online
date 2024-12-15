@@ -35,7 +35,14 @@ $(".additional-info .tag").click(function () {
   }
 });
 
-//среднее время отклика (Average): 20,00
+$(".update-metric-button").click(function () {
+  const editModeBlock = $(this).closest(".edit-mode");
+  const metricId = editModeBlock.find(".update-metric-id").val();
+  const metricName = editModeBlock.find(".update-metric-name").val();
+  const metricGuid = editModeBlock.find(".update-metric-guid").val();
+  const metricThrough = editModeBlock.find(".update-metric-through").val();
+  const metricAverage = editModeBlock.find(".update-metric-average").val();
+});
 
 // $(".discription-type .type-container img").click(function () {
 // .css("display", "inline-block"); //сменили у найденного элемента скрытое(none) отображение на видимое
