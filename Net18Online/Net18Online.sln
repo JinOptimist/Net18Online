@@ -31,7 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Everything.Data", "Everythi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LifeGame", "LifeGame\LifeGame.csproj", "{15C29ED9-32ED-49E6-B2EB-BE93A2FABA7A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enums", "Enums\Enums.csproj", "{A55D6625-FA7D-400D-AADD-17C63D908F91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enums", "Enums\Enums.csproj", "{A55D6625-FA7D-400D-AADD-17C63D908F91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatMinimalApi", "ChatMinimalApi\ChatMinimalApi.csproj", "{C3110613-7780-40FC-BF9E-92611AF073AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +101,10 @@ Global
 		{A55D6625-FA7D-400D-AADD-17C63D908F91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A55D6625-FA7D-400D-AADD-17C63D908F91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A55D6625-FA7D-400D-AADD-17C63D908F91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3110613-7780-40FC-BF9E-92611AF073AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3110613-7780-40FC-BF9E-92611AF073AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3110613-7780-40FC-BF9E-92611AF073AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3110613-7780-40FC-BF9E-92611AF073AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
