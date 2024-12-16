@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -29,6 +31,8 @@ var app = builder.Build();
 
 app.UseCors();
 
+app.MapControllers();
+
 app.MapGet("/", () => "Hello World!");
 
 app.MapGet("/smile", () => "Happy");
@@ -37,31 +41,6 @@ app.MapGet("/calc", (int x, int y) =>
 {
     var answer = x + y;
     return answer;
-});
-
-app.MapGet("/getMessages", (ChatDbContext dbContext) =>
-{
-    return dbContext.Messages.Select(x => new ChatMessageViewModel
-    {
-        Id = x.Id,
-        Text = x.Text,
-        AuthorId = x.AuthorId,
-        AuthorName = x.AuthorName,
-    }).ToList();
-});
-
-app.MapPost("/addMessage", (ChatDbContext dbContext, [FromBody] AddMessageViewModel vm) =>
-{
-    var message = new Message
-    {
-        AuthorId = vm.AuthorId,
-        AuthorName = vm.AuthorName,
-        Text = vm.Text
-    };
-    dbContext.Messages.Add(message);
-    dbContext.SaveChanges();
-
-    return $"Message is added. Id: {message.Id}";
 });
 
 app.UseSwagger();
