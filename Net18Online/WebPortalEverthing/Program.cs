@@ -131,6 +131,7 @@ app.UseMiddleware<CustomThemeMiddleware>();
 
 app.MapHub<ChatHub>("/hub/chatMainPage");
 app.MapHub<CoffeShopChatHub>("/hub/chatCoffePage");
+app.MapHub<GameAlertHub>("/hub/alertGamePage");
 
 app.MapControllerRoute(
     name: "default",

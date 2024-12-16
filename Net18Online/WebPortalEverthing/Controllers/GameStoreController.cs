@@ -14,6 +14,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using WebPortalEverthing.Controllers.AuthAttributes;
 using WebPortalEverthing.Models.AnimeGirl.Profile;
 using Enums.Users;
+using Microsoft.AspNetCore.SignalR;
+using WebPortalEverthing.Hubs;
 
 namespace WebPortalEverthing.Controllers
 {
@@ -26,18 +28,21 @@ namespace WebPortalEverthing.Controllers
         private List<string> _bannedWords = new List<string> { "admin", "root", "test" };
         private AuthService _authService;
         private IWebHostEnvironment _webHostEnvironment;
+        private IHubContext<GameAlertHub, IGameAlertHub> _hubContext;
 
         public GameStoreController(IGameStoreRepositoryReal gameStoreRepository,
             WebDbContext webDbContext,
             AuthService authService,
             IUserRepositryReal userRepositryReal,
-            IWebHostEnvironment webHostEnvironment)
+            IWebHostEnvironment webHostEnvironment,
+            IHubContext<GameAlertHub, IGameAlertHub> hubContext)
         {
             _gameStoreRepository = gameStoreRepository;
             _webDbContext = webDbContext;
             _authService = authService;
             _userRepositryReal = userRepositryReal;
             _webHostEnvironment = webHostEnvironment;
+            _hubContext = hubContext;
         }
         public IActionResult Index()
         {
@@ -72,7 +77,7 @@ namespace WebPortalEverthing.Controllers
                 Studios = dbGame.Studios?.Name, 
                 LikeCount = dbGame.UsersWhoLikedGame.Count(),
                 IsLiked = dbGame.UsersWhoLikedGame.Any(x => x.Id == user.Id),
-                DislikeCount = dbGame.UsersWhoDislikedGame.Count(),
+                DislikeCount =  dbGame.UsersWhoDislikedGame.Count(),
                 IsDisliked = dbGame.UsersWhoDislikedGame.Any(x => x.Id == user.Id),
             }).ToList();
 
@@ -162,6 +167,7 @@ namespace WebPortalEverthing.Controllers
                 //Tags = new()
             };
 
+            _hubContext.Clients.All.Alert($"Игра {viewModel.Name} добавлена на сайт");
 
             _gameStoreRepository.Add(dataGame);
 
