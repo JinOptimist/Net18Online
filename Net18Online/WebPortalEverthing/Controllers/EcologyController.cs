@@ -7,7 +7,9 @@ using Microsoft.Extensions.Logging;
 using Everything.Data.Repositories;
 using WebPortalEverthing.Models.Ecology;
 using Everything.Data.Models;
+using Microsoft.AspNetCore.SignalR;
 using WebPortalEverthing.Controllers.AuthAttributes;
+using WebPortalEverthing.Hubs;
 using WebPortalEverthing.Services;
 
 
@@ -22,13 +24,15 @@ public class EcologyController : Controller
     private ICommentRepositoryReal _commentRepositoryReal;
     private AuthService _authService;
     private IWebHostEnvironment _webHostEnvironment;
+    public IHubContext<ChatHub, IChatHub> _chatHub;
     
     public EcologyController(IEcologyRepositoryReal ecologyRepository, 
         ICommentRepositoryReal commentRepositoryReal,
         IUserRepositryReal userRepositryReal,
         AuthService authService,
         WebDbContext webDbContext,
-        IWebHostEnvironment webHostEnvironment)
+        IWebHostEnvironment webHostEnvironment,
+        IHubContext<ChatHub, IChatHub> chatHub)
     {
         _ecologyRepository = ecologyRepository;
         _commentRepositoryReal = commentRepositoryReal;
@@ -36,6 +40,7 @@ public class EcologyController : Controller
         _userRepositryReal = userRepositryReal;
         _authService = authService;
         _webHostEnvironment = webHostEnvironment;
+        _chatHub = chatHub;
     }
 
     public IActionResult Index()
@@ -204,6 +209,9 @@ public class EcologyController : Controller
 
         _ecologyRepository.Create(ecology, currentUserId!.Value, viewModel.PostId);
         //_ecologyRepository.Add(ecology);
+        
+        // Отправка уведомления о новом посте
+        _chatHub.Clients.All.NewMessageAdded($"User {viewModel.UserName} create a new post: {viewModel.Text}");
 
         return RedirectToAction("EcologyChat");
     }

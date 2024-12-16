@@ -28,5 +28,7 @@ namespace WebPortalEverthing.Models.Ecology
             ErrorMessageResourceName = "ValidationMessage_UploadFile")]
         //[FileExtensions(Extensions = "jpg,jpeg,png", ErrorMessage = "Please upload a valid image file (jpg, jpeg, png).")]
         public IFormFile ImageFile { get; set; }
+        
+        public string UserName { get; set; }
     }
 }
