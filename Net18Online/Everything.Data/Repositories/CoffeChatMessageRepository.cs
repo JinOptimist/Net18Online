@@ -17,16 +17,6 @@ namespace Everything.Data.Repositories
 
         public void AddMessage(int? userId, string message)
         {
-            var isMessageDuplicate = _dbSet
-                .OrderByDescending(x => x.CreationTime)
-                .Take(COUNT_OF_MESSAGE_TO_CHECK_ON_SPAM)
-                .Any(x => x.Message == message);
-
-            if (isMessageDuplicate)
-            {
-                return;
-            }
-
             var messageData = new CoffeChatMessageData
             {
                 CreationTime = DateTime.Now,
