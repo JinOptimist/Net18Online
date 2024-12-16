@@ -69,6 +69,7 @@ builder.Services.AddScoped<ILoadVolumeTestingRepositoryReal, LoadVolumeTestingRe
 builder.Services.AddScoped<ILoadUserRepositryReal, LoadUserRepository>();
 builder.Services.AddScoped<IUserRepositryReal, UserRepository>();
 builder.Services.AddScoped<IChatMessageRepositryReal, ChatMessageRepositry>();
+builder.Services.AddScoped<ICoffeChatMessageRepositryKey, CoffeChatMessageRepository>();
 builder.Services
     .AddAuthentication(LoadAuthService.AUTH_TYPE_KEY)
     .AddCookie(LoadAuthService.AUTH_TYPE_KEY, config =>
@@ -129,6 +130,7 @@ app.UseMiddleware<CustomLocalizationMiddleware>();
 app.UseMiddleware<CustomThemeMiddleware>();
 
 app.MapHub<ChatHub>("/hub/chatMainPage");
+app.MapHub<CoffeShopChatHub>("/hub/chatCoffePage");
 
 app.MapControllerRoute(
     name: "default",
