@@ -63,6 +63,7 @@ namespace Everything.Data
         public DbSet<DndClassData> DndClasses { get; set; }
 
         public DbSet<ChatMessageData> ChatMessages { get; set; }
+        public DbSet<CoffeChatMessageData> CoffeChatMessages { get; set; }
 
         public WebDbContext() { }
 
@@ -138,6 +139,12 @@ namespace Everything.Data
                 .HasMany(x => x.ChatMessages)
                 .WithOne(x => x.User)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<UserData>()
+                .HasMany(x => x.CoffeChatMessages)
+                .WithOne(x => x.User)
+                .OnDelete(DeleteBehavior.SetNull);
+
 
             modelBuilder.Entity<CoffeData>()
                 .HasOne(x => x.Creator)
