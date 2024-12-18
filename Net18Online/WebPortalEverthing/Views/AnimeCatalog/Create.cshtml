@@ -4,13 +4,13 @@
 @{
     Layout = "~/Views/Shared/_LayoutAnimeCatalog.cshtml";
 }
-
-<form method="post">
+<form action="/AnimeCatalog/UpdateAvatar" method="post" enctype="multipart/form-data">
     <div>
         @Html.TextBoxFor(x => x.Name, new { placeholder = "Введи название аниме" })
     </div>
     <div>
         @Html.TextBoxFor(x => x.ImageSrc, new { placeholder = "Введи путь к картинке" })
+        <input type="file" name="anime" />
         @Html.ValidationMessageFor(x => x.ImageSrc)
     </div>
     <button type="submit">Создать</button>
