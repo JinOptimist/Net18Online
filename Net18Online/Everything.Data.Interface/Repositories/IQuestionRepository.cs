@@ -10,6 +10,5 @@ namespace Everything.Data.Interface.Repositories
         void UpdateTitle(int id, string value);
         void UpdateRequired(int id, bool value);
         void UpdateAnswerType(int id, AnswerType value);
-        List<T> GetQuestionsForSurvey(int surveyId);
     }
 }

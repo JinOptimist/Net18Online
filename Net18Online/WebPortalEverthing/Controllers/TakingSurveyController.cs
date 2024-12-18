@@ -27,20 +27,21 @@ namespace WebPortalEverthing.Controllers
         {
             var userId = _authService.GetUserId()!.Value;
 
-            var takingId = _takingUserSurveyRepository.Add(userId, surveyId);
+            var takingId = _takingUserSurveyRepository.ReturnIdLastUncompletedSurvey(userId);
+            takingId ??= _takingUserSurveyRepository.Add(userId, surveyId);
 
             var survey = _surveysRepository.Get(surveyId);
-            var questions = _questionRepository.GetQuestionsForSurvey(surveyId);
+            var questions = _questionRepository.GetQuestionsForSurveyByTaking(takingId!.Value);
 
             var viewModel = new TakingSurveyIndexViewModel
             {
-                Id = takingId,
+                Id = takingId!.Value,
                 SurveyId = surveyId,
                 SurveyTitle = survey.Title,
                 Questions = questions
-                    .Select(question => new QuestionViewModel
+                    .Select(question => new QuestionToAnswerViewModel
                     {
-                        Id = question.Id,
+                        AnswerId = question.AnswerId,
                         Title = question.Title,
                         IsRequired = question.IsRequired,
                         AnswerType = question.AnswerType
