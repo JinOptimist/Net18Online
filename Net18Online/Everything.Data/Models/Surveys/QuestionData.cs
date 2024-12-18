@@ -9,5 +9,6 @@ namespace Everything.Data.Models.Surveys
         public bool IsRequired { get; set; }
         public AnswerType AnswerType { get; set; }
         public virtual SurveyData Survey { get; set; }
+        public virtual List<AnswerToQuestionData> Answers { get; set; }
     }
 }

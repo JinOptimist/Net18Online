@@ -4,6 +4,7 @@ using Everything.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Everything.Data.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    partial class WebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241217115852_AddAnswerToQuestion")]
+    partial class AddAnswerToQuestion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -213,31 +216,6 @@ namespace Everything.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Clients", (string)null);
-                });
-
-            modelBuilder.Entity("Everything.Data.Models.CoffeChatMessageData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("CoffeChatMessages");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.CoffeCompanyData", b =>
@@ -1111,16 +1089,6 @@ namespace Everything.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Everything.Data.Models.CoffeChatMessageData", b =>
-                {
-                    b.HasOne("Everything.Data.Models.UserData", "User")
-                        .WithMany("CoffeChatMessages")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Everything.Data.Models.CoffeCompanyData", b =>
                 {
                     b.HasOne("Everything.Data.Models.CoffeShopActivityData", "TypeOfActivity")
@@ -1536,8 +1504,6 @@ namespace Everything.Data.Migrations
             modelBuilder.Entity("Everything.Data.Models.UserData", b =>
                 {
                     b.Navigation("ChatMessages");
-
-                    b.Navigation("CoffeChatMessages");
 
                     b.Navigation("Comments");
 

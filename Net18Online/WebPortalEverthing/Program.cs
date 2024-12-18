@@ -59,6 +59,7 @@ builder.Services.AddScoped<ISurveysRepositoryReal, SurveysRepository>();
 builder.Services.AddScoped<IQuestionRepositoryReal, QuestionRepository>();
 builder.Services.AddScoped<IDocumentRepositoryReal, DocumentRepository>();
 builder.Services.AddScoped<ITakingUserSurveyRepositoryReal, TakingUserSurveyRepository>();
+builder.Services.AddScoped<IAnswerToQuestionRepositoryReal, AnswerToQuestionRepository>();
 builder.Services.AddScoped<IGameStoreRepositoryReal, GameStoreRepository>();
 builder.Services.AddScoped<IGameStudiosRepositoryReal, GameStudiosRepository>();
 builder.Services.AddScoped<ICakeRepositoryReal, CakeRepository>();
@@ -132,6 +133,7 @@ app.UseMiddleware<CustomThemeMiddleware>();
 app.MapHub<ChatHub>("/hub/chatMainPage");
 app.MapHub<CoffeShopChatHub>("/hub/chatCoffePage");
 app.MapHub<GameAlertHub>("/hub/alertGamePage");
+app.MapHub<TakingSurveyHub>("/hub/takingSurvey");
 
 app.MapControllerRoute(
     name: "default",

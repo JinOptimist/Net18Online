@@ -1,11 +1,14 @@
 ﻿using Everything.Data.Interface.Enums;
 using Everything.Data.Interface.Repositories;
+using Everything.Data.Models.SqlRawModels;
 using Everything.Data.Models.Surveys;
+using Microsoft.EntityFrameworkCore;
 
 namespace Everything.Data.Repositories.Surveys
 {
     public interface IQuestionRepositoryReal : IQuestionRepository<QuestionData>
     {
+        IEnumerable<QuestionToAnswerModel> GetQuestionsForSurveyByTaking(int takingId);
     }
 
     public class QuestionRepository : BaseRepository<QuestionData>, IQuestionRepositoryReal
@@ -64,10 +67,22 @@ namespace Everything.Data.Repositories.Surveys
             _webDbContext.SaveChanges();
         }
 
-        public List<QuestionData> GetQuestionsForSurvey(int surveyId)
+        public IEnumerable<QuestionToAnswerModel> GetQuestionsForSurveyByTaking(int takingId)
         {
-            return _dbSet
-                .Where(q => q.Survey.Id == surveyId)
+
+            var sql = @$"
+SELECT	Answer.id AS AnswerId,
+		Questions.Title,
+		Questions.IsRequired,
+		Questions.AnswerType
+FROM dbo.TakingUserSurveys TakingSurveys
+INNER JOIN dbo.AnswerToQuestions Answer ON TakingSurveys.id = Answer.TakingUserSurveyId
+INNER JOIN dbo.Questions Questions ON Answer.QuestionId = Questions.Id
+WHERE TakingSurveys.Id = {takingId}";
+
+            return _webDbContext
+                .Database
+                .SqlQueryRaw<QuestionToAnswerModel>(sql)
                 .ToList();
         }
     }

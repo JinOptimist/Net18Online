@@ -1,4 +1,4 @@
-﻿form.new-survey {
+﻿form .survey {
     margin: 10px;
 }
 
@@ -16,16 +16,12 @@ input {
     border-radius: 5px;
 }
 
-.new-survey .round-border {
+.survey .round-border {
     border: 1px solid;
     border-color: grey;
     border-radius: 7px;
     margin: 5px 0px;
     padding: 10px;
-}
-
-.question.template {
-    display: none;
 }
 
 .question .answer-option {

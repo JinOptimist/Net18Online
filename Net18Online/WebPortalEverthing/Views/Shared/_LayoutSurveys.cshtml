@@ -15,6 +15,7 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/cookie.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
     @RenderSection("Scripts", false)
 </head>
 <body>
@@ -53,6 +54,11 @@
         </div>
         <div class="main-content">
             @RenderBody()
+        </div>
+    </div>
+    <div class="notification-container">
+        <div class="alert alert-primary template" role="alert">
+            <span class="text"></span>
         </div>
     </div>
 </body>
