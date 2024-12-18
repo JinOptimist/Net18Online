@@ -1,0 +1,24 @@
+﻿@using WebPortalEverthing.Models.AnimeCatalog
+
+@model List<AnimeWithShortestReviewViewModel>
+
+@{
+    Layout = "~/Views/Shared/_LayoutAnimeCatalog.cshtml";
+}
+
+<div class="animes">
+    @foreach (var anime in Model)
+    {
+        <div class="anime">
+            <div class="name">
+                @anime.AnimeName
+            </div>
+            <div class="image-container">
+                <img src="@anime.ImageSrc" alt="" />
+            </div>
+            <div>
+                <span> Длина самого короткого отзыва - @anime.ShortestReviewLength</span>
+            </div>
+        </div>
+    }
+</div>
