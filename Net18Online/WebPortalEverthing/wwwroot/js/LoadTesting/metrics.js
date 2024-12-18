@@ -35,33 +35,65 @@ $(".additional-info .tag").click(function () {
   }
 });
 
+$(".discription-type .view-mode").click(function () {
+  const nameBlock = $(this).closest(".discription-type");
+  nameBlock.find(".view-mode").hide();
+  nameBlock.find(".edit-mode").show();
+});
+
 $(".update-metric-button").click(function () {
-  const editModeBlock = $(this).closest(".edit-mode");
+  const updateButton = $(this);
+
+  // Найти ближайший родительский контейнер с классом .discription-type
+  const discriptionBlock = updateButton.closest(".discription-type");
+
+  // Найти .edit-mode и .view-mode внутри этого контейнера
+  const editModeBlock = discriptionBlock.find(".edit-mode");
+  const viewModeBlock = discriptionBlock.find(".view-mode");
+
+  // Считать значения из полей редактирования
   const metricId = editModeBlock.find(".update-metric-id").val();
   const metricName = editModeBlock.find(".update-metric-name").val();
   const metricGuid = editModeBlock.find(".update-metric-guid").val();
   const metricThrough = editModeBlock.find(".update-metric-throughput").val();
   const metricAverage = editModeBlock.find(".update-metric-average").val();
 
-  const url = `/LoadTesting/UpdateMetric?
-  id=${metricId}&
-  name=${metricName}&
-  guid=${metricGuid}&
-  ThroughputInput=${metricThrough}&
-  AverageInput=${metricAverage}`;
+  console.log("finded id, name, guid, throughput, average.");
 
-    $.get(url).then(function (response) {
-      if (response) {
-        nameBlock.find(".view-mode").text(metricName);
-      } else {
-        const oldName = nameBlock.find(".view-mode").text();
-        nameBlock.find(".update-metric-name").val(oldName);
-      }
+  const url =
+    `/LoadTesting/UpdateMetric?` +
+    `id=${metricId}&` +
+    `name=${metricName}&` +
+    `guid=${metricGuid}&` +
+    `ThroughputInput=${metricThrough}&` +
+    `AverageInput=${metricAverage}`;
 
-      nameBlock.find(".view-mode").show();
-      nameBlock.find(".edit-mode").hide();
-      updateButton.removeAttr("disabled");
-      nameBlock.find(".update-metric-name").removeAttr("disabled");
+  // Отправить GET-запрос
+  $.get(url).then(function (response) {
+    if (response) {
+      // Успешное обновление, обновляем текст в режиме просмотра
+      viewModeBlock.text(metricName);
+      viewModeBlock.text(metricGuid);
+    } else {
+      // В случае ошибки вернуть старое значение
+      const oldName = viewModeBlock.text();
+      editModeBlock.find(".update-metric-name").val(oldName);
+    }
+
+    // Скрыть edit-mode и показать view-mode
+    viewModeBlock.show();
+    console.log("view-mode is now visible");
+    editModeBlock.hide();
+    console.log("edit-mode is now hidden");
+
+    // Разблокировать кнопки и поля
+    updateButton.removeAttr("disabled");
+    editModeBlock.find(".update-metric-name").removeAttr("disabled");
+  });
+
+  // Заблокировать кнопку и поле ввода во время запроса
+  updateButton.attr("disabled", "disabled");
+  editModeBlock.find(".update-metric-name").attr("disabled", "disabled");
 });
 
 // $(".discription-type .type-container img").click(function () {

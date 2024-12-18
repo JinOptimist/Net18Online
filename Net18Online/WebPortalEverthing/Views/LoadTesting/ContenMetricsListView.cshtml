@@ -36,14 +36,15 @@
             </div>
             *@
                 <div class="view-mode">
-                    ***
+                    <span class="tag-view-mode">@metric.Name</span>
+                    <span class="tag-view-mode">@metric.Guid</span>
                 </div>
                 <div class="edit-mode">
                     <input class="update-metric-id" type="hidden" name="id" value="@metric.Id" />
                     <input class="update-metric-name" type="text" name="name" value="@metric.Name" />
                     <input class="update-metric-guid" type="hidden" name="guid" value="@metric.Guid" />
-                    <input class="update-metric-throughput" type="text" name="throughput" value="@metric.Throughput" />
-                    <input class="update-metric-average" type="text" name="average" value="@metric.Average" />
+                    <input class="update-metric-throughput" type="text" name="ThroughputInput" value="@metric.Throughput" />
+                    <input class="update-metric-average" type="text" name="AverageInput" value="@metric.Average" />
                     <button class="update-metric-button" type="button">Update</button>
                 </div>
                 <div class="type-guid">GUID : @metric.Guid</div>
