@@ -70,6 +70,7 @@ $(".update-metric-button").click(function () {
 
   // Отправить GET-запрос
   $.get(url).then(function (response) {
+    //подписались на ответ(ждём ответа)
     if (response) {
       // Успешное обновление, обновляем текст в режиме просмотра
       viewModeBlock.text(metricName);
