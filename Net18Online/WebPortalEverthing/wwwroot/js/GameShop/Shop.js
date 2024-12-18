@@ -1,5 +1,4 @@
-﻿alert(1)
-$(document).ready(function (){
+﻿$(document).ready(function (){
     function onToggleButtonClick() {
         $(this)
         .closest(".game-block")

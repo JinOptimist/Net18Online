@@ -1,0 +1,27 @@
+﻿@section Scripts {
+    <script src="~/js/CoffeShop/Chat.js"></script>
+    <script src="~/js/CoffeShop/Alert.js"></script>
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/CoffeShop/chat.css" />
+}
+
+
+@{
+    Layout = "~/Views/Shared/CoffeLayout/_LayoutCoffe.cshtml";
+}
+
+<div>
+    <div>
+        <div class="chat-container mt-2">
+            <h2 class="reviews-label"> Ваша электронная книга жалоб и предложений: </h2>
+            <div id="liveAlertPlaceholder"></div>
+            <div class="input-group m-2">
+                <span class="input-group-text">Ваше сообщение нам</span>
+                <input class="new-coffe-message" />
+                <button class="send-new-coffe-message" type="button" id="liveAlertBtn">Отправить</button>
+            </div>
+        </div>
+    </div>
+</div>

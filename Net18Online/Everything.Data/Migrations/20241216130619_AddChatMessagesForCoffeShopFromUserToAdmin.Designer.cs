@@ -4,6 +4,7 @@ using Everything.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Everything.Data.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    partial class WebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241216130619_AddChatMessagesForCoffeShopFromUserToAdmin")]
+    partial class AddChatMessagesForCoffeShopFromUserToAdmin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -733,33 +736,6 @@ namespace Everything.Data.Migrations
                     b.ToTable("Producers", (string)null);
                 });
 
-            modelBuilder.Entity("Everything.Data.Models.Surveys.AnswerToQuestionData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TakingUserSurveyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionId");
-
-                    b.HasIndex("TakingUserSurveyId");
-
-                    b.ToTable("AnswerToQuestions");
-                });
-
             modelBuilder.Entity("Everything.Data.Models.Surveys.DocumentData", b =>
                 {
                     b.Property<int>("Id")
@@ -1308,25 +1284,6 @@ namespace Everything.Data.Migrations
                     b.Navigation("FilmDirector");
                 });
 
-            modelBuilder.Entity("Everything.Data.Models.Surveys.AnswerToQuestionData", b =>
-                {
-                    b.HasOne("Everything.Data.Models.Surveys.QuestionData", "Question")
-                        .WithMany("Answers")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Everything.Data.Models.Surveys.TakingUserSurveyData", "TakingUserSurvey")
-                        .WithMany("AnswerToQuestions")
-                        .HasForeignKey("TakingUserSurveyId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Question");
-
-                    b.Navigation("TakingUserSurvey");
-                });
-
             modelBuilder.Entity("Everything.Data.Models.Surveys.QuestionData", b =>
                 {
                     b.HasOne("Everything.Data.Models.Surveys.SurveyData", "Survey")
@@ -1511,11 +1468,6 @@ namespace Everything.Data.Migrations
                     b.Navigation("Characters");
                 });
 
-            modelBuilder.Entity("Everything.Data.Models.Surveys.QuestionData", b =>
-                {
-                    b.Navigation("Answers");
-                });
-
             modelBuilder.Entity("Everything.Data.Models.Surveys.SurveyData", b =>
                 {
                     b.Navigation("PassingUsers");
@@ -1526,11 +1478,6 @@ namespace Everything.Data.Migrations
             modelBuilder.Entity("Everything.Data.Models.Surveys.SurveyGroupData", b =>
                 {
                     b.Navigation("Surveys");
-                });
-
-            modelBuilder.Entity("Everything.Data.Models.Surveys.TakingUserSurveyData", b =>
-                {
-                    b.Navigation("AnswerToQuestions");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.UserData", b =>

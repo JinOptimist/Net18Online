@@ -44,5 +44,14 @@ namespace WebPortalEverthing.Hubs
             _chatMessageRepositry.AddMessage(userId, message);
             Clients.All.NewMessageAdded(message).Wait();
         }
+        
+        public void UserCreatedNewPost()
+        {
+            var userName = _authService.GetName();
+
+            var newMessage = $"{userName} add new post";
+
+            SendMessage(newMessage);
+        }
     }
 }

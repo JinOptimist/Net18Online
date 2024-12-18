@@ -42,6 +42,16 @@ namespace WebPortalEverthing.Controllers
             return View(viewModels);
         }
 
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
+
+        public IActionResult UserMessage()
+        {
+            return View();
+        }
+
         public List<CoffeViewModel> CoffeView()
         {
             var valuesCoffeFromDb = _coffeShopRepository.GetAllWithCreatorsAndBrand();
