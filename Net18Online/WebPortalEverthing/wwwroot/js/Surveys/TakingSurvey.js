@@ -20,6 +20,12 @@ $(document).ready(function () {
     }
 
     function notify(message) {
-        alert(message);
+        const notificationContainer = $(".notification-container")
+        let alertTemplate = notificationContainer.find(".alert.template").clone();
+
+        alertTemplate.removeClass("template");
+        alertTemplate.find(".text").text(message);
+
+        notificationContainer.append(alertTemplate);
     }
 });

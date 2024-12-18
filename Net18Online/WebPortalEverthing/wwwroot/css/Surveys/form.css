@@ -24,10 +24,6 @@ input {
     padding: 10px;
 }
 
-.question.template {
-    display: none;
-}
-
 .question .answer-option {
     display: flex;
     justify-content: space-between;
