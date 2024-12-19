@@ -108,7 +108,7 @@
 /* Стили для текста внутри кнопки */
 .button span {
     position: relative;
-    z-index: 2;
+    z-index: 2; 
     font-weight: bold; /* Жирный текст для лучшей четкости */
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Тень для контраста */
 }
