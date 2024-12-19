@@ -42,5 +42,18 @@ namespace WebPortalEverthing.Controllers.ApiControllers
             return true;
 
         }
+
+        public bool RemoveById(int id)
+        {
+            _loadTestingRepository.Delete(id);
+            return true;
+        }
+
+        public bool RemoveByGuid(Guid Guid)
+        {
+            _loadTestingRepository.DeleteByGuid(Guid);
+            return true;
+        }
+
     }
 }

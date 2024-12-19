@@ -99,6 +99,58 @@ $(".update-metric-button").click(function () {
   });
 });
 
+$(document).ready(function () {
+  // Удаление метрики по GUID
+  $(".delete-metric-by-guid").click(function () {
+    const guid = $(this).data("guid");
+
+    if (!guid) {
+      console.error("GUID not found for the selected metric.");
+      return;
+    }
+
+    if (
+      !confirm(`Are you sure you want to delete the metric with GUID: ${guid}?`)
+    ) {
+      return;
+    }
+
+    $.get(`/api/ApiLoadTesting/RemoveByGuid?guid=${guid}`)
+      .done(function (response) {
+        alert(`Metric with GUID ${guid} successfully deleted.`);
+        location.reload();
+      })
+      .fail(function (error) {
+        alert(`Error deleting metric with GUID ${guid}: ${error.responseText}`);
+      });
+  });
+
+  // Удаление метрики по ID
+  $(".delete-metric-by-id").click(function () {
+    const id = $(this).data("id");
+
+    if (!id) {
+      console.error("ID not found for the selected metric.");
+      return;
+    }
+
+    if (
+      !confirm(`Are you sure you want to delete the metric with ID: ${id}?`)
+    ) {
+      return;
+    }
+
+    $.get(`/api/ApiLoadTesting/RemoveById?id=${id}`)
+      .done(function (response) {
+        alert(`Metric with ID ${id} successfully deleted.`);
+        location.reload();
+      })
+      .fail(function (error) {
+        alert(`Error deleting metric with ID ${id}: ${error.responseText}`);
+      });
+  });
+});
+
 //--------------------------------------------------
 /*$(".update-metric-button").click(function () {
   const updateButton = $(this);
