@@ -16,6 +16,7 @@ using AnimeCatalogRepository = Everything.Data.Repositories.AnimeCatalogReposito
 using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRepository;
 using WebPortalEverthing.Services.LoadTesting;
 using WebPortalEverthing.CustomMiddlewares;
+using WebPortalEverthing.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +34,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(WebDbContext.CONNECTION_STRING));
 //builder.Services.AddDbContext<WebDbContext>(options => options.UseNpgsql(WebDbContext.CONNECTION_STRING));
 
+builder.Services.AddSignalR();
 
 // Register in DI container services/repository for ServiceCenter
 builder.Services.AddScoped<ITypeOfApplianceRepositoryReal, TypeOfApplianceRepository>();
@@ -54,7 +56,10 @@ builder.Services.AddScoped<IAnimeGirlRepositoryReal, AnimeGirlRepository>();
 builder.Services.AddScoped<ISurveyGroupRepositoryReal, SurveyGroupRepository>();
 builder.Services.AddScoped<IStatusRepositoryReal, StatusRepository>();
 builder.Services.AddScoped<ISurveysRepositoryReal, SurveysRepository>();
+builder.Services.AddScoped<IQuestionRepositoryReal, QuestionRepository>();
 builder.Services.AddScoped<IDocumentRepositoryReal, DocumentRepository>();
+builder.Services.AddScoped<ITakingUserSurveyRepositoryReal, TakingUserSurveyRepository>();
+builder.Services.AddScoped<IAnswerToQuestionRepositoryReal, AnswerToQuestionRepository>();
 builder.Services.AddScoped<IGameStoreRepositoryReal, GameStoreRepository>();
 builder.Services.AddScoped<IGameStudiosRepositoryReal, GameStudiosRepository>();
 builder.Services.AddScoped<ICakeRepositoryReal, CakeRepository>();
@@ -64,6 +69,8 @@ builder.Services.AddScoped<ILoadTestingRepositoryReal, LoadTestingRepository>();
 builder.Services.AddScoped<ILoadVolumeTestingRepositoryReal, LoadVolumeTestingRepository>();
 builder.Services.AddScoped<ILoadUserRepositryReal, LoadUserRepository>();
 builder.Services.AddScoped<IUserRepositryReal, UserRepository>();
+builder.Services.AddScoped<IChatMessageRepositryReal, ChatMessageRepositry>();
+builder.Services.AddScoped<ICoffeChatMessageRepositryKey, CoffeChatMessageRepository>();
 builder.Services
     .AddAuthentication(LoadAuthService.AUTH_TYPE_KEY)
     .AddCookie(LoadAuthService.AUTH_TYPE_KEY, config =>
@@ -121,6 +128,12 @@ app.UseAuthentication(); // Who Am I?
 app.UseAuthorization(); // May I?
 
 app.UseMiddleware<CustomLocalizationMiddleware>();
+app.UseMiddleware<CustomThemeMiddleware>();
+
+app.MapHub<ChatHub>("/hub/chatMainPage");
+app.MapHub<CoffeShopChatHub>("/hub/chatCoffePage");
+app.MapHub<GameAlertHub>("/hub/alertGamePage");
+app.MapHub<TakingSurveyHub>("/hub/takingSurvey");
 
 app.MapControllerRoute(
     name: "default",

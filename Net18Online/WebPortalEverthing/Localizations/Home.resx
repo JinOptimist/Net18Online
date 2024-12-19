@@ -153,4 +153,10 @@
   <data name="Cake_Link_Text" xml:space="preserve">
     <value>За тортиками</value>
   </data>
+  <data name="Home_MoviePosterDesc" xml:space="preserve">
+    <value>Не знаешь что посмотреть на выходных? Тогда тебе</value>
+  </data>
+  <data name="MoviePoster_Link_Text" xml:space="preserve">
+    <value>сюда</value>
+  </data>
 </root>

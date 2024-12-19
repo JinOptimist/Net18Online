@@ -167,6 +167,7 @@ img.admin-img {
     height: auto;
     border-radius: 10%;
 }
+
 .catalog-filter {
     margin-top: 20px;
     margin-left: 20px;
@@ -279,4 +280,16 @@ img.admin-img {
     margin-right: 10px;
     border: 1px rgb(126, 126, 126) solid;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.shop-info-table .edit-mode {
+    display: none;
+}
+
+    .shop-info-table .edit-mode .close-edit-button {
+        cursor: pointer;
+    }
+
+.shop-info-table .view-mode {
+    cursor: pointer
 }

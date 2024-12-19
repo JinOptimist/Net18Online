@@ -3,6 +3,7 @@ using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
 using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using WebPortalEverthing.Controllers.AuthAttributes;
 using WebPortalEverthing.Models.AnimeCatalog;
 using WebPortalEverthing.Models.AnimeReview;
 using WebPortalEverthing.Services;
@@ -63,14 +64,11 @@ namespace WebPortalEverthing.Controllers
         }
 
         [HttpPost]
+        [IsAuthenticated]
         public IActionResult CreateReviewAndLinktoAnime(IndexAnimeReviewViewModel viewModel, int animeId)
         {
             var currentUserId = _authService.GetUserId();
 
-            if(currentUserId == null)
-            {
-                return RedirectToAction("Register", "Auth");
-            }
             var animeReview = new AnimeReviewData
             {
                 Review = viewModel.NewReview.Review

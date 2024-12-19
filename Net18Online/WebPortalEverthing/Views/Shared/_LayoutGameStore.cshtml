@@ -1,13 +1,21 @@
 ﻿@using WebPortalEverthing.Localizations.LocalizationForGame
 @using WebPortalEverthing.Services
-@inject UserService userService
+@inject UserService userService    
+
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Game Store</title>
     <link href="~/css/GameStore/reset.css" rel="stylesheet" />
-    <link href="~/css/GameStore/style.css" rel="stylesheet" />    
+    <link href="~/css/GameStore/style.css" rel="stylesheet" />   
+    <link href="~/css/GameStore/icon.css" rel="stylesheet" />
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/ajaxHelper.js"></script>
+    <script src="~/js/GameShop/gameAlert.js"></script>
+    @RenderSection("Scripts", false)
 </head>
 <body>
     <header class="page-header">
@@ -62,6 +70,9 @@
         </div>
         <div class="content">
             @RenderBody()
+        </div>
+        <div id="alert" class="alert hidden">
+            <p class="alert-message">Это ваше уведомление!</p>
         </div>
     </div>
 </body>

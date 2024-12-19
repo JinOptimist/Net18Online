@@ -4,33 +4,35 @@
 @model QuestionViewModel
 
 <div class="question round-border">
-    @Html.HiddenFor(x => x.Id)
+    <input class="question-id" value="@Model.Id" type="hidden" />
     <div class="answer-option">
         <div>
-            <select name="AnswerType">
-                <option value="@AnswerType.TextString">Текст (строка)</option>
+            <select name="AnswerType" class="answer-type form-select form-select-sm">
+                <option value="@AnswerType.TextString" selected="@(Model.AnswerType == @AnswerType.TextString)">Текст (строка)</option>
+                <option value="@AnswerType.TextParagraph" selected="@(Model.AnswerType == @AnswerType.TextParagraph)">Текст (абзац)</option>
             </select>
         </div>
-        <div>
-        <label>
-            Обязательный вопрос
-            @Html.CheckBoxFor(x => x.IsRequired)
-        </label>
+        <div class="form-check form-switch">
+            <input class="question-required form-check-input" type="checkbox" checked="@Model.IsRequired">
+            <label class="form-check-label">Обязательный вопрос</label>
         </div>
         <div>
-            <button type="submit" asp-action="DeleteQuestion" asp-route-data-surveyCreate="@Model">Удалить</button>
+            <button class="del-button btn btn-sm btn-danger" type="button">Удалить</button>
         </div>
     </div>
-    <hr>
+    <hr class="my-2">
     <div class="title">
-        @Html.TextBoxFor(x => x.Title)
+        <input name="Title" class="question-title form-control form-control-sm" type="text" value="@Model.Title">
         @Html.ValidationMessageFor(x => x.Title)
     </div>
     <div>
         @switch (Model.AnswerType)
         {
             case AnswerType.TextString:
-                    <input type="text" value="Краткий ответ" />
+                <input type="text" class="form-control form-control-sm" value="Краткий ответ" disabled />
+                break;
+            case AnswerType.TextParagraph:
+                <textarea id="ctrl-@AnswerType.TextParagraph-template" class="form-control form-control-sm" disabled>Развёрнутый ответ</textarea>
                 break;
             default:
                     <span>Контрол не задан</span>

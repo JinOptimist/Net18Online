@@ -1,21 +1,28 @@
 ﻿using Everything.Data;
 using Everything.Data.Models;
 using Everything.Data.Repositories;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
+using WebPortalEverthing.Controllers.AuthAttributes;
 using WebPortalEverthing.Models.AnimeCatalog;
+using WebPortalEverthing.Services;
 
 namespace WebPortalEverthing.Controllers
 {
     public class AnimeCatalogController : Controller
     {
         private IAnimeCatalogRepositoryReal _animeCatalogRepository;
-
         private WebDbContext _webDbContext;
+        private IWebHostEnvironment _webHostEnvironment;
+        private AuthService _authService;
 
-        public AnimeCatalogController(IAnimeCatalogRepositoryReal animeCatalogRepository, WebDbContext webDbContext)
+        public AnimeCatalogController(IAnimeCatalogRepositoryReal animeCatalogRepository, WebDbContext webDbContext, IWebHostEnvironment webHostEnvironment, AuthService authService)
         {
             _animeCatalogRepository = animeCatalogRepository;
             _webDbContext = webDbContext;
+            _webHostEnvironment = webHostEnvironment;
+            _authService = authService;
         }
 
         public IActionResult Index(int? count)
@@ -62,23 +69,74 @@ namespace WebPortalEverthing.Controllers
             return View();
         }
 
+        [IsAuthenticated]
         [HttpPost]
-        public IActionResult Create(AnimeCatalogCreationViewModel viewModel)
+        public IActionResult UpdateAvatar(IFormFile anime, AnimeCatalogCreationViewModel viewModel)
         {
-            if (!ModelState.IsValid)
+            if (viewModel.Name == null)
             {
-                return View(viewModel);
+                throw new Exception();
             }
+            if (anime == null && viewModel.ImageSrc == null)
+            {
+                throw new Exception();
+            }
+            if (viewModel.ImageSrc != null)
+            {
+                var animeData = new AnimeData
+                {
+                    Name = viewModel.Name,
+                    ImageSrc = viewModel.ImageSrc,
+                };
+
+                _animeCatalogRepository.Add(animeData);
+                return RedirectToAction("Index");
+            }
+
+            var webRootPath = _webHostEnvironment.WebRootPath;
+
+            var animeFileName = $"Anime-{anime!.FileName.GetHashCode()}.jpg";
+
+            var path = Path.Combine(webRootPath, "images", "AnimeCatalog", animeFileName);
+
+            if (Path.Exists(path))
+            {
+                return RedirectToAction("Index");
+            }
+
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                anime
+                    .CopyToAsync(fileStream)
+                    .Wait();
+            }
+
+            var animeUrl = $"/images/AnimeCatalog/Anime-{anime!.FileName.GetHashCode()}.jpg";
 
             var dataCatalog = new AnimeData
             {
                 Name = viewModel.Name,
-                ImageSrc = viewModel.ImageSrc,
+                ImageSrc = animeUrl,
             };
 
             _animeCatalogRepository.Add(dataCatalog);
 
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult GetShortestReview()
+        {
+            var shortestReviews = _animeCatalogRepository.GetAnimeWithShortestReview();
+            var viewModel = shortestReviews.Select(x => new AnimeWithShortestReviewViewModel
+            {
+                AnimeId = x.AnimeId,
+                ImageSrc = x.ImageSrc,
+                AnimeName = x.AnimeName,
+                ShortestReviewLength = x.ShortestReviewLength
+            })
+                .ToList();
+            return View(viewModel);
         }
     }
 }

@@ -98,4 +98,13 @@
       girlBlock.insertBefore($(".girl.create"));
     });
   });
+
+  $(".girl .name .icon").click(function () {
+    $(this).toggleClass("like");
+    $(this).toggleClass("like-pushed");
+
+    const girlId = $(this).closest(".girl").attr("data-id");
+    const url = `/api/ApiGirl/Like?girlId=${girlId}`;
+    $.get(url);
+  });
 });

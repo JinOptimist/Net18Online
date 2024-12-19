@@ -7,7 +7,9 @@ using Microsoft.Extensions.Logging;
 using Everything.Data.Repositories;
 using WebPortalEverthing.Models.Ecology;
 using Everything.Data.Models;
+using Microsoft.AspNetCore.SignalR;
 using WebPortalEverthing.Controllers.AuthAttributes;
+using WebPortalEverthing.Hubs;
 using WebPortalEverthing.Services;
 
 
@@ -22,13 +24,15 @@ public class EcologyController : Controller
     private ICommentRepositoryReal _commentRepositoryReal;
     private AuthService _authService;
     private IWebHostEnvironment _webHostEnvironment;
-
+    public IHubContext<ChatHub, IChatHub> _chatHub;
+    
     public EcologyController(IEcologyRepositoryReal ecologyRepository, 
         ICommentRepositoryReal commentRepositoryReal,
         IUserRepositryReal userRepositryReal,
         AuthService authService,
         WebDbContext webDbContext,
-        IWebHostEnvironment webHostEnvironment)
+        IWebHostEnvironment webHostEnvironment,
+        IHubContext<ChatHub, IChatHub> chatHub)
     {
         _ecologyRepository = ecologyRepository;
         _commentRepositoryReal = commentRepositoryReal;
@@ -36,6 +40,7 @@ public class EcologyController : Controller
         _userRepositryReal = userRepositryReal;
         _authService = authService;
         _webHostEnvironment = webHostEnvironment;
+        _chatHub = chatHub;
     }
 
     public IActionResult Index()
@@ -60,7 +65,7 @@ public class EcologyController : Controller
         
         return View(viewModel);
     }
-    
+
     [HttpPost]
     public IActionResult SetForMainPage(Type postId)
     {
@@ -80,11 +85,14 @@ public class EcologyController : Controller
 
             var info = _commentRepositoryReal.GetCommentAuthors((int)userId);
         
-            info.Comments.Select(dbComment => new CommentForProfileViewModel()
-            {
-                CommentId = dbComment.Id,
-                CommentText = dbComment.CommentText
-            });
+            viewModel.Comments = info
+                .Comments
+                .Select(dbComment => new CommentForProfileViewModel()
+                {
+                    CommentId = dbComment.Id,
+                    CommentText = dbComment.CommentText
+                })
+                .ToList();
         
             viewModel.Posts = info
                 .Posts
@@ -100,7 +108,7 @@ public class EcologyController : Controller
             viewModel.UserName = "Guest";
             viewModel.AvatarUrl = "~/images/Ecology/defaltavatar.JPG";
             viewModel.Posts = new List<EcologyForProfileViewModel>();
-            viewModel.Comments = new List<CommentViewModel>();
+            viewModel.Comments = new List<CommentForProfileViewModel>();
         }
         
         return View(viewModel);
@@ -112,18 +120,19 @@ public class EcologyController : Controller
         var ecologyFromDb = _ecologyRepository.GetAllWithUsersAndComments();
         var currentUserId = _authService.GetUserId();
         var isAdmin = User.Claims.Any(c => c.Type == ClaimTypes.Role && c.Value == "Admin"); 
-
+        
         if (currentUserId is null)
         {
             return RedirectToAction("Index");
         }
 
         var user = _userRepositryReal.Get(currentUserId.Value);
+
         if (user.Coins < 150)
         {
             return RedirectToAction("Index");
         }
-        
+    
         var ecologyViewModels = ecologyFromDb
             .Select(dbEcology =>
                 new EcologyViewModel
@@ -135,14 +144,23 @@ public class EcologyController : Controller
                     //Text = dbEcology.Comments?.CommentText ?? "Without comments",
                     CanDelete = dbEcology.User?.Id == currentUserId || isAdmin,
                     CanMove = isAdmin,
-                    PostsForMainPage = dbEcology.ForMainPage == 1
+                    PostsForMainPage = dbEcology.ForMainPage == 1,
+                    LikeCount = dbEcology.UsersWhoLikeIt.Count(),                                                                                                     
+                    IsLiked = dbEcology.UsersWhoLikeIt.Any(x => x.UserId == user.Id)
                 }
             )
             .ToList();
-        return View(ecologyViewModels);
+
+        var viewModel = new PostViewModel
+        {
+            Ecologies = ecologyViewModels,
+            Posts = new List<PostCreationViewModel>()
+        };
+        
+        return View(viewModel);
     }
     
-    [HttpPost]
+    [HttpPost] //Это и есть создание 
     public IActionResult EcologyChat(PostCreationViewModel viewModel, IFormFile imageFile)
     {
         if (CalcCountWorldRepeat.IsEclogyTextHas(viewModel.Text) >= 4)
@@ -157,7 +175,7 @@ public class EcologyController : Controller
 
         var currentUserId = _authService.GetUserId();
         
-        string imageUrl = null;
+        string imageUrl = null; //изначально null для того, чтобы затем получить либо URL, либо путь к загруженному изображению с компьютера. Для того, чтобы  использовать одно из значений в объекте EcologyData
         
         if (imageFile != null && imageFile.Length > 0)
         {
@@ -177,6 +195,11 @@ public class EcologyController : Controller
         {
             imageUrl = viewModel.Url;
         }
+        else
+        {
+            ModelState.AddModelError("", "Please provide either an image URL or upload an image."); 
+            return View("EcologyChat");
+        }
 
         var ecology = new EcologyData
         {
@@ -186,31 +209,10 @@ public class EcologyController : Controller
 
         _ecologyRepository.Create(ecology, currentUserId!.Value, viewModel.PostId);
         //_ecologyRepository.Add(ecology);
-
-        return RedirectToAction("EcologyChat");
-    }
         
-    [HttpPost]
-    public IActionResult UpdatePost(int id, string url, string text)
-    {
-        _ecologyRepository.UpdatePost(id, url, text);
-        return RedirectToAction("EcologyChat");
-    }
+        // Отправка уведомления о новом посте
+        _chatHub.Clients.All.NewMessageAdded($"User {viewModel.UserName} create a new post: {viewModel.Text}");
 
-    [HttpPost]
-    public IActionResult Remove(int postId)
-    {
-        var ecology = _ecologyRepository.Get(postId);
-        if (ecology != null)
-        {
-            // Удаление изображения с диска
-            var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, ecology.ImageSrc.TrimStart('/'));
-            if (System.IO.File.Exists(imagePath))
-            {
-                System.IO.File.Delete(imagePath);
-            } 
-            _ecologyRepository.Delete(ecology);
-        } 
         return RedirectToAction("EcologyChat");
     }
 
@@ -232,6 +234,7 @@ public class EcologyController : Controller
     public IActionResult CommentsForPost(int postId)
     {
         var comm = _commentRepositoryReal.GetCommentsByPostId(postId);
+        
         return View(comm);
     }
     

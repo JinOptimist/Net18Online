@@ -34,16 +34,16 @@
                         @if (!User.Identity?.IsAuthenticated ?? false)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login">@Home.Home_Login</a>
+                                <a class="nav-link text-dark login-link" asp-area="" asp-controller="Auth" asp-action="Login">@Home.Home_Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Register">@Home.Home_Registration</a>
+                                <a class="nav-link text-dark registration-link" asp-area="" asp-controller="Auth" asp-action="Register">@Home.Home_Registration</a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout">@Home.Home_Logout</a>
+                                <a class="nav-link text-dark logout-link" asp-area="" asp-controller="Auth" asp-action="Logout">@Home.Home_Logout</a>
                             </li>
                         }
                         @if (authService.IsAdmin())
@@ -56,6 +56,11 @@
                         {
                             <a class="nav-link text-dark" href="/Home/UpdateLocale?language=@Language.Ru">Ру</a>
                             <a class="nav-link text-dark" href="/Home/UpdateLocale?language=@Language.En">En</a>
+                        }
+                        else
+                        {
+                            <a class="nav-link text-dark unauth-lang" href="#" data-lang="@Language.Ru">Ру</a>
+                            <a class="nav-link text-dark unauth-lang" href="#" data-lang="@Language.En">En</a>
                         }
                     </ul>
                 </div>
@@ -75,7 +80,10 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/cookie.js" asp-append-version="true"></script>
+    <script src="~/js/language.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

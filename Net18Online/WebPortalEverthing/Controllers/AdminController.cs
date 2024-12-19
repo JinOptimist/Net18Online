@@ -41,6 +41,12 @@ namespace WebPortalEverthing.Controllers
             return View(viewModel);
         }
 
+        public IActionResult DeleteUser(int id)
+        {
+            _userRepositryReal.Delete(id);
+            return RedirectToAction("Users");
+        }
+
         public IActionResult UpdateRole(Role role, int userId)
         {
             _userRepositryReal.UpdateRole(userId, role);

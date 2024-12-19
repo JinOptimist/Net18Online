@@ -20,6 +20,9 @@ namespace Everything.Data.Repositories
         bool HasSimilarName(string name);
         UserData GetInfoAboutUser(int? userId);
         IEnumerable<MostPopularGames> GetMostPopularGames();
+        IEnumerable<GameData> GetAllWithStudio();
+        bool LikeGame(int gameId, int userId);
+        bool DislikeGame(int gameId, int userId);
     }
     public class GameStoreRepository : BaseRepository<GameData>, IGameStoreRepositoryReal
     {
@@ -130,6 +133,61 @@ ORDER BY
                 .ToList();
 
             return result;
+        }
+
+        public IEnumerable<GameData> GetAllWithStudio()
+        {
+            var result = _webDbContext.Games
+                .Include(game => game.UsersWhoLikedGame)
+                .Include(game => game.UsersWhoDislikedGame)
+                .Include(game => game.Studios) 
+                .ToList();
+
+            return result;
+        }
+
+        public bool LikeGame(int gameId, int userId)
+        {
+            var game = _dbSet
+                .Include(x => x.UsersWhoLikedGame)
+                .First(x => x.Id == gameId);
+
+            var isUserAlreadyLikeTheGame = _dbSet
+                .Any(g => g.Id == userId
+                && g.UsersWhoLikedGame.Any(u => u.Id == userId));
+            var user = _webDbContext.Users.First(x => x.Id == userId);
+
+            if (isUserAlreadyLikeTheGame)
+            {                
+                game.UsersWhoLikedGame.Remove(user);
+                _webDbContext.SaveChanges();
+                return false;
+            }
+            game.UsersWhoLikedGame.Add(user);
+            _webDbContext.SaveChanges();
+            return true;
+
+        }
+
+        public bool DislikeGame(int gameId, int userId)
+        {
+            var game = _dbSet
+                .Include(x => x.UsersWhoDislikedGame)
+                .First(x => x.Id == gameId);
+
+            var isUserAlreadyDislikeTheGame = _dbSet
+                .Any(g => g.Id == userId
+                && g.UsersWhoDislikedGame.Any(u => u.Id == userId));
+            var user = _webDbContext.Users.First(x => x.Id == userId);
+            if (isUserAlreadyDislikeTheGame)
+            {                
+                game.UsersWhoDislikedGame.Remove(user);
+                _webDbContext.SaveChanges();
+                return false;
+            }
+            game.UsersWhoDislikedGame.Add(user);
+            _webDbContext.SaveChanges();
+            return true;
         }
     }
 

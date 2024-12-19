@@ -1,0 +1,54 @@
+﻿@using Everything.Data.Interface.Enums
+@using WebPortalEverthing.Models.Surveys
+
+@model TakingSurveyIndexViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutSurveys.cshtml";
+}
+
+@section Scripts {
+    <script src="~/js/Surveys/TakingSurvey.js"></script>
+}
+
+<div class="main-content-title">
+    <span>Прохождение опроса</span>
+</div>
+<div class="survey">
+    <input id="taking-id" value="@Model.Id" type="hidden" />
+    <div>
+        <label>
+            Название опроса
+            <h5>@Model.SurveyTitle</h5>
+        </label>
+    </div>
+    <div class="questions">
+        @foreach (var question in Model.Questions)
+        {
+            <div class="question round-border">
+                <input class="answer-id" value="@question.AnswerId" type="hidden" />
+                <div class="title">
+                    <p class="text-primary fw-bold">
+                        <span>@(@question.IsRequired ? "* " : "")</span>
+                        <span>@question.Title</span>
+                    </p>
+                </div>
+                <hr class="my-2">
+                <div>
+                    @switch (question.AnswerType)
+                    {
+                        case AnswerType.TextString:
+                            <input type="text" class="answer-control form-control form-control-sm" data-answer-type="@AnswerType.TextParagraph" />
+                            break;
+                        case AnswerType.TextParagraph:
+                            <textarea class="answer-control form-control form-control-sm" data-answer-type="@AnswerType.TextParagraph"></textarea>
+                            break;
+                        default:
+                            <span>Контрол не задан</span>
+                            break;
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>

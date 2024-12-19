@@ -5,6 +5,10 @@
     Layout = "~/Views/Shared/CoffeLayout/_LayoutCoffe.cshtml";
 }
 
+@section Scripts {
+    <script src="~/js/CoffeShop/Index.js"></script>
+}
+
 <div class="main-page">
     <h1>
         Admin panel
@@ -14,8 +18,11 @@
         <a class="btn btn-outline-info mt-2" href="/Brand">
             Brands Info
         </a>
+        <a class="btn btn-outline-info mt-2" href="/CoffeShop/UserMessage">
+            Messages    
+        </a>
     </div>
-    <div>
+    <div class="shop-info-table">
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -34,24 +41,30 @@
             <tbody>
                 @foreach (var coffe in Model)
                 {
-                    <tr>
+                    <tr class="coffe-object">
                         <th scope="row">
                             @if (coffe.CanDeleteOrUpdate)
                             {
-                                <a class="btn btn-outline-danger" href="/CoffeShop/Delete?id=@coffe.Id">
+                                <a class="object-delete" href="#" data-id="@coffe.Id">
                                     D
                                 </a>
                             } @coffe.Id
                         </th>
                         <td scope="row">
-                            <form action="/CoffeShop/UpdateCoffe" method="post">
-                                <input type="hidden" name="id" value="@coffe.Id" />
-                                <input name="name" value="@coffe.Coffe" />
-                                @if (coffe.CanDeleteOrUpdate)
-                                {
-                                    <button type="submit" class="btn btn-outline-success">U</button>
-                                }
-                            </form>
+                            <div class="table-block">
+                                <div class="view-mode">
+                                    @coffe.Coffe
+                                </div>
+                                <div class="edit-mode">
+                                    <button type="button" class="close-edit-button">X</button>
+                                    <input class="coffe-id" type="hidden" name="id" value="@coffe.Id" />
+                                    <input class="new-coffe-name" name="name" value="@coffe.Coffe" />
+                                    @if (coffe.CanDeleteOrUpdate)
+                                    {
+                                        <button type="button" class="update-coffe-button">U</button>
+                                    }
+                                </div>
+                            </div>
                         </td>
                         <td scope="row">
                             <form action="/CoffeShop/UpdateCost" method="post">
@@ -59,7 +72,7 @@
                                 <input name="cost" value="@coffe.Cost" />
                                 @if (coffe.CanDeleteOrUpdate)
                                 {
-                                    <button type="submit" class="btn btn-outline-success">U</button>
+                                    <button type="submit" class="update-coffe-button">U</button>
                                 }
                             </form>
                         </td>
@@ -76,7 +89,7 @@
                                 <input name="url" />
                                 @if (coffe.CanDeleteOrUpdate)
                                 {
-                                    <button type="submit" class="btn btn-outline-success">U</button>
+                                    <button type="submit" class="update-coffe-button">U</button>
                                 }
                             </form>
                         </td>

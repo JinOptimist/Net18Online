@@ -42,6 +42,16 @@ namespace WebPortalEverthing.Controllers
             return View(viewModels);
         }
 
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
+
+        public IActionResult UserMessage()
+        {
+            return View();
+        }
+
         public List<CoffeViewModel> CoffeView()
         {
             var valuesCoffeFromDb = _coffeShopRepository.GetAllWithCreatorsAndBrand();
@@ -108,18 +118,6 @@ namespace WebPortalEverthing.Controllers
 
             _coffeShopRepository.Create(coffe, currentUserId!.Value, viewModel.BrandId);
 
-            return RedirectToAction("Index");
-        }
-
-        public IActionResult Delete(int id)
-        {
-            _coffeShopRepository.Delete(id);
-            return RedirectToAction("Index");
-        }
-
-        public IActionResult UpdateCoffe(int id, string name)
-        {
-            _coffeShopRepository.UpdateCoffeName(id, name);
             return RedirectToAction("Index");
         }
 

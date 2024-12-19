@@ -14,6 +14,8 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using WebPortalEverthing.Controllers.AuthAttributes;
 using WebPortalEverthing.Models.AnimeGirl.Profile;
 using Enums.Users;
+using Microsoft.AspNetCore.SignalR;
+using WebPortalEverthing.Hubs;
 
 namespace WebPortalEverthing.Controllers
 {
@@ -26,18 +28,21 @@ namespace WebPortalEverthing.Controllers
         private List<string> _bannedWords = new List<string> { "admin", "root", "test" };
         private AuthService _authService;
         private IWebHostEnvironment _webHostEnvironment;
+        private IHubContext<GameAlertHub, IGameAlertHub> _hubContext;
 
         public GameStoreController(IGameStoreRepositoryReal gameStoreRepository,
             WebDbContext webDbContext,
             AuthService authService,
             IUserRepositryReal userRepositryReal,
-            IWebHostEnvironment webHostEnvironment)
+            IWebHostEnvironment webHostEnvironment,
+            IHubContext<GameAlertHub, IGameAlertHub> hubContext)
         {
             _gameStoreRepository = gameStoreRepository;
             _webDbContext = webDbContext;
             _authService = authService;
             _userRepositryReal = userRepositryReal;
             _webHostEnvironment = webHostEnvironment;
+            _hubContext = hubContext;
         }
         public IActionResult Index()
         {
@@ -52,12 +57,15 @@ namespace WebPortalEverthing.Controllers
 
         public IActionResult Shop()
         {
-            var gameFromDb = _gameStoreRepository.GetAll();
+            var gameFromDb = _gameStoreRepository.GetAllWithStudio();
 
             if (!_gameStoreRepository.Any())
             {
                 //GenerateDefaultGame();
             }
+
+            var userId = _authService.GetUserId()!;
+            var user = _userRepositryReal.Get(userId.Value)!;
 
             var shopViewModels = gameFromDb.Select(dbGame =>
             new ShopViewModel
@@ -66,6 +74,11 @@ namespace WebPortalEverthing.Controllers
                 NameGame = dbGame.NameGame,
                 ImageSrc = dbGame.ImageSrc,
                 Cost = dbGame.Cost,
+                Studios = dbGame.Studios?.Name, 
+                LikeCount = dbGame.UsersWhoLikedGame.Count(),
+                IsLiked = dbGame.UsersWhoLikedGame.Any(x => x.Id == user.Id),
+                DislikeCount =  dbGame.UsersWhoDislikedGame.Count(),
+                IsDisliked = dbGame.UsersWhoDislikedGame.Any(x => x.Id == user.Id),
             }).ToList();
 
             var shopListViewModel = new ShopListViewModel
@@ -154,14 +167,10 @@ namespace WebPortalEverthing.Controllers
                 //Tags = new()
             };
 
+            _hubContext.Clients.All.Alert($"Игра {viewModel.Name} добавлена на сайт");
 
             _gameStoreRepository.Add(dataGame);
 
-            return RedirectToAction("Shop");
-        }
-        public IActionResult UpdateName(string newName, int id)
-        {
-            _gameStoreRepository.UpdateName(id, newName);
             return RedirectToAction("Shop");
         }
 
@@ -171,7 +180,6 @@ namespace WebPortalEverthing.Controllers
             return RedirectToAction("Shop");
         }
 
-
         public IActionResult Purchases(int buyerId, int gameId)
         {
 
@@ -179,11 +187,7 @@ namespace WebPortalEverthing.Controllers
             return RedirectToAction("Shop");
 
         }
-        public IActionResult Remove(int id)
-        {
-            _gameStoreRepository.Delete(id);
-            return RedirectToAction("Library");
-        }
+
         [IsAuthenticated]
         public IActionResult Profile()
         {

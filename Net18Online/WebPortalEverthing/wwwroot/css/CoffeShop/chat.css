@@ -1,0 +1,9 @@
+﻿.chat-container {
+    display:block;
+    margin-left: auto;
+    margin-right:auto;
+    width: 800px;
+}
+.template {
+    display: none;
+}

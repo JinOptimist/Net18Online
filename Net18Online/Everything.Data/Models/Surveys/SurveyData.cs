@@ -9,5 +9,6 @@ namespace Everything.Data.Models.Surveys
         public string? Description { get; set; }
         public virtual SurveyGroupData SurveyGroup { get; set; }
         public virtual List<QuestionData> Questions { get; set; } = new();
+        public virtual List<TakingUserSurveyData> PassingUsers { get; set; } = new();
     }
 }

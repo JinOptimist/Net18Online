@@ -57,9 +57,14 @@ namespace Everything.Data
         public DbSet<SurveyGroupData> SurveyGroups { get; set; }
         public DbSet<QuestionData> Questions { get; set; }
         public DbSet<DocumentData> Documents { get; set; }
+        public DbSet<TakingUserSurveyData> TakingUserSurveys { get; set; }
+        public DbSet<AnswerToQuestionData> AnswerToQuestions { get; set; }
         #endregion
 
         public DbSet<DndClassData> DndClasses { get; set; }
+
+        public DbSet<ChatMessageData> ChatMessages { get; set; }
+        public DbSet<CoffeChatMessageData> CoffeChatMessages { get; set; }
 
         public WebDbContext() { }
 
@@ -92,11 +97,15 @@ namespace Everything.Data
                 .WithMany(x => x.CreatedGirls)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<GirlData>()
+                .HasMany(x => x.UsersWhoLikeIt)
+                .WithMany(x => x.GirlsWhichUsersLike);
+
             modelBuilder.Entity<AnimeReviewData>()
                 .HasOne(x => x.Creator)
                 .WithMany(x => x.CreatedAnimeReviews)
                 .OnDelete(DeleteBehavior.NoAction);
-                
+
             modelBuilder.Entity<MovieData>()
                 .HasOne(x => x.Creator)
                 .WithMany(x => x.CreatedMovies)
@@ -112,10 +121,41 @@ namespace Everything.Data
                 .WithOne(x => x.Survey)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<TakingUserSurveyData>()
+                .HasOne(x => x.User)
+                .WithMany(x => x.PassingSurveys)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<TakingUserSurveyData>()
+                .HasOne(x => x.Survey)
+                .WithMany(x => x.PassingUsers)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<AnswerToQuestionData>()
+                .HasOne(x => x.TakingUserSurvey)
+                .WithMany(x => x.AnswerToQuestions)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<AnswerToQuestionData>()
+                .HasOne(x => x.Question)
+                .WithMany(x => x.Answers)
+                .OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<UserData>()
                 .HasMany(x => x.СreatorSurveyGroups)
                 .WithOne(x => x.СreatorUser)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<UserData>()
+                .HasMany(x => x.ChatMessages)
+                .WithOne(x => x.User)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<UserData>()
+                .HasMany(x => x.CoffeChatMessages)
+                .WithOne(x => x.User)
+                .OnDelete(DeleteBehavior.SetNull);
+
 
             modelBuilder.Entity<CoffeData>()
                 .HasOne(x => x.Creator)
@@ -141,7 +181,7 @@ namespace Everything.Data
                 .HasMany(x => x.Magazins)
                 .WithMany(x => x.Cakes);
 
-                
+
             modelBuilder.Entity<CakeData>()
                 .HasOne(x => x.Creator)
                 .WithMany(x => x.CreatedCakes)
@@ -195,6 +235,19 @@ namespace Everything.Data
                 .OnDelete(DeleteBehavior.NoAction)
                 .HasForeignKey(x => x.UserId);
 
+            modelBuilder.Entity<UserEcologyLikesData>().HasKey(ue => new { ue.UserId, ue.EcologyDataId });
+            modelBuilder.Entity<UserEcologyLikesData>()
+                .HasOne(ue => ue.User)
+                .WithMany(u => u.PostsWhichUsersLike)
+                .HasForeignKey(ue => ue.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<UserEcologyLikesData>()
+                .HasOne(ue => ue.EcologyData)
+                .WithMany(ec => ec.UsersWhoLikeIt)
+                .HasForeignKey(ue => ue.EcologyDataId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<AnimeData>()
                 .HasMany(x => x.Reviews)
                 .WithOne(x => x.Anime)
@@ -219,7 +272,15 @@ namespace Everything.Data
 
             modelBuilder.Entity<GameData>()
                 .HasMany(x => x.Buyers)
-                .WithMany(x => x.Games);                
+                .WithMany(x => x.Games);
+
+            modelBuilder.Entity<GameData>()
+                .HasMany(x => x.UsersWhoLikedGame)
+                .WithMany(x => x.GameWhichUsersLike);
+
+            modelBuilder.Entity<GameData>()
+                .HasMany(x => x.UsersWhoDislikedGame)
+                .WithMany(x => x.GameWhichUsersDislike);
 
             modelBuilder.Entity<FilmDirectorData>()
                 .HasMany(x => x.Movies)
