@@ -11,6 +11,10 @@
         public string CreatorName { get; set; }
         public string MangaName { get; set; }
 
+        public bool IsLiked { get; set; }
+
         public bool CanDelete { get; set; }
+
+        public int LikeCount { get; set; }
     }
 }

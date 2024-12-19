@@ -15,6 +15,7 @@ namespace Everything.Data.Repositories
         void UpdateLocal(int userId, Language language);
         void UpdateRole(int userId, Role role);
         int GetNewIdForImage(int userId);
+        bool CheckIsNameAvailable(string userName);
     }
 
     public class UserRepository : BaseRepository<UserData>, IUserRepositryReal
@@ -27,6 +28,11 @@ namespace Everything.Data.Repositories
         public override int Add(UserData data)
         {
             throw new NotImplementedException("User method Register to create a new User");
+        }
+
+        public bool CheckIsNameAvailable(string userName)
+        {
+            return !_dbSet.Any(x => x.Login == userName);
         }
 
         public string GetAvatarUrl(int userId)
@@ -63,6 +69,11 @@ namespace Everything.Data.Repositories
 
         public void Register(string login, string password, int age, Role role = Role.User)
         {
+            if (_dbSet.Any(x => x.Login == login))
+            {
+                throw new Exception();
+            }
+
             var user = new UserData
             {
                 Login = login,

@@ -14,38 +14,36 @@
 <div class="main-content-title">
     <span>@(Model.Id == 0 ? "Создание нового" : "Редактирование") опроса</span>
 </div>
-<div class="question-template">
-    <div class="question round-border">
-        <div class="answer-option">
-            <div>
-                <select name="AnswerType">
-                    <option value="@AnswerType.TextString">Текст (строка)</option>
-                    <option value="@AnswerType.TextParagraph">Текст (абзац)</option>
-                </select>
-            </div>
-            <div>
-                <label>
-                    Обязательный вопрос
-                    @Html.CheckBox("check-box")
-                </label>
-            </div>
-            <div>
-                <button class="del-button" type="button">Удалить вопрос</button>
-            </div>
+<div class="question round-border template">
+    <input class="question-id" value="***" type="hidden" />
+    <div class="answer-option">
+        <div>
+            <select name="AnswerType" class="answer-type form-select form-select-sm">
+                <option value="@AnswerType.TextString">Текст (строка)</option>
+                <option value="@AnswerType.TextParagraph">Текст (абзац)</option>
+            </select>
         </div>
-        <hr>
-        <div class="title">
-            @Html.TextBox("title")
+        <div class="form-check form-switch">
+            <input class="question-required form-check-input" type="checkbox">
+            <label class="form-check-label">Обязательный вопрос</label>
         </div>
         <div>
-            <input id="ctrl-@AnswerType.TextString-template" type="text" value="Краткий ответ" />
-            <textarea id="ctrl-@AnswerType.TextParagraph-template" value="Развёрнутый ответ"></textarea>
+            <button class="del-button btn btn-sm btn-danger" type="button">Удалить</button>
         </div>
+    </div>
+    <hr class="my-2">
+    <div class="title">
+        <input class="question-title form-control form-control-sm" type="text" />
+    </div>
+    <div>
+        <input id="ctrl-@AnswerType.TextString-template" class="form-control form-control-sm" type="text" value="Краткий ответ" disabled />
+        <textarea id="ctrl-@AnswerType.TextParagraph-template" class="form-control form-control-sm" disabled>Развёрнутый ответ</textarea>
     </div>
 </div>
 <div>
-    <form class="new-survey" method="post">
+    <form class="survey" method="post">
         <div class="round-border">
+            <input id="survey-id" value="@Model.Id" type="hidden" />
             <div>
                 @Html.HiddenFor(x => x.Id)
                 @Html.HiddenFor(x => x.SurveyGroup.Id)
@@ -79,10 +77,10 @@
             }
         </div>
         <div class="add-question round-border">
-            <button id="add-button" type="button">Добавить вопрос</button>
+            <button id="add-button" class="btn btn-sm btn-secondary" type="button">Добавить вопрос</button>
         </div>
         <div class="actions">
-            <button class="save-button" type="submit">Сохранить</button>
+            <button class="save-button btn btn-sm btn-success" type="submit">Сохранить</button>
         </div>
     </form>
 </div>

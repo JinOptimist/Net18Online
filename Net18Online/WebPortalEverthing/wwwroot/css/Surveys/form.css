@@ -1,9 +1,9 @@
-﻿form.new-survey {
+﻿form .survey {
     margin: 10px;
 }
 
 input {
-    margin: 3px;
+    margin: 3px 0px;
     border-color: #6d797678;
     border-radius: 5px;
 }
@@ -16,22 +16,13 @@ input {
     border-radius: 5px;
 }
 
-.new-survey .round-border {
+.survey .round-border {
     border: 1px solid;
     border-color: grey;
     border-radius: 7px;
     margin: 5px 0px;
     padding: 10px;
 }
-
-.question-template {
-    display: none;
-}
-
-    .question-template .answer-option {
-        display: flex;
-        justify-content: space-between;
-    }
 
 .question .answer-option {
     display: flex;

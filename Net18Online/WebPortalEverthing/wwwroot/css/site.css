@@ -34,3 +34,15 @@ body {
     display: inline-block;
     padding: 5px;
 }
+
+.main-page{
+    display: flex;
+}
+
+.chat-container{
+    width: 300px;
+}
+
+    .chat-container .joke {
+        display: none;
+    }
