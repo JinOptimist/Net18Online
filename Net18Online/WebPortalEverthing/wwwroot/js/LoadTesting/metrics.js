@@ -41,7 +41,66 @@ $(".discription-type .view-mode").click(function () {
   nameBlock.find(".edit-mode").show();
 });
 
+const userLocale = navigator.language || navigator.userLanguage; // Например, "ru-RU" или "en-US"
+
+function parseLocalizedNumber(input) {
+  /* if (userLocale === "ru-RU") {
+    // Русская локализация (запятая)
+    return parseFloat(input.replace(",", "."));
+  } else {
+    // Английская локализация (точка)
+    return parseFloat(input);
+  }*/
+  return parseFloat(input.replace(",", "."));
+}
+
 $(".update-metric-button").click(function () {
+  const updateButton = $(this);
+
+  // Найти ближайший родительский контейнер с классом .discription-type
+  const discriptionBlock = updateButton.closest(".discription-type");
+
+  // Найти .edit-mode
+  const editModeBlock = discriptionBlock.find(".edit-mode");
+
+  // Считать значения из полей редактирования
+  const metric = {
+    id: editModeBlock.find(".update-metric-id").val(),
+    name: editModeBlock.find(".update-metric-name").val(),
+    guid: editModeBlock.find(".update-metric-guid").val(),
+    // Преобразуем числа с учетом локализации и приводим к строке
+    ThroughputInput: parseLocalizedNumber(
+      editModeBlock.find(".update-metric-throughput").val()
+    ).toString(),
+    AverageInput: parseLocalizedNumber(
+      editModeBlock.find(".update-metric-average").val()
+    ).toString(),
+  };
+
+  console.log("Отправляем метрику:", metric);
+
+  // Отправить POST-запрос
+  $.ajax({
+    url: "/api/ApiLoadTesting/UpdateMetric",
+    method: "POST",
+    contentType: "application/json",
+    data: JSON.stringify(metric),
+    success: function (response) {
+      console.log("Успешное обновление:", response);
+
+      // Найти .view-mode и обновить UI после успешного ответа
+      const viewModeBlock = discriptionBlock.find(".view-mode");
+      viewModeBlock.show();
+      editModeBlock.hide();
+    },
+    error: function (error) {
+      console.error("Ошибка при обновлении:", error);
+    },
+  });
+});
+
+//--------------------------------------------------
+/*$(".update-metric-button").click(function () {
   const updateButton = $(this);
 
   // Найти ближайший родительский контейнер с классом .discription-type
@@ -63,8 +122,8 @@ $(".update-metric-button").click(function () {
     Кодирует запятые (,) как %2C.
     Кодирует пробелы как %20.
     Кодирует другие специальные символы, такие как &, = и ?.*/
-  const url =
-    `/api/ApiLoadTesting/UpdateMetric?` +
+/* const url =
+    `/LoadTesting/UpdateMetric?` +
     `id=${encodeURIComponent(metricId)}&` +
     `name=${encodeURIComponent(metricName)}&` +
     `guid=${encodeURIComponent(metricGuid)}&` +
@@ -98,7 +157,7 @@ $(".update-metric-button").click(function () {
   // Заблокировать кнопку и поле ввода во время запроса
   updateButton.attr("disabled", "disabled");
   editModeBlock.find(".update-metric-name").attr("disabled", "disabled");
-});
+});*/
 
 // $(".discription-type .type-container img").click(function () {
 // .css("display", "inline-block"); //сменили у найденного элемента скрытое(none) отображение на видимое
