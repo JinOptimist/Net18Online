@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.LoadTesting;
 using WebPortalEverthing.Services.LoadTesting;
 
-namespace WebPortalEverthing.Controllers.LoadTesting
+namespace WebPortalEverthing.Controllers.ApiControllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]

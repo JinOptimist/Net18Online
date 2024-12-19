@@ -59,18 +59,21 @@ $(".update-metric-button").click(function () {
   const metricAverage = editModeBlock.find(".update-metric-average").val();
 
   console.log("finded id, name, guid, throughput, average.");
-
+  /*encodeURIComponent:
+    Кодирует запятые (,) как %2C.
+    Кодирует пробелы как %20.
+    Кодирует другие специальные символы, такие как &, = и ?.*/
   const url =
-    `/LoadTesting/UpdateMetric?` +
-    `id=${metricId}&` +
-    `name=${metricName}&` +
-    `guid=${metricGuid}&` +
-    `ThroughputInput=${metricThrough}&` +
-    `AverageInput=${metricAverage}`;
+    `/api/ApiLoadTesting/UpdateMetric?` +
+    `id=${encodeURIComponent(metricId)}&` +
+    `name=${encodeURIComponent(metricName)}&` +
+    `guid=${encodeURIComponent(metricGuid)}&` +
+    `ThroughputInput=${encodeURIComponent(metricThrough)}&` +
+    `AverageInput=${encodeURIComponent(metricAverage)}`;
 
   // Отправить GET-запрос
   $.get(url).then(function (response) {
-    //подписались на ответ(ждём ответа)
+    //подписались на ответ(ждём ответа, если есть ответ)
     if (response) {
       // Успешное обновление, обновляем текст в режиме просмотра
       viewModeBlock.text(metricName);
