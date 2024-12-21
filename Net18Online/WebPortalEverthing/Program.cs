@@ -87,6 +87,7 @@ builder.Services.AddScoped<LoadAuthService>();
 builder.Services.AddScoped<EnumHelper>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<LoadUserService>();
+builder.Services.AddScoped<LoadVolumeService>();
 builder.Services.AddScoped<FileProvider>();
 builder.Services.AddScoped<HelperForFile>();
 

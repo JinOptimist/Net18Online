@@ -4,9 +4,13 @@
 @using WebPortalEverthing.Services.LoadTesting
 @inject LoadAuthService loadAuthService
 @inject LoadUserService loadUserService
+@inject LoadVolumeService loadVolumeService
 
 @{
     Layout = "~/Views/Shared/LoadTesting/_LayoutLoadTesting.cshtml";
+
+    // Получаем список LoadVolumes из LoadVolumeService
+    var loadVolumes = loadVolumeService.GetLoadVolumes();
 }
 
 @section Scripts {
@@ -21,20 +25,7 @@
                 <span class="@(metric.CreatorName == LoadAuthService.CLAIM_TYPE_NAME ? "special-load-volume" : "special")">
 
                     <div class="type-name">@metric.Name</div>
-                </span> @*класс стиля*@
-                @*Указать экшен, который будет вызван при отправке формы*@
-                @*
-            <form action="/LoadTesting/UpdateMetric" method="post">
-            <input type="hidden" name="id" value="@metric.Id" />
-            <input type="text" name="name" value="@metric.Name" />
-            <input type="hidden" name="guid" value="@metric.Guid" />
-            <input type="text" name="ThroughputInput" value="@metric.Throughput" />
-            <input type="text" name="AverageInput" value="@metric.Average" />
-            <input type="submit" value="Update" />
-            </form>
-            <div class="view-mode">
-            </div>
-            *@
+                </span>
                 <div class="view-mode">
                     <span class="tag-view-mode">@metric.Name</span>
                     <span class="tag-view-mode">@metric.Guid</span>
@@ -69,10 +60,34 @@
                     <button type="button" class="delete-metric-by-guid" data-guid="@metric.Guid">Delete Guid</button>
                     <button type="button" class="delete-metric-by-id" data-id="@metric.Id">Delete Id</button>
                 }
-
             </div>
         }
+        <div class="create-profile-form">
+            <div class="image-container">
+                <img src="~/images/LoadTesting/photo_2024-07-15_09-13-16.jpg" alt="metric creating" />
+            </div>
+            <div class="title">Введите данные профайла</div>
+            <div class="input-container">
+                <input id="metric-name" type="text" placeholder="Name" />
+                <span id="metric-name-error" class="validation-error"></span>
 
-        <!-- Закрытие блока .discription-tipes -->
+                <input id="metric-throughput" type="text" placeholder="Throughput" />
+                <span id="metric-throughput-error" class="validation-error"></span>
+
+                <input id="metric-average" type="text" placeholder="Average" />
+                <span id="metric-average-error" class="validation-error"></span>
+
+                <select id="metric-load-volume">
+                    <option value="" disabled selected>Choose Load Volume</option>
+                    @foreach( var volume in loadVolumes )
+                    {
+                        <option value="@volume.Value">@volume.Text</option>
+                    }
+                </select>
+                <span id="metric-load-volume-error" class="validation-error"></span>
+
+                <button type="button" id="create-metric-button">Create Metric</button>
+            </div>
+        </div>
     </div>
 </div>

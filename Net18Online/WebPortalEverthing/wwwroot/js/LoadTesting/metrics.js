@@ -102,7 +102,8 @@ $(".update-metric-button").click(function () {
 $(document).ready(function () {
   // Удаление метрики по GUID
   $(".delete-metric-by-guid").click(function () {
-    const guid = $(this).data("guid");
+    //тоже самое , что attr("data-guid");
+    const guid = $(this).data("guid"); //извлекает значение атрибута data-guid у этого элемента
 
     if (!guid) {
       console.error("GUID not found for the selected metric.");
@@ -148,6 +149,106 @@ $(document).ready(function () {
       .fail(function (error) {
         alert(`Error deleting metric with ID ${id}: ${error.responseText}`);
       });
+  });
+});
+// создание новой метрики с инъекцией во вью сервиса получающего список LoadVolumes
+$("#create-metric-button").click(function () {
+  const loadVolumeDropdown = $("#metric-load-volume");
+
+  // Проверяем, заполнен ли список LoadVolumes
+  if (loadVolumeDropdown.children("option").length < 1) {
+    $.get("/api/ApiLoadTesting/GetLoadVolumes", function (loadVolumes) {
+      loadVolumes.forEach(function (volume) {
+        loadVolumeDropdown.append(
+          `<option value="${volume.value}">${volume.text}</option>`
+        );
+      });
+    });
+  }
+
+  // Собираем данные из формы
+  const name = $("#metric-name").val();
+  const throughput = parseLocalizedNumber(
+    $("#metric-throughput").val()
+  ).toString();
+  const average = parseLocalizedNumber($("#metric-average").val()).toString();
+  const loadVolumeId = $("#metric-load-volume").val();
+
+  // Валидация данных
+  let isValid = true;
+
+  if (!name) {
+    isValid = false;
+    $("#metric-name-error").text("Name is required.");
+  } else {
+    $("#metric-name-error").text("");
+  }
+
+  if (!throughput) {
+    isValid = false;
+    $("#metric-throughput-error").text("Throughput is required.");
+  } else {
+    $("#metric-throughput-error").text("");
+  }
+
+  if (!average) {
+    isValid = false;
+    $("#metric-average-error").text("Average is required.");
+  } else {
+    $("#metric-average-error").text("");
+  }
+
+  if (!loadVolumeId) {
+    isValid = false;
+    $("#metric-load-volume-error").text("Load Volume is required.");
+  } else {
+    $("#metric-load-volume-error").text("");
+  }
+
+  if (!isValid) {
+    return; // Останавливаем отправку, если есть ошибки
+  }
+
+  // Формируем данные для отправки на сервер
+  const url = "/api/ApiLoadTesting/CreateMetric";
+  const metric = {
+    Name: name.toString(),
+    ThroughputInput: throughput,
+    AverageInput: average,
+    loadVolumeId: loadVolumeId.toString(),
+  };
+  console.log("Отправляем метрику:", metric);
+
+  // Отправляем данные через AJAX
+  $.ajax({
+    type: "POST",
+    url: url,
+    contentType: "application/json",
+    data: JSON.stringify(metric),
+    success: function (response) {
+      alert("Metric created successfully!");
+      location.reload(); // Перезагрузка страницы для обновления списка
+    },
+    error: function (error) {
+      const errors = error.responseJSON?.errors;
+      if (errors) {
+        // Отображаем ошибки на странице
+        if (errors.Name) {
+          $("#metric-name-error").text(errors.Name.join(", "));
+        }
+        if (errors.ThroughputInput) {
+          $("#metric-throughput-error").text(errors.ThroughputInput.join(", "));
+        }
+        if (errors.AverageInput) {
+          $("#metric-average-error").text(errors.AverageInput.join(", "));
+        }
+        if (errors.LoadVolumeId) {
+          $("#metric-load-volume-error").text(errors.LoadVolumeId.join(", "));
+        }
+      } else {
+        alert(`Error creating metric: ${error.responseText}`);
+      }
+    },
   });
 });
 

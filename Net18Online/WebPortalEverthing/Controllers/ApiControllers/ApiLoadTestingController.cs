@@ -21,8 +21,10 @@ namespace WebPortalEverthing.Controllers.ApiControllers
 
         private ILoadUserRepositryReal _loadUserRepositryReal;
         private LoadAuthService _loadAuthService;
+        private LoadVolumeService _loadVolumeService;
 
-        public ApiLoadTestingController(IWebHostEnvironment webHostEnvironment, ILoadTestingRepositoryReal loadTestingRepository, WebDbContext webDbContext, ILoadUserRepositryReal loadUserRepositryReal, LoadAuthService loadAuthService, ILoadVolumeTestingRepositoryReal loadVolumeTestingRepositoryReal)
+
+        public ApiLoadTestingController(IWebHostEnvironment webHostEnvironment, ILoadTestingRepositoryReal loadTestingRepository, WebDbContext webDbContext, ILoadUserRepositryReal loadUserRepositryReal, LoadAuthService loadAuthService, ILoadVolumeTestingRepositoryReal loadVolumeTestingRepositoryReal, LoadVolumeService loadVolumeService)
         {
             _webHostEnvironment = webHostEnvironment;
             _loadTestingRepository = loadTestingRepository;
@@ -30,6 +32,7 @@ namespace WebPortalEverthing.Controllers.ApiControllers
             _loadUserRepositryReal = loadUserRepositryReal;
             _loadAuthService = loadAuthService;
             _loadVolumeTestingRepositoryReal = loadVolumeTestingRepositoryReal;
+            _loadVolumeService = loadVolumeService;
         }
 
         public bool UpdateMetric(MetricCreationViewModel metric)
@@ -52,6 +55,36 @@ namespace WebPortalEverthing.Controllers.ApiControllers
         public bool RemoveByGuid(Guid Guid)
         {
             _loadTestingRepository.DeleteByGuid(Guid);
+            return true;
+        }
+
+        [HttpGet]
+        public bool GetLoadVolumes()
+        {
+            var loadVolumes = _loadVolumeService.GetLoadVolumes();
+            return true;
+        }
+
+        [HttpPost]
+        public bool CreateMetric([FromBody] MetricCreationViewModel metric)
+        {
+            if (!ModelState.IsValid)
+            {
+                return false;
+            }
+
+            var currentUserId = _loadAuthService.GetUserId();
+
+            // Используем _loadTestingRepository для сохранения данных
+            var metricData = new Everything.Data.Models.MetricData
+            {
+                Name = metric.Name,
+                Throughput = (decimal)metric.Throughput,
+                Average = (decimal)metric.Average
+            };
+
+            _loadTestingRepository.Create(metricData, currentUserId!.Value, metric.LoadVolumeId);
+
             return true;
         }
 
