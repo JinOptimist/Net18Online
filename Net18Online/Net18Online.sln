@@ -35,11 +35,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enums", "Enums\Enums.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatMinimalApi", "ChatMinimalApi\ChatMinimalApi.csproj", "{C3110613-7780-40FC-BF9E-92611AF073AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoffeMinimalApi", "CoffeMinimalApi\CoffeMinimalApi.csproj", "{A2502BF3-B1E9-4DD7-8E1C-4B7D6555105A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoffeMinimalApi", "CoffeMinimalApi\CoffeMinimalApi.csproj", "{A2502BF3-B1E9-4DD7-8E1C-4B7D6555105A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebPortalEverthing.E2E", "WebPortalEverthing.E2E\WebPortalEverthing.E2E.csproj", "{8950CFFD-14E5-4A2F-A9B9-D8669E833093}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebPortalEverthing.E2E", "WebPortalEverthing.E2E\WebPortalEverthing.E2E.csproj", "{8950CFFD-14E5-4A2F-A9B9-D8669E833093}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapMinimalApi", "MapMinimalApi\MapMinimalApi.csproj", "{ED03EA34-8AEB-4A99-A017-C2C5521896DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReflectionExample", "ReflectionExample\ReflectionExample.csproj", "{A2097222-39A0-400E-BFBA-91FCAA2B55A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -123,6 +125,10 @@ Global
 		{ED03EA34-8AEB-4A99-A017-C2C5521896DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED03EA34-8AEB-4A99-A017-C2C5521896DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED03EA34-8AEB-4A99-A017-C2C5521896DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2097222-39A0-400E-BFBA-91FCAA2B55A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2097222-39A0-400E-BFBA-91FCAA2B55A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2097222-39A0-400E-BFBA-91FCAA2B55A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2097222-39A0-400E-BFBA-91FCAA2B55A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

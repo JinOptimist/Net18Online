@@ -2,21 +2,14 @@ using Everything.Data;
 using Everything.Data.Fake.Repositories;
 using Everything.Data.Interface.Repositories;
 using Everything.Data.Repositories;
-using Everything.Data.Repositories.Surveys;
 using MazeCore.Builders;
 using Microsoft.EntityFrameworkCore;
 using SimulatorOfPrinting.Models;
-using WebPortalEverthing.Services;
-using AnimeGirlRepository = Everything.Data.Repositories.AnimeGirlRepository;
-using CoffeShopRepository = Everything.Data.Repositories.CoffeShopRepository;
-using EcologyRepository = Everything.Data.Repositories.EcologyRepository;
-using GameStoreRepository = Everything.Data.Repositories.GameStoreRepository;
-using LoadTestingRepository = Everything.Data.Repositories.LoadTestingRepository;
-using AnimeCatalogRepository = Everything.Data.Repositories.AnimeCatalogRepository;
-using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRepository;
-using WebPortalEverthing.Services.LoadTesting;
 using WebPortalEverthing.CustomMiddlewares;
 using WebPortalEverthing.Hubs;
+using WebPortalEverthing.Services;
+using WebPortalEverthing.Services.LoadTesting;
+using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,39 +31,13 @@ builder.Services.AddSignalR();
 
 // Register in DI container services/repository for ServiceCenter
 builder.Services.AddScoped<ITypeOfApplianceRepositoryReal, TypeOfApplianceRepository>();
-
 builder.Services.AddSingleton<IDNDRepository, DNDRepository>();
 builder.Services.AddSingleton<IChessPartiesRepository, ChessPartiesRepository>();
+builder.Services.AddSingleton<IGameLifeRepository, GameLifeRepository>();
 
-builder.Services.AddScoped<IMoviePosterRepositoryReal, MoviePosterRepository>();
+var registrationHelper = new RegistrationHelper();
+registrationHelper.AutoRegisterRepositories(builder.Services);
 
-builder.Services.AddScoped<IAnimeCatalogRepositoryReal, AnimeCatalogRepository>();
-builder.Services.AddScoped<IAnimeReviewRepositoryReal, AnimeReviewsRepository>();
-builder.Services.AddScoped<IEcologyRepositoryReal, EcologyRepository>();
-builder.Services.AddScoped<ICommentRepositoryReal, CommentRepository>();
-builder.Services.AddScoped<IKeyCoffeShopRepository, CoffeShopRepository>();
-builder.Services.AddScoped<IMangaRepositoryReal, MangaRepository>();
-builder.Services.AddScoped<IBrandRepositoryReal, BrandRepository>();
-builder.Services.AddScoped<IFilmDirectorRepositoryReal, FilmDirectorRepository>();
-builder.Services.AddScoped<IAnimeGirlRepositoryReal, AnimeGirlRepository>();
-builder.Services.AddScoped<ISurveyGroupRepositoryReal, SurveyGroupRepository>();
-builder.Services.AddScoped<IStatusRepositoryReal, StatusRepository>();
-builder.Services.AddScoped<ISurveysRepositoryReal, SurveysRepository>();
-builder.Services.AddScoped<IQuestionRepositoryReal, QuestionRepository>();
-builder.Services.AddScoped<IDocumentRepositoryReal, DocumentRepository>();
-builder.Services.AddScoped<ITakingUserSurveyRepositoryReal, TakingUserSurveyRepository>();
-builder.Services.AddScoped<IAnswerToQuestionRepositoryReal, AnswerToQuestionRepository>();
-builder.Services.AddScoped<IGameStoreRepositoryReal, GameStoreRepository>();
-builder.Services.AddScoped<IGameStudiosRepositoryReal, GameStudiosRepository>();
-builder.Services.AddScoped<ICakeRepositoryReal, CakeRepository>();
-builder.Services.AddScoped<IMagazinRepositoryReal, MagazinRepository>();
-
-builder.Services.AddScoped<ILoadTestingRepositoryReal, LoadTestingRepository>();
-builder.Services.AddScoped<ILoadVolumeTestingRepositoryReal, LoadVolumeTestingRepository>();
-builder.Services.AddScoped<ILoadUserRepositryReal, LoadUserRepository>();
-builder.Services.AddScoped<IUserRepositryReal, UserRepository>();
-builder.Services.AddScoped<IChatMessageRepositryReal, ChatMessageRepositry>();
-builder.Services.AddScoped<ICoffeChatMessageRepositryKey, CoffeChatMessageRepository>();
 builder.Services
     .AddAuthentication(LoadAuthService.AUTH_TYPE_KEY)
     .AddCookie(LoadAuthService.AUTH_TYPE_KEY, config =>
@@ -82,16 +49,15 @@ builder.Services
 builder.Services.AddScoped<HelperForValidatingCake>();
 builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();
-builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<LoadAuthService>();
-builder.Services.AddScoped<EnumHelper>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<LoadUserService>();
 builder.Services.AddScoped<LoadVolumeService>();
 builder.Services.AddScoped<FileProvider>();
 builder.Services.AddScoped<HelperForFile>();
 
-builder.Services.AddSingleton<IGameLifeRepository, GameLifeRepository>();
+registrationHelper.AutoRegisterServiceByAttribute(builder.Services);
+registrationHelper.AutoRegisterServiceByAttributeOnConstructor(builder.Services);
 
 builder.Services.AddHttpContextAccessor();
 

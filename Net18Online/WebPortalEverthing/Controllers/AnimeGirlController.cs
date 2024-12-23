@@ -17,22 +17,22 @@ namespace WebPortalEverthing.Controllers
         private IMangaRepositoryReal _mangaRepositoryReal;
         private IUserRepositryReal _userRepositryReal;
         private AuthService _authService;
-        private WebDbContext _webDbContext;
+        private GeneratorAnimeGirls _generatorAnimeGirls;
         private IWebHostEnvironment _webHostEnvironment;
 
         public AnimeGirlController(IAnimeGirlRepositoryReal animeGirlRepository,
-            WebDbContext webDbContext,
             IUserRepositryReal userRepositryReal,
             AuthService authService,
             IMangaRepositoryReal mangaRepositoryReal,
-            IWebHostEnvironment webHostEnvironment)
+            IWebHostEnvironment webHostEnvironment,
+            GeneratorAnimeGirls generatorAnimeGirls)
         {
             _animeGirlRepository = animeGirlRepository;
-            _webDbContext = webDbContext;
             _userRepositryReal = userRepositryReal;
             _authService = authService;
             _mangaRepositoryReal = mangaRepositoryReal;
             _webHostEnvironment = webHostEnvironment;
+            _generatorAnimeGirls = generatorAnimeGirls;
         }
 
         public IActionResult Index(string name, int age)
