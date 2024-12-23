@@ -57,6 +57,12 @@
                 <li><a class="dropdown-item" href="/CoffeShop/UpdateLocale?language=@Language.En">English</a></li>
             </ul>
         </div>
+        <div>
+            @if (User.Identity?.IsAuthenticated ?? false)
+            {
+                <a class="nav-link text-dark logout-link" asp-area="" asp-controller="Auth" asp-action="Logout">@Home.Home_Logout</a>
+            }
+        </div>
         <div class="header-actions">
             @if (User.Identity?.IsAuthenticated ?? false)
             {
