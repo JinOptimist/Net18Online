@@ -62,76 +62,63 @@
     <!-- Прозрачный фон под списком кнопок с переливающимся фоном -->
     <div class="fire-fon"></div>
 
-    <div class="buttona-and-content"/>
-    <div class="button-list">
-        <div class="fridaysRemaining">
-            <div>До нового года осталось</div>
-            <span id="fridaysCount">0</span> пятниц_ц_ц !
-        </div>
-        <ul>
-            <li>
-                <a href="/Loadtesting/ContenMetricsListView" class="button">
-                    <span>All metrics</span>
-                </a>
-            </li>
-            <li>
-                <a href="/Loadtesting/CreateProfileView" class="button">
-                    <span>CreateProfile</span>
-                </a>
-            </li>
-            <li>
-                <a href="/Loadtesting/CreateProfileView" class="button">
-                    <span>EditeProfile</span>
-                </a>
-            </li>
-            <li>
-                <a href="/GameLife/GameLifeOwnSize" class="button">
-                    <span>GameLifeOwnSize</span>
-                </a>
-            </li>
-            <li>
-                <a href="/LoadVolumeTesting/IndexLoadVolumeView" class="button">
-                    <span>All Load Volumies</span>
-                </a>
-            </li>
-            <li>
-                <a href="/LoadVolumeTesting/CreateloadVolumeView" class="button">
-                    <span>Create LoadVolume</span>
-                </a>
-            </li>
-            @if (loadAuthService.IsAdmin())
-            {
-                <li>
-                    <a href="/LoadAdmin/LoadUsersView" class="button"><span>Load Users</span></a>
-                </li>
-            }
-            <li>
-                <a href="/LoadAdmin/LoadUsersByRolsView" class="button">
-                    <span>LoadUsers By Rols</span>
-                </a>
-            </li>
-        </ul>
-        <form method="post">
-            <div class="oval-form">
-                <div class="input-container">
-                    <div class="title">Закажи себе нагрузку на Новый год:</div>
-                    <input type="text" name="name" placeholder="Name" value="NewYearLoad" required/>
-                    <input type="text" name="throughput" placeholder="Throughput" required/>
-                    <input type="text" name="average" placeholder="Average" required/>
-                    <button type="submit">Создать</button>
-                </div>
+    <div class="buttona-and-content">
+        <div class="button-list">
+            <div class="fridaysRemaining">
+                <div>До нового года осталось</div> <span id="fridaysCount">0</span> пятниц_ц_ц !
             </div>
-        </form>
-    </div>
-    @RenderBody();
-    <!-- Добавьте этот блок для рендеринга секции Scripts из \LoadTesting\GameLife\GameLifeDefault.cshtml -->
-    @RenderSection("Scripts", required: false)
-    <div></div>
-    <!-- Закрытие блока .content -->
-    <div></div>
-    <!-- Закрытие блока .buttona-and-content -->
+            <ul>
+                <li>
+                    <a href="/Loadtesting/ContenMetricsListView" class="button"><span>All metrics</span></a>
+                </li>
+                <li>
+                    <a href="/Loadtesting/CreateProfileView" class="button"><span>CreateProfile</span></a>
+                </li>
+                <li>
+                    <a href="/Loadtesting/CreateProfileView" class="button"><span>EditeProfile</span></a>
+                </li>
+                <li>
+                    <a href="/GameLife/GameLifeOwnSize" class="button"><span>GameLifeOwnSize</span></a>
+                </li>
+                <li>
+                    <a href="/LoadVolumeTesting/IndexLoadVolumeView" class="button"><span>All Load Volumies</span></a>
+                </li>
+                <li>
+                    <a href="/LoadVolumeTesting/CreateloadVolumeView" class="button"><span>Create LoadVolume</span></a>
+                </li>
+                @if( loadAuthService.IsAdmin() )
+                {
+                    <li>
+                        <a href="/LoadAdmin/LoadUsersView" class="button"><span>Load Users</span></a>
+                    </li>
+                }
+                <li>
+                    <a href="/LoadAdmin/LoadUsersByRolsView" class="button"><span>LoadUsers By Rols</span></a>
+                </li>
+            </ul>
 
-    </body>
+
+
+            <form method="post">
+                <div class="oval-form">
+                    <div class="input-container">
+                        <div class="title">Закажи себе нагрузку на Новый год:</div>
+                        <input type="text" name="name" placeholder="Name" value="NewYearLoad" required />
+                        <input type="text" name="throughput" placeholder="Throughput" required />
+                        <input type="text" name="average" placeholder="Average" required />
+                        <button type="submit">Создать</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        @RenderBody();
+        <!-- Добавьте этот блок для рендеринга секции Scripts из \LoadTesting\GameLife\GameLifeDefault.cshtml -->
+        @RenderSection("Scripts", required: false)
+        <div></div><!-- Закрытие блока .content -->
+        <div></div>  <!-- Закрытие блока .buttona-and-content -->
+
+</body>
 </html>
 <script>
     function countFridaysUntilNewYear() {
