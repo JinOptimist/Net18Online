@@ -231,6 +231,7 @@ namespace WebPortalEverthing.Controllers.LoadTesting
 
         public IActionResult UpdateMetric(MetricCreationViewModel metric)
         {
+            Thread.Sleep(1000);
             _loadTestingRepository.UpdateNameByGuid(metric.Guid, metric.Name);
             _loadTestingRepository.UpdateThroughputByGuid(metric.Guid, (decimal)metric.Throughput);
             _loadTestingRepository.UpdateAverageByGuid(metric.Guid, (decimal)metric.Average);

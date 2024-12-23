@@ -9,21 +9,21 @@
     width: 100%; /* Используем гибкую ширину для адаптации */
     justify-content: flex-start; /* Выравнивание элементов по левому краю */
 }
-    background-image: linear-gradient( 45deg, rgba(98, 0, 255, 0.4), rgba(225, 0, 255, 0.4), rgba(43, 1, 14, 0.4), rgba(255, 69, 0, 0.4) ) !important; /* Фиксируем фон, чтобы он не наследовался */
-    background-size: 300% 300%; /* Увеличиваем размер для эффекта перелива */
-    animation: fireGlow 4s ease infinite; /* Анимация для перелива */
-    border-radius: 20px; /* Красивая закругленная форма для фона */
-    opacity: 1; /* Немного прозрачный фон */ /* Фоновый цвет кнопки */
 
-    text-decoration: none; /* Убираем подчеркивание */
-    border: none; /* Убираем границу */
-    border-radius: 20px; /* Закругление углов */
-    overflow: hidden; /* Прячем лишние элементы */
-    cursor: pointer; /* Курсор при наведении */
-    transition: background-color 0.3s ease, opacity 0.3s ease; /* Плавный переход для прозрачности */
-    margin: 10px 0; /* Отступы 50px сверху и снизу между кнопками */
-    opacity: 1; /* 0.5 Прозрачность кнопки на 50% */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 -2px 8px rgba(255, 165, 0, 0.6); /* Эффект выпуклости и подсветки */
+background-image: linear-gradient( 45deg, rgba(98, 0, 255, 0.4), rgba(225, 0, 255, 0.4), rgba(43, 1, 14, 0.4), rgba(255, 69, 0, 0.4) ) !important; /* Фиксируем фон, чтобы он не наследовался */
+background-size: 300% 300%; /* Увеличиваем размер для эффекта перелива */
+animation: fireGlow 4s ease infinite; /* Анимация для перелива */
+border-radius: 20px; /* Красивая закругленная форма для фона */
+opacity: 1; /* Немного прозрачный фон */ /* Фоновый цвет кнопки */
+text-decoration: none; /* Убираем подчеркивание */
+border: none; /* Убираем границу */
+border-radius: 20px; /* Закругление углов */
+overflow: hidden; /* Прячем лишние элементы */
+cursor: pointer; /* Курсор при наведении */
+transition: background-color 0.3s ease, opacity 0.3s ease; /* Плавный переход для прозрачности */
+margin: 10px 0; /* Отступы 50px сверху и снизу между кнопками */
+opacity: 1; /* 0.5 Прозрачность кнопки на 50% */
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 -2px 8px rgba(255, 165, 0, 0.6); /* Эффект выпуклости и подсветки */
 }
 /* Анимация для переливающегося фона */
 @keyframes fireGlow {
@@ -40,16 +40,35 @@
     }
 }
 
+
+
+.discription-type.highlight-is-active {
+    opacity: 0.2;
+}
+
+    .discription-type.highlight-is-active.highlighted {
+        opacity: 1;
+    }
+
 .discription-type {
     margin: 10px;
     width: 200px;
 }
+
 
     .discription-type .type-name {
         display: flex;
         justify-content: center;
         font-size: 40px; /* Устанавливает размер шрифта 24 пикселя */
         margin: 10px;
+    }
+
+    .discription-type .edit-mode {
+        display: none;
+    }
+
+    .discription-type .view-mode {
+        cursor: pointer;
     }
 
     .discription-type .type-guid {
@@ -68,16 +87,256 @@
             max-height: 200px;
         }
 
+        .discription-type .type-container.full {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /*     background-color: antiquewhite; */
+            background-image: linear-gradient( 45deg, rgba(98, 0, 255, 1), rgba(225, 0, 255,1), rgba(43, 1, 14,1), rgba(255, 69, 0, 1) ) !important; /* Фиксируем фон, чтобы он не наследовался */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            border-radius: 100px; /* Радиус скругления углов */
+        }
+
+            .discription-type .type-container.full img {
+                max-width: 70%;
+                max-height: 70%;
+                border-radius: 30px; /* Радиус скругления углов */
+            }
+
     .discription-type .additional-info {
-        display: grid;
+        /*  display: grid; */
+        width: 200px;
         border-top: 1px #ccc solid;
-        /* display: flex;*/
+        display: none;
         flex-wrap: wrap; /*разрешаешь детей переносить на след. строку*/
+        position: absolute;
+        background: linear-gradient( 45deg, rgba(98, 0, 255, 1), rgba(225, 0, 255,1), rgba(43, 1, 14,1), rgba(255, 69, 0, 1) ) !important; /* Фиксируем фон, чтобы он не наследовался */
+        z-index: 100;
     }
 
         .discription-type .additional-info .tag {
+            width: 100%; /* Ширина равна ширине родителя */
+            box-sizing: border-box; /* Включает padding и border в общую ширину */
             border: 3px rgb(243, 9, 204);
-            display: inline-block;
             border: radius 2px;
             margin: 3px;
+            /*    display: none; */
+            display: inline-block;
+        }
+
+/*Для кнопки параметров (скрытых сначала) */
+
+.toggle-button-tag-additional-info {
+    position: relative;
+    display: block;
+    padding: 15px 10px; /* Отступы внутри кнопки */
+    font-size: 16px; /* Размер шрифта */
+    color: rgb(27, 2, 48, 0,40); /* Цвет текста */
+    background-image: linear-gradient( 45deg, rgba(98, 0, 255, 0.4), rgba(225, 0, 255, 0.4), rgba(43, 1, 14, 0.4), rgba(255, 69, 0, 0.4) ) !important; /* Фиксируем фон, чтобы он не наследовался */
+    background-size: 300% 300%; /* Увеличиваем размер для эффекта перелива */
+    animation: fireGlow 4s ease infinite; /* Анимация для перелива */
+
+    text-decoration: none; /* Убираем подчеркивание */
+    border: none; /* Убираем границу */
+    border-radius: 20px; /* Закругление углов */
+    overflow: hidden; /* Прячем лишние элементы */
+    cursor: pointer; /* Курсор при наведении */
+    transition: background-color 0.3s ease, opacity 0.3s ease; /* Плавный переход для прозрачности */
+    width: auto; /* Фиксированная ширина кнопки */
+    margin: 10px 0; /* Отступы 10px сверху и снизу между кнопками */
+    opacity: 0.5; /* 0.5 Прозрачность кнопки на 50% */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 -2px 8px rgba(255, 165, 0, 0.6); /* Эффект выпуклости и подсветки */
+}
+/* Анимация для переливающегося фона */
+@keyframes fireGlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Эффект при наведении на кнопку */
+.toggle-button-tag-additional-info:hover {
+    background-color: #1d1d1d; /* Темный фон при наведении для контраста */
+    opacity: 1; /* Полная непрозрачность при наведении */
+    box-shadow: 0 36px 12px rgba(0, 0, 0, 0.4),
+    /* Увеличение тени при наведении */ inset 0 -2px 8px rgba(255, 165, 0, 0.8); /* Подсветка при наведении */
+}
+
+.toggle-button-tag-additional-info::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%; /* Начало анимации слева за пределами кнопки */
+    width: 100%;
+    height: 30%;
+    background-image: linear-gradient( 90deg, transparent 0%, rgb(4, 252, 4) 20%, rgba(36, 243, 9, 0.8) 40%, transparent 60% );
+    background-size: 30px 60%; /* Увеличиваем ширину рисок и расстояние между ними */
+    transition: left 0.5s ease;
+}
+
+/* Запускаем анимацию при наведении */
+.toggle-button-tag-additional-info:hover::before {
+    left: 0; /* Ограничиваем движение анимации длиной кнопки */
+}
+
+/* Стили для текста внутри кнопки */
+.toggle-button-tag-additional-info span {
+    position: relative;
+    /*   z-index: 2;  */
+    font-weight: bold; /* Жирный текст для лучшей четкости */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Тень для контраста */
+}
+
+/*Для кнопки апдэйта параметров метрики */
+
+.update-metric-button {
+    position: relative;
+    display: block;
+    padding: 15px 10px; /* Отступы внутри кнопки */
+    font-size: 16px; /* Размер шрифта */
+    color: rgb(27, 2, 48, 0,40); /* Цвет текста */
+    font-weight: bold; /* Жирный текст для лучшей четкости */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    background-image: linear-gradient( 45deg, rgba(98, 0, 255, 0.4), rgba(225, 0, 255, 0.4), rgba(43, 1, 14, 0.4), rgba(255, 69, 0, 0.4) ) !important; /* Фиксируем фон, чтобы он не наследовался */
+    background-size: 300% 300%; /* Увеличиваем размер для эффекта перелива */
+    animation: fireGlow 4s ease infinite; /* Анимация для перелива */
+
+    text-decoration: none; /* Убираем подчеркивание */
+    border: none; /* Убираем границу */
+    border-radius: 20px; /* Закругление углов */
+    overflow: hidden; /* Прячем лишние элементы */
+    cursor: pointer; /* Курсор при наведении */
+    transition: background-color 0.3s ease, opacity 0.3s ease; /* Плавный переход для прозрачности */
+    width: auto; /* Фиксированная ширина кнопки */
+    margin: 10px 0; /* Отступы 10px сверху и снизу между кнопками */
+    opacity: 0.5; /* 0.5 Прозрачность кнопки на 50% */
+    box-shadow: 0 4px 8px rgba(28, 3, 119, 0.7), inset 0 -2px 8px rgba(255, 165, 0, 0.6); /* Эффект выпуклости и подсветки */
+}
+
+/* Эффект при наведении на кнопку */
+.update-metric-button:hover {
+    background-color: #1d1d1d; /* Темный фон при наведении для контраста */
+    opacity: 1; /* Полная непрозрачность при наведении */
+    box-shadow: 0 36px 12px rgba(0, 0, 0, 0.4),
+    /* Увеличение тени при наведении */ inset 0 -2px 8px rgba(255, 165, 0, 0.8); /* Подсветка при наведении */
+}
+
+.update-metric-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%; /* Начало анимации слева за пределами кнопки */
+    width: 100%;
+    height: 30%;
+    background-image: linear-gradient( 90deg, transparent 0%, rgb(4, 252, 4) 20%, rgba(36, 243, 9, 0.8) 40%, transparent 60% );
+    background-size: 30px 60%; /* Увеличиваем ширину рисок и расстояние между ними */
+    transition: left 0.5s ease;
+}
+
+/* Запускаем анимацию при наведении */
+.update-metric-button:hover::before {
+    left: 0; /* Ограничиваем движение анимации длиной кнопки */
+}
+
+/* Стили для текста внутри кнопки */
+.update-metric-button span {
+    position: relative;
+    /*   z-index: 2;  */
+    font-weight: bold; /* Жирный текст для лучшей четкости */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Тень для контраста */
+}
+
+/* Стили для формы create-metric-form */
+.discription-tipes .create-metric-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: linear-gradient(45deg, rgba(98, 0, 255, 0.4), rgba(225, 0, 255, 0.4), rgba(43, 1, 14, 0.4), rgba(255, 69, 0, 0.4));
+    background-size: 300% 300%;
+    animation: fireGlow 4s ease infinite;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 -2px 8px rgba(255, 165, 0, 0.6);
+}
+
+    .discription-tipes .create-metric-form .image-container {
+        margin-bottom: 20px;
+    }
+
+        .discription-tipes .create-metric-form .image-container img {
+            max-width: 100px;
+            border-radius: 10px;
+        }
+
+    .discription-tipes .create-metric-form .title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #fff;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    }
+
+    .discription-tipes .create-metric-form .input-parms-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 400px;
+    }
+
+        .discription-tipes .create-metric-form .input-parms-container input,
+        .discription-tipes .create-metric-form .input-parms-container select {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            background: rgba(128, 128, 128, 0.2); /* Прозрачный серый фон */
+            color: #fff; /* Яркий белый текст */
+            font-size: 16px;
+            outline: none;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+        }
+
+            .discription-tipes .create-metric-form .input-parms-container input:focus,
+            .discription-tipes .create-metric-form .input-parms-container select:focus {
+                background: rgba(128, 128, 128, 0.4); /* Более яркий прозрачный фон при фокусе */
+                color: rgba(98, 0, 255, 1); /* Яркий желтый текст при фокусе */
+                box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.4);
+            }
+
+        .discription-tipes .create-metric-form .input-parms-container .validation-error {
+            color: #ff6666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+    .discription-tipes .create-metric-form #create-metric-button {
+        padding: 15px 20px;
+        font-size: 16px;
+        color: #fff;
+        background-image: linear-gradient(45deg, rgba(98, 0, 255, 0.4), rgba(225, 0, 255, 0.4), rgba(43, 1, 14, 0.4), rgba(255, 69, 0, 0.4));
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 -2px 8px rgba(255, 165, 0, 0.6);
+        transition: opacity 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .discription-tipes .create-metric-form #create-metric-button:hover {
+            opacity: 1;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5), inset 0 -3px 10px rgba(255, 165, 0, 0.8);
         }

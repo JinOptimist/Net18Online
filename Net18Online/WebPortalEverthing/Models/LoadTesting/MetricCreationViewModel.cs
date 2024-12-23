@@ -19,17 +19,14 @@ namespace WebPortalEverthing.Models.LoadTesting
         [Required]
         public string AverageInput { get; set; } // Получение из формы в строковом виде
 
-        // GUID метрики, инициализируется при создании
         [Required]
-        public Guid Guid { get; set; } = Guid.NewGuid();
+        public Guid Guid { get; set; } = Guid.NewGuid(); // GUID метрики, инициализируется при создании
 
         public double Throughput
         {
             get
             {
-                return double.TryParse(ThroughputInput.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out var value)
-                    ? value
-                    : 0;
+                return ParseInput(ThroughputInput);
             }
         }
 
@@ -37,13 +34,38 @@ namespace WebPortalEverthing.Models.LoadTesting
         {
             get
             {
-                return double.TryParse(AverageInput.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out var value)
-                    ? value
-                    : 0;
+                return ParseInput(AverageInput);
             }
         }
 
-        public int LoadVolumeId { get; set; } // значение, которое выбрал пользователь
-        public List<SelectListItem>? LoadVolumes { get; set; }  //тут будет все значения Load volumes и Id
+        public int LoadVolumeId { get; set; } // Значение, которое выбрал пользователь
+        public List<SelectListItem>? LoadVolumes { get; set; } // Тут будет все значения Load volumes и Id
+
+        /// <summary>
+        /// Парсит строку в число с учетом текущей локали. 
+        /// Если парсинг невозможен, возвращает 0.
+        /// </summary>
+        private double ParseInput(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+                return 0;
+
+            var currentCulture = CultureInfo.CurrentCulture;
+
+            // Заменяем символы-разделители на основе текущей культуры
+            if (currentCulture.NumberFormat.NumberDecimalSeparator == ",")
+            {
+                input = input.Replace('.', ',');
+            }
+            else
+            {
+                input = input.Replace(',', '.');
+            }
+
+            // Пытаемся распознать значение
+            return double.TryParse(input, NumberStyles.Any, currentCulture, out var value)
+                ? value
+                : 0;
+        }
     }
 }
