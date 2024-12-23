@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Enums.Users;
 using Everything.Data;
 using Everything.Data.Interface.Models;
 using Everything.Data.Interface.Repositories;
@@ -13,9 +14,8 @@ using WebPortalEverthing.Hubs;
 using WebPortalEverthing.Services;
 
 
-namespace WebPortalEverthing.Controllers
-{
- 
+namespace WebPortalEverthing.Controllers;
+
 public class EcologyController : Controller
 { 
     private IEcologyRepositoryReal _ecologyRepository;
@@ -32,7 +32,7 @@ public class EcologyController : Controller
         AuthService authService,
         WebDbContext webDbContext,
         IWebHostEnvironment webHostEnvironment,
-        IHubContext<ChatHub, IChatHub> chatHub)
+        IHubContext<ChatHub, IChatHub> hubContext)
     {
         _ecologyRepository = ecologyRepository;
         _commentRepositoryReal = commentRepositoryReal;
@@ -40,7 +40,7 @@ public class EcologyController : Controller
         _userRepositryReal = userRepositryReal;
         _authService = authService;
         _webHostEnvironment = webHostEnvironment;
-        _chatHub = chatHub;
+        _chatHub = hubContext;
     }
 
     public IActionResult Index()
@@ -84,24 +84,30 @@ public class EcologyController : Controller
             viewModel.AvatarUrl = _userRepositryReal.GetAvatarUrl(userId!.Value);
 
             var info = _commentRepositoryReal.GetCommentAuthors((int)userId);
-        
-            viewModel.Comments = info
-                .Comments
-                .Select(dbComment => new CommentForProfileViewModel()
-                {
-                    CommentId = dbComment.Id,
-                    CommentText = dbComment.CommentText
-                })
-                .ToList();
-        
-            viewModel.Posts = info
-                .Posts
-                .Select(dbPost => new EcologyForProfileViewModel
-                {
-                    ImageSrc = dbPost.ImageSrc,
-                    Texts = dbPost.Text,
-                })
-                .ToList();
+
+            if (info != null)
+            {
+                viewModel.Comments = info 
+                    .Comments 
+                    .Select(dbComment => new CommentForProfileViewModel()
+                    {
+                        CommentId = dbComment.Id, 
+                        CommentText = dbComment.CommentText
+                    }) .ToList(); 
+                
+                viewModel.Posts = info 
+                    .Posts 
+                    .Select(dbPost => new EcologyForProfileViewModel
+                    {
+                        ImageSrc = dbPost.ImageSrc, 
+                        Texts = dbPost.Text,
+                    }) .ToList();
+            }
+            else
+            {
+                viewModel.Comments = new List<CommentForProfileViewModel>(); 
+                viewModel.Posts = new List<EcologyForProfileViewModel>();
+            }
         }
         else 
         {
@@ -111,6 +117,20 @@ public class EcologyController : Controller
             viewModel.Comments = new List<CommentForProfileViewModel>();
         }
         
+        return View(viewModel);
+    }
+    
+    [HttpGet]
+    public IActionResult EcologyMap()
+    {
+        var viewModel = new LocationViewModel();
+
+        var userName = _authService.GetName();
+        var userId = _authService.GetUserId();
+            
+        viewModel.UserName = userName;
+        viewModel.UserId = userId ?? -1;
+            
         return View(viewModel);
     }
     
@@ -127,12 +147,12 @@ public class EcologyController : Controller
         }
 
         var user = _userRepositryReal.Get(currentUserId.Value);
-
+        
         if (user.Coins < 150)
         {
             return RedirectToAction("Index");
         }
-    
+
         var ecologyViewModels = ecologyFromDb
             .Select(dbEcology =>
                 new EcologyViewModel
@@ -160,7 +180,7 @@ public class EcologyController : Controller
         return View(viewModel);
     }
     
-    [HttpPost] //Это и есть создание 
+    [HttpPost]
     public IActionResult EcologyChat(PostCreationViewModel viewModel, IFormFile imageFile)
     {
         if (CalcCountWorldRepeat.IsEclogyTextHas(viewModel.Text) >= 4)
@@ -209,13 +229,14 @@ public class EcologyController : Controller
 
         _ecologyRepository.Create(ecology, currentUserId!.Value, viewModel.PostId);
         //_ecologyRepository.Add(ecology);
-        
-        // Отправка уведомления о новом посте
-        _chatHub.Clients.All.NewMessageAdded($"User {viewModel.UserName} create a new post: {viewModel.Text}");
 
+        // Отправка уведомления о новом посте
+        var userName = _authService.GetName();
+        _chatHub.Clients.All.NewMessageAdded($"User {viewModel.UserName} create a new post: {viewModel.Text}");
+        
         return RedirectToAction("EcologyChat");
     }
-
+    
     [HttpPost]
     public IActionResult AddComment(int postId, string commentText)
     {
@@ -236,6 +257,15 @@ public class EcologyController : Controller
         var comm = _commentRepositoryReal.GetCommentsByPostId(postId);
         
         return View(comm);
+    }
+    
+    [IsAuthenticated]
+    public IActionResult UpdateLocale(Language language)
+    {
+        var userId = _authService.GetUserId()!.Value;
+        _userRepositryReal.UpdateLocal(userId, language);
+
+        return RedirectToAction("Index");
     }
     
     [IsAuthenticated]
@@ -260,5 +290,4 @@ public class EcologyController : Controller
 
         return RedirectToAction("EcologyProfile");
     }
-}
 }
