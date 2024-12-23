@@ -1,5 +1,6 @@
 ﻿using Everything.Data;
 using Everything.Data.Models;
+using Everything.Data.Models.SqlRawModels;
 using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -19,13 +20,15 @@ namespace WebPortalEverthing.Controllers
         private AuthService _authService;
         private GeneratorAnimeGirls _generatorAnimeGirls;
         private IWebHostEnvironment _webHostEnvironment;
+        private AutoMapperSmile _autoMapperSmile;
 
         public AnimeGirlController(IAnimeGirlRepositoryReal animeGirlRepository,
             IUserRepositryReal userRepositryReal,
             AuthService authService,
             IMangaRepositoryReal mangaRepositoryReal,
             IWebHostEnvironment webHostEnvironment,
-            GeneratorAnimeGirls generatorAnimeGirls)
+            GeneratorAnimeGirls generatorAnimeGirls,
+            AutoMapperSmile autoMapperSmile)
         {
             _animeGirlRepository = animeGirlRepository;
             _userRepositryReal = userRepositryReal;
@@ -33,6 +36,7 @@ namespace WebPortalEverthing.Controllers
             _mangaRepositoryReal = mangaRepositoryReal;
             _webHostEnvironment = webHostEnvironment;
             _generatorAnimeGirls = generatorAnimeGirls;
+            _autoMapperSmile = autoMapperSmile;
         }
 
         public IActionResult Index(string name, int age)
@@ -86,7 +90,7 @@ namespace WebPortalEverthing.Controllers
                     .Select(x => new MangaNameAndIdViewModel
                     {
                         Id = x.Id,
-                        Name = x.Title
+                        Title = x.Title
                     })
                     .ToList()
             };
@@ -221,16 +225,7 @@ namespace WebPortalEverthing.Controllers
         {
             var viewModels = _animeGirlRepository
                 .GetGirlsWithDuplicateInfo()
-                .Select(db => new DuplicateInfoViewModel
-                {
-                    Id = db.Id,
-                    Name = db.Name,
-                    ImageSrc = db.ImageSrc,
-                    DuplicateStatus = db.DuplicateStatus,
-                    OriginId = db.OriginId,
-                    OriginName = db.OriginName,
-                    UniqStatus = db.UniqStatus
-                })
+                .Select(_autoMapperSmile.Map<DuplicateInfoViewModel, GirlsWithDuplicateInfo>)
                 .ToList();
 
             return View(viewModels);
