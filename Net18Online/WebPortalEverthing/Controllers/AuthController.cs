@@ -44,7 +44,7 @@ namespace WebPortalEverthing.Controllers
 
             if (!ModelState.IsValid)
             {
-                return View(viewModel);
+                //return View(viewModel);
             }
 
             //Good user

@@ -3,23 +3,23 @@
     height: 500px;
     display: flex;
     flex-direction: column;
-    background-color: #ffffff;
+    background-color: #ffffff; /* Вы можете изменить цвет, если это необходимо */
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    position: fixed; 
+    position: fixed; /* Фиксированное положение для выравнивания слева */
     bottom: 20px;
-    left: -320px; 
-    z-index: 1000; 
+    left: 20px; /* Начальная позиция за границами экрана */
+    z-index: 1000; /* Обеспечивает видимость поверх других элементов */
     transition: left 0.3s ease;
 }
 
 .chat-container.show {
-    left: 20px; 
+    left: 20px; /* Позиция на экране при показе */
 }
 
 .chat-container.hidden {
-    left: -320px; 
+    left: -320px; /* Позиция за границами экрана при скрытии */
 }
 
 .messages {
