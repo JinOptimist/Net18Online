@@ -12,5 +12,18 @@ namespace WebPortalEverthing.E2E.Pages
         public static readonly By Password = By.CssSelector("#Password");
 
         public static readonly By SubmitButton = By.CssSelector("button[type=submit]");
+
+        /// <summary>
+        /// Coffe selectors section
+        /// </summary>
+        public static readonly By CreateCoffeLink = By.ClassName("create-link");
+        public static readonly By CoffeObjects = By.ClassName("coffe-object");
+        public static readonly By RemoveCoffeObject = By.ClassName("object-delete");
+
+        public static readonly By CreateCoffeName = By.CssSelector("#Coffe");
+        public static readonly By CreateCoffeUrl = By.CssSelector("#Url");
+        public static readonly By CreateCoffeCost = By.CssSelector("#Cost");
+
+        public static readonly By CoffeCreateSubmitButton = By.CssSelector("#submit-link");
     }
 }

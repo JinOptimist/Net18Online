@@ -157,4 +157,20 @@
   </ItemGroup>
 
 
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\css\Ecology\button.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\Ecology\chat.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\Ecology\dark-profile.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\Ecology\postCreation.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\Ecology\profile.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\Ecology\reset.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\Ecology\style.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\Ecology\chat.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\Ecology\index.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\Ecology\PostCreationForm.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\Ecology\theme.js" />
+  </ItemGroup>
+
+
 </Project>

@@ -17,30 +17,35 @@ $(document).ready(function () {
 
     $(".toggle-chat").click(function () {
         $(".chat-container").toggleClass("show hidden");
+        $(document).click (function (e) 
+        { 
+            if (!$(e.target).closest(".chat-container, .toggle-chat").length) 
+            { 
+                $(".chat-container").addClass("hidden").removeClass("show"); 
+            } 
+        });
     });
 
     function sendMessage() {
         const message = $(".new-message").val();
         if (message.trim() !== "") {
             hub.invoke("addNewMessage", message)
-                .then(function () 
-                { 
-                    hub.invoke("userCreatedNewPost"); // Notify when a new post is created
-                });
+                .catch(err => console.error(err));
             $(".new-message").val("");
         }
     }
 
     hub.start().then(function () {
         // When connection with the server is alive
-        hub.invoke("userEnteredToChat");
+        hub.invoke("userEnteredToChat")
+            .catch(err => console.error(err));
     }).catch(err => console.error(err));
 
     function init() {
         const url = "/api/ApiChat/GetLastMessages";
         $.get(url).then(function (messages) {
             messages.forEach((message) => createNewMessage(message));
-        });
+        }).catch(err => console.error(err));
     }
 
     function createNewMessage(message) {

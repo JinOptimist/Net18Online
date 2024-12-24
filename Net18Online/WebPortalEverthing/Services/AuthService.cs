@@ -1,10 +1,9 @@
-﻿
-using Enums.Users;
-using System.Data;
+﻿using Enums.Users;
 using WebPortalEverthing.Localizations;
 
 namespace WebPortalEverthing.Services
 {
+    [AutoRegisterFlag]
     public class AuthService
     {
         private IHttpContextAccessor _httpContextAccessor;

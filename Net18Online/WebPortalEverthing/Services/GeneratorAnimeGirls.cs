@@ -7,6 +7,11 @@ namespace WebPortalEverthing.Services
     {
         private IAnimeGirlRepositoryReal _animeGirlRepository;
 
+        public GeneratorAnimeGirls()
+        {
+        }
+
+        [AutoRegisterFlag]
         public GeneratorAnimeGirls(IAnimeGirlRepositoryReal animeGirlRepository)
         {
             _animeGirlRepository = animeGirlRepository;

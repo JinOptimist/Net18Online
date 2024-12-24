@@ -219,11 +219,11 @@ header .logotip img {
 }
 
 .like-container .like-pushed {
-    color: red;
+    color: red; 
 }
 
 .like-container .like {
-    color: grey;
+    color: grey; 
 }
 
 .like-container .like-count {
