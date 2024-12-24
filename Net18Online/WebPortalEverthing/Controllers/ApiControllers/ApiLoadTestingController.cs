@@ -66,11 +66,11 @@ namespace WebPortalEverthing.Controllers.ApiControllers
         }
 
         [HttpPost]
-        public bool CreateMetric([FromBody] MetricCreationViewModel metric)
+        public MetricCreationViewModel CreateMetric([FromBody] MetricCreationViewModel metric)
         {
             if (!ModelState.IsValid)
             {
-                return false;
+                return new MetricCreationViewModel();
             }
 
             var currentUserId = _loadAuthService.GetUserId();
@@ -85,7 +85,7 @@ namespace WebPortalEverthing.Controllers.ApiControllers
 
             _loadTestingRepository.Create(metricData, currentUserId!.Value, metric.LoadVolumeId);
 
-            return true;
+            return metric;
         }
 
     }
