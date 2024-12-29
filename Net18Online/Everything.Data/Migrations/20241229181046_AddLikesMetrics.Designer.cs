@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Everything.Data.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    [Migration("20241229084316_AddLikesForMetrics")]
-    partial class AddLikesForMetrics
+    [Migration("20241229181046_AddLikesMetrics")]
+    partial class AddLikesMetrics
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -212,7 +212,9 @@ namespace Everything.Data
                 .WithMany(x => x.LoadVolumeTestingParts)
                 .OnDelete(DeleteBehavior.NoAction);
 
-
+            modelBuilder.Entity<MetricData>()
+                .HasMany(x => x.UserWhoLikeIt)
+                .WithMany(x => x.MetricsWhichUsersLike);
 
             modelBuilder.Entity<UserData>().HasKey(us => us.Id);
             modelBuilder.Entity<UserData>()

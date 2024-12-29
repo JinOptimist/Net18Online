@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Everything.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AddLikesForMetrics : Migration
+    public partial class AddLikesMetrics : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
