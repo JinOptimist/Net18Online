@@ -25,5 +25,7 @@ namespace Everything.Data.Models
 
         public virtual List<MetricData> Metrics { get; set; } = new();
         public virtual List<LoadVolumeTestingData> LoadVolumeTestingParts { get; set; } = new();
+
+        public virtual List<MetricData> MetricsWhichUsersLike { get; set; }
     }
 }

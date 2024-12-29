@@ -24,6 +24,7 @@
     <Folder Include="wwwroot\files\" />
     <Folder Include="wwwroot\images\Ecology\eccologyPosts\" />
     <Folder Include="wwwroot\images\LoadTesting\avatars\" />
+    <Folder Include="wwwroot\images\LoadTesting\icon\" />
   </ItemGroup>
 
 

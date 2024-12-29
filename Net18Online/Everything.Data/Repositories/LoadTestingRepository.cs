@@ -13,6 +13,14 @@ namespace Everything.Data.Repositories
         bool HasSimilarName(string name);
         bool IsNameUniq(string name);
         void Create(MetricData metricData, int currentUserId, int LoadVolumeId);
+        /// <summary>
+        /// Return true if metric wasn't like. And now she is
+        /// Return false if metric was liked but not is not
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+
+        bool LikeMetric(int metricId, int userId); 
     }
     public class LoadTestingRepository : BaseRepository<MetricData>, ILoadTestingRepositoryReal
     {
@@ -144,6 +152,14 @@ namespace Everything.Data.Repositories
                 .Where(x => x.LoadUserDataCreator != null
                     && x.LoadUserDataCreator.Id == userId)
                 .ToList();
+        }
+
+        bool LikeMetric(int metricId, int userId)
+        {
+            /*   var metric = _dbSet
+                   .Include(x => x.UserWhoLikeIt)
+           */
+            return true;
         }
     }
 }
