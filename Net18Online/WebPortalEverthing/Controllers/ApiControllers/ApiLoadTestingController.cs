@@ -6,6 +6,7 @@ using WebPortalEverthing.Models.LoadTesting;
 using WebPortalEverthing.Services.LoadTesting;
 using Everything.Data.Interface.Repositories;
 using WebPortalEverthing.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebPortalEverthing.Controllers.ApiControllers
 {
@@ -89,6 +90,8 @@ namespace WebPortalEverthing.Controllers.ApiControllers
 
             return metric;
         }
+
+        [Authorize]
         public bool Like(int metricId)
         {
             var userId = _loadAuthService.GetUserId()!.Value;
