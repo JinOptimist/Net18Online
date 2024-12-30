@@ -65,6 +65,7 @@ namespace Everything.Data.Repositories
             return _dbSet
                 .Include(x => x.LoadUserDataCreator)
                 .Include(x => x.LoadVolumeTesting)
+                .Include(x => x.UserWhoLikeIt)
                 .ToList();
         }
 
@@ -157,7 +158,9 @@ namespace Everything.Data.Repositories
         public bool LikeMetric(int metricId, int userId)
         {
             var metric = _dbSet
-                .Include(x => x.UserWhoLikeIt)
+                .Include(x => x.UserWhoLikeIt)//для высоконагруженных приложений не подходит,
+                                              //нужна модель с двумя полями,
+                                              //id метрики и id юзера , который лайкнул
                 .First(x => x.Id == metricId);
 
             var user = _webDbContext.LoadUsers.First(x => x.Id == userId);
