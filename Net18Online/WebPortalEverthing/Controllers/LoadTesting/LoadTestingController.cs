@@ -13,6 +13,7 @@ using WebPortalEverthing.Models.LoadTesting.Profile;
 using WebPortalEverthing.Models.AnimeGirl.Profile;
 using Microsoft.AspNetCore.Hosting;
 using WebPortalEverthing.Controllers.LoadTesting.Attribute;
+using WebPortalEverthing.Models.Home;
 
 
 namespace WebPortalEverthing.Controllers.LoadTesting
@@ -257,6 +258,13 @@ namespace WebPortalEverthing.Controllers.LoadTesting
         {
             _loadTestingRepository.DeleteByGuid(Guid);
             return RedirectToAction("ContenMetricsListView");
+        }
+
+        public IActionResult ChatView()
+        {
+            var viewModel = new IndexViewModel();
+            return View(viewModel); //model выдаст данные наружу, на страницу
+
         }
 
 
