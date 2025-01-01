@@ -50,6 +50,7 @@ namespace Everything.Data
         public DbSet<MetricData> Metrics { get; set; } // Описание таблицы с метриками
         public DbSet<LoadVolumeTestingData> LoadVolumeTestingMetrics { get; set; } // Описание таблицы с разделами LoadVolumeTesting
         public DbSet<LoadUserData> LoadUsers { get; set; }
+        public DbSet<LoadChatMessageData> LoadChatMessages { get; set; }
 
         #region SURVEYS
         public DbSet<StatusData> Statuses { get; set; }
@@ -215,6 +216,11 @@ namespace Everything.Data
             modelBuilder.Entity<MetricData>()
                 .HasMany(x => x.UserWhoLikeIt)
                 .WithMany(x => x.MetricsWhichUsersLike);
+
+            modelBuilder.Entity<LoadUserData>()
+                .HasMany(x => x.LoadChatMessages)
+                .WithOne(x => x.User)
+                .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<UserData>().HasKey(us => us.Id);
             modelBuilder.Entity<UserData>()
