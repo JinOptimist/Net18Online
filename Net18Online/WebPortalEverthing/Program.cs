@@ -101,6 +101,8 @@ app.MapHub<ChatHub>("/hub/chatMainPage");
 app.MapHub<CoffeShopChatHub>("/hub/chatCoffePage");
 app.MapHub<GameAlertHub>("/hub/alertGamePage");
 app.MapHub<TakingSurveyHub>("/hub/takingSurvey");
+app.MapHub<LoadChatHub>("/hub/loadChat");
+
 
 app.MapControllerRoute(
     name: "default",

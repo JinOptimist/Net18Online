@@ -263,6 +263,13 @@ namespace WebPortalEverthing.Controllers.LoadTesting
         public IActionResult ChatView()
         {
             var viewModel = new IndexViewModel();
+
+            var userName = _loadAuthService.GetName();
+            var userId = _loadAuthService.GetUserId();
+
+            viewModel.UserName = userName;
+            viewModel.UserId = userId ?? -1;
+
             return View(viewModel); //model выдаст данные наружу, на страницу
 
         }
