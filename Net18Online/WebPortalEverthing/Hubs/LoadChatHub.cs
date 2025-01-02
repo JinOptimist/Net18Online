@@ -13,12 +13,12 @@ namespace WebPortalEverthing.Hubs
     public class LoadChatHub : Hub<ILoadChatHub>
     {
         private LoadAuthService _loadAuthService;
-        private IChatMessageRepositryReal _chatMessageRepositry;
+        private ILoadChatMessageRepositryReal _loadChatMessageRepositry;
 
-        public LoadChatHub(LoadAuthService loadAuthService, IChatMessageRepositryReal chatMessageRepositry)
+        public LoadChatHub(LoadAuthService loadAuthService, ILoadChatMessageRepositryReal loadChatMessageRepositry)
         {
             _loadAuthService = loadAuthService;
-            _chatMessageRepositry = chatMessageRepositry;
+            _loadChatMessageRepositry = loadChatMessageRepositry;
         }
 
         public void UserEnteredToChat()
@@ -42,7 +42,7 @@ namespace WebPortalEverthing.Hubs
         private void SendMessage(string message)
         {
             var userId = _loadAuthService.GetUserId();
-            _chatMessageRepositry.AddMessage(userId, message);
+            _loadChatMessageRepositry.AddMessage(userId, message);
             Clients.All.NewMessageAdded(message).Wait();
         }
         
