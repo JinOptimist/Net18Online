@@ -30,6 +30,7 @@ namespace WebPortalEverthing.Hubs
             SendMessage(newMessage);
         }
 
+
         public void AddNewMessage(string message)
         {
             var userName = _loadAuthService.GetName();
@@ -45,7 +46,7 @@ namespace WebPortalEverthing.Hubs
             _loadChatMessageRepositry.AddMessage(userId, message);
             Clients.All.NewMessageAdded(message).Wait();
         }
-        
+
         public void UserCreatedNewPost()
         {
             var userName = _loadAuthService.GetName();
