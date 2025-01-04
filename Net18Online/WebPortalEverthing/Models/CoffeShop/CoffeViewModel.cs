@@ -16,5 +16,7 @@
 
         public bool CanDeleteOrUpdate { get; set; }
 
+        public List<string> BrandNames { get; set; }
+
     }
 }
