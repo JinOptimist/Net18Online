@@ -37,7 +37,8 @@ namespace WebPortalEverthing.Hubs
 
             var newMessage = $"{userName}: {message}";
 
-            SendMessage(newMessage);
+               SendMessage(newMessage);
+   
         }
 
         private void SendMessage(string message)
