@@ -98,12 +98,12 @@ namespace Everything.Data.Repositories
         {
             var sql = @"
     SELECT 
-        P.Id,
-        P.Text,
-        P.ImageSrc,
-        P.ForMainPage,
-        CASE WHEN P.ForMainPage = 1 THEN 'ForMainPage' ELSE 'NotForMainPage' END as MainPageStatus 
-    FROM Posts P";
+        E.Id,
+        E.Text,
+        E.ImageSrc,
+        E.ForMainPage,
+        CASE WHEN E.ForMainPage = 1 THEN 'ForMainPage' ELSE 'NotForMainPage' END as MainPageStatus 
+    FROM Ecologies E";
             
             var result = _webDbContext
                 .Database
