@@ -1,3 +1,22 @@
 ﻿.template {
-    display: none;
+  display: none; /* Скрываем шаблон */
+}
+
+.messages {
+  max-height: 400px;
+  overflow-y: auto; /* Добавляем прокрутку по вертикали при переполнении */
+  border: none; /* Убираем границу */
+  padding: 10px; /* Внутренний отступ */
+}
+
+.message {
+  padding: 5px; /* Внутренний отступ */
+  margin-bottom: 5px; /* Отступ снизу */
+  margin-left: 10px; /* Отступ слева */
+  border-radius: 5px; /* Скругленные углы */
+  background-color: #f5f5f5; /* Светлый фон */
+}
+
+.message.template {
+  display: none; /* Скрываем сообщение-шаблон */
 }

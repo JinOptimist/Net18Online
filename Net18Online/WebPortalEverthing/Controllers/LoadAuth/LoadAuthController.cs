@@ -18,9 +18,10 @@ namespace WebPortalEverthing.Controllers.LoadAuth
         public ILoadUserRepositryReal _loadUserRepositryReal;
         public IHubContext<LoadChatHub, ILoadChatHub> _chatHub;
 
-        public LoadAuthController(ILoadUserRepositryReal loadUserRepositryReal)
+        public LoadAuthController(ILoadUserRepositryReal loadUserRepositryReal, IHubContext<LoadChatHub, ILoadChatHub> chatHub)
         {
             _loadUserRepositryReal = loadUserRepositryReal;
+            _chatHub = chatHub;
         }
 
         [HttpGet]
@@ -64,6 +65,8 @@ namespace WebPortalEverthing.Controllers.LoadAuth
             HttpContext
                 .SignInAsync(principal)
                 .Wait();
+
+            _chatHub.Clients.All.NewMessageAdded($"пользователь login: {viewModel.Login} зашел на сайт.");
 
             return RedirectToAction("IndexLoadVolumeView", "LoadVolumeTesting");
         }
