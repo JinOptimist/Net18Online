@@ -18,7 +18,7 @@ namespace WebPortalEverthing.CustomMiddlewares
 
         public async Task InvokeAsync(HttpContext context)
         {
-            var authService = context.RequestServices.GetRequiredService<AuthService>();
+           /* var authService = context.RequestServices.GetRequiredService<AuthService>();
             var userRepositryReal = context.RequestServices.GetRequiredService<IUserRepositryReal>();
 
             if (authService.IsAuthenticated())
@@ -50,7 +50,7 @@ namespace WebPortalEverthing.CustomMiddlewares
                     return;
                 }
             }
-
+           */
             await _next.Invoke(context);
         }
 
