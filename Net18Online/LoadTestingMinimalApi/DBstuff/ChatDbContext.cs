@@ -21,7 +21,9 @@ namespace LoadTestingMinimalApi.DBstuff
             // optionsBuilder.UseNpgsql(connectionString);
         }
 
-       public DbSet<MetricData> Metrics { get; set; } 
+        public DbSet<MetricData> Metrics { get; set; }
+
+        public DbSet<Message> Messages { get; set; }
 
         /* Ниже без файла appsettings.json:
         public const string CONNECTION_STRING = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=\"LoadTestingMinimalApi\";Integrated Security=True;";
