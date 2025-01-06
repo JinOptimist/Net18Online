@@ -1,11 +1,67 @@
+using LoadTestingMinimalApi.DBstuff;
+using LoadTestingMinimalApi.DBstuff.DataModels;
+using LoadTestingMinimalApi.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();// собирает инфу про все endpoints
-builder.Services.AddSwaggerGen(); //swagger генерирует json                                          
+builder.Services.AddSwaggerGen(); //swagger генерирует json
+                                  //
 
+// Добавляем DbContext с конфигурацией из appsettings.json
+builder.Services.AddDbContext<ChatDbContext>(options =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("ChatDb");
+    options.UseSqlServer(connectionString);
+    // options.UseNpgsql(connectionString);
+});
+
+// Другие настройки приложения
 var app = builder.Build();
 
+
+
 app.MapGet("/", () => "Hello World!");
+
+
+app.MapPost("/addMetric", (ChatDbContext chatDbContext, [FromBody] MetricViewModel model) =>
+{
+    //viewmodel перевести в dataModel, и dataModel записать в БД
+    MetricData metricData = new MetricData()
+    {
+        Average = model.Average,
+        Throughput = model.Throughput,
+        Name = model.Name,
+        CreatorName = model.CreatorName,
+        LoadVolumeName = model.LoadVolumeName,
+        CanDelete = model.CanDelete,
+        IsLiked = model.IsLiked,
+    };
+
+    chatDbContext.Metrics.Add(metricData);
+    chatDbContext.SaveChanges();
+
+    return $"""
+    Metric added:
+        Id: {model.Id}
+        Guid: {model.Guid}
+        Name: {model.Name}
+        Throughput: {model.Throughput}
+        Average: {model.Average}
+        CreatorName: {model.CreatorName}
+        LoadVolumeName: {model.LoadVolumeName}
+        CanDelete: {model.CanDelete}
+        IsLiked: {model.IsLiked}
+        LikeCount: {model.LikeCount}
+    """;
+});
+
+
+
+
+
 
 
 
@@ -13,6 +69,7 @@ app.UseSwagger();
 /*  красивая UI для swagger , чтобы в адрес добавить /swagger  наподобие, 
    https://localhost:7121/swagger/index.html   */
 app.UseSwaggerUI();
+
 
 
 
