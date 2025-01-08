@@ -12,7 +12,7 @@ namespace LoadTestingMinimalApi.Hubs
     public class LoadChatHub : Hub<ILoadChatHub>
     {
 
-        private readonly ChatDbContext _chatDbContext;
+        private ChatDbContext _chatDbContext;
 
         public LoadChatHub(ChatDbContext chatDbContext)
         {

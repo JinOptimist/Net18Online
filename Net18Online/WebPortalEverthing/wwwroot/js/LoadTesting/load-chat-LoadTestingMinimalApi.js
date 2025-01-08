@@ -1,10 +1,60 @@
 $(document).ready(function () {
+  const baseUrl = "https://localhost:7121";
+
+  //const baseUrl = window.location.origin;
+
+  const authorId = $(".user-id").val() - 0;
+  const authorName = $(".user-name").val();
+
+  /*const hub = new signalR.HubConnectionBuilder()
+    .withUrl(baseUrl + "/hub/loadChat")
+    .build();*/
+
   const hub = new signalR.HubConnectionBuilder()
-    .withUrl("/hub/loadChat")
+    .withUrl("https://localhost:7130/hub/loadChat", {
+      transport: signalR.HttpTransportType.WebSockets,
+    })
+    .configureLogging(signalR.LogLevel.Information)
     .build();
 
   init();
 
+  hub.on("newMessageAdded", createNewMessage);
+
+  $(".send-new-message").click(sendMessage);
+
+  $(".new-message").on("keyup", function (e) {
+    if (e.which == 13) {
+      // 13 is a code of Enter key
+      sendMessage();
+    }
+  });
+
+  function sendMessage() {
+    const message = $(".new-message").val();
+    if (!message.trim()) {
+      console.warn("Сообщение не может быть пустым.");
+      return;
+    }
+
+    hub
+      .invoke("addNewMessage", authorId, authorName, message)
+      .then(() => {
+        $(".new-message").val(""); // Очищаем поле ввода
+      })
+      .catch((err) => console.error("Ошибка при отправке сообщения:", err));
+  }
+
+  hub
+    .start()
+    .then(function () {
+      hub.invoke("userEnteredToChat", authorId, authorName);
+    })
+    .catch(function (err) {
+      console.error("Ошибка подключения к хабу:", err.toString());
+    });
+
+  //TODO refactor the method. Get data from new minimal api server
   function init() {
     const url = "/api/ApiLoadChat/GetLastMessages";
     $.get(url)
@@ -14,50 +64,6 @@ $(document).ready(function () {
       })
       .catch((err) => console.error("Ошибка загрузки сообщений:", err));
   }
-
-  hub.on("newMessageAdded", createNewMessage);
-
-  $(".send-new-message").click(function () {
-    const message = $(".new-message").val();
-    if (!message.trim()) {
-      console.warn("Сообщение не может быть пустым.");
-      return;
-    }
-
-    hub
-      .invoke("addNewMessage", message)
-      .then(() => {
-        $(".new-message").val(""); // Очищаем поле ввода
-      })
-      .catch((err) => console.error("Ошибка при отправке сообщения:", err));
-  });
-
-  $(".send-help").click(function () {
-    let message = $(".help-admin").val();
-    if (!message.trim()) {
-      console.warn("Сообщение не может быть пустым.");
-      return;
-    }
-
-    hub
-      .invoke("addNewMessageToAdmin", message)
-      .then(() => {
-        $(".help-admin").val(""); // Очищаем поле ввода
-        console.log("Сообщение отправлено администратору:", message);
-      })
-      .catch((err) =>
-        console.error("Ошибка при отправке сообщения администратору:", err)
-      );
-  });
-
-  hub
-    .start()
-    .then(function () {
-      hub.invoke("userEnteredToChat");
-    })
-    .catch(function (err) {
-      console.error("Ошибка подключения к хабу:", err.toString());
-    });
 
   function createNewMessage(message) {
     if (hub.state !== signalR.HubConnectionState.Connected) {
