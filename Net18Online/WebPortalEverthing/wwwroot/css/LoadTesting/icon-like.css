@@ -1,0 +1,30 @@
+.discription-type .icon {
+  cursor: pointer;
+}
+
+.discription-type .icon::before {
+  content: " ";
+  display: inline-flex;
+  background-size: cover;
+  width: 24px;
+  height: 24px;
+  /*background-color: aqua;*/
+  justify-content: center;
+  align-items: center;
+}
+
+.discription-type .icon.like::before {
+  background-image: url("/images/LoadTesting/icon/EmptyLike.ico");
+}
+
+.discription-type .icon.like-pushed::before {
+  background-image: url("/images/LoadTesting/icon/Like.ico");
+}
+
+.discription-type .icon.arrow-down::before {
+  background-image: url("/images/icon/keyboard_arrow_down_24.svg");
+}
+
+.discription-type .icon.arrow-right::before {
+  background-image: url("/images/icon/keyboard_arrow_right_24.svg");
+}

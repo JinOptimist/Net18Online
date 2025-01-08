@@ -12,5 +12,8 @@
         public string LoadVolumeName { get; set; }
 
         public bool CanDelete { get; set; }
+
+        public bool IsLiked { get; set; }
+        public int LikeCount { get; set; }
     }
 }

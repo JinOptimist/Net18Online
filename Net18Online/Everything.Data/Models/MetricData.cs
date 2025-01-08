@@ -12,5 +12,6 @@ namespace Everything.Data.Models
 
         public virtual LoadUserData? LoadUserDataCreator { get; set; }
         public virtual LoadVolumeTestingData? LoadVolumeTesting { get; set; }
+        public virtual List<LoadUserData> UserWhoLikeIt { get; set; }
     }
 }

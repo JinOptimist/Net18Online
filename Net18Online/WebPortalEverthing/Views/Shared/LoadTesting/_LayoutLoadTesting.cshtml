@@ -1,6 +1,8 @@
 ﻿@using WebPortalEverthing.Services
 @using WebPortalEverthing.Services.LoadTesting
 @using WebPortalEverthing.Localizations
+@using Enums.Users
+
 @inject LoadAuthService loadAuthService
 @inject LoadUserService loadUserService
 
@@ -27,9 +29,12 @@
     <link href="~/css/LoadTesting/name-user-auth-and-coins.css" rel="stylesheet" />
     <link href="~/css/LoadTesting/loadUserProfile.css" rel="stylesheet" />
     <link href="~/css/LoadTesting/load-users.css" rel="stylesheet" />
+    <link href="~/css/LoadTesting/icon-like.css" rel="stylesheet" />
     <!--  ссылка на библиотеку jQuery -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/LoadTesting/like.js"></script>
+    <script src="~/js/cookie.js" asp-append-version="true"></script>
+    <script src="~/js/language.js" asp-append-version="true"></script>
 
 
 </head>
@@ -98,6 +103,10 @@
                 }
                 <li>
                     <a href="/LoadAdmin/LoadUsersByRolsView" class="button"><span>LoadUsers By Rols</span></a>
+                </li>
+                <li>
+                    <a class="nav-link text-dark unauth-lang" href="#" data-lang="@Language.Ru">Ру</a>
+                    <a class="nav-link text-dark unauth-lang" href="#" data-lang="@Language.En">En</a>
                 </li>
             </ul>
 
