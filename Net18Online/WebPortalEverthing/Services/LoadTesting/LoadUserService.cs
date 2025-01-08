@@ -26,5 +26,16 @@ namespace WebPortalEverthing.Services.LoadTesting
             var user = _loadUserRepositryReal.Get(userId.Value);
             return user.AvatarUrl;
         }
+
+        public int GetUserId(String UserName)
+        {
+            var user = _loadUserRepositryReal.GetAll().FirstOrDefault(x =>
+            {
+                return x.Login == UserName;
+            });
+
+
+            return user?.Id ?? 0;
+        }
     }
 }

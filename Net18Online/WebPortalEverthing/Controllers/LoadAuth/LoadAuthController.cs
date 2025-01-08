@@ -2,21 +2,26 @@
 using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.Security.Claims;
 using WebPortalEverthing.Models.Auth;
 using WebPortalEverthing.Models.LoadTesting.Auth;
 using WebPortalEverthing.Services;
 using WebPortalEverthing.Services.LoadTesting;
+using WebPortalEverthing.Hubs;
+
 
 namespace WebPortalEverthing.Controllers.LoadAuth
 {
     public class LoadAuthController : Controller
     {
         public ILoadUserRepositryReal _loadUserRepositryReal;
+        public IHubContext<LoadChatHub, ILoadChatHub> _chatHub;
 
-        public LoadAuthController(ILoadUserRepositryReal loadUserRepositryReal)
+        public LoadAuthController(ILoadUserRepositryReal loadUserRepositryReal, IHubContext<LoadChatHub, ILoadChatHub> chatHub)
         {
             _loadUserRepositryReal = loadUserRepositryReal;
+            _chatHub = chatHub;
         }
 
         [HttpGet]
@@ -61,6 +66,8 @@ namespace WebPortalEverthing.Controllers.LoadAuth
                 .SignInAsync(principal)
                 .Wait();
 
+            _chatHub.Clients.All.NewMessageAdded($"пользователь login: {viewModel.Login} зашел на сайт.");
+
             return RedirectToAction("IndexLoadVolumeView", "LoadVolumeTesting");
         }
 
@@ -77,6 +84,9 @@ namespace WebPortalEverthing.Controllers.LoadAuth
                 viewModel.Login,
                 viewModel.Password,
                 viewModel.Email);
+
+            _chatHub.Clients.All.NewMessageAdded($"Новый пользователь зарегестировался у нас на сайте. Его зовут {viewModel.Login}");
+
 
             return RedirectToAction("LoginLoadUserView");
         }

@@ -4,6 +4,7 @@ using Everything.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Everything.Data.Migrations
 {
     [DbContext(typeof(WebDbContext))]
-    partial class WebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241229181046_AddLikesMetrics")]
+    partial class AddLikesMetrics
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -500,34 +503,6 @@ namespace Everything.Data.Migrations
                     b.HasIndex("MangaId");
 
                     b.ToTable("Girls");
-                });
-
-            modelBuilder.Entity("Everything.Data.Models.LoadChatMessageData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ToUserId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("LoadChatMessages");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.LoadUserData", b =>
@@ -1265,16 +1240,6 @@ namespace Everything.Data.Migrations
                     b.Navigation("Manga");
                 });
 
-            modelBuilder.Entity("Everything.Data.Models.LoadChatMessageData", b =>
-                {
-                    b.HasOne("Everything.Data.Models.LoadUserData", "User")
-                        .WithMany("LoadChatMessages")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Everything.Data.Models.LoadVolumeTestingData", b =>
                 {
                     b.HasOne("Everything.Data.Models.UserData", "Author")
@@ -1564,8 +1529,6 @@ namespace Everything.Data.Migrations
 
             modelBuilder.Entity("Everything.Data.Models.LoadUserData", b =>
                 {
-                    b.Navigation("LoadChatMessages");
-
                     b.Navigation("LoadVolumeTestingParts");
 
                     b.Navigation("Metrics");

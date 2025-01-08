@@ -13,6 +13,7 @@ using WebPortalEverthing.Models.LoadTesting.Profile;
 using WebPortalEverthing.Models.AnimeGirl.Profile;
 using Microsoft.AspNetCore.Hosting;
 using WebPortalEverthing.Controllers.LoadTesting.Attribute;
+using WebPortalEverthing.Models.Home;
 
 
 namespace WebPortalEverthing.Controllers.LoadTesting
@@ -80,7 +81,7 @@ namespace WebPortalEverthing.Controllers.LoadTesting
             var currentUserId = _loadAuthService.GetUserId();
             if (currentUserId is null)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("LoginLoadUserView", "LoadAuth");
             }
             var user = _loadUserRepositryReal.Get(currentUserId.Value);
 
@@ -98,7 +99,9 @@ namespace WebPortalEverthing.Controllers.LoadTesting
                     CreatorName = metricDB.LoadUserDataCreator?.Login ?? "UnknownCreator",
                     LoadVolumeName = metricDB.LoadVolumeTesting?.Title ?? "UnknownLoadVolume",
                     CanDelete = metricDB.LoadUserDataCreator is null
-                    || metricDB.LoadUserDataCreator?.Id == currentUserId
+                    || metricDB.LoadUserDataCreator?.Id == currentUserId,
+                    LikeCount = metricDB.UserWhoLikeIt.Count(),
+                    IsLiked = metricDB.UserWhoLikeIt.Any(x => x.Id == currentUserId)
                 })
                 .ToList();
 
@@ -188,7 +191,7 @@ namespace WebPortalEverthing.Controllers.LoadTesting
             var userId = _loadAuthService.GetUserId()!.Value;
             var avatarFileName = $"avatar-{userId}.jpg";
 
-            var path = Path.Combine(webRootPath, "images","LoadTesting", "avatars", avatarFileName);
+            var path = Path.Combine(webRootPath, "images", "LoadTesting", "avatars", avatarFileName);
             using (var fileStream = new FileStream(path, FileMode.Create))
             {
                 avatar
@@ -255,6 +258,20 @@ namespace WebPortalEverthing.Controllers.LoadTesting
         {
             _loadTestingRepository.DeleteByGuid(Guid);
             return RedirectToAction("ContenMetricsListView");
+        }
+
+        public IActionResult ChatView()
+        {
+            var viewModel = new IndexViewModel();
+
+            var userName = _loadAuthService.GetName();
+            var userId = _loadAuthService.GetUserId();
+
+            viewModel.UserName = userName;
+            viewModel.UserId = userId ?? -1;
+
+            return View(viewModel); //model выдаст данные наружу, на страницу
+
         }
 
 

@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebPortalEverthing.Models.LoadTesting;
 using WebPortalEverthing.Services.LoadTesting;
+using Everything.Data.Interface.Repositories;
+using WebPortalEverthing.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebPortalEverthing.Controllers.ApiControllers
 {
@@ -66,11 +69,11 @@ namespace WebPortalEverthing.Controllers.ApiControllers
         }
 
         [HttpPost]
-        public bool CreateMetric([FromBody] MetricCreationViewModel metric)
+        public MetricCreationViewModel CreateMetric([FromBody] MetricCreationViewModel metric)
         {
             if (!ModelState.IsValid)
             {
-                return false;
+                return new MetricCreationViewModel();
             }
 
             var currentUserId = _loadAuthService.GetUserId();
@@ -85,7 +88,15 @@ namespace WebPortalEverthing.Controllers.ApiControllers
 
             _loadTestingRepository.Create(metricData, currentUserId!.Value, metric.LoadVolumeId);
 
-            return true;
+            return metric;
+        }
+
+        [Authorize]
+        public bool Like(int metricId)
+        {
+            var userId = _loadAuthService.GetUserId()!.Value;
+
+            return _loadTestingRepository.LikeMetric(metricId, userId);
         }
 
     }
