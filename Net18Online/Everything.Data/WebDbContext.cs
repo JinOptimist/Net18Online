@@ -7,8 +7,6 @@ namespace Everything.Data
 {
     public class WebDbContext : DbContext
     {
-        public const string CONNECTION_STRING = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=\"Net18Online\";Integrated Security=True;";
-        //public const string CONNECTION_STRING = "Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=12345;";
         public DbSet<GirlData> Girls { get; set; }
 
         public DbSet<MangaData> Mangas { get; set; }
@@ -73,9 +71,7 @@ namespace Everything.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(CONNECTION_STRING);
-            //optionsBuilder.UseNpgsql(CONNECTION_STRING);
-            // base.OnConfiguring(optionsBuilder);
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
