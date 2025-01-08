@@ -86,10 +86,26 @@ header .name {
 	flex-wrap: wrap;
 }
 
+	.movies.highlighting .movie {
+		opacity: 0.2;
+	}
+
+		.movies.highlighting .movie.highlighted {
+			opacity: 1;
+		}
+
 .movie {
 	margin: 10px;
 	height: auto;
 	width: 150px;
+}
+
+.poster-tag-container {
+	display: none;
+	position: absolute;
+	background: white;
+	top: 50px;
+	z-index: 100;
 }
 
 .movie .name {
@@ -116,6 +132,7 @@ header .name {
 	display: flex;
 	flex-wrap: wrap;
 	margin-bottom: 10px;
+	position: relative;
 }
 
 .movie .additional-info .tag {
@@ -124,6 +141,7 @@ header .name {
 	border-radius: 5px;
 	margin: 3px;
 	padding: 3px;
+	cursor: pointer;
 }
 
 .filmDirectors	 {
@@ -146,4 +164,3 @@ header .name {
 		border: 1px #ccc solid;
 		padding: 5px;
 	}
-

@@ -4,6 +4,11 @@
 @{
     Layout = "~/Views/Shared/_LayoutMoviePoster.cshtml";
 }
+
+@section Scripts{
+    <script src="~/js/MoviePoster/AllPosters.js"></script>
+}
+
 <div class="movies">
     @foreach (var poster in Model)
     {
@@ -23,17 +28,20 @@
                     <input name="id" value="@poster.Id" type="hidden" />
                     <input name="url" />
                     <button type="submit">new image</button>
+                    <button type="button" class="toggle-tags">...</button>
                 </form>
-                <span class="tag">@poster.CreatorName</span>
-                <span class="tag">@poster.FilmDirector</span>
-                @foreach (var tag in poster.Tags)
-                {
-                    <span class="tag">@tag</span>
-                }
-                @if (poster.CanDelete)
-                {
-                    <a class="tag" href=" /MoviePoster/Remove?id =@poster.Id">Delete</a>
-                }
+                <div class="poster-tag-container">
+                    <span class="tag">@poster.CreatorName</span>
+                    <span class="tag">@poster.FilmDirector</span>
+                    @foreach (var tag in poster.Tags)
+                    {
+                        <span class="tag">@tag</span>
+                    }
+                    @if (poster.CanDelete)
+                    {
+                        <a class="tag" href=" /MoviePoster/Remove?id =@poster.Id">Delete</a>
+                    }
+                </div>
             </div>
         </div>
     }

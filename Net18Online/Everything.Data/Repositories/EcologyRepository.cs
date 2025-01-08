@@ -1,6 +1,7 @@
 using Everything.Data.Interface.Models;
 using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
+using Everything.Data.Models.SqlRawModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Everything.Data.Repositories
@@ -11,7 +12,8 @@ namespace Everything.Data.Repositories
         IEnumerable<EcologyData>GetAllWithUsersAndComments();
     
         void SetForMainPage(Type postId);
-        
+
+        IEnumerable<PostWithMainStatus> GetPostsForMainPage();
         bool LikeEcology(int ecologyId, int userId);
     }
 
@@ -90,6 +92,25 @@ namespace Everything.Data.Repositories
                 });
             _webDbContext.SaveChanges();
             return true;
+        }
+        
+        public IEnumerable<PostWithMainStatus> GetPostsForMainPage() 
+        {
+            var sql = @"
+    SELECT 
+        E.Id,
+        E.Text,
+        E.ImageSrc,
+        E.ForMainPage,
+        CASE WHEN E.ForMainPage = 1 THEN 'ForMainPage' ELSE 'NotForMainPage' END as MainPageStatus 
+    FROM Ecologies E";
+            
+            var result = _webDbContext
+                .Database
+                .SqlQueryRaw<PostWithMainStatus>(sql)
+                .ToList(); 
+
+            return result; 
         }
     }
 }    
