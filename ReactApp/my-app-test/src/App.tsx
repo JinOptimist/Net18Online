@@ -1,11 +1,10 @@
-import React from 'react';
-import './App.css';
-import Smile from './components/Smile';
+import React from "react";
+import AnimeGirl from "./components/AnimeGirl/AnimeGirl";
 
 function App() {
   return (
-    <div className="App">
-      <Smile></Smile>
+    <div>
+      <AnimeGirl></AnimeGirl>
     </div>
   );
 }
