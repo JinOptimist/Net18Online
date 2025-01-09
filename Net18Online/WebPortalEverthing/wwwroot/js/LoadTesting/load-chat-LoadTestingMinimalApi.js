@@ -7,14 +7,11 @@ $(document).ready(function () {
   const authorName = $(".user-name").val();
 
   /*const hub = new signalR.HubConnectionBuilder()
-    .withUrl(baseUrl + "/hub/loadChat")
+    .withUrl(baseUrl + "/hub/loadChatmini")
     .build();*/
 
   const hub = new signalR.HubConnectionBuilder()
-    .withUrl("https://localhost:7130/hub/loadChat", {
-      transport: signalR.HttpTransportType.WebSockets,
-    })
-    .configureLogging(signalR.LogLevel.Information)
+    .withUrl("https://localhost:7121/hub/loadChatmini")
     .build();
 
   init();
@@ -40,6 +37,7 @@ $(document).ready(function () {
     hub
       .invoke("addNewMessage", authorId, authorName, message)
       .then(() => {
+        console.log("Сообщение успешно отправлено:", message);
         $(".new-message").val(""); // Очищаем поле ввода
       })
       .catch((err) => console.error("Ошибка при отправке сообщения:", err));
@@ -47,11 +45,12 @@ $(document).ready(function () {
 
   hub
     .start()
-    .then(function () {
+    .then(() => {
+      console.log("Соединение установлено");
       hub.invoke("userEnteredToChat", authorId, authorName);
     })
-    .catch(function (err) {
-      console.error("Ошибка подключения к хабу:", err.toString());
+    .catch((err) => {
+      console.error("Ошибка подключения к хабу:", err.message);
     });
 
   //TODO refactor the method. Get data from new minimal api server
@@ -70,6 +69,7 @@ $(document).ready(function () {
       console.error("Соединение не установлено.");
       return;
     }
+    console.log("Соединение установлено -> Сообщение создано:", message);
     const messageBlock = $(".message.template").clone();
     messageBlock.removeClass("template"); // Убираем класс template
     messageBlock.text(message); // Устанавливаем текст сообщения

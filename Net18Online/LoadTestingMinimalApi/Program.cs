@@ -24,7 +24,7 @@ builder.Services.AddDbContext<ChatDbContext>(options =>
 });
 
 //разрешить серверу принимать данные с других сайтов
-/*builder.Services.AddCors(option =>
+builder.Services.AddCors(option =>
 {
     option.AddDefaultPolicy(policy =>
     {
@@ -36,9 +36,9 @@ builder.Services.AddDbContext<ChatDbContext>(options =>
         //можно настроить правила
         policy.AllowCredentials();
     });
-});*/
+});
 
-builder.Services.AddCors(options =>
+/*builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
@@ -47,7 +47,7 @@ builder.Services.AddCors(options =>
               .AllowCredentials()
               .WithOrigins("https://localhost:7121"); // Укажите ваш клиентский URL
     });
-});
+});*/
 
 
 
@@ -145,7 +145,7 @@ app.UseSwaggerUI();
 
 app.UseCors();
 
-app.MapHub<LoadChatHub>("/hub/loadChat");
+app.MapHub<LoadChatHub>("/hub/loadChatmini");
 // адрес как в проекте WebPortalEverthing, чтобы он работал через miniApi 
 
 
