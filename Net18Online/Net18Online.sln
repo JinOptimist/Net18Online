@@ -39,9 +39,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoffeMinimalApi", "CoffeMin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebPortalEverthing.E2E", "WebPortalEverthing.E2E\WebPortalEverthing.E2E.csproj", "{8950CFFD-14E5-4A2F-A9B9-D8669E833093}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapMinimalApi", "MapMinimalApi\MapMinimalApi.csproj", "{ED03EA34-8AEB-4A99-A017-C2C5521896DC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapMinimalApi", "MapMinimalApi\MapMinimalApi.csproj", "{ED03EA34-8AEB-4A99-A017-C2C5521896DC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReflectionExample", "ReflectionExample\ReflectionExample.csproj", "{A2097222-39A0-400E-BFBA-91FCAA2B55A8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReflectionExample", "ReflectionExample\ReflectionExample.csproj", "{A2097222-39A0-400E-BFBA-91FCAA2B55A8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadTestingMinimalApi", "LoadTestingMinimalApi\LoadTestingMinimalApi.csproj", "{00A69866-0714-4461-BFDF-AB2CEA1AD61A}"
 EndProject
