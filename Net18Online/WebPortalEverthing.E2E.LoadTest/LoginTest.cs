@@ -15,7 +15,7 @@ namespace WebPortalEverthing.E2E.LoadTest
 {
     public class LoginTest
     {
-        private IWebDriver webDriver;
+        private IWebDriver _webDriver;
 
         //[SetUp] Before each test
         [OneTimeSetUp]
@@ -24,7 +24,7 @@ namespace WebPortalEverthing.E2E.LoadTest
             // Установка драйвера
             new DriverManager().SetUpDriver(new ChromeConfig());
 
-            webDriver = new ChromeDriver();
+            _webDriver = new ChromeDriver();
         }
 
         [Test]
@@ -33,10 +33,10 @@ namespace WebPortalEverthing.E2E.LoadTest
 
 
             // Открытие страницы
-            webDriver.Navigate().GoToUrl("https://localhost:7130/LoadAuth/LoginLoadUserView");
+            _webDriver.Navigate().GoToUrl("https://localhost:7130/LoadAuth/LoginLoadUserView");
 
             // Явное ожидание
-            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
+            var wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
 
             // Поиск поля логина
             var loginDiv = wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(".login")));
@@ -65,7 +65,7 @@ namespace WebPortalEverthing.E2E.LoadTest
         [OneTimeTearDown]
         public void TearDown()
         {
-            webDriver.Close();
+            _webDriver.Close();
         }
     }
 }
