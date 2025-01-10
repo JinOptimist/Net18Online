@@ -5,6 +5,7 @@ using WebPortalEverthing.Localizations;
 
 namespace WebPortalEverthing.Services.LoadTesting
 {
+    //   public class LoadAuthService : AuthService
     public class LoadAuthService
     {
         private IHttpContextAccessor _httpContextAccessor;
@@ -15,6 +16,11 @@ namespace WebPortalEverthing.Services.LoadTesting
         public const string CLAIM_TYPE_COINS = "Coins";
         public const string CLAIM_TYPE_ROLE = "Role";
 
+        /*     public LoadAuthService(IHttpContextAccessor httpContextAccessor)
+                  : base(httpContextAccessor) // Вызов конструктора родительского класса
+             {
+                 _httpContextAccessor = httpContextAccessor;
+             }*/
         public LoadAuthService(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;

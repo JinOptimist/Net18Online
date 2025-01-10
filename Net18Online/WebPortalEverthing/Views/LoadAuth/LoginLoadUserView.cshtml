@@ -5,10 +5,10 @@
 <div class="login-form">
 
     <form method="post">
-        <div>
+        <div class="login">
             @Html.TextBoxFor(x => x.Login, new { placeholder = @LoadStuffs.Login })
         </div>
-        <div>
+        <div class="password">
             @Html.TextBoxFor(x => x.Password, new { @type = "password", placeholder = @LoadStuffs.Password })
         </div>
         <div>
