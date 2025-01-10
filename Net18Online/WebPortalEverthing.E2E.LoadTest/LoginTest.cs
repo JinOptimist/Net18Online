@@ -20,12 +20,6 @@ namespace WebPortalEverthing.E2E.LoadTest
             // Установка драйвера
             new DriverManager().SetUpDriver(new ChromeConfig());
 
-            //// <summary>
-            ///Можно вручную скачать драйвер и прописать к нему путь
-            /// var chromeDriverPath = @"C:\Path\To\ChromeDriver"; // Укажите путь к chromedriver.exe
-            ///var driver = new ChromeDriver(chromeDriverPath);
-            /// </summary>
-
             using (var webDriver = new ChromeDriver())
             {
                 // Открытие страницы
