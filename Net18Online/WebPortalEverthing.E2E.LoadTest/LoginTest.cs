@@ -10,6 +10,7 @@ using SeleniumExtras.WaitHelpers;
 
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
+using WebPortalEverthing.E2E.LoadTest.Pages;
 
 namespace WebPortalEverthing.E2E.LoadTest
 {
@@ -33,35 +34,31 @@ namespace WebPortalEverthing.E2E.LoadTest
 
 
             // Открытие страницы
-            _webDriver.Navigate().GoToUrl("https://localhost:7130/LoadAuth/LoginLoadUserView");
+            _webDriver.Navigate().GoToUrl(CommonConstants.loginUrl);
+
+            //нужная страница загружена
+            Assert.That(_webDriver.Url, Is.EqualTo(CommonConstants.loginUrl));
 
             // Явное ожидание
             var wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
 
-            // Поиск поля логина
-            var loginDiv = wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(".login")));
-            var loginInput = loginDiv.FindElement(By.TagName("input"));
-
-            // Поиск поля пароля
-            var passwordDiv = wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector(".password")));
-            var passwordInput = passwordDiv.FindElement(By.TagName("input"));
+            // Поиск и взаимодействие с элементами
+            var loginInput = wait.Until(ExpectedConditions.ElementIsVisible(LoginLoadUserViewSelectors.LoginElement));
+            var passwordInput = wait.Until(ExpectedConditions.ElementIsVisible(LoginLoadUserViewSelectors.PasswordElement));
+            var signInButton = wait.Until(ExpectedConditions.ElementIsVisible(LoginLoadUserViewSelectors.SignInButton));
 
             // Ввод данных
             loginInput.SendKeys("admin");
             passwordInput.SendKeys("admin");
 
-            // Поиск и нажатие на кнопку
-            var signInButton = wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("button[type='submit']")));
+            // Клик по кнопке входа
             signInButton.Click();
 
-            // Проверка успешной авторизации (пример: URL содержит 'Home')
+            // Проверка успешной авторизации
             Assert.That(wait.Until(ExpectedConditions.UrlContains("IndexLoadVolumeView")));
-
-
-
-            //    [TearDown]//after each test
         }
 
+        //    [TearDown]//after each test
         [OneTimeTearDown]
         public void TearDown()
         {

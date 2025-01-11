@@ -16,4 +16,8 @@
     <PackageReference Include="WebDriverManager" Version="2.17.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Enums\Enums.csproj" />
+  </ItemGroup>
+
 </Project>

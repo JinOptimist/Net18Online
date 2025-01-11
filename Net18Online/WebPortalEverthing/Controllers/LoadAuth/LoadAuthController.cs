@@ -16,11 +16,16 @@ namespace WebPortalEverthing.Controllers.LoadAuth
     public class LoadAuthController : Controller
     {
         public ILoadUserRepositryReal _loadUserRepositryReal;
+        //общий сервис, у меня отдельный
+        public IUserRepositryReal _userRepositryReal;
         public IHubContext<LoadChatHub, ILoadChatHub> _chatHub;
 
-        public LoadAuthController(ILoadUserRepositryReal loadUserRepositryReal, IHubContext<LoadChatHub, ILoadChatHub> chatHub)
+        public LoadAuthController(ILoadUserRepositryReal loadUserRepositryReal,
+            IUserRepositryReal userRepositryReal,
+            IHubContext<LoadChatHub, ILoadChatHub> chatHub)
         {
             _loadUserRepositryReal = loadUserRepositryReal;
+            _userRepositryReal = userRepositryReal;
             _chatHub = chatHub;
         }
 
@@ -84,6 +89,18 @@ namespace WebPortalEverthing.Controllers.LoadAuth
                 viewModel.Login,
                 viewModel.Password,
                 viewModel.Email);
+
+
+            //тут в общий сервис и БД  зарегистрировать пользователя
+            if (!_userRepositryReal.CheckIsNameAvailable(viewModel.Login))
+            {
+                return View(viewModel);
+            }
+
+            _userRepositryReal.Register(
+                viewModel.Login,
+                viewModel.Password,
+                18);
 
             _chatHub.Clients.All.NewMessageAdded($"Новый пользователь зарегестировался у нас на сайте. Его зовут {viewModel.Login}");
 
