@@ -502,6 +502,34 @@ namespace Everything.Data.Migrations
                     b.ToTable("Girls");
                 });
 
+            modelBuilder.Entity("Everything.Data.Models.LoadChatMessageData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ToUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("LoadChatMessages");
+                });
+
             modelBuilder.Entity("Everything.Data.Models.LoadUserData", b =>
                 {
                     b.Property<int>("Id")
@@ -1059,6 +1087,21 @@ namespace Everything.Data.Migrations
                     b.ToTable("GirlDataUserData");
                 });
 
+            modelBuilder.Entity("LoadUserDataMetricData", b =>
+                {
+                    b.Property<int>("MetricsWhichUsersLikeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserWhoLikeItId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MetricsWhichUsersLikeId", "UserWhoLikeItId");
+
+                    b.HasIndex("UserWhoLikeItId");
+
+                    b.ToTable("LoadUserDataMetricData");
+                });
+
             modelBuilder.Entity("CakeDataMagazinData", b =>
                 {
                     b.HasOne("Everything.Data.Models.CakeData", null)
@@ -1220,6 +1263,16 @@ namespace Everything.Data.Migrations
                     b.Navigation("Creator");
 
                     b.Navigation("Manga");
+                });
+
+            modelBuilder.Entity("Everything.Data.Models.LoadChatMessageData", b =>
+                {
+                    b.HasOne("Everything.Data.Models.LoadUserData", "User")
+                        .WithMany("LoadChatMessages")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Everything.Data.Models.LoadVolumeTestingData", b =>
@@ -1457,6 +1510,21 @@ namespace Everything.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("LoadUserDataMetricData", b =>
+                {
+                    b.HasOne("Everything.Data.Models.MetricData", null)
+                        .WithMany()
+                        .HasForeignKey("MetricsWhichUsersLikeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Everything.Data.Models.LoadUserData", null)
+                        .WithMany()
+                        .HasForeignKey("UserWhoLikeItId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Everything.Data.Models.AnimeData", b =>
                 {
                     b.Navigation("Reviews");
@@ -1496,6 +1564,8 @@ namespace Everything.Data.Migrations
 
             modelBuilder.Entity("Everything.Data.Models.LoadUserData", b =>
                 {
+                    b.Navigation("LoadChatMessages");
+
                     b.Navigation("LoadVolumeTestingParts");
 
                     b.Navigation("Metrics");

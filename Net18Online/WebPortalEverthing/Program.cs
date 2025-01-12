@@ -3,10 +3,12 @@ using Everything.Data.Fake.Repositories;
 using Everything.Data.Interface.Repositories;
 using Everything.Data.Repositories;
 using MazeCore.Builders;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using SimulatorOfPrinting.Models;
 using WebPortalEverthing.CustomMiddlewares;
 using WebPortalEverthing.Hubs;
+using WebPortalEverthing.Providers;
 using WebPortalEverthing.Services;
 using WebPortalEverthing.Services.LoadTesting;
 using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRepository;
@@ -24,8 +26,8 @@ builder.Services
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<WebDbContext>(x => x.UseSqlServer(WebDbContext.CONNECTION_STRING));
-//builder.Services.AddDbContext<WebDbContext>(options => options.UseNpgsql(WebDbContext.CONNECTION_STRING));
+builder.Services.AddDbContext<WebDbContext>(x =>
+    x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddSignalR();
 
@@ -55,6 +57,8 @@ builder.Services.AddScoped<LoadUserService>();
 builder.Services.AddScoped<LoadVolumeService>();
 builder.Services.AddScoped<FileProvider>();
 builder.Services.AddScoped<HelperForFile>();
+
+builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 
 registrationHelper.AutoRegisterServiceByAttribute(builder.Services);
 registrationHelper.AutoRegisterServiceByAttributeOnConstructor(builder.Services);
@@ -101,6 +105,9 @@ app.MapHub<ChatHub>("/hub/chatMainPage");
 app.MapHub<CoffeShopChatHub>("/hub/chatCoffePage");
 app.MapHub<GameAlertHub>("/hub/alertGamePage");
 app.MapHub<TakingSurveyHub>("/hub/takingSurvey");
+app.MapHub<LoadChatHub>("/hub/loadChat");
+
+
 
 app.MapControllerRoute(
     name: "default",

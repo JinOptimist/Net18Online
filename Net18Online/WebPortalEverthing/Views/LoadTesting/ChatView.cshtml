@@ -1,0 +1,42 @@
+@using WebPortalEverthing.Models.Home
+@model IndexViewModel
+@using WebPortalEverthing.Services
+@using WebPortalEverthing.Services.LoadTesting
+@inject LoadAuthService loadAuthService
+@inject LoadUserService loadUserService
+@inject LoadVolumeService loadVolumeService
+
+@{
+    Layout = "~/Views/Shared/LoadTesting/_LayoutLoadTesting.cshtml";
+
+    // Получаем список LoadVolumes из LoadVolumeService
+    var loadVolumes = loadVolumeService.GetLoadVolumes();
+}
+
+@section Scripts {
+ @*   <script src="~/js/LoadTesting/load-chat.js"></script>  *@
+     <script src="~/js/LoadTesting/load-chat-LoadTestingMinimalApi.js"></script>
+   
+
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/LoadTesting/load-chat.css" />
+
+}
+
+<div class="chat-container">
+    <input type="hidden" class="user-id" value="@Model.UserId" />
+    <input type="hidden" class="user-name" value="@Model.UserName" />
+    <div class="messages">
+        <div class="message template">***</div>
+    </div>
+    <div>
+        <input class="new-message" placeholder="Введите сообщение" />
+        <button class="send-new-message" type="button">Отправить</button>
+    </div>
+    <div>
+        <input class="help-admin" placeholder="Сообщение для админа" />
+        <button class="send-help" type="button">Админ, памаги!</button>
+    </div>
+</div>

@@ -13,6 +13,14 @@ namespace Everything.Data.Repositories
         bool HasSimilarName(string name);
         bool IsNameUniq(string name);
         void Create(MetricData metricData, int currentUserId, int LoadVolumeId);
+        /// <summary>
+        /// Return true if metric wasn't like. And now she is
+        /// Return false if metric was liked but not is not
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+
+        bool LikeMetric(int metricId, int userId);
     }
     public class LoadTestingRepository : BaseRepository<MetricData>, ILoadTestingRepositoryReal
     {
@@ -57,6 +65,7 @@ namespace Everything.Data.Repositories
             return _dbSet
                 .Include(x => x.LoadUserDataCreator)
                 .Include(x => x.LoadVolumeTesting)
+                .Include(x => x.UserWhoLikeIt)
                 .ToList();
         }
 
@@ -144,6 +153,33 @@ namespace Everything.Data.Repositories
                 .Where(x => x.LoadUserDataCreator != null
                     && x.LoadUserDataCreator.Id == userId)
                 .ToList();
+        }
+
+        public bool LikeMetric(int metricId, int userId)
+        {
+            var metric = _dbSet
+                .Include(x => x.UserWhoLikeIt)//для высоконагруженных приложений не подходит,
+                                              //нужна модель с двумя полями,
+                                              //id метрики и id юзера , который лайкнул
+                .First(x => x.Id == metricId);
+
+            var user = _webDbContext.LoadUsers.First(x => x.Id == userId);
+
+            var isUserAlreadyLikeTheMetric = metric
+                .UserWhoLikeIt
+                .Any(u => u.Id == userId);
+
+            if (isUserAlreadyLikeTheMetric)
+            {
+                metric.UserWhoLikeIt.Remove(user);
+                _webDbContext.SaveChanges();
+                return false;
+            }
+
+            metric.UserWhoLikeIt.Add(user);
+            _webDbContext.SaveChanges();
+
+            return true;
         }
     }
 }

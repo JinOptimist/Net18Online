@@ -50,7 +50,7 @@ namespace WebPortalEverthing.CustomMiddlewares
                     return;
                 }
             }
-
+           
             await _next.Invoke(context);
         }
 

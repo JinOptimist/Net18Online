@@ -47,11 +47,11 @@
                         <div class="accordion-body">
                             <div class="catalog-filter-block">
                                 <ul class="tags">
-                                    @foreach (var brand in Model)
+                                    @foreach (var brandName in Model.FirstOrDefault()?.BrandNames ?? new List<string>())
                                     {
                                         <li>
-                                            <input type="radio" id="@brand.Id" name="brend-type" class="filter-radio" />
-                                            <label for="@brand.Id">@brand.Brand</label>
+                                            <input type="radio" id="@brandName" name="brend-type" class="filter-radio" />
+                                            <label for="@brandName">@brandName</label>
                                         </li>
                                     }
                                 </ul>

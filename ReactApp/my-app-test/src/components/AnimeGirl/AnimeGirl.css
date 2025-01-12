@@ -1,0 +1,21 @@
+.girl {
+	width: 200px;
+	height: 300px;
+	border: 1px red solid;
+	border-radius: 5px;
+}
+.name {
+	display: flex;
+	justify-content: center;
+}
+.image-container img {
+	max-width: 100%;
+	max-height: 210px;
+}
+
+.tag {
+	border: 3px blueviolet dotted;
+	display: inline-block;
+	padding: 5px;
+	margin: 3px;
+}
