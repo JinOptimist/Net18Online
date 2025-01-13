@@ -23,6 +23,28 @@ namespace WebPortalEverthing.Controllers.ApiControllers
             _authService = authService;
         }
 
+        public List<GirlViewModel> GetGirls()
+        {
+            var girlsFromDb = _animeGirlRepository.GetAllWithCreatorsAndManga();
+            var girlsViewModels = girlsFromDb
+                .Select(dbGirl =>
+                    new GirlViewModel
+                    {
+                        Id = dbGirl.Id,
+                        Name = dbGirl.Name,
+                        ImageSrc = dbGirl.ImageSrc,
+                        Tags = new List<string>(),
+                        CreatorName = dbGirl.Creator?.Login ?? "Неизвестный",
+                        MangaName = dbGirl.Manga?.Title ?? "Из фанфика",
+                        CanDelete = false,
+                        LikeCount = dbGirl.UsersWhoLikeIt.Count(),
+                        IsLiked = false
+                    }
+                )
+                .ToList();
+            return girlsViewModels;
+        }
+
         public bool UpdateName(string newName, int id)
         {
             Thread.Sleep(5 * 1000);
@@ -70,6 +92,18 @@ namespace WebPortalEverthing.Controllers.ApiControllers
             };
 
             return viewModel;
+        }
+
+        public void CreateGirlForGuess(ApiGirlCreationViewModel girlDto)
+        {
+            var girl = new GirlData
+            {
+                Name = girlDto.Name,
+                ImageSrc = girlDto.Url
+            };
+
+
+            _animeGirlRepository.Add(girl);
         }
 
         [Authorize]

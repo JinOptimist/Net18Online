@@ -38,18 +38,18 @@ namespace WebPortalEverthing.CustomMiddlewares
                 return;
             }
             
-            if (context.Request.Headers.ContainsKey("accept-language"))
-            {
-                var langFromHeader = context.Request.Headers["accept-language"].FirstOrDefault();
-                if (langFromHeader is not null)
-                {
-                    var localStrCode = langFromHeader.Substring(0, 5);
-                    var culture = new CultureInfo(localStrCode);
-                    SwitchLanguage(culture);
-                    await _next.Invoke(context);
-                    return;
-                }
-            }
+            //if (context.Request.Headers.ContainsKey("accept-language"))
+            //{
+            //    var langFromHeader = context.Request.Headers["accept-language"].FirstOrDefault();
+            //    if (langFromHeader is not null)
+            //    {
+            //        var localStrCode = langFromHeader.Substring(0, 5);
+            //        var culture = new CultureInfo(localStrCode);
+            //        SwitchLanguage(culture);
+            //        await _next.Invoke(context);
+            //        return;
+            //    }
+            //}
            
             await _next.Invoke(context);
         }

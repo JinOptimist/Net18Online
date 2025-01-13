@@ -65,7 +65,21 @@ registrationHelper.AutoRegisterServiceByAttributeOnConstructor(builder.Services)
 
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddCors(option =>
+{
+    option.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
+        policy.SetIsOriginAllowed(origin => true);
+        policy.AllowCredentials();
+    });
+});
+
 var app = builder.Build();
+
+app.UseCors();
+
 // Load data into repository from JSON file
 var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
 using (var scope = scopeFactory.CreateScope())

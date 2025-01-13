@@ -1,0 +1,4 @@
+.girls {
+	display: flex;
+	flex-wrap: wrap;
+}

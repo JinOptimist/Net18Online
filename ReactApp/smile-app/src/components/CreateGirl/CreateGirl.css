@@ -1,0 +1,8 @@
+.new-girl-creation{
+	display: flex;
+}
+
+.new-girl-creation-info{
+	display: flex;
+	flex-direction: column;
+}

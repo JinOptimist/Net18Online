@@ -1,5 +1,5 @@
 import './App.css'
-import Girls from './components/Girls'
+import { Girls } from './components'
 
 function App() {
   return (
