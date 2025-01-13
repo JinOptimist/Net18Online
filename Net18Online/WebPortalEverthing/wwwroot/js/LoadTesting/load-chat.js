@@ -3,21 +3,20 @@ $(document).ready(function () {
     .withUrl("/hub/loadChat")
     .build();
 
-  // Обработка нового сообщения
-  hub.on("newMessageAdded", function (message) {
-    if (hub.state !== signalR.HubConnectionState.Connected) {
-      console.error("Соединение не установлено.");
-      return;
-    }
+  init();
 
-    // Клонирование шаблона сообщения
-    const messageBlock = $(".message.template").clone();
-    messageBlock.removeClass("template"); // Убираем класс template
-    messageBlock.text(message); // Устанавливаем текст сообщения
-    $(".messages").append(messageBlock); // Добавляем сообщение в контейнер
-  });
+  function init() {
+    const url = "/api/ApiLoadChat/GetLastMessages";
+    $.get(url)
+      .then(function (messages) {
+        console.log("Полученные сообщения:", messages);
+        messages.forEach((message) => createNewMessage(message));
+      })
+      .catch((err) => console.error("Ошибка загрузки сообщений:", err));
+  }
 
-  // Отправка нового сообщения
+  hub.on("newMessageAdded", createNewMessage);
+
   $(".send-new-message").click(function () {
     const message = $(".new-message").val();
     if (!message.trim()) {
@@ -30,12 +29,11 @@ $(document).ready(function () {
       .then(() => {
         $(".new-message").val(""); // Очищаем поле ввода
       })
-      .catch((err) => console.error(err.toString()));
+      .catch((err) => console.error("Ошибка при отправке сообщения:", err));
   });
 
-  // Отправка сообщения администратору
   $(".send-help").click(function () {
-    const message = $(".help-admin").val();
+    let message = $(".help-admin").val();
     if (!message.trim()) {
       console.warn("Сообщение не может быть пустым.");
       return;
@@ -45,18 +43,30 @@ $(document).ready(function () {
       .invoke("addNewMessageToAdmin", message)
       .then(() => {
         $(".help-admin").val(""); // Очищаем поле ввода
+        console.log("Сообщение отправлено администратору:", message);
       })
-      .catch((err) => console.error(err.toString()));
+      .catch((err) =>
+        console.error("Ошибка при отправке сообщения администратору:", err)
+      );
   });
 
-  // Запуск подключения к SignalR-хабу
   hub
     .start()
-    .than(function (data) {
-      // When connection with server is alive
+    .then(function () {
       hub.invoke("userEnteredToChat");
     })
     .catch(function (err) {
       console.error("Ошибка подключения к хабу:", err.toString());
     });
+
+  function createNewMessage(message) {
+    if (hub.state !== signalR.HubConnectionState.Connected) {
+      console.error("Соединение не установлено.");
+      return;
+    }
+    const messageBlock = $(".message.template").clone();
+    messageBlock.removeClass("template"); // Убираем класс template
+    messageBlock.text(message); // Устанавливаем текст сообщения
+    $(".messages").append(messageBlock); // Добавляем сообщение в контейнер
+  }
 });
