@@ -135,5 +135,12 @@ namespace Everything.Data.Repositories
 
             return result;
         }
+
+        public void Delete(int userId)
+        {
+            var user = _dbSet.First(x => x.Id == userId);
+            _dbSet.Remove(user);
+            _webDbContext.SaveChanges();
+        }
     }
 }

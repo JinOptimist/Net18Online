@@ -3,17 +3,25 @@
 
 <div class="registration-form">
     <form method="post">
-        <div>
-            @Html.TextBoxFor(x => x.Login, new { placeholder = "логин" })
+        <div class="login">
+            <div>
+                @Html.TextBoxFor(x => x.Login, new { placeholder = "логин" })
+            </div>
         </div>
-        <div>
-            @Html.TextBoxFor(x => x.Password, new { @type = "password", placeholder = "пароль" })
+        <div class="password">
+            <div>
+                @Html.TextBoxFor(x => x.Password, new { @type = "password", placeholder = "пароль" })
+            </div>
         </div>
-        <div>
-            @Html.TextBoxFor(x => x.Email, new { @type = "email", placeholder = "email" })
+        <div class="email">
+            <div>
+                @Html.TextBoxFor(x => x.Email, new { @type = "email", placeholder = "email" })
+            </div>
         </div>
-        <div>
-            @Html.TextBoxFor(x => x.Role, new { @type = "role", placeholder = "role" })
+        <div class="role">
+            <div>
+                @Html.TextBoxFor(x => x.Role, new { @type = "role", placeholder = "role" })
+            </div>
         </div>
         <div>
             <button type="submit">Регистрация</button>
