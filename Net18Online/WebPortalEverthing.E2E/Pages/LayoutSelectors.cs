@@ -25,5 +25,8 @@ namespace WebPortalEverthing.E2E.Pages
         public static readonly By CreateCoffeCost = By.CssSelector("#Cost");
 
         public static readonly By CoffeCreateSubmitButton = By.CssSelector("#submit-link");
+
+        
+        
     }
 }

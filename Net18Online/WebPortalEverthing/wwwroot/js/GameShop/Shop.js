@@ -70,7 +70,7 @@
             nameBlock.find('.new-game-name').attr('disabled', 'disabled');
     });
 
-    $(".tag.delete").click(function(event){
+    $(".tag-delete").click(function(event){
         const gameBlock = $(this).closest('.game-block');
         const gameId = $(this).data('id');
         const url = `/api/ApiGameStore/Remove?id=${gameId}`;
