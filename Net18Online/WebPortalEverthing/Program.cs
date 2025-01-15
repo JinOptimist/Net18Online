@@ -10,6 +10,7 @@ using WebPortalEverthing.CustomMiddlewares;
 using WebPortalEverthing.Hubs;
 using WebPortalEverthing.Providers;
 using WebPortalEverthing.Services;
+using WebPortalEverthing.Services.Apis;
 using WebPortalEverthing.Services.LoadTesting;
 using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRepository;
 
@@ -57,6 +58,13 @@ builder.Services.AddScoped<LoadUserService>();
 builder.Services.AddScoped<LoadVolumeService>();
 builder.Services.AddScoped<FileProvider>();
 builder.Services.AddScoped<HelperForFile>();
+
+builder.Services.AddHttpClient<HttpNumberApi>(httpClient =>
+    httpClient.BaseAddress = new Uri("http://numbersapi.com/")
+    );
+builder.Services.AddHttpClient<HttpWoofApi>(httpClient =>
+    httpClient.BaseAddress = new Uri("https://random.dog/")
+    );
 
 builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 

@@ -5,6 +5,7 @@ using System.Globalization;
 using WebPortalEverthing.Controllers.AuthAttributes;
 using WebPortalEverthing.Models.Home;
 using WebPortalEverthing.Services;
+using WebPortalEverthing.Services.Apis;
 
 namespace WebPortalEverthing.Controllers
 {
@@ -12,14 +13,21 @@ namespace WebPortalEverthing.Controllers
     {
         private AuthService _authService;
         private IUserRepositryReal _userRepositryReal;
+        private HttpNumberApi _httpNumberApi;
+        private HttpWoofApi _httpWoofApi;
 
-        public HomeController(AuthService authService, IUserRepositryReal userRepositryReal)
+        public HomeController(AuthService authService,
+            IUserRepositryReal userRepositryReal,
+            HttpNumberApi httpNumberApi,
+            HttpWoofApi httpWoofApi)
         {
             _authService = authService;
             _userRepositryReal = userRepositryReal;
+            _httpNumberApi = httpNumberApi;
+            _httpWoofApi = httpWoofApi;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var viewModel = new IndexViewModel();
 
@@ -28,6 +36,16 @@ namespace WebPortalEverthing.Controllers
 
             viewModel.UserName = userName;
             viewModel.UserId = userId ?? -1;
+
+            viewModel.TheNumber = DateTime.Now.Second;
+            
+            var taskforNumber = _httpNumberApi.GetFactAsync(viewModel.TheNumber);
+            var taskforDog = _httpWoofApi.GetRandomDogImage();
+
+            await Task.WhenAll(taskforNumber, taskforDog);
+
+            viewModel.FactAboutNumber = taskforDog.Result;
+            viewModel.DogImageSrc = taskforDog.Result;
 
             return View(viewModel);
         }
