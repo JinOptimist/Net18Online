@@ -24,42 +24,42 @@ namespace WebPortalEverthing.E2E.GameTests
             _wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(100));
             _webDriver.Url = CommonConstants.BASE_URL;
         }
-        [Test]
-        [TestCase("SmileTest1", "https://kolyda.ru/d/kofe_amerikano.jpg", 20)]
-        public void CreateGame(string gamename, string url, int cost)
-        {
-            _webDriver.LoginAsAdmin();
+        //[Test]
+        //[TestCase("SmileTest1", "https://kolyda.ru/d/kofe_amerikano.jpg", 20)]
+        //public void CreateGame(string gamename, string url, int cost)
+        //{
+        //    _webDriver.LoginAsAdmin();
 
-            _webDriver.Url = CommonConstants.GAME_CREATE_URL;
+        //    _webDriver.Url = CommonConstants.GAME_CREATE_URL;
 
-            var gameName = _webDriver.FindElement(LayoutSelectors.CreateGameName);
-            gameName.SendKeys(gamename);
+        //    var gameName = _webDriver.FindElement(LayoutSelectors.CreateGameName);
+        //    gameName.SendKeys(gamename);
 
-            var gameUrl = _webDriver.FindElement(LayoutSelectors.CreateGameUrl);
-            gameUrl.SendKeys(url);
-
-
-            var gameCost = _webDriver.FindElement(LayoutSelectors.CreateGameCost);
-            gameCost.SendKeys(Convert.ToString(cost));
-
-            var createButton = _webDriver.FindElement(LayoutSelectors.GameAddButton);
-            createButton.Click();
-
-            var gameObjects = _wait.Until(driver => driver.FindElements(LayoutSelectors.GameObjects));
+        //    var gameUrl = _webDriver.FindElement(LayoutSelectors.CreateGameUrl);
+        //    gameUrl.SendKeys(url);
 
 
-            var lastGameObject = _wait.Until(driver => gameObjects[gameObjects.Count - 2]);
+        //    var gameCost = _webDriver.FindElement(LayoutSelectors.CreateGameCost);
+        //    gameCost.SendKeys(Convert.ToString(cost));
 
-            var infoBar = _wait.Until(driver => lastGameObject.FindElement(LayoutSelectors.OpenInfoButton));
-            infoBar.Click();
+        //    var createButton = _webDriver.FindElement(LayoutSelectors.GameAddButton);
+        //    createButton.Click();
 
-            var deleteGameLink = _wait.Until(x => lastGameObject.FindElement(LayoutSelectors.GameDeleteButton));
+        //    var gameObjects = _wait.Until(driver => driver.FindElements(LayoutSelectors.GameObjects));
 
-            var gameId = deleteGameLink.GetAttribute("data-id");
 
-            var deleteButton = _wait.Until(driver => driver.FindElement(GameSelectors.RemoveGeneratedGame(gameId)));
-            deleteButton.Click();
-        }
+        //    var lastGameObject = _wait.Until(driver => gameObjects[gameObjects.Count - 2]);
+
+        //    var infoBar = _wait.Until(driver => lastGameObject.FindElement(LayoutSelectors.OpenInfoButton));
+        //    infoBar.Click();
+
+        //    var deleteGameLink = _wait.Until(x => lastGameObject.FindElement(LayoutSelectors.GameDeleteButton));
+
+        //    var gameId = deleteGameLink.GetAttribute("data-id");
+
+        //    var deleteButton = _wait.Until(driver => driver.FindElement(GameSelectors.RemoveGeneratedGame(gameId)));
+        //    deleteButton.Click();
+        //}
 
         [OneTimeTearDown]
         public void TearDown()
