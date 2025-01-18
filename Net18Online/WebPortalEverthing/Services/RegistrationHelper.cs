@@ -7,6 +7,10 @@ namespace WebPortalEverthing.Services
 {
     public class RegistrationHelper
     {
+        /// <summary>
+        /// Регистрирует в di контейнере все репозитории (т.е. интерфейсы, у которых есть класс) и насл от базового репозитория
+        /// </summary>
+        /// <param name="services"></param>
         public void AutoRegisterRepositories(IServiceCollection services)
         {
             var baseRepositoryClassType = typeof(BaseRepository<>);
