@@ -47,7 +47,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoadTestingMinimalApi", "Lo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebPortalEverthing.E2E.LoadTest", "WebPortalEverthing.E2E.LoadTest\WebPortalEverthing.E2E.LoadTest.csproj", "{F66DDEEF-AF52-46DA-B5F4-E0B0C7FB2A23}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultyTreadConsole", "MultyTreadConsole\MultyTreadConsole.csproj", "{CC1BBEC7-3B1A-41B0-8E37-3702A7A2FC5D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultyTreadConsole", "MultyTreadConsole\MultyTreadConsole.csproj", "{CC1BBEC7-3B1A-41B0-8E37-3702A7A2FC5D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReflectionLoadTesting", "ReflectionLoadTesting\ReflectionLoadTesting.csproj", "{E373D029-E963-4F7B-962B-A1DB52AE1F57}"
 EndProject
