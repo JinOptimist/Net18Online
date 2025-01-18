@@ -7,4 +7,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Everything.Data\Everything.Data.csproj" />
+    <ProjectReference Include="..\LoadTestingMinimalApi\LoadTestingMinimalApi.csproj" />
+    <ProjectReference Include="..\WebPortalEverthing.E2E.LoadTest\WebPortalEverthing.E2E.LoadTest.csproj" />
+    <ProjectReference Include="..\WebPortalEverthing\WebPortalEverthing.csproj" />
+  </ItemGroup>
+
 </Project>
