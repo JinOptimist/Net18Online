@@ -32,30 +32,31 @@ namespace WebPortalEverthing.E2E.GameTests
 
             _webDriver.Url = CommonConstants.GAME_CREATE_URL;
 
-            var gameName = _webDriver.FindElement(LayoutSelectors.CreateGameName);
+            var gameName = _webDriver.FindElement(GameSelectors.CreateGameName);
             gameName.SendKeys(gamename);
 
-            var gameUrl = _webDriver.FindElement(LayoutSelectors.CreateGameUrl);
+            var gameUrl = _webDriver.FindElement(GameSelectors.CreateGameUrl);
             gameUrl.SendKeys(url);
 
 
-            var gameCost = _webDriver.FindElement(LayoutSelectors.CreateGameCost);
+            var gameCost = _webDriver.FindElement(GameSelectors.CreateGameCost);
             gameCost.SendKeys(Convert.ToString(cost));
 
-            var createButton = _webDriver.FindElement(LayoutSelectors.GameAddButton);
+            var createButton = _webDriver.FindElement(GameSelectors.GameAddButton);
             createButton.Click();
 
-            var gameObjects = _wait.Until(driver => driver.FindElements(LayoutSelectors.GameObjects));
+            var gameObjects = _wait.Until(driver => driver.FindElements(GameSelectors.GameObjects));
 
 
             var lastGameObject = _wait.Until(driver => gameObjects[gameObjects.Count - 2]);
 
-            var infoBar = _wait.Until(driver => lastGameObject.FindElement(LayoutSelectors.OpenInfoButton));
+            var infoBar = _wait.Until(driver => lastGameObject.FindElement(GameSelectors.OpenInfoButton));
             infoBar.Click();
 
-            var deleteGameLink = _wait.Until(x => lastGameObject.FindElement(LayoutSelectors.GameDeleteButton));
+            var deleteGameLink = _wait.Until(x => lastGameObject.FindElement(GameSelectors.GameDeleteButton));
 
             var gameId = deleteGameLink.GetAttribute("data-id");
+            //test
 
             var deleteButton = _wait.Until(driver => driver.FindElement(GameSelectors.RemoveGeneratedGame(gameId)));
             deleteButton.Click();
