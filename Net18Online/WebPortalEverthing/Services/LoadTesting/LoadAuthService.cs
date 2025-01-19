@@ -6,6 +6,10 @@ using WebPortalEverthing.Localizations;
 namespace WebPortalEverthing.Services.LoadTesting
 {
     //   public class LoadAuthService : AuthService
+    /// <summary>
+    /// класс LoadAuthService (AuthService тоже) будет зарегистрирован автоматически в контейнере (AutoRegisterFlagAttribute)
+    /// благодаря рефлексии, сервис ищется по атрибуту AutoRegisterFlag и регистрируется
+    /// </summary>
     public class LoadAuthService
     {
         private IHttpContextAccessor _httpContextAccessor;
