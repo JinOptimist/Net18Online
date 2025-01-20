@@ -3,6 +3,10 @@
     Layout ="~/Views/Shared/_LayoutEcology.cshtml";
 }
 
+@section Scripts {
+    <link rel="stylesheet" href="~/css/Ecology/weather.css" />
+}
+
 <div class="content">
     <div class="advices">
         <div class="advice">
@@ -11,7 +15,7 @@
             </div>
             <div class="advice-info">
                 <span class="text">Using renewable energy will reduce carbon emissions</span>
-             </div>
+            </div>
         </div>
         <div class="advice">
             <div class="advice-image">
@@ -19,7 +23,7 @@
             </div>
             <div class="advice-info">
                 <span class="text">Using a bicycle instead of car helps to reduce air pollution</span>
-                </div>
+            </div>
         </div>
         <div class="advice">
             <div class="advice-image">
@@ -32,14 +36,20 @@
         <ul>
             @foreach (var post in Model.Posts)
             {
-            <li>
-                <div class="post">
-                    <img src="@post.ImageSrc" alt="Post Image" class="post-image" />
-                    <p>@post.Texts</p>
-                    <p>Posted by: @post.UserName</p>
-                </div>
-            </li>
+                <li>
+                    <div class="post">
+                        <img src="@post.ImageSrc" alt="Post Image" class="post-image" />
+                        <p>@post.Texts</p>
+                        <p>Posted by: @post.UserName</p>
+                    </div>
+                </li>
             }
         </ul>
+    </div>
+    <div class="weather-container">
+        <div class="weather-header"> Weather forecast: </div>
+        <div class="weather-content">
+            @Model.WeatherInfo
+        </div>
     </div>
 </div>
