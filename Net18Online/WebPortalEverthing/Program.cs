@@ -65,6 +65,9 @@ builder.Services.AddHttpClient<HttpNumberApi>(httpClient =>
 builder.Services.AddHttpClient<HttpWoofApi>(httpClient =>
     httpClient.BaseAddress = new Uri("https://random.dog/")
     );
+builder.Services.AddHttpClient<HttpJokeApi>(httpClient =>
+    httpClient.BaseAddress = new Uri("https://official-joke-api.appspot.com/random_joke")
+    );
 
 builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 

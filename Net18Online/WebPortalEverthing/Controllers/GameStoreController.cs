@@ -16,6 +16,7 @@ using WebPortalEverthing.Models.AnimeGirl.Profile;
 using Enums.Users;
 using Microsoft.AspNetCore.SignalR;
 using WebPortalEverthing.Hubs;
+using WebPortalEverthing.Services.Apis;
 
 namespace WebPortalEverthing.Controllers
 {
@@ -29,13 +30,18 @@ namespace WebPortalEverthing.Controllers
         private AuthService _authService;
         private IWebHostEnvironment _webHostEnvironment;
         private IHubContext<GameAlertHub, IGameAlertHub> _hubContext;
+        private HttpNumberApi _httpNumberApi;
+        private HttpJokeApi _httpJokeApi;
 
         public GameStoreController(IGameStoreRepositoryReal gameStoreRepository,
             WebDbContext webDbContext,
             AuthService authService,
             IUserRepositryReal userRepositryReal,
             IWebHostEnvironment webHostEnvironment,
-            IHubContext<GameAlertHub, IGameAlertHub> hubContext)
+            IHubContext<GameAlertHub,
+            IGameAlertHub> hubContext,
+            HttpNumberApi httpNumberApi,
+            HttpJokeApi httpJokeApi)
         {
             _gameStoreRepository = gameStoreRepository;
             _webDbContext = webDbContext;
@@ -43,14 +49,24 @@ namespace WebPortalEverthing.Controllers
             _userRepositryReal = userRepositryReal;
             _webHostEnvironment = webHostEnvironment;
             _hubContext = hubContext;
+            _httpNumberApi = httpNumberApi;
+            _httpJokeApi = httpJokeApi;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var model = new GameViewModel();
             var userName = _authService.GetName();
             model.UserName = userName;
             model.Date = DateTime.Now;
             model.NameGame = "Dota 2";
+
+            var taskForDate = _httpNumberApi.GetFactAboutDateAsync();
+            var taskForJoke = _httpJokeApi.GetRandomJokeAsync();
+
+            await Task.WhenAll(taskForDate, taskForJoke);
+
+            model.FactAboutDate = taskForDate.Result;
+            model.Joke = taskForJoke.Result;
 
             return View(model);
         }
@@ -74,10 +90,10 @@ namespace WebPortalEverthing.Controllers
                 NameGame = dbGame.NameGame,
                 ImageSrc = dbGame.ImageSrc,
                 Cost = dbGame.Cost,
-                Studios = dbGame.Studios?.Name, 
+                Studios = dbGame.Studios?.Name,
                 LikeCount = dbGame.UsersWhoLikedGame.Count(),
                 IsLiked = dbGame.UsersWhoLikedGame.Any(x => x.Id == user.Id),
-                DislikeCount =  dbGame.UsersWhoDislikedGame.Count(),
+                DislikeCount = dbGame.UsersWhoDislikedGame.Count(),
                 IsDisliked = dbGame.UsersWhoDislikedGame.Any(x => x.Id == user.Id),
             }).ToList();
 
