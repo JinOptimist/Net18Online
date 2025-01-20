@@ -65,6 +65,8 @@ namespace Everything.Data
         public DbSet<ChatMessageData> ChatMessages { get; set; }
         public DbSet<CoffeChatMessageData> CoffeChatMessages { get; set; }
 
+        public DbSet<NotificationData> Notifications { get; set; }
+
         public WebDbContext() { }
 
         public WebDbContext(DbContextOptions<WebDbContext> contextOptions)
@@ -72,7 +74,7 @@ namespace Everything.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
+            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=\"Net18Online\";Integrated Security=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -295,6 +297,10 @@ namespace Everything.Data
                 .HasOne(x => x.Creator)
                 .WithMany(x => x.CreatedFilmDirectors)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<NotificationData>()
+                .HasMany(x => x.UsersWhoAlreadySawIt)
+                .WithMany(x => x.NotificationsWhichIAlreadySaw);
         }
     }
 }

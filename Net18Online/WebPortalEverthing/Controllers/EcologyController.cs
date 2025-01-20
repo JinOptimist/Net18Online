@@ -9,6 +9,7 @@ using Everything.Data.Repositories;
 using WebPortalEverthing.Models.Ecology;
 using Everything.Data.Models;
 using Microsoft.AspNetCore.SignalR;
+using W.Services.Services.Apis;
 using WebPortalEverthing.Controllers.AuthAttributes;
 using WebPortalEverthing.Hubs;
 using WebPortalEverthing.Services;
@@ -25,6 +26,7 @@ public class EcologyController : Controller
     private AuthService _authService;
     private IWebHostEnvironment _webHostEnvironment;
     public IHubContext<ChatHub, IChatHub> _chatHub;
+    private WeatherApi _weatherApi;
     
     public EcologyController(IEcologyRepositoryReal ecologyRepository, 
         ICommentRepositoryReal commentRepositoryReal,
@@ -32,7 +34,8 @@ public class EcologyController : Controller
         AuthService authService,
         WebDbContext webDbContext,
         IWebHostEnvironment webHostEnvironment,
-        IHubContext<ChatHub, IChatHub> hubContext)
+        IHubContext<ChatHub, IChatHub> hubContext,
+        WeatherApi weatherApi)
     {
         _ecologyRepository = ecologyRepository;
         _commentRepositoryReal = commentRepositoryReal;
@@ -41,9 +44,10 @@ public class EcologyController : Controller
         _authService = authService;
         _webHostEnvironment = webHostEnvironment;
         _chatHub = hubContext;
+        _weatherApi = _weatherApi;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
         var mainPagePosts = _ecologyRepository.GetAllWithUsersAndComments() 
             .Where(p => p.ForMainPage == 1) 
@@ -63,6 +67,10 @@ public class EcologyController : Controller
             Posts = mainPagePosts
         };
         
+        var taskforWeather = _weatherApi.GetWeatherAsync(55.7558, 37.6173); // Координаты Москвы
+        await Task.WhenAll(taskforWeather); 
+        viewModel.WeatherInfo = taskforWeather.Result;
+
         return View(viewModel);
     }
 

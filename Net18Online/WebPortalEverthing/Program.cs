@@ -6,6 +6,7 @@ using MazeCore.Builders;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using SimulatorOfPrinting.Models;
+using W.Services.Services.Apis;
 using WebPortalEverthing.CustomMiddlewares;
 using WebPortalEverthing.Hubs;
 using WebPortalEverthing.Providers;
@@ -66,6 +67,15 @@ builder.Services.AddHttpClient<HttpNumberApi>(httpClient =>
 builder.Services.AddHttpClient<HttpWoofApi>(httpClient =>
     httpClient.BaseAddress = new Uri("https://random.dog/")
     );
+builder.Services.AddHttpClient<HttpJokeApi>(httpClient =>
+    httpClient.BaseAddress = new Uri("https://official-joke-api.appspot.com/random_joke")
+    );
+
+builder.Services.AddHttpClient<WeatherApi>(httpClient =>
+    httpClient.BaseAddress = new Uri("https://api.open-meteo.com/v1/")
+    );
+
+
 
 
 builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
@@ -130,8 +140,7 @@ app.MapHub<CoffeShopChatHub>("/hub/chatCoffePage");
 app.MapHub<GameAlertHub>("/hub/alertGamePage");
 app.MapHub<TakingSurveyHub>("/hub/takingSurvey");
 app.MapHub<LoadChatHub>("/hub/loadChat");
-
-
+app.MapHub<NotificationHub>("/hub/notification");
 
 app.MapControllerRoute(
     name: "default",

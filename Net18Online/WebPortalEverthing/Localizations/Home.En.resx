@@ -159,4 +159,7 @@
   <data name="MoviePoster_Link_Text" xml:space="preserve">
     <value>you</value>
   </data>
+  <data name="Home_Notification" xml:space="preserve">
+    <value>Notification</value>
+  </data>
 </root>
