@@ -86,15 +86,7 @@ namespace WebPortalEverthing.Localizations {
                 return ResourceManager.GetString("Coffe_Link_Text", resourceCulture);
             }
         }
-
-        public static string MoviePoster_Link_Text
-        {
-            get
-            {
-                return ResourceManager.GetString("MoviePoster_Link_Text", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Если вам хочется полюбоваться на аниме девочек то вас.
         /// </summary>
@@ -103,15 +95,7 @@ namespace WebPortalEverthing.Localizations {
                 return ResourceManager.GetString("Home_AnimeGirlDesc", resourceCulture);
             }
         }
-
-        public static string Home_MoviePosterDesc
-        {
-            get
-            {
-                return ResourceManager.GetString("Home_MoviePosterDesc", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Если вы хотите заказать кофе, и всё что для него прилагается, то вам.
         /// </summary>
@@ -167,6 +151,24 @@ namespace WebPortalEverthing.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Не знаешь что посмотреть на выходных? Тогда тебе.
+        /// </summary>
+        public static string Home_MoviePosterDesc {
+            get {
+                return ResourceManager.GetString("Home_MoviePosterDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Уведомления.
+        /// </summary>
+        public static string Home_Notification {
+            get {
+                return ResourceManager.GetString("Home_Notification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Зарегестироваться.
         /// </summary>
         public static string Home_Registration {
@@ -181,6 +183,15 @@ namespace WebPortalEverthing.Localizations {
         public static string Home_Users {
             get {
                 return ResourceManager.GetString("Home_Users", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to сюда.
+        /// </summary>
+        public static string MoviePoster_Link_Text {
+            get {
+                return ResourceManager.GetString("MoviePoster_Link_Text", resourceCulture);
             }
         }
     }

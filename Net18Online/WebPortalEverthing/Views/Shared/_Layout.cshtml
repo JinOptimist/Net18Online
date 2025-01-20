@@ -11,10 +11,13 @@
     <title>@ViewData["Title"] - WebPortalEverthing</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/icon.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebPortalEverthing.styles.css" asp-append-version="true" />
     @RenderSection("Styles", false)
 </head>
 <body>
+    
+    
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -51,6 +54,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Users">@Home.Home_Users</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Notification" asp-action="Notify">@Home.Home_Notification</a>
+                            </li>
                         }
                         @if (User.Identity?.IsAuthenticated ?? false)
                         {
@@ -72,7 +78,6 @@
             @RenderBody()
         </main>
     </div>
-
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2024 - WebPortalEverthing - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
@@ -84,6 +89,9 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/cookie.js" asp-append-version="true"></script>
     <script src="~/js/language.js" asp-append-version="true"></script>
+
+    @await Html.PartialAsync("_NotificationPartial")
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
