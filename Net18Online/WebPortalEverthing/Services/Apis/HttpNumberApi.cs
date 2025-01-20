@@ -13,5 +13,17 @@
         {
             return await _httpClient.GetStringAsync($"{number}");
         }
+
+        public async Task<string> GetFactAboutDateAsync()
+        {
+            
+            var today = DateTime.Now;
+            int month = today.Month;
+            int day = today.Day;
+            
+            string path = $"{month}/{day}/date";
+            
+            return await _httpClient.GetStringAsync(path);
+        }
     }
 }

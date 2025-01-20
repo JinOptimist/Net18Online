@@ -38,5 +38,7 @@ namespace Everything.Data.Models
         public virtual List<GameData> GameWhichUsersDislike { get; set; }
         public virtual List<ChatMessageData> ChatMessages { get; set;} = new();
         public virtual List<CoffeChatMessageData> CoffeChatMessages { get; set;} = new();
+
+        public virtual List<NotificationData> NotificationsWhichIAlreadySaw { get; set; }
     }
 }

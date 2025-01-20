@@ -23,3 +23,7 @@
 .icon.arrow-right::before {
     background-image: url('/images/icon/keyboard_arrow_right_24.svg');
 }
+
+.icon.close::before {
+    background-image: url('/images/icon/close_24.svg');
+}
