@@ -3,7 +3,11 @@ using WebPortalEverthing.Localizations;
 
 namespace WebPortalEverthing.Services
 {
-    [AutoRegisterFlag]
+    /// <summary>
+    /// класс AuthService будет зарегистрирован автоматически в контейнере (AutoRegisterFlagAttribute)
+    /// благодаря рефлексии, сервис ищется по атрибуту AutoRegisterFlag и регистрируется
+    /// </summary>
+    [AutoRegisterFlag] 
     public class AuthService
     {
         private IHttpContextAccessor _httpContextAccessor;

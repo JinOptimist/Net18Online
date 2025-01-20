@@ -54,6 +54,7 @@ builder.Services.AddScoped<HelperForValidatingCake>();
 builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();
 builder.Services.AddScoped<LoadAuthService>();
+builder.Services.AddScoped<ApiReflectionService>();//  [AutoRegisterFlag] - just handle registration bi controller
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<LoadUserService>();
 builder.Services.AddScoped<LoadVolumeService>();
@@ -73,6 +74,7 @@ builder.Services.AddHttpClient<HttpJokeApi>(httpClient =>
 builder.Services.AddHttpClient<WeatherApi>(httpClient =>
     httpClient.BaseAddress = new Uri("https://api.open-meteo.com/v1/")
     );
+
 
 
 
