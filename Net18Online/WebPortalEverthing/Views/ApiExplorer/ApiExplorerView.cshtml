@@ -1,0 +1,37 @@
+﻿@using ParameterInfo = WebPortalEverthing.Models.LoadTesting.LoadTestingApi.ParameterInfo;
+@model List<WebPortalEverthing.Models.LoadTesting.LoadTestingApi.ApiMethodInfo>
+
+<h1>API Explorer</h1>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Controller</th>
+            <th>Method</th>
+            <th>HTTP Method</th>
+            <th>Return Type</th>
+            <th>Parameters</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var method in Model)
+        {
+            <tr>
+                <td>@method.ControllerName</td>
+                <td>@method.MethodName</td>
+                <td>@method.HttpMethod</td>
+                <td>@method.ReturnType</td>
+                <td>
+                    @foreach (var param in method.Parameters)
+                    {
+                        <div>@param.Name (@param.Type)</div>
+                    }
+                </td>
+                <td>
+                    <button onclick="openForm('@method.HttpMethod', '@method.MethodName', '@method.ControllerName', '@method.Parameters')">Send Request</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

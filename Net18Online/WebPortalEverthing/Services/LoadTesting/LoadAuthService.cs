@@ -7,9 +7,10 @@ namespace WebPortalEverthing.Services.LoadTesting
 {
     //   public class LoadAuthService : AuthService
     /// <summary>
-    /// класс LoadAuthService (AuthService тоже) будет зарегистрирован автоматически в контейнере (AutoRegisterFlagAttribute)
+    /// класс LoadAuthService (AuthService тоже) будет зарегистрирован автоматически в контейнере (AutoRegisterFlagAttribute) если установить аттрибут [AutoRegisterFlag]
     /// благодаря рефлексии, сервис ищется по атрибуту AutoRegisterFlag и регистрируется
     /// </summary>
+    //  [AutoRegisterFlag] пока вручную зарегаю в bi контейнере
     public class LoadAuthService
     {
         private IHttpContextAccessor _httpContextAccessor;

@@ -53,6 +53,7 @@ builder.Services.AddScoped<HelperForValidatingCake>();
 builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();
 builder.Services.AddScoped<LoadAuthService>();
+builder.Services.AddScoped<ApiReflectionService>();//  [AutoRegisterFlag] - just handle registration bi controller
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<LoadUserService>();
 builder.Services.AddScoped<LoadVolumeService>();
@@ -65,6 +66,7 @@ builder.Services.AddHttpClient<HttpNumberApi>(httpClient =>
 builder.Services.AddHttpClient<HttpWoofApi>(httpClient =>
     httpClient.BaseAddress = new Uri("https://random.dog/")
     );
+
 
 builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 

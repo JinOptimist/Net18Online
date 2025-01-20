@@ -61,12 +61,12 @@ namespace WebPortalEverthing.Controllers.ApiControllers
             return true;
         }
 
-        [HttpGet]
-        public bool GetLoadVolumes()
-        {
-            var loadVolumes = _loadVolumeService.GetLoadVolumes();
-            return true;
-        }
+        /*   [HttpGet]
+           public bool GetLoadVolumes()
+           {
+               var loadVolumes = _loadVolumeService.GetLoadVolumes();
+               return true;
+           } нет реализации */
 
         [HttpPost]
         public MetricCreationViewModel CreateMetric([FromBody] MetricCreationViewModel metric)
