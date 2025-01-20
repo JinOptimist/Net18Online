@@ -6,6 +6,7 @@ using MazeCore.Builders;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using SimulatorOfPrinting.Models;
+using W.Services.Services.Apis;
 using WebPortalEverthing.CustomMiddlewares;
 using WebPortalEverthing.Hubs;
 using WebPortalEverthing.Providers;
@@ -68,6 +69,12 @@ builder.Services.AddHttpClient<HttpWoofApi>(httpClient =>
 builder.Services.AddHttpClient<HttpJokeApi>(httpClient =>
     httpClient.BaseAddress = new Uri("https://official-joke-api.appspot.com/random_joke")
     );
+
+builder.Services.AddHttpClient<WeatherApi>(httpClient =>
+    httpClient.BaseAddress = new Uri("https://api.open-meteo.com/v1/")
+    );
+
+
 
 builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 
