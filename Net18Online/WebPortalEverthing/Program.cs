@@ -12,6 +12,7 @@ using WebPortalEverthing.Hubs;
 using WebPortalEverthing.Providers;
 using WebPortalEverthing.Services;
 using WebPortalEverthing.Services.Apis;
+using WebPortalEverthing.Services.BackgroundServices;
 using WebPortalEverthing.Services.LoadTesting;
 using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRepository;
 
@@ -74,9 +75,9 @@ builder.Services.AddHttpClient<WeatherApi>(httpClient =>
     httpClient.BaseAddress = new Uri("https://api.open-meteo.com/v1/")
     );
 
-
-
 builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
+
+builder.Services.AddHostedService<NotificationExparator>();
 
 registrationHelper.AutoRegisterServiceByAttribute(builder.Services);
 registrationHelper.AutoRegisterServiceByAttributeOnConstructor(builder.Services);

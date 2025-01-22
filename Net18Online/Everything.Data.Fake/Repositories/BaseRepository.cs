@@ -45,6 +45,9 @@ namespace Everything.Data.Fake.Repositories
             return _entyties.Any();
         }
 
-       
+        public int Count()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
