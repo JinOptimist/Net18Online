@@ -40,5 +40,7 @@ namespace Everything.Data.Models
         public virtual List<CoffeChatMessageData> CoffeChatMessages { get; set;} = new();
 
         public virtual List<NotificationData> NotificationsWhichIAlreadySaw { get; set; }
+        public virtual TagGameData TagGame { get; set; } = new();
+
     }
 }

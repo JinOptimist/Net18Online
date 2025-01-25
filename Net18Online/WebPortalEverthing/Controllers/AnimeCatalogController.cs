@@ -7,6 +7,9 @@ using System.IO;
 using WebPortalEverthing.Controllers.AuthAttributes;
 using WebPortalEverthing.Models.AnimeCatalog;
 using WebPortalEverthing.Services;
+using TagGame;
+using TagGame.Classes.Base;
+using MoveTileRequest = WebPortalEverthing.Services.TagGameHelper.MoveTileRequest;
 
 namespace WebPortalEverthing.Controllers
 {
@@ -16,13 +19,16 @@ namespace WebPortalEverthing.Controllers
         private WebDbContext _webDbContext;
         private IWebHostEnvironment _webHostEnvironment;
         private AuthService _authService;
+        private TagGameHelper _tagGameHelper;
+        private Field _tagField = new();
 
-        public AnimeCatalogController(IAnimeCatalogRepositoryReal animeCatalogRepository, WebDbContext webDbContext, IWebHostEnvironment webHostEnvironment, AuthService authService)
+        public AnimeCatalogController(IAnimeCatalogRepositoryReal animeCatalogRepository, WebDbContext webDbContext, IWebHostEnvironment webHostEnvironment, AuthService authService, TagGameHelper tagGameHelper)
         {
             _animeCatalogRepository = animeCatalogRepository;
             _webDbContext = webDbContext;
             _webHostEnvironment = webHostEnvironment;
             _authService = authService;
+            _tagGameHelper = tagGameHelper;
         }
 
         public IActionResult Index(int? count)
@@ -138,5 +144,105 @@ namespace WebPortalEverthing.Controllers
                 .ToList();
             return View(viewModel);
         }
+
+        [IsAuthenticated]
+        [HttpGet]
+        public IActionResult TagGame()
+        {
+            var viewModel = new TagGameViewModel();
+
+            var tagsFromDb = _tagGameHelper.GetTagsFromDb(_webDbContext, _authService);
+
+            if (tagsFromDb != null)
+            {
+                viewModel.Tags = _tagGameHelper.ConvertFlatArrayToMultidimensional(tagsFromDb);
+
+                return View(viewModel);
+            }
+
+            _tagField.Change();
+
+            var tags = _tagField.GetTags();
+
+            _tagGameHelper.CahangeTags(_webDbContext, _authService, tags);
+
+            viewModel.Tags = tags;
+
+            return View(viewModel);
+        }
+
+        [IsAuthenticated]
+        [HttpPost]
+        public IActionResult MoveTile([FromBody] MoveTileRequest request)
+        {
+
+            var x = request.x;
+            var y = request.y;
+
+            var tagsFromDb = _tagGameHelper.GetTagsFromDb(_webDbContext, _authService);
+
+            var multidimensionalTags = _tagGameHelper.ConvertFlatArrayToMultidimensional(tagsFromDb);
+
+            _tagField.CopyTags(multidimensionalTags);
+
+            var tags = multidimensionalTags;
+            var emptyX = -1;
+            var emptyY = -1;
+
+            for (var i = 0; i < tags.GetLength(0); i++)
+            {
+                for (var j = 0; j < tags.GetLength(1); j++)
+                {
+                    if (tags[i, j] == 0)
+                    {
+                        emptyX = i;
+                        emptyY = j;
+                        break;
+                    }
+                }
+            }
+
+            if (emptyX == -1 && emptyY == -1)
+            {
+                return Json(new { success = false, message = $"Произошла ошибка: Все печально" });
+            }
+
+            if (Math.Abs(emptyX - x) + Math.Abs(emptyY - y) != 1)
+            {
+                return Json(new { success = false, message = "Неверный ход!" });
+            }
+
+            _tagField.ChangePositions(x, y);
+
+            var changedTags = _tagField.GetTags();
+            _tagGameHelper.CahangeTags(_webDbContext, _authService, changedTags);
+
+            var isWin = _tagField.IsWin();
+
+            var serializableTags = _tagGameHelper.ConvertToSerializableArray(tags);
+
+            return Json(new { success = true, tags = serializableTags, isWin });
+
+        }
+
+        [IsAuthenticated]
+        [HttpGet]
+        public IActionResult ChangeTags()
+        {
+            var tagsFromDb = _tagGameHelper.GetTagsFromDb(_webDbContext, _authService);
+
+            var multidimensionalTags = _tagGameHelper.ConvertFlatArrayToMultidimensional(tagsFromDb);
+
+            _tagField.CopyTags(multidimensionalTags);
+            _tagField.Change();
+
+            var tags = _tagField.GetTags();
+            _tagGameHelper.CahangeTags(_webDbContext, _authService, tags);
+
+            var serializableTags = _tagGameHelper.ConvertToSerializableArray(tags);
+
+            return Json(new { success = true, tags = serializableTags });
+        }
+
     }
 }

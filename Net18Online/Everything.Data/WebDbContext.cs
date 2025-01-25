@@ -67,6 +67,8 @@ namespace Everything.Data
 
         public DbSet<NotificationData> Notifications { get; set; }
 
+        public DbSet<TagGameData> TagGame { get; set; }
+
         public WebDbContext() { }
 
         public WebDbContext(DbContextOptions<WebDbContext> contextOptions)
@@ -301,6 +303,14 @@ namespace Everything.Data
             modelBuilder.Entity<NotificationData>()
                 .HasMany(x => x.UsersWhoAlreadySawIt)
                 .WithMany(x => x.NotificationsWhichIAlreadySaw);
+            
+            modelBuilder.Entity<UserData>()
+                .HasOne(x => x.TagGame)
+                .WithOne(x => x.Creator)
+                .HasForeignKey<TagGameData>(x => x.Id)
+                .OnDelete(DeleteBehavior.NoAction);
+
+
         }
     }
 }

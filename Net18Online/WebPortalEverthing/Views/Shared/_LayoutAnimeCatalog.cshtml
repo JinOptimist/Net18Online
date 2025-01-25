@@ -5,7 +5,12 @@
     <title>Anime Catalog</title>
     <link href="~/css/AnimeCatalog/reset.css" rel="stylesheet" />
     <link href="~/css/AnimeCatalog/style.css" rel="stylesheet" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
     @RenderSection("Reviews", false)
+    @RenderSection("Scripts", false)
+    @RenderSection("TagGameCss", false)
 </head>
 
 <body>
@@ -26,6 +31,7 @@
                 <li><a href="/AnimeCatalog/Create">Создать аниме</a></li>
                 <li><a href="/AnimeCatalog/GetShortestReview">Самые короткие отзывы</a></li>
                 <li><a href="/AnimeReview">Все отзывы</a></li>
+                <li><a href="/AnimeCatalog/TagGame">Пятнашки</a></li>
             </ul>
         </div>
         <div class="content">

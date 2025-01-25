@@ -1,0 +1,33 @@
+﻿@using WebPortalEverthing.Models.AnimeCatalog
+@model TagGameViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutAnimeCatalog.cshtml";
+}
+
+@section TagGameCss
+{
+    <link href="~/css/AnimeCatalog/tagGame.css" rel="stylesheet" />
+    <script src="~/js/AnimeCatalog/tagGame.js"></script>
+}
+
+<div class="game">
+    <div class="puzzle-board">
+        @for (var i = 0; i < Model.Tags.GetLength(0); i++)
+        {
+            <div class="row">
+                @for (var j = 0; j < Model.Tags.GetLength(1); j++)
+                {
+                    if (Model.Tags[i, j] != 0)
+                    {
+                        <div class="tag" data-x="@i" data-y="@j">@Model.Tags[i, j]</div>
+                    }
+                    else
+                    {
+                        <div class="tag empty" data-x="@i" data-y="@j"></div>
+                    }
+                }
+            </div>
+        }
+    </div>
+</div>

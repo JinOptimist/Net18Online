@@ -4,6 +4,10 @@
 @{
     Layout = "~/Views/Shared/_LayoutAnimeCatalog.cshtml";
 }
+@section Scripts
+{
+    <script src="~/js/AnimeCatalog/index.js"></script>
+}
 
 <div class="animes">
     @foreach (var anime in Model)

@@ -60,6 +60,7 @@ builder.Services.AddScoped<LoadUserService>();
 builder.Services.AddScoped<LoadVolumeService>();
 builder.Services.AddScoped<FileProvider>();
 builder.Services.AddScoped<HelperForFile>();
+builder.Services.AddScoped<TagGameHelper>();
 
 builder.Services.AddHttpClient<HttpNumberApi>(httpClient =>
     httpClient.BaseAddress = new Uri("http://numbersapi.com/")
