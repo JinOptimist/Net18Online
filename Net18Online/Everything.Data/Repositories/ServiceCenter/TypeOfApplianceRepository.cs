@@ -123,5 +123,10 @@ namespace Everything.Data.Repositories
                 _webDbContext.SaveChanges();
             }
         }
+
+        public int Count()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
