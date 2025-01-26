@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using WebPortalEverthing.Localizations
+
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -21,11 +23,11 @@
     <div class="menu-plus-content">
         <div class="menu custom-list">
             <ul>
-                <li><a href="/">Главная страница сайта</a></li>
-                <li><a href="/AnimeCatalog">Начальная страница аниме</a></li>
-                <li><a href="/AnimeCatalog/Create">Создать аниме</a></li>
-                <li><a href="/AnimeCatalog/GetShortestReview">Самые короткие отзывы</a></li>
-                <li><a href="/AnimeReview">Все отзывы</a></li>
+                <li><a href="/">@AnimeCatalog.AnimeMainPage_LinkText</a></li>
+                <li><a href="/AnimeCatalog">@AnimeCatalog.AnimeMainPage_LinkText</a></li>
+                <li><a href="/AnimeCatalog/Create">@AnimeCatalog.AnimeCreate_LinkText</a></li>
+                <li><a href="/AnimeCatalog/GetShortestReview">@AnimeCatalog.AnimeShortestReviews_LinkText</a></li>
+                <li><a href="/AnimeReview">@AnimeCatalog.AnimeReviews_LinkText</a></li>
             </ul>
         </div>
         <div class="content">
