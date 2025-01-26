@@ -8,6 +8,15 @@ import "./boys.css"; // Подключаем CSS
 function Boys() {
   console.log("Boy component rendered.");
 
+  // Состояния для изображений и их имен
+  const [images, setImages] = useState<string[]>([boy1, boy2, boy3, boy4]);
+  const [names, setNames] = useState<string[]>([
+    "Boy 1",
+    "Boy 2",
+    "Boy 3",
+    "Boy 4",
+  ]);
+
   // Состояния для лайков каждого изображения
   const [likes, setLikes] = useState<number[]>([0, 0, 0, 0]);
 
@@ -20,14 +29,32 @@ function Boys() {
     });
   }, []);
 
+  // Функция для обновления имени
+  const updateName = useCallback((index: number, newName: string) => {
+    setNames((prevNames) => {
+      const updatedNames = [...prevNames];
+      updatedNames[index] = newName; // Обновляем конкретное имя
+      return updatedNames;
+    });
+  }, []);
+
   return (
     <div className="boys-container">
-      {[boy1, boy2, boy3, boy4].map((boy, index) => (
+      {images.map((src, index) => (
         <div key={index} className="boy-card">
-          <img src={boy} alt={`Boy ${index + 1}`} className="boy-image" />
+          <img src={src} alt={`Boy ${index + 1}`} className="boy-image" />
           <div>
             <p>Likes: {likes[index]}</p>
             <button onClick={() => incrementLikes(index)}>Add Like</button>
+          </div>
+          <div>
+            <p>Name: {names[index]}</p>
+            <input
+              type="text"
+              value={names[index]}
+              onChange={(e) => updateName(index, e.target.value)} // Обновляем имя
+              placeholder="Enter new name"
+            />
           </div>
         </div>
       ))}
