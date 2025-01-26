@@ -77,7 +77,7 @@ namespace WebPortalEverthing.Services
 
             if (tagGameData == null)
             {
-                throw new Exception();
+                return [];
             }
 
             var tags = tagGameData.Tags;
