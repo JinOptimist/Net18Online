@@ -36,14 +36,14 @@
 	user-select: none;
 }
 
-	.tag.empty {
-		background-color: transparent;
-		border: none;
-		cursor: default;
-		padding: 1.92px;
-	}
+.tag.empty {
+	background-color: transparent;
+	border: none;
+	cursor: default;
+	padding: 1.92px;
+}
 
-	.tag:hover {
-		background-color: #d9edf7;
-		transform: scale(1.05);
-	}
+.tag:hover {
+	background-color: #d9edf7;
+	transform: scale(1.05);
+}
