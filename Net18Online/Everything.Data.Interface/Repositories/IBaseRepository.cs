@@ -12,6 +12,8 @@
         T? Get(int id);
 
         bool Any();
+
+        int Count();
     }
 
     public interface IBaseCommandRepository<T>

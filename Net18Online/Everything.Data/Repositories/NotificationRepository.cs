@@ -9,6 +9,7 @@ namespace Everything.Data.Repositories
     {
         List<NotificationTextAndId> GetUnseenMessages(int userId);
         void MessageWasSeen(int id, int userId);
+        int RemoveOutdatedNotifications();
     }
 
     public class NotificationRepository
@@ -47,6 +48,23 @@ namespace Everything.Data.Repositories
             notification.UsersWhoAlreadySawIt.Add(user);
 
             _webDbContext.SaveChanges();
+        }
+
+        /// <summary>
+        /// Remove notifications which was end date yesterday or later
+        /// </summary>
+        /// <returns></returns>
+        public int RemoveOutdatedNotifications()
+        {
+            var yesterday = DateTime.Now.AddDays(-1);
+            var notificationsForRemove = _dbSet
+                .Where(x => x.End != null && x.End < yesterday)
+                .ToList();
+            _dbSet.RemoveRange(notificationsForRemove);
+
+            _webDbContext.SaveChanges();
+
+            return notificationsForRemove.Count();
         }
     }
 }

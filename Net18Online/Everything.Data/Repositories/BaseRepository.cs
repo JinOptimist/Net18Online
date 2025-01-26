@@ -29,6 +29,11 @@ namespace Everything.Data.Repositories
             return _dbSet.Any();
         }
 
+        public int Count()
+        {
+            return _dbSet.Count();
+        }
+
         public virtual void Delete(T data)
         {
             _dbSet.Remove(data);

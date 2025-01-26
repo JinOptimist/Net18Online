@@ -25,6 +25,11 @@ namespace Everything.Data.Repositories
             return _webDbContext.Clients.Any();
         }
 
+        public int Count()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Delete(ClientData data)
         {
             _webDbContext.Clients.Remove(data);
