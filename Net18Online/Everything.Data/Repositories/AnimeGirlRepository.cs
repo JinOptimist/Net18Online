@@ -1,4 +1,7 @@
-﻿using Everything.Data.Interface.Repositories;
+﻿using Enums;
+using Enums.Girls;
+using Everything.Data.DataLayerModels;
+using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
 using Everything.Data.Models.SqlRawModels;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +13,7 @@ namespace Everything.Data.Repositories
         int Create(GirlData dataGirl, int currentUserId, int mangaId);
         IEnumerable<GirlData> GetWithoutManga();
         IEnumerable<GirlData> GetAllWithCreatorsAndManga();
+        Pagginator<GirlData> GetAllWithCreatorsAndManga(int page, int perPage, GirlSortType sortType, OrderDirection orderDirection);
         GirlData GetWithCreatorsAndManga(int id);
         bool HasSimilarName(string name);
         bool IsNameUniq(string name);
@@ -62,6 +66,42 @@ namespace Everything.Data.Repositories
             return WithCreatorsAndManga()
                 .Include(x => x.UsersWhoLikeIt)
                 .ToList();
+        }
+
+        public Pagginator<GirlData> GetAllWithCreatorsAndManga(
+            int page,
+            int perPage,
+            GirlSortType sortType,
+            OrderDirection orderDirection)
+        {
+            var items = WithCreatorsAndManga()
+                .Include(x => x.UsersWhoLikeIt)
+                .AsQueryable();
+
+            switch (sortType)
+            {
+                case GirlSortType.Like:
+                    items = items.OrderBy(x => x.UsersWhoLikeIt.Count);
+                    break;
+                case GirlSortType.Name:
+                    items = items.OrderBy(x => x.Name);
+                    break;
+                case GirlSortType.Default:
+                    items = items.OrderBy(x => x.Id);
+                    break;
+            }
+
+            if (orderDirection == OrderDirection.Desc)
+            {
+                items = items.Reverse();
+            }
+
+            var data = new Pagginator<GirlData>();
+            data.TotalRecords = items.Count();
+            data.Items = items.Skip((page - 1) * perPage)
+                .Take(perPage)
+                .ToList();
+            return data;
         }
 
         public GirlData GetWithCreatorsAndManga(int id)

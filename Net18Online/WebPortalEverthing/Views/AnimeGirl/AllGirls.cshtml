@@ -8,6 +8,39 @@
     <script src="~/js/AnimeGirl/AllGirls.js"></script>
 }
 
+<div class="pagginator">
+    @if (!Model.Girls.IsStartOfPageList)
+    {
+        <a href="#" data-page="@(1)" class="page @(1 == Model.Girls.Page ? "active": "")">@(1)</a>
+        <span>..</span>
+    }
+    
+    @foreach (var page in Model.Girls.Pages)
+    {
+        <a href="#" data-page="@(page)" class="page @(page == Model.Girls.Page ? "active": "")">@(page)</a>
+    }
+
+    @if (!Model.Girls.IsEndOfPageList)
+    {
+        <span>..</span>
+        <a href="#" data-page="@(Model.Girls.LastPage)" class="page @(Model.Girls.LastPage == Model.Girls.Page ? "active": "")">@(Model.Girls.LastPage)</a>
+    }
+    
+    <select name="perPage">
+        <option value="3">3</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+    </select>
+</div>
+
+<div class="order-container">
+    <button class="order" data-order="Like" type="button">Order by Like</button>
+    <button class="order" data-order="Name" type="button">Order by Name</button>
+    <button class="order" data-order="Default" type="button">Order by Default</button>
+</div>
+
 <div class="girls">
     <div class="girl template">
         <div class="name">
@@ -37,13 +70,13 @@
             </div>
         </div>
     </div>
-    @foreach (var girl in Model.Girls)
+    @foreach (var girl in Model.Girls.Items)
     {
         <div class="girl" data-id="@girl.Id">
             <div class="name">
                 <div><i class="icon @(girl.IsLiked ? "like-pushed" : "like")"></i></div>
                 <div class="view-mode">
-                    @girl.Name
+                    @girl.Name [@girl.LikeCount]
                 </div>
                 <div class="edit-mode">
                     <input class="girl-id" name="id" value="@girl.Id" type="hidden" />
@@ -98,4 +131,12 @@
             <button class="create-girl-button" type="button">create new girl</button>
         </div>
     </div>
+</div>
+
+<div class="pagginator">
+    @foreach (var page in Model.Girls.Pages)
+    {
+        <a href="/AnimeGirl/AllGirls?page=@(page)&perPage=@Model.Girls.PerPage"
+            class="page @(page == Model.Girls.Page ? "active": "")">@(page)</a>
+    }
 </div>

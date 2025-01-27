@@ -22,6 +22,11 @@
 
                     Console.WriteLine($"{name} {TheNumber} - ");
                 }
+
+                //var mutex = new Mutex(false, "Test");
+                //mutex.WaitOne();
+                //// Use common res
+                //mutex.ReleaseMutex();
             }
         }
     }

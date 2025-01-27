@@ -1,7 +1,4 @@
-﻿using System.Net.Http.Json;
-using System.Text.Json.Serialization;
-
-namespace WebPortalEverthing.Services.Apis
+﻿namespace WebPortalEverthing.Services.Apis
 {
     public class HttpWoofApi
     {
@@ -14,14 +11,21 @@ namespace WebPortalEverthing.Services.Apis
 
         public async Task<string> GetRandomDogImage()
         {
-            var response = await _httpClient.GetAsync("woof.json");
-            var dto = await response.Content.ReadFromJsonAsync<Dto>();
-            if (dto == null)
+            try
             {
-                throw new Exception("Api is broken");
+                var response = await _httpClient.GetAsync("woof.json");
+                var dto = await response.Content.ReadFromJsonAsync<Dto>();
+                if (dto == null)
+                {
+                    throw new Exception("Api is broken");
+                }
+                return dto.Url;
             }
-
-            return dto.Url;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return "/images/broken.jpg";
+            }
         }
 
         private class Dto

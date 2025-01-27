@@ -1,10 +1,13 @@
-﻿using Everything.Data;
+﻿using Enums;
+using Enums.Girls;
+using Everything.Data;
 using Everything.Data.Models;
 using Everything.Data.Models.SqlRawModels;
 using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebPortalEverthing.Controllers.AuthAttributes;
+using WebPortalEverthing.Models;
 using WebPortalEverthing.Models.AnimeGirl;
 using WebPortalEverthing.Models.AnimeGirl.Profile;
 using WebPortalEverthing.Services;
@@ -21,6 +24,8 @@ namespace WebPortalEverthing.Controllers
         private GeneratorAnimeGirls _generatorAnimeGirls;
         private IWebHostEnvironment _webHostEnvironment;
         private AutoMapperSmile _autoMapperSmile;
+        private int DEFUALT_PAGE = 1;
+        private int DEFUALT_PER_PAGE = 5;
 
         public AnimeGirlController(IAnimeGirlRepositoryReal animeGirlRepository,
             IUserRepositryReal userRepositryReal,
@@ -51,8 +56,14 @@ namespace WebPortalEverthing.Controllers
         }
 
         [IsAuthenticated]
-        public IActionResult AllGirls()
+        public IActionResult AllGirls(int? page, int? perPage, 
+            GirlSortType? orderField, OrderDirection? orderDirection)
         {
+            page = page ?? DEFUALT_PAGE;
+            perPage = perPage ?? DEFUALT_PER_PAGE;
+            orderField = orderField ?? GirlSortType.Default;
+            orderDirection = orderDirection ?? OrderDirection.Asc;
+
             if (!_animeGirlRepository.Any())
             {
                 GenerateDefaultAnimeGirl();
@@ -62,9 +73,15 @@ namespace WebPortalEverthing.Controllers
 
             var user = _userRepositryReal.Get(currentUserId.Value)!;
 
-            var girlsFromDb = _animeGirlRepository.GetAllWithCreatorsAndManga();
+            var girlsFromDb = _animeGirlRepository
+                .GetAllWithCreatorsAndManga(
+                page.Value, 
+                perPage.Value, 
+                orderField.Value, 
+                orderDirection.Value);
 
             var girlsViewModels = girlsFromDb
+                .Items
                 .Select(dbGirl =>
                     new GirlViewModel
                     {
@@ -82,9 +99,17 @@ namespace WebPortalEverthing.Controllers
                 )
                 .ToList();
 
+            var pagginatorViewModel = new PagginatorViewModel<GirlViewModel>()
+            {
+                Items = girlsViewModels,
+                Page = page.Value,
+                PerPage = perPage.Value,
+                TotalRecords = girlsFromDb.TotalRecords
+            };
+
             var viewModel = new AllGirlsViewModel
             {
-                Girls = girlsViewModels,
+                Girls = pagginatorViewModel,
                 Mangas = _mangaRepositoryReal
                     .GetAll()
                     .Select(x => new MangaNameAndIdViewModel

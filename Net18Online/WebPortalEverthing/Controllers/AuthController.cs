@@ -87,7 +87,6 @@ namespace WebPortalEverthing.Controllers
                 viewModel.Password,
                 viewModel.Age);
 
-            // TODO Notify chat about new user
             _chatHub.Clients.All.NewMessageAdded($"Новый пользователь зарегестировался у нас на сайте. Его зовут {viewModel.UserName}");
 
             return RedirectToAction("Login");

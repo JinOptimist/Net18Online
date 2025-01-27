@@ -2,7 +2,7 @@
 {
     public class AllGirlsViewModel
     {
-        public List<GirlViewModel> Girls { get; set; }
+        public PagginatorViewModel<GirlViewModel> Girls { get; set; }
 
         public List<MangaNameAndIdViewModel> Mangas { get; set; }
     }
