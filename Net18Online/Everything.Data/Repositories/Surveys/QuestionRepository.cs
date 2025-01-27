@@ -1,4 +1,5 @@
 ﻿using Everything.Data.Interface.Enums;
+using Everything.Data.Interface.Models.Surveys;
 using Everything.Data.Interface.Repositories;
 using Everything.Data.Models.SqlRawModels;
 using Everything.Data.Models.Surveys;
@@ -65,6 +66,13 @@ namespace Everything.Data.Repositories.Surveys
             question.AnswerType = value;
 
             _webDbContext.SaveChanges();
+        }
+
+        public IEnumerable<IQuestionData> GetQuestionsForSurvey(int surveyId)
+        {
+            return _dbSet
+                .Where(i => i.Survey.Id == surveyId)
+                .ToList();
         }
 
         public IEnumerable<QuestionToAnswerModel> GetQuestionsForSurveyByTaking(int takingId)

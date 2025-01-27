@@ -22,7 +22,7 @@ namespace Everything.Data.Repositories.Surveys
                 .First(x => x.Id == id);
         }
 
-        public void CreateSurvey(string title, int groupId, string? description)
+        public int CreateSurvey(string title, int groupId, string? description)
         {
             var group = _webDbContext
                 .SurveyGroups
@@ -38,6 +38,8 @@ namespace Everything.Data.Repositories.Surveys
 
             _dbSet.Add(survey);
             _webDbContext.SaveChanges();
+
+            return survey.Id;
         }
 
         public void UpdateTitle(int id, string newTitle)

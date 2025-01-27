@@ -15,14 +15,16 @@ namespace WebPortalEverthing.Controllers
         private ISurveyGroupRepositoryReal _surveyGroupRepository;
         private IStatusRepositoryReal _statusRepository;
         private ISurveysRepositoryReal _surveysRepository;
+        private IQuestionRepositoryReal _questionRepository;
         private AuthService _authService;
 
-        public SurveysController(ISurveyGroupRepositoryReal surveyGroupRepository, IStatusRepositoryReal statusRepository, ISurveysRepositoryReal surveysRepository, AuthService authService)
+        public SurveysController(ISurveyGroupRepositoryReal surveyGroupRepository, IStatusRepositoryReal statusRepository, ISurveysRepositoryReal surveysRepository, AuthService authService, IQuestionRepositoryReal questionRepository)
         {
             _statusRepository = statusRepository;
             _surveyGroupRepository = surveyGroupRepository;
             _surveysRepository = surveysRepository;
             _authService = authService;
+            _questionRepository = questionRepository;
         }
 
         public ActionResult Index()
@@ -310,32 +312,22 @@ namespace WebPortalEverthing.Controllers
         [HasRole(Role.SurveysCreatorOrEditor)]
         public ActionResult Create(int idGroup)
         {
+            var title = "Новый опрос";
+            var surveyId = _surveysRepository.CreateSurvey(title, idGroup, null);
+
             var surveyGroup = _surveyGroupRepository
                 .Get(idGroup);
 
             var surveyCreate = new SurveyCreateViewModel()
             {
-                Id = 0,
+                Id = surveyId,
+                Title = title,
                 SurveyGroup = new SurveyGroupForListViewModel()
                 {
                     Id = surveyGroup.Id,
                     Title = surveyGroup.Title,
                 },
                 Questions = new()
-                {
-                    new QuestionViewModel
-                    {
-                        Title = "Вопрос 1",
-                        IsRequired = true,
-                        AnswerType = AnswerType.TextString
-                    },
-                    new QuestionViewModel
-                    {
-                        Title = "Вопрос 2",
-                        IsRequired = true,
-                        AnswerType = AnswerType.TextString
-                    }
-                }
             };
 
             return View(surveyCreate);
@@ -347,10 +339,20 @@ namespace WebPortalEverthing.Controllers
         {
             if (!ModelState.IsValid)
             {
+                surveyCreate.Questions = _questionRepository.GetQuestionsForSurvey(surveyCreate.Id)
+                    .Select(question => new QuestionViewModel
+                    {
+                        Id = question.Id,
+                        Title = question.Title,
+                        IsRequired = question.IsRequired,
+                        AnswerType = question.AnswerType
+                    }).ToList();
+
                 return View(surveyCreate);
             }
 
-            _surveysRepository.CreateSurvey(surveyCreate.Title, surveyCreate.SurveyGroup.Id, surveyCreate.Description);
+            _surveysRepository.UpdateTitle(surveyCreate.Id, surveyCreate.Title);
+            _surveysRepository.UpdateDescription(surveyCreate.Id, surveyCreate.Description);
 
             return RedirectToAction(nameof(SurveysAll));
         }
