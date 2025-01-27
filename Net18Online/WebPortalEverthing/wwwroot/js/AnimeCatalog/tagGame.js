@@ -17,7 +17,7 @@
 
                         if (response.isWin) {
                             setTimeout(function () {
-                                alert("Вы победили!");
+                                console.log("Вы победили!");
                                 changeTags();
                             }, 50);
                         }
@@ -62,7 +62,7 @@
             success: function (response) {
                 if (response.success) {
                     updateBoard(response.tags);
-                    alert("Новая игра началась!");
+                    console.log("Новая игра началась!");
                 } else {
                     alert(response.message || "Не удалось обновить пятнашки.");
                 }

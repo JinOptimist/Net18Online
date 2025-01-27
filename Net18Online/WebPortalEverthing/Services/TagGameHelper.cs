@@ -5,11 +5,6 @@ namespace WebPortalEverthing.Services
 {
     public class TagGameHelper
     {
-        public class MoveTileRequest
-        {
-            public int x { get; set; }
-            public int y { get; set; }
-        }
 
         public List<int[]> ConvertToSerializableArray(int[,] array)
         {

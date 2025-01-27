@@ -7,9 +7,7 @@ using System.IO;
 using WebPortalEverthing.Controllers.AuthAttributes;
 using WebPortalEverthing.Models.AnimeCatalog;
 using WebPortalEverthing.Services;
-using TagGame;
 using TagGame.Classes.Base;
-using MoveTileRequest = WebPortalEverthing.Services.TagGameHelper.MoveTileRequest;
 
 namespace WebPortalEverthing.Controllers
 {
@@ -173,7 +171,7 @@ namespace WebPortalEverthing.Controllers
 
         [IsAuthenticated]
         [HttpPost]
-        public IActionResult MoveTile([FromBody] MoveTileRequest request)
+        public IActionResult MoveTile([FromBody] MoveTileRequestViewModel request)
         {
 
             var x = request.x;
