@@ -15,6 +15,7 @@ using WebPortalEverthing.Services.Apis;
 using WebPortalEverthing.Services.BackgroundServices;
 using WebPortalEverthing.Services.LoadTesting;
 using TypeOfApplianceRepository = Everything.Data.Repositories.TypeOfApplianceRepository;
+using TagField = TagGame.Classes.Base.Field;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,6 +62,7 @@ builder.Services.AddScoped<LoadVolumeService>();
 builder.Services.AddScoped<FileProvider>();
 builder.Services.AddScoped<HelperForFile>();
 builder.Services.AddScoped<TagGameHelper>();
+builder.Services.AddScoped<TagField>();
 
 builder.Services.AddHttpClient<HttpNumberApi>(httpClient =>
     httpClient.BaseAddress = new Uri("http://numbersapi.com/")

@@ -18,15 +18,16 @@ namespace WebPortalEverthing.Controllers
         private IWebHostEnvironment _webHostEnvironment;
         private AuthService _authService;
         private TagGameHelper _tagGameHelper;
-        private Field _tagField = new();
+        private Field _tagField;
 
-        public AnimeCatalogController(IAnimeCatalogRepositoryReal animeCatalogRepository, WebDbContext webDbContext, IWebHostEnvironment webHostEnvironment, AuthService authService, TagGameHelper tagGameHelper)
+        public AnimeCatalogController(IAnimeCatalogRepositoryReal animeCatalogRepository, WebDbContext webDbContext, IWebHostEnvironment webHostEnvironment, AuthService authService, TagGameHelper tagGameHelper, Field field)
         {
             _animeCatalogRepository = animeCatalogRepository;
             _webDbContext = webDbContext;
             _webHostEnvironment = webHostEnvironment;
             _authService = authService;
             _tagGameHelper = tagGameHelper;
+            _tagField = field;
         }
 
         public IActionResult Index(int? count)
