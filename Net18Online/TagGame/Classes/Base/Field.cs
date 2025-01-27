@@ -22,6 +22,28 @@
             _tags[count - 1, count - 1] = 0;
         }
 
+        public Field()
+        {
+            var count = 3;
+            _tags = new int[count, count];
+            var valueCount = 1;
+
+            for (var masX = 0; masX < _tags.GetLength(0); masX++)
+            {
+                for (var masY = 0; masY < _tags.GetLength(1); masY++)
+                {
+                    _tags[masX, masY] = valueCount;
+                    valueCount++;
+                }
+            }
+            _tags[count - 1, count - 1] = 0;
+        }
+
+        public void CopyTags(int[,] tags)
+        {
+            _tags = tags;
+        }
+
         public void Change()
         {
             var countOfRotates = _tags.GetLength(0) * _tags.GetLength(1) * 2;

@@ -33,6 +33,11 @@ header .name {
 	display: flex;
 }
 
+.content {
+	height: 100%;
+	width: 100%;
+}
+
 .profile-block {
 	display: flex;
 	align-items: center;
@@ -83,4 +88,13 @@ header .name {
 	display: flex;
 	max-width: 100%;
 	justify-content: center;
+}
+
+.anime .image-container img.full {
+	width: 100%;
+	height: auto;
+	position: relative;
+	z-index: 10;
+	transition: transform 0.3s ease;
+	transform: scale(1.5);
 }

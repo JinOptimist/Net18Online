@@ -14,6 +14,7 @@
     <ProjectReference Include="..\LifeGame\LifeGame.csproj" />
     <ProjectReference Include="..\MazeCore\MazeCore.csproj" />
     <ProjectReference Include="..\SimulatorOfPrinting\SimulatorOfPrinting\SimulatorOfPrinting.csproj" />
+    <ProjectReference Include="..\TagGame\TagGame.csproj" />
   </ItemGroup>
 
 
