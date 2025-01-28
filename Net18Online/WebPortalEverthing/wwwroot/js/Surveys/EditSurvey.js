@@ -26,7 +26,23 @@ $(document).ready(function () {
         const questionBlock = $(this).closest('.question');
         let questionId = questionBlock.find('.question-id').val();
         const url = `/api/ApiQuestion/UpdateAnswerType?id=${questionId}&value=${value}`;
-        $.get(url);
+        $.get(url).then(function (response) {
+            if (response) {
+                viewControlForQuestion(questionBlock, value);
+            }
+        });
+    }
+
+    function viewControlForQuestion(questionBlock, selectorValue) {
+        let controlBlock = questionBlock.find('.control');
+        controlBlock.empty();
+
+        const ctrlByValue = `.ctrl-${selectorValue}-template`;
+        const questionTemplateBlock = $(".question.template");
+        let controlTemplateBlock = questionTemplateBlock.find('.control');
+        let control = controlTemplateBlock.find(ctrlByValue).clone();
+
+        controlBlock.append(control);
     }
 
     function onDeleteButtonClick() {
@@ -49,8 +65,11 @@ $(document).ready(function () {
             questionTemplateBlock.find('.question-id').val(questionId);
             questionTemplateBlock.find('.question-title').change(onSetTitleEvent);
             questionTemplateBlock.find('.question-required').change(onSetRequiredEvent);
-            questionTemplateBlock.find('.answer-type').change(onSetAnswerTypeEvent);
+            let answerTypeSelector = questionTemplateBlock.find('.answer-type');
+            answerTypeSelector.change(onSetAnswerTypeEvent);
             questionTemplateBlock.find('.del-button').click(onDeleteButtonClick);
+
+            viewControlForQuestion(questionTemplateBlock, answerTypeSelector.val());
 
             let questionsBlock = $('.questions');
             questionsBlock.append(questionTemplateBlock);
