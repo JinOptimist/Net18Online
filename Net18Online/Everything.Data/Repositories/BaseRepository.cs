@@ -1,6 +1,7 @@
 ﻿using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Everything.Data.Repositories
 {
@@ -54,6 +55,38 @@ namespace Everything.Data.Repositories
         public virtual IEnumerable<T> GetAll()
         {
             return _dbSet.ToList();
+        }
+
+        protected virtual IQueryable<T> SortAndGetAll(string fieldForSort)
+        {
+            return SortAndGetAll(_dbSet, fieldForSort);
+        }
+
+        protected virtual IQueryable<T> SortAndGetAll(IQueryable<T> source, string fieldForSort)
+        {
+            // for example: model
+            var paramExp = Expression.Parameter(typeof(T), "model");
+
+            // For exmaple fieldForSort == "Manga.User.Id";
+
+            var propertiesNames = fieldForSort.Split(".");
+            // for example: model.Manga
+            var propertyExp = Expression.Property(paramExp, propertiesNames[0]);
+            for (int i = 1; i < propertiesNames.Length; i++)
+            {
+                propertyExp = Expression.Property(propertyExp, propertiesNames[i]);
+            }
+
+            // for example: model.Name
+            var propertyExpAsObject = Expression.Convert(propertyExp, typeof(object));
+
+            // for example: model => model.Name
+            var linqExp = Expression.Lambda<Func<T, object>>(
+                propertyExpAsObject,
+                paramExp
+                );
+
+            return source.OrderBy(linqExp);
         }
     }
 }

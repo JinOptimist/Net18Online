@@ -13,7 +13,9 @@ namespace Everything.Data.Repositories
         int Create(GirlData dataGirl, int currentUserId, int mangaId);
         IEnumerable<GirlData> GetWithoutManga();
         IEnumerable<GirlData> GetAllWithCreatorsAndManga();
-        Pagginator<GirlData> GetAllWithCreatorsAndManga(int page, int perPage, GirlSortType sortType, OrderDirection orderDirection);
+        Pagginator<GirlData> GetAllWithCreatorsAndManga(int page, int perPage,
+            string fieldNameForSort, 
+            OrderDirection orderDirection);
         GirlData GetWithCreatorsAndManga(int id);
         bool HasSimilarName(string name);
         bool IsNameUniq(string name);
@@ -71,25 +73,14 @@ namespace Everything.Data.Repositories
         public Pagginator<GirlData> GetAllWithCreatorsAndManga(
             int page,
             int perPage,
-            GirlSortType sortType,
+            string fieldNameForSort,
             OrderDirection orderDirection)
         {
             var items = WithCreatorsAndManga()
                 .Include(x => x.UsersWhoLikeIt)
                 .AsQueryable();
 
-            switch (sortType)
-            {
-                case GirlSortType.Like:
-                    items = items.OrderBy(x => x.UsersWhoLikeIt.Count);
-                    break;
-                case GirlSortType.Name:
-                    items = items.OrderBy(x => x.Name);
-                    break;
-                case GirlSortType.Default:
-                    items = items.OrderBy(x => x.Id);
-                    break;
-            }
+            items = SortAndGetAll(items, fieldNameForSort);
 
             if (orderDirection == OrderDirection.Desc)
             {

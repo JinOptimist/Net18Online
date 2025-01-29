@@ -56,12 +56,15 @@ namespace WebPortalEverthing.Controllers
         }
 
         [IsAuthenticated]
-        public IActionResult AllGirls(int? page, int? perPage, 
-            GirlSortType? orderField, OrderDirection? orderDirection)
+        public IActionResult AllGirls(
+            int? page, 
+            int? perPage, 
+            string? fieldNameForSort,
+            OrderDirection? orderDirection)
         {
             page = page ?? DEFUALT_PAGE;
             perPage = perPage ?? DEFUALT_PER_PAGE;
-            orderField = orderField ?? GirlSortType.Default;
+            fieldNameForSort = fieldNameForSort ?? "Id";
             orderDirection = orderDirection ?? OrderDirection.Asc;
 
             if (!_animeGirlRepository.Any())
@@ -76,8 +79,8 @@ namespace WebPortalEverthing.Controllers
             var girlsFromDb = _animeGirlRepository
                 .GetAllWithCreatorsAndManga(
                 page.Value, 
-                perPage.Value, 
-                orderField.Value, 
+                perPage.Value,
+                fieldNameForSort, 
                 orderDirection.Value);
 
             var girlsViewModels = girlsFromDb

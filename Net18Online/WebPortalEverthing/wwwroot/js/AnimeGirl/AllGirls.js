@@ -115,7 +115,7 @@
         const order = $(this).attr('data-order');
         const url = new URL(document.location.href);
 
-        const orderOld = url.searchParams.get('orderField');
+        const orderOld = url.searchParams.get('fieldNameForSort');
         if (orderOld == order) {
             url.searchParams.set('orderDirection', 'Desc');
         } else {
@@ -124,7 +124,7 @@
 
         url.searchParams.set('page', 1);
 
-        url.searchParams.set('orderField', order);
+        url.searchParams.set('fieldNameForSort', order);
         window.location.href = url.href;
     });
 
