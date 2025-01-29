@@ -6,5 +6,6 @@ namespace Everything.Data.Interface.Repositories
         where T : IAnswerToQuestionData
     {
         void SetTextValue(int id, string? value);
+        List<int> GetIdsUnansweredQuestions(int takingId);
     }
 }

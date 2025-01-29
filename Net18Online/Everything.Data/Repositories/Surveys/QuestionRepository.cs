@@ -82,7 +82,8 @@ namespace Everything.Data.Repositories.Surveys
 SELECT	Answer.id AS AnswerId,
 		Questions.Title,
 		Questions.IsRequired,
-		Questions.AnswerType
+		Questions.AnswerType,
+		Answer.[Text] AS AnswerText
 FROM dbo.TakingUserSurveys TakingSurveys
 INNER JOIN dbo.AnswerToQuestions Answer ON TakingSurveys.id = Answer.TakingUserSurveyId
 INNER JOIN dbo.Questions Questions ON Answer.QuestionId = Questions.Id

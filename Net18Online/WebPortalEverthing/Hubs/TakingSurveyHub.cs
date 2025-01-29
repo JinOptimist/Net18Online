@@ -1,5 +1,7 @@
-﻿using Everything.Data.Repositories.Surveys;
+﻿using Everything.Data.Interface.Repositories;
+using Everything.Data.Repositories.Surveys;
 using Microsoft.AspNetCore.SignalR;
+using WebPortalEverthing.Controllers;
 using WebPortalEverthing.Services;
 
 namespace WebPortalEverthing.Hubs
@@ -7,18 +9,22 @@ namespace WebPortalEverthing.Hubs
     public interface ITakingSurveyHub
     {
         Task Notify(string message);
+        Task RedirectPage(string url);
+        Task MarkUnansweredQuestions(List<int> ids);
     }
 
     public class TakingSurveyHub : Hub<ITakingSurveyHub>
     {
         private AuthService _authService;
+        private ITakingUserSurveyRepositoryReal _takingUserSurveyRepository;
         private IAnswerToQuestionRepositoryReal _answerToQuestionRepository;
         private Dictionary<string /*connectionId*/, int? /*userId*/> _connections = new();
 
-        public TakingSurveyHub(AuthService authService, IAnswerToQuestionRepositoryReal answerToQuestionRepository)
+        public TakingSurveyHub(AuthService authService, IAnswerToQuestionRepositoryReal answerToQuestionRepository, ITakingUserSurveyRepositoryReal takingUserSurveyRepository)
         {
             _authService = authService;
             _answerToQuestionRepository = answerToQuestionRepository;
+            _takingUserSurveyRepository = takingUserSurveyRepository;
         }
 
         public override async Task OnConnectedAsync()
@@ -40,6 +46,21 @@ namespace WebPortalEverthing.Hubs
             _answerToQuestionRepository.SetTextValue(answerId, value);
 
             ShowToCurrentUser("Ответ сохранён!");
+        }
+
+        public void SubmitSurvey(int takingId)
+        {
+            var unansweredQuestionsIds = _answerToQuestionRepository.GetIdsUnansweredQuestions(takingId);
+
+            if (unansweredQuestionsIds.Count == 0)
+            {
+                _takingUserSurveyRepository.SetCompleteStatus(takingId);
+                Clients.Caller.RedirectPage("/Surveys/SurveysAll").Wait();
+            }
+            else
+            {
+                Clients.Caller.MarkUnansweredQuestions(unansweredQuestionsIds).Wait();
+            }
         }
 
         public void ShowToCurrentUser(string message)
