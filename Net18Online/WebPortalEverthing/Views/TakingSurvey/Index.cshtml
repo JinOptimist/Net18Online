@@ -38,10 +38,10 @@
                     @switch (question.AnswerType)
                     {
                         case AnswerType.TextString:
-                            <input type="text" class="answer-control form-control form-control-sm" data-answer-type="@AnswerType.TextParagraph" />
+                            <input type="text" class="answer-control form-control form-control-sm" data-answer-type="@AnswerType.TextParagraph" value="@question.AnswerText" />
                             break;
                         case AnswerType.TextParagraph:
-                            <textarea class="answer-control form-control form-control-sm" data-answer-type="@AnswerType.TextParagraph"></textarea>
+                            <textarea class="answer-control form-control form-control-sm" data-answer-type="@AnswerType.TextParagraph">@question.AnswerText</textarea>
                             break;
                         default:
                             <span>Контрол не задан</span>
@@ -50,5 +50,8 @@
                 </div>
             </div>
         }
+    </div>
+    <div class="actions">
+        <button class="save-button btn btn-sm btn-success">Сохранить</button>
     </div>
 </div>

@@ -28,3 +28,8 @@ input {
     display: flex;
     justify-content: space-between;
 }
+
+.questions .question.unanswered {
+    border-color: red;
+    border-width: 3px;
+}

@@ -27,7 +27,7 @@ namespace WebPortalEverthing.Controllers
         {
             var userId = _authService.GetUserId()!.Value;
 
-            var takingId = _takingUserSurveyRepository.ReturnIdLastUncompletedSurvey(userId);
+            var takingId = _takingUserSurveyRepository.ReturnIdLastUncompletedSurvey(userId, surveyId);
             takingId ??= _takingUserSurveyRepository.Add(userId, surveyId);
 
             var survey = _surveysRepository.Get(surveyId);
@@ -44,7 +44,8 @@ namespace WebPortalEverthing.Controllers
                         AnswerId = question.AnswerId,
                         Title = question.Title,
                         IsRequired = question.IsRequired,
-                        AnswerType = question.AnswerType
+                        AnswerType = question.AnswerType,
+                        AnswerText = question.AnswerText
                     })
                     .ToList()
             };

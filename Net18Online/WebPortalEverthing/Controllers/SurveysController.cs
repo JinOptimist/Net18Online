@@ -394,7 +394,16 @@ namespace WebPortalEverthing.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(surveyCreate);
+                surveyCreate.Questions = _questionRepository.GetQuestionsForSurvey(surveyCreate.Id)
+                    .Select(question => new QuestionViewModel
+                    {
+                        Id = question.Id,
+                        Title = question.Title,
+                        IsRequired = question.IsRequired,
+                        AnswerType = question.AnswerType
+                    }).ToList();
+
+                return View(nameof(Create), surveyCreate);
             }
 
             _surveysRepository.UpdateTitle(surveyCreate.Id, surveyCreate.Title);

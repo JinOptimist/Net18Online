@@ -19,7 +19,7 @@ namespace Everything.Data.Repositories.Surveys
             throw new NotImplementedException($"Use method {nameof(Add)} with parameters userId and surveyId to add a record");
         }
 
-        public int? ReturnIdLastUncompletedSurvey(int userId)
+        public int? ReturnIdLastUncompletedSurvey(int userId, int surveyId)
         {
             if (!_dbSet.Any())
             {
@@ -28,11 +28,11 @@ namespace Everything.Data.Repositories.Surveys
 
             return _dbSet
                 .Where(x => x.User.Id == userId
-                    && x.CompletionStatus == SurveyCompletionStatus.InProgress)
+                   && x.Survey.Id == surveyId
+                   && x.CompletionStatus == SurveyCompletionStatus.InProgress)
                 .OrderByDescending(x => x.StartTime)
-                .Take(1)
-                .First()
-                .Id;
+                .FirstOrDefault()
+                ?.Id;
         }
 
         public int Add(int userId, int surveyId)
@@ -64,6 +64,14 @@ namespace Everything.Data.Repositories.Surveys
             _webDbContext.SaveChanges();
 
             return takingData.Id;
+        }
+
+        public void SetCompleteStatus(int takingId)
+        {
+            var takingData = Get(takingId);
+            takingData.CompletionStatus = SurveyCompletionStatus.Completed;
+
+            _webDbContext.SaveChanges();
         }
     }
 }
