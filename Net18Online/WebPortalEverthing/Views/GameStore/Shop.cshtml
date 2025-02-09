@@ -12,21 +12,20 @@
 }
 
 <div class="content">
-    <div class="title">@GameShop.Shop_Header</div>
-
-
-   @if(authService.IsAdmin()){
+    <!--<div class="title">@GameShop.Shop_Header</div>-->
+    @if (authService.IsAdmin())
+    {
         <div class="game-block template">
             <div class="name">
-                    <div class="view-mode">
-                        #
-                    </div>
-                    <div class="edit-mode">
-                        <input class="game-id" name="id" value="0" type="hidden" />
-                        <input class="new-game-name" name="newName" value="#" />
-                        <button class="update-game-name-button" type="button">upd</button>
-                    </div>
-               
+                <div class="view-mode">
+                    #
+                </div>
+                <div class="edit-mode">
+                    <input class="game-id" name="id" value="0" type="hidden" />
+                    <input class="new-game-name" name="newName" value="#" />
+                    <button class="update-game-name-button" type="button">upd</button>
+                </div>
+
             </div>
             <div class="image-container">
                 <img src="#" alt="Game">
@@ -34,26 +33,26 @@
             <button type="button" class="toggle-tags">...</button>
             <div class="info">
 
-                    <form method="post" action="/GameStore/UpdateImage">
-                        <input name="id" value="#" type="hidden" />
-                        <input name="url" />
-                        <button type="submit">new image</button>
-                    </form>
-                    <a class="tag delete" href="#" data-id="#">Delete</a>
+                <form method="post" action="/GameStore/UpdateImage">
+                    <input name="id" value="#" type="hidden" />
+                    <input name="url" />
+                    <button type="submit">new image</button>
+                </form>
+                <a class="tag delete" href="#" data-id="#">Delete</a>
 
-                    <span class="tag cost">@GameShop.Shop_Cost <strong>#</strong></span>
-                    <span class="tag studios">Studios:<strong>#</strong></span>
-                    <a class="tag" href="/GameStore/Purchases?buyerId=@authService.GetUserId()&gameId=#">@GameShop.Shop_Buy</a>
-                
+                <span class="tag cost">@GameShop.Shop_Cost <strong>#</strong></span>
+                <span class="tag studios">Studios:<strong>#</strong></span>
+                <a class="tag" href="/GameStore/Purchases?buyerId=@authService.GetUserId()&gameId=#">@GameShop.Shop_Buy</a>
+
             </div>
         </div>
-   }
+    }
 
 
     @foreach (var game in Model.Games)
     {
         <div class="game-block" data-id="@game.Id">
-            <div class="name" >
+            <div class="name">
                 <div><i class="icon @(game.IsLiked ? "like-pushed" : "like")"></i></div>
                 <div><i class="icon @(game.IsLiked ? "dislike-pushed" : "dislike")"></i></div>
                 @if (authService.IsAdmin())
@@ -69,11 +68,15 @@
                 }
                 else
                 {
-                    <div class="name">@game.NameGame</div>
+                    <div class="game-name">@game.NameGame</div>
                 }
             </div>
-            <div class="image-container">
-                <img src="@game.ImageSrc" alt="Game">
+            <div class="image-container" style="background: url(@game.ImageSrc);
+                background-repeat: no-repeat;
+                background-position: center center;
+                background-size: cover;
+                background-attachment: scroll;">
+                <!--<img src="@game.ImageSrc" alt="Game">-->
             </div>
             <button type="button" class="toggle-tags">...</button>
             <div class="info">
@@ -101,26 +104,26 @@
     @if (authService.IsAdmin())
     {
         <div class="game-block create">
-            <div class="name">                
-                <div class="edit-mode">                   
-                    <input class="new-game-name" name="newName" placeholder="game name" />                    
-                </div>                
+            <div class="name">
+                <div class="edit-mode">
+                    <input class="new-game-name" name="newName" placeholder="game name" />
+                </div>
             </div>
             <div class="image-container">
                 <img src="/images/GameStore/defaultgame.jpg" alt="Game">
-            </div>            
+            </div>
             <div class="info create">
                 <form method="post" action="/GameStore/UpdateImage">
-                    <input class="new-game-url" name="url" placeholder="game url"/>
-                    
-                </form>              
+                    <input class="new-game-url" name="url" placeholder="game url" />
+
+                </form>
                 @* <span class="tag">@GameShop.Shop_Cost <strong>@game.Cost</strong></span> *@
                 <select class="cost">
                     <option value="1">10</option>
                     <option value="2">20</option>
                     <option value="3">30</option>
                     <option value="4">40</option>
-                </select>                
+                </select>
                 <button class="create-game-button" type="button">create new game</button>
             </div>
         </div>
