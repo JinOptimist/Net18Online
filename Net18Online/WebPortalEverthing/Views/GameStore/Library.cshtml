@@ -5,14 +5,18 @@
 }
 
 <div class="content">
-    <div class="title">Library</div>
+    <!--<div class="title">Library</div>-->
     @foreach (var game in Model.GamesInTheLibrary)
     {
         <div class="Library">
             <div class="game-block">
                 <div class="name">@game.NameGame</div>
-                <div class="image-container">
-                    <img src="@game.ImageSrc" alt="Game">
+                <div class="image-container" style="background: url(@game.ImageSrc);
+                background-repeat: no-repeat;
+                background-position: center center;
+                background-size: cover;
+                background-attachment: scroll;">
+                    <!--<img src="@game.ImageSrc" alt="Game">-->
                 </div>
                 <div class="info">
                     @foreach (var tag in game.Tags)
