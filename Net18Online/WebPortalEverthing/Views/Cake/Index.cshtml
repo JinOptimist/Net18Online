@@ -1,31 +1,40 @@
 ﻿@using WebPortalEverthing.Models.Cake
-@model List<CakeViewModel>
+@model CakesWithPagginatorViewModel
 @{
     Layout = "~/Views/Shared/_LayoutCake.cshtml";
 }
-
-@foreach (var cake in Model)
-{
-    <div class="card">
-        <img src="@cake.ImageSrc" alt="cake">
-        <div class="text-wrapper">
-            <h1 class="name">@cake.Name</h1>
-            <p class="cake_desc">@cake.Description</p>
-            <h1 class="magazins">Magazins</h1>
-            @{
-                if (cake.Magazins.Count == 0)
-                {
-                    <p class="list-magazins">Not in stores</p>
-                }
-                else
-                {
-                    foreach (var magazin in cake.Magazins)
+<div class="cakes">
+    @foreach (var cake in Model.Cakes.Items)
+    {
+        <div class="card">
+            <img src="@cake.ImageSrc" alt="cake">
+            <div class="text-wrapper">
+                <h1 class="name">@cake.Name</h1>
+                <p class="cake_desc">@cake.Description</p>
+                <h1 class="magazins">Magazins</h1>
+                @{
+                    if (cake.Magazins.Count == 0)
                     {
-                        <span class="list-magazins">@magazin.Name </span>
+                        <p class="list-magazins">Not in stores</p>
+                    }
+                    else
+                    {
+                        foreach (var magazin in cake.Magazins)
+                        {
+                            <span class="list-magazins">@magazin.Name </span>
+                        }
                     }
                 }
-            }
-            <p class="price">@cake.Price BYN</p>
+                <p class="price">@cake.Price BYN</p>
+            </div>
         </div>
-    </div>
-}
+    }
+</div>
+
+<div class="pagginator">
+    @foreach(var page in Model.Cakes.Pages)
+    {
+        <a href="/Cake/Index?page=@(page)" 
+        class="page @(page == Model.Cakes.Page ? "active": "")">@(page)</a>
+    }
+</div>

@@ -1,4 +1,5 @@
-﻿using Everything.Data.Interface.Repositories;
+﻿using Everything.Data.DataLayerModels;
+using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,6 +7,8 @@ namespace Everything.Data.Repositories
 {
     public interface ICakeRepositoryReal : ICakeRepository<CakeData>
     {
+        IEnumerable<CakeData> GetAllWithCakesAndMagazins();
+        Pagginator<CakeData> GetAllWithCakesAndMagazins(int page, int perPage);
         void Create(CakeData dataCake, int currentUserId);
         void Link(int cakeId, int magazinId);
         bool IsUrlUniq(string url);
@@ -24,6 +27,25 @@ namespace Everything.Data.Repositories
             dataCake.Creator = creator;
 
             Add(dataCake);
+        }
+
+        public Pagginator<CakeData> GetAllWithCakesAndMagazins(int page, int perPage)
+        {
+            var items = WithMagazins().AsQueryable();
+
+            var data = new Pagginator<CakeData>();
+            data.TotalRecords = items.Count();
+            data.Items = items.Skip((page - 1) * perPage)
+                .Take(perPage)
+                .ToList();
+
+            return data;
+        }
+
+        public IEnumerable<CakeData> GetAllWithCakesAndMagazins()
+        {
+            return WithMagazins()
+                .ToList();
         }
 
         public IEnumerable<CakeData> GetMyCakesICreated(int? userId)
@@ -83,6 +105,12 @@ namespace Everything.Data.Repositories
             cakeImage.Price = newPrice;
 
             _webDbContext.SaveChanges();
+        }
+
+        private IQueryable<CakeData> WithMagazins()
+        {
+            return _dbSet
+                .Include(x => x.Magazins);
         }
     }
 }

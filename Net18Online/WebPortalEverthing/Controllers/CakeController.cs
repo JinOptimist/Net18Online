@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebPortalEverthing.Controllers.AuthAttributes;
+using WebPortalEverthing.Models.AnimeGirl;
+using WebPortalEverthing.Models;
 using WebPortalEverthing.Models.Cake;
 using WebPortalEverthing.Models.Cake.MyCreation;
 using WebPortalEverthing.Models.CakeLink;
@@ -21,7 +23,9 @@ namespace WebPortalEverthing.Controllers
         private AuthService _authService;
         private WebDbContext _webDbContext;
         private IWebHostEnvironment _webHostEnvironment;
-        private HelperForFile _helperForFile;
+        private HelperForFile _helperForFile; 
+        private int DEFUALT_PAGE = 1;
+        private int DEFUALT_PER_PAGE = 4;
 
         public CakeController(ICakeRepositoryReal cakeRepository, 
             IMagazinRepositoryReal magazinRepository, 
@@ -39,12 +43,14 @@ namespace WebPortalEverthing.Controllers
             _webHostEnvironment = webHostEnvironment;
             _helperForFile = helperForFile;
         }
-        public IActionResult Index()
+        public IActionResult Index(int? page)
         {
-            var cakesFromDb = _webDbContext
-                .Cakes;
+            page = page ?? DEFUALT_PAGE;
+
+            var cakesFromDb = _cakeRepository.GetAllWithCakesAndMagazins(page.Value, DEFUALT_PER_PAGE);
 
             var cakesViewModel = cakesFromDb
+                .Items
                 .Select(dbCake => new CakeViewModel
                 {
                     Id = dbCake.Id,
@@ -52,8 +58,8 @@ namespace WebPortalEverthing.Controllers
                     Name = dbCake.Name,
                     Description = dbCake.Description,
                     Price = dbCake.Price,
-                    CreatorName = dbCake.Creator.Login ?? "None",
-                    Magazins = dbCake.Magazins
+                    CreatorName = dbCake.Creator?.Login ?? "None",
+                    Magazins = dbCake.Magazins?
                                 .Select(dbMagazin => new MagazinViewModel
                                 {
                                     Name = dbMagazin.Name,
@@ -61,7 +67,20 @@ namespace WebPortalEverthing.Controllers
                                 .ToList(),
                 }).ToList();
 
-            return View(cakesViewModel);
+            var pagginatorViewModel = new PagginatorViewModel<CakeViewModel>()
+            {
+                Items = cakesViewModel,
+                Page = page.Value,
+                PerPage = DEFUALT_PER_PAGE,
+                TotalRecords = cakesFromDb.TotalRecords
+            };
+
+            var viewModel = new CakesWithPagginatorViewModel
+            {
+                Cakes = pagginatorViewModel,
+            };
+
+            return View(viewModel);
         }
         [HttpGet]
         [IsAuthenticated]

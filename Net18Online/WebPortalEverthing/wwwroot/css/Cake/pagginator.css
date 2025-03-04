@@ -1,0 +1,22 @@
+﻿.pagginator{
+    display: flex;
+    justify-content:center
+}
+
+    .pagginator .page {
+        display: flex;
+        width: 20px;
+        height: 20px;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+        margin: 3px;
+        border: 1px bisque solid;
+        border-radius: 5px;
+        text-decoration: none;
+        color: black;
+    }
+
+        .pagginator .page.active {
+            background-color: #ccc;
+        }
