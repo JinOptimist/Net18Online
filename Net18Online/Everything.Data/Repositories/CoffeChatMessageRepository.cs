@@ -1,12 +1,14 @@
 ﻿using Everything.Data.Interface.Models;
 using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Everything.Data.Repositories
 {
     public interface ICoffeChatMessageRepositryKey : ICoffeChatMessageRepositry<CoffeChatMessageData>
     {
         void AddMessage(int? userId, string message);
+        PaginatedMessages GetAllMessages(int pageNumber, int pageSize);
     }
     public class CoffeChatMessageRepository : BaseRepository<CoffeChatMessageData>, ICoffeChatMessageRepositryKey
     {
@@ -27,6 +29,23 @@ namespace Everything.Data.Repositories
             };
 
             base.Add(messageData);
+        }
+
+        public PaginatedMessages GetAllMessages(int pageNumber, int pageSize)
+        {
+            var totalCount = _dbSet.Count();
+            var messages = _dbSet
+                .OrderByDescending(x => x.CreationTime)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(m => m.Message)
+                .ToList();
+
+            return new PaginatedMessages
+            {
+                Messages = messages,
+                TotalCount = totalCount
+            };
         }
     }
 }
