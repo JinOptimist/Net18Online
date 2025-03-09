@@ -61,25 +61,6 @@ $(document).ready(function () {
             });
     }
 
-    $(".coffe-messages").on("click", ".delete-button", function () {
-        const messageBlock = $(this).closest(".coffe-message");
-        const message = $(this).data("message");
-
-        deleteMessage(message, messageBlock);
-    });
-
-    function deleteMessage(message, messageBlock) {
-        $.ajax({
-            url: "/api/ApiCoffeChat/DeleteMessage",
-            type: "DELETE",
-            data: JSON.stringify({ message: message }),
-            contentType: "application/json",
-            success: function () {
-                messageBlock.remove();
-            },
-        });
-    }
-
     function updatePagination(page, totalCount) {
         const totalPages = Math.ceil(totalCount / pageSize);
         $(".pagination").empty();
