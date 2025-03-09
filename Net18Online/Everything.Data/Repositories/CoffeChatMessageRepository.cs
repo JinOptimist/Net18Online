@@ -9,6 +9,7 @@ namespace Everything.Data.Repositories
     {
         void AddMessage(int? userId, string message);
         PaginatedMessages GetAllMessages(int pageNumber, int pageSize);
+        void DeleteMessage(string message);
     }
     public class CoffeChatMessageRepository : BaseRepository<CoffeChatMessageData>, ICoffeChatMessageRepositryKey
     {
@@ -46,6 +47,16 @@ namespace Everything.Data.Repositories
                 Messages = messages,
                 TotalCount = totalCount
             };
+        }
+
+        public void DeleteMessage(string message)
+        {
+            var messageToDelete = _dbSet.FirstOrDefault(m => m.Message == message);
+            if (messageToDelete != null)
+            {
+                _dbSet.Remove(messageToDelete);
+                _webDbContext.SaveChanges();
+            }
         }
     }
 }

@@ -20,5 +20,12 @@ namespace WebPortalEverthing.Controllers.ApiControllers
             var messages = _coffeChatMessageRepositryKey.GetAllMessages(pageNumber, pageSize);
             return Ok(messages);
         }
+
+        [HttpDelete]
+        public IActionResult DeleteMessage([FromBody] string message)
+        {
+            _coffeChatMessageRepositryKey.DeleteMessage(message);
+            return Ok();
+        }
     }
 }

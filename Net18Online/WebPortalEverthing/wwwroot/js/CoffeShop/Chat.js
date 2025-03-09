@@ -24,8 +24,6 @@ $(document).ready(function () {
     function sendMessage() {
         const message = $(".new-coffe-message").val();
         if (!message.trim()) return;
-
-        console.log("Sending message:", message);
         hub.invoke("AddNewMessage", message)
         $(".new-coffe-message").val("");
     }
@@ -33,17 +31,53 @@ $(document).ready(function () {
     function createNewMessage(message) {
         const messageBlock = $(".coffe-message.template").clone();
         messageBlock.removeClass("template");
-        messageBlock.text(message);
+        messageBlock.find(".message-text").text(message);
+        messageBlock.find(".delete-button").attr("data-message", message);
         messageBlock.show();
         $(".coffe-messages").prepend(messageBlock);
     }
 
+
     function loadMessages(page = 1) {
         $.get(`/api/ApiCoffeChat/GetMessages?pageNumber=${page}&pageSize=${pageSize}`)
             .done(function (result) {
-                result.messages.forEach(createNewMessage);
+                $(".coffe-message").each(function () {
+                    const messagePage = $(this).data("page");
+                    if (messagePage !== page) {
+                        $(this).hide();
+                    } else {
+                        $(this).show();
+                    }
+                });
+
+                result.messages.forEach(function (message) {
+                    const existingMessage = $(`.coffe-message[data-message='${message}']`);
+                    if (existingMessage.length === 0) {
+                        createNewMessage(message);
+                    }
+                });
+
                 updatePagination(page, result.totalCount);
-            })
+            });
+    }
+
+    $(".coffe-messages").on("click", ".delete-button", function () {
+        const messageBlock = $(this).closest(".coffe-message");
+        const message = $(this).data("message");
+
+        deleteMessage(message, messageBlock);
+    });
+
+    function deleteMessage(message, messageBlock) {
+        $.ajax({
+            url: "/api/ApiCoffeChat/DeleteMessage",
+            type: "DELETE",
+            data: JSON.stringify({ message: message }),
+            contentType: "application/json",
+            success: function () {
+                messageBlock.remove();
+            },
+        });
     }
 
     function updatePagination(page, totalCount) {
@@ -52,6 +86,15 @@ $(document).ready(function () {
         $(".pagination").append(`
             <li class="page-item ${page === 1 ? 'disabled' : ''}">
                 <a class="page-link" href="#" data-page="${page - 1}">Previous</a>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link">${1}</span>
+            </li>
+           <li class="page-item">
+                <span class="page-link">${page}</span>
+            </li>
+            <li class="page-item">
+                <span class="page-link disabled">${totalPages}</span>
             </li>
             <li class="page-item ${page === totalPages ? 'disabled' : ''}">
                 <a class="page-link" href="#" data-page="${page + 1}">Next</a>
