@@ -3,6 +3,7 @@
 @using WebPortalEverthing.Localizations
 @inject AuthService authService
 @inject UserService userService
+@inject CartService cartService
 
 <!DOCTYPE html>
 <head>
@@ -64,6 +65,11 @@
         <div class="header-actions">
             @if (User.Identity?.IsAuthenticated ?? false)
             {
+                <div>
+                    <div class="btn-group">
+                        <a class="btn btn-secondary" href="#">@Coffe.Layout_Thing <span class="btn btn-danger">@cartService.GetCartItemCount((int)authService.GetUserId())</span></a>
+                    </div>
+                </div>
                 <div class="logo">
                     <a href="/CoffeShop/UserProfile">
                         <img src="@userService.GetAvatar()" alt="User profile" />
@@ -83,15 +89,14 @@
         <div class="footer">
             <div class="row">
                 <ul>
-                    <li><a href="#">Contact us</a></li>
-                    <li><a href="#">Our Services</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms & Conditions</a></li>
-                    <li><a href="#">Career</a></li>
+                    <li><a href="#">@Coffe.Footer_Contact</a></li>
+                    <li><a href="#">@Coffe.Footer_Service</a></li>
+                    <li><a href="#">@Coffe.Footer_Policy</a></li>
+                    <li><a href="#">@Coffe.Footer_Career</a></li>
                 </ul>
             </div>
             <div class="row">
-                Copyright © @DateTime.Now.Year IWell. All rights reserved.
+                @Coffe.Footer_Copyright © @DateTime.Now.Year IWell. @Coffe.Footer_Rights.
             </div>
         </div>
     </footer>

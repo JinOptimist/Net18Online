@@ -124,7 +124,7 @@
     <value>Buy</value>
   </data>
   <data name="Coffe_Cart" xml:space="preserve">
-    <value>Cart</value>
+    <value>In Cart</value>
   </data>
   <data name="Coffe_Filter" xml:space="preserve">
     <value>Filters</value>
@@ -156,7 +156,7 @@
   <data name="Profile_Avatar" xml:space="preserve">
     <value>Avatar</value>
   </data>
-  <data name="Profile_Сart" xml:space="preserve">
+  <data name="Profile_Cart" xml:space="preserve">
     <value>My cart</value>
   </data>
   <data name="Profile_Update_Avatar" xml:space="preserve">
@@ -164,5 +164,26 @@
   </data>
   <data name="Profile_Default_Avatar" xml:space="preserve">
     <value>Set default avatar</value>
+  </data>
+  <data name="Footer_Contact" xml:space="preserve">
+    <value>Contact us</value>
+  </data>
+  <data name="Footer_Service" xml:space="preserve">
+    <value>Our Services</value>
+  </data>
+  <data name="Footer_Policy" xml:space="preserve">
+    <value>Privacy Policy</value>
+  </data>
+  <data name="Footer_Career" xml:space="preserve">
+    <value>Career</value>
+  </data>
+  <data name="Footer_Copyright" xml:space="preserve">
+    <value>Copyright</value>
+  </data>
+  <data name="Footer_Rights" xml:space="preserve">
+    <value>All rights reserved</value>
+  </data>
+  <data name="Layout_Thing" xml:space="preserve">
+    <value>Cart</value>
   </data>
 </root>

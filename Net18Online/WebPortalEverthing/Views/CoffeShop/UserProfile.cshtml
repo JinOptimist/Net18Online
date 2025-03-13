@@ -52,7 +52,22 @@
     }
 
     <div>
-        @Coffe.Profile_Cart: 
+        <h2>@Coffe.Profile_Cart</h2>
+        @foreach (var item in Model.CoffeInCart)
+        {
+            <div class="cart-item">
+                <img src="@item.Url" alt="@item.Coffe" class="cart-img" />
+                <div>
+                    <span>@item.Coffe</span>
+                    <span>@item.Cost $</span>
+                    <span>Количество: @item.Quantity</span>
+                </div>
+                <form action="/CoffeShop/RemoveFromCart" method="post">
+                    <input type="hidden" name="coffeId" value="@item.Id" />
+                    <button type="submit">Удалить</button>
+                </form>
+            </div>
+        }
     </div>
 
 

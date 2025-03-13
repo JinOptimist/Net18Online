@@ -45,6 +45,8 @@ namespace Everything.Data
 
         public DbSet<CoffeShopActivityData> Activities { get; set; }
 
+        public DbSet<CartData> CartItems { get; set; }
+
         public DbSet<MetricData> Metrics { get; set; } // Описание таблицы с метриками
         public DbSet<LoadVolumeTestingData> LoadVolumeTestingMetrics { get; set; } // Описание таблицы с разделами LoadVolumeTesting
         public DbSet<LoadUserData> LoadUsers { get; set; }

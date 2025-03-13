@@ -75,13 +75,13 @@
                         <span class="product-price"> @coffe.Cost $</span>
                     </div>
                     <div class="product-bottom">
-                        <button type="submit" class="product-button">
-                            @Coffe.Coffe_Buy
-                        </button>
-                        <button type="submit" class="bag-product-button">
-                            @Coffe.Coffe_Cart
-                        </button>
-                    </div>
+                        <form action="/CoffeShop/AddToCart" method="post">
+                            <input type="hidden" name="coffeId" value="@coffe.Id" />
+                            <button type="submit" class="bag-product-button">
+                                @Coffe.Coffe_Cart
+                            </button>
+                        </form>
+                    </div>                    
                     <div class="sales">
                     </div>
                 </div>
