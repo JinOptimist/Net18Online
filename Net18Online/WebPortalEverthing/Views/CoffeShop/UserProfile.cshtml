@@ -51,24 +51,27 @@
         </div>
     }
 
-    <div>
+    <div class="cart-container">
         <h2>@Coffe.Profile_Cart</h2>
         @foreach (var item in Model.CoffeInCart)
         {
             <div class="cart-item">
                 <img src="@item.Url" alt="@item.Coffe" class="cart-img" />
-                <div>
-                    <span>@item.Coffe</span>
-                    <span>@item.Cost $</span>
-                    <span>Количество: @item.Quantity</span>
+                <div class="cart-details">
+                    <span class="cart-name">@item.Coffe</span>
+                    <span class="cart-price">@(@item.Cost * @item.Quantity) $</span>
+                    <span class="cart-quantity">Количество: @item.Quantity</span>
                 </div>
                 <form action="/CoffeShop/RemoveFromCart" method="post">
                     <input type="hidden" name="coffeId" value="@item.Id" />
-                    <button type="submit">Удалить</button>
+                    <button type="submit" class="cart-remove-btn">
+                        <i class="fa fa-trash"></i>
+                    </button>
                 </form>
             </div>
         }
     </div>
+
 
 
 </div>

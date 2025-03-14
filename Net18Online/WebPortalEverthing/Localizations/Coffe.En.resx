@@ -186,4 +186,7 @@
   <data name="Layout_Thing" xml:space="preserve">
     <value>Cart</value>
   </data>
+  <data name="Layout_Admin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
 </root>

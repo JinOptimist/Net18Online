@@ -178,6 +178,15 @@ namespace WebPortalEverthing.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Админ.
+        /// </summary>
+        public static string Layout_Admin {
+            get {
+                return ResourceManager.GetString("Layout_Admin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Каталог.
         /// </summary>
         public static string Layout_Catalog {

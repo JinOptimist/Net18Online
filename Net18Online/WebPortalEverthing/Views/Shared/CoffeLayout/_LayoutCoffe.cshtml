@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="~/css/CoffeShop/footer.css" />
     <link rel="stylesheet" href="~/css/CoffeShop/burger.css" />
     <link rel="stylesheet" href="~/css/CoffeShop/accordion.css" />
+    <link rel="stylesheet" href="~/css/CoffeShop/profile.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Play&display=swap" rel="stylesheet">
@@ -41,7 +42,7 @@
                 <li><a class="menu__item" href="/">@Coffe.Layout_ToPortal</a></li>
                 @if (authService.IsAdmin())
                 {
-                    <li><a class="menu__item" href="/CoffeShop">Admin</a></li>
+                    <li><a class="menu__item" href="/CoffeShop">@Coffe.Layout_Admin</a></li>
                 }
                 <li><a class="menu__item" href="/CoffeShop/Coffe">@Coffe.Layout_Coffe</a></li>
                 <li><a class="menu__item" href="/CoffeShop/AboutUs">@Coffe.Layout_Reviews</a></li>

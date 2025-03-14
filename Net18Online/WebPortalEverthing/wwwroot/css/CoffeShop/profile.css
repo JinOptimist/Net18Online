@@ -1,0 +1,256 @@
+﻿.cart-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: transform 0.2s ease-in-out;
+}
+
+    .cart-item:hover {
+        transform: scale(1.02);
+    }
+
+.cart-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.cart-details {
+    flex-grow: 1;
+    margin-left: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.cart-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.cart-price {
+    font-size: 16px;
+    color: #28a745;
+}
+
+.cart-quantity {
+    font-size: 14px;
+    color: #555;
+}
+
+.cart-remove-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+    .cart-remove-btn:hover {
+        background: #b92c3c;
+    }
+
+    .cart-remove-btn i {
+        font-size: 16px;
+    }
+
+.profile {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+    .profile h1 {
+        font-size: 28px;
+        font-weight: bold;
+        color: #333;
+    }
+
+.avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: 10px;
+    border: 3px solid #28a745;
+}
+
+.profile form {
+    margin-top: 10px;
+}
+
+.profile input[type="file"] {
+    display: block;
+    margin: 10px auto;
+}
+
+.profile button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+    font-size: 14px;
+}
+
+    .profile button[type="submit"] {
+        background: #007bff;
+        color: white;
+    }
+
+        .profile button[type="submit"]:hover {
+            background: #0056b3;
+        }
+
+.list-of-coffe {
+    background: #ffc107;
+    color: #333;
+    font-weight: bold;
+    padding: 10px 16px;
+    border-radius: 6px;
+    margin-top: 15px;
+}
+
+    .list-of-coffe:hover {
+        background: #e0a800;
+    }
+
+.all-coffe-user {
+    display: none;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 5px;
+    margin-top: 15px;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+}
+    .all-coffe-user.open {
+        display: flex;
+        opacity: 1;
+    }
+
+
+.coffe {
+    width: 120px;
+    min-height: 150px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.all-coffe-user.open .coffe {
+    opacity: 1;
+    transform: scale(1);
+}
+
+    .coffe:hover {
+        transform: scale(1.05);
+    }
+
+.name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.image-container img {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.cart-container {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: transform 0.2s ease-in-out;
+}
+
+    .cart-item:hover {
+        transform: scale(1.02);
+    }
+
+.cart-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.cart-details {
+    flex-grow: 1;
+    margin-left: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.cart-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.cart-price {
+    font-size: 16px;
+    color: #28a745;
+}
+
+.cart-quantity {
+    font-size: 14px;
+    color: #555;
+}
+
+.cart-remove-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+    .cart-remove-btn:hover {
+        background: #b92c3c;
+    }
+
+    .cart-remove-btn i {
+        font-size: 16px;
+    }
