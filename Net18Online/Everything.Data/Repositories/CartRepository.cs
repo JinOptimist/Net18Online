@@ -48,7 +48,7 @@ namespace Everything.Data.Repositories
                 .ToList();
         }
 
-        public void RemoveFromCart(int userId, int coffeId, int quantity)
+        public int RemoveFromCart(int userId, int coffeId, int quantity)
         {
             var item = _webDbContext.CartItems.FirstOrDefault(x => x.UserId == userId && x.CoffeId == coffeId);
 
@@ -61,11 +61,17 @@ namespace Everything.Data.Repositories
                 else
                 {
                     _webDbContext.CartItems.Remove(item);
+                    _webDbContext.SaveChanges();
+                    return 0;
                 }
 
                 _webDbContext.SaveChanges();
+                return item.Quantity;
             }
+
+            return -1;
         }
+
 
         public int GetCartItemCount(int userId)
         {

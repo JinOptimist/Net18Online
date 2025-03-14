@@ -64,9 +64,10 @@ namespace WebPortalEverthing.Controllers
         public IActionResult RemoveFromCart(int coffeId)
         {
             var userId = _authService.GetUserId();
-            _cartRepositoryReal.RemoveFromCart(userId.Value, coffeId, 1);
-            return RedirectToAction("UserProfile");
+            int remainingQuantity = _cartRepositoryReal.RemoveFromCart(userId.Value, coffeId, 1);
+            return Json(new { success = true, remainingQuantity });
         }
+
 
         public IActionResult AboutUs()
         {

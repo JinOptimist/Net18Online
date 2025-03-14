@@ -62,12 +62,10 @@
                     <span class="cart-price">@(@item.Cost * @item.Quantity) $</span>
                     <span class="cart-quantity">Количество: @item.Quantity</span>
                 </div>
-                <form action="/CoffeShop/RemoveFromCart" method="post">
-                    <input type="hidden" name="coffeId" value="@item.Id" />
-                    <button type="submit" class="cart-remove-btn">
-                        <i class="fa fa-trash"></i>
-                    </button>
-                </form>
+                <input type="hidden" name="coffeId" value="@item.Id" />
+                <button class="cart-remove-btn">
+                    <i class="fa fa-trash"></i>
+                </button>
             </div>
         }
     </div>
