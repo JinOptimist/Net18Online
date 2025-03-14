@@ -259,6 +259,15 @@ namespace WebPortalEverthing.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Созданно мной.
+        /// </summary>
+        public static string Profile_Created {
+            get {
+                return ResourceManager.GetString("Profile_Created", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Установить готовый аватар.
         /// </summary>
         public static string Profile_Default_Avatar {

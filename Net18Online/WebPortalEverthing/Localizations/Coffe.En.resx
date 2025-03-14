@@ -189,4 +189,7 @@
   <data name="Layout_Admin" xml:space="preserve">
     <value>Admin</value>
   </data>
+  <data name="Profile_Created" xml:space="preserve">
+    <value>Сreated by me</value>
+  </data>
 </root>
