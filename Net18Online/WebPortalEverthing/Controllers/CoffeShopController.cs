@@ -108,6 +108,37 @@ namespace WebPortalEverthing.Controllers
             return viewModels;
         }
 
+        [HttpGet]
+        public IActionResult FilterByBrand(string brandName)
+        {
+            var valuesCoffeFromDb = _coffeShopRepository.GetCoffeByBrandName(brandName);
+
+            var userId = _authService.GetUserId();
+
+            var brands = _brandRepositoryReal.GetBrandsNamesWithUniqStatusInfo()
+                .Select(b => b.BrandName)
+                .ToList();
+
+            var viewModels = valuesCoffeFromDb
+                .Select(coffeFromDb =>
+                    new CoffeViewModel
+                    {
+                        Id = coffeFromDb.Id,
+                        Coffe = coffeFromDb.Coffe,
+                        Url = coffeFromDb.Url,
+                        Cost = coffeFromDb.Cost,
+                        CreatorName = coffeFromDb.Creator?.Login ?? "Неизвестный",
+                        Brand = coffeFromDb.Brand?.Name ?? "MaxWell",
+                        CanDeleteOrUpdate = coffeFromDb.Creator is null
+                            || coffeFromDb.Creator?.Id == userId,
+                        BrandNames = brands
+                    }
+                ).ToList();
+
+            return View("Coffe", viewModels);
+        }
+
+
         public IActionResult Coffe()
         {
             var viewModels = CoffeView();

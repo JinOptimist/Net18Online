@@ -115,6 +115,15 @@ namespace WebPortalEverthing.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Сбросить.
+        /// </summary>
+        public static string Coffe_Filter_Reset {
+            get {
+                return ResourceManager.GetString("Coffe_Filter_Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Язык.
         /// </summary>
         public static string Coffe_Language {

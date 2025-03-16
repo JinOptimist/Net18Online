@@ -192,4 +192,7 @@
   <data name="Profile_Created" xml:space="preserve">
     <value>Созданно мной</value>
   </data>
+  <data name="Coffe_Filter_Reset" xml:space="preserve">
+    <value>Сбросить</value>
+  </data>
 </root>
