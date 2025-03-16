@@ -18,11 +18,11 @@
                 <div class="name">@brand.Name</div>
                 <label class="info">Название Компании владельца</label>
                 <div class="company">@brand.Company</div>
-                <label class="info">Коффе под этим брендом</label>
+                <label class="info">Кофе под этим брендом</label>
                 <div class="all-coffe">
                     @foreach (var coffe in brand.CoffeList)
                     {
-                        <span>@coffe.Name</span>
+                        <span class="coffe-item">@coffe.Name</span>
                     }
                 </div>
                 <form action="/Brand/LinkCoffeAndBrand" method="post">
