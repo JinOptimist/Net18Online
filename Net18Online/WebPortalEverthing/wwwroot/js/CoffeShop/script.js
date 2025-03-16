@@ -25,4 +25,15 @@
             },
         });
     });
+
+    $(".dropdown-button").on("click", function (e) {
+        e.stopPropagation();
+        $(this)
+            .siblings(".dropdown-list")
+            .addClass("show");
+    });
+
+    $(document).on("click", function () {
+        $(".dropdown-list").removeClass("show");
+    });
 });

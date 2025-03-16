@@ -48,13 +48,13 @@
                 <li><a class="menu__item" href="/CoffeShop/AboutUs">@Coffe.Layout_Reviews</a></li>
             </ul>
         </div>
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <div class="custom-dropdown">
+            <button class="dropdown-button">
                 @Coffe.Coffe_Language
             </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="/CoffeShop/UpdateLocale?language=@Language.Ru">Русский</a></li>
-                <li><a class="dropdown-item" href="/CoffeShop/UpdateLocale?language=@Language.En">English</a></li>
+            <ul class="dropdown-list">
+                <li><a href="/CoffeShop/UpdateLocale?language=@Language.Ru">Русский</a></li>
+                <li><a href="/CoffeShop/UpdateLocale?language=@Language.En">English</a></li>
             </ul>
         </div>
         <div>
@@ -66,10 +66,11 @@
         <div class="header-actions">
             @if (User.Identity?.IsAuthenticated ?? false)
             {
-                <div>
-                    <div class="btn-group">
-                        <a class="btn btn-secondary" href="#">@Coffe.Layout_Thing <span class="btn btn-danger">@cartService.GetCartItemCount((int)authService.GetUserId())</span></a>
-                    </div>
+                <div class="cart-group">
+                    <a href="#" class="cart-link">
+                        @Coffe.Layout_Thing
+                        <span class="cart-count">@cartService.GetCartItemCount((int)authService.GetUserId())</span>
+                    </a>
                 </div>
                 <div class="logo">
                     <a href="/CoffeShop/UserProfile">
@@ -102,6 +103,7 @@
         </div>
     </footer>
 </body>
+<script src="~/js/CoffeShop/script.js"></script>
 <script src="~/js/Bootstrap/bootstrap.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
