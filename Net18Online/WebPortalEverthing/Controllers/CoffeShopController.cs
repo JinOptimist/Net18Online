@@ -1,4 +1,5 @@
 ﻿using Enums.Users;
+using Everything.Data.Interface.Repositories;
 using Everything.Data.Models;
 using Everything.Data.Repositories;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -18,14 +19,21 @@ namespace WebPortalEverthing.Controllers
         private IUserRepositryReal _userRepositryReal;
         private AuthService _authService;
         private IWebHostEnvironment _webHostEnvironment;
+        private ICartRepositoryReal _cartRepositoryReal;
 
-        public CoffeShopController(IKeyCoffeShopRepository coffeShopRepository, IBrandRepositoryReal brandRepositoryReal, IUserRepositryReal userRepositryReal, AuthService authService, IWebHostEnvironment webHostEnvironment)
+        public CoffeShopController(IKeyCoffeShopRepository coffeShopRepository,
+            IBrandRepositoryReal brandRepositoryReal,
+            IUserRepositryReal userRepositryReal,
+            AuthService authService,
+            IWebHostEnvironment webHostEnvironment,
+            ICartRepositoryReal cartRepositoryReal)
         {
             _coffeShopRepository = coffeShopRepository;
             _brandRepositoryReal = brandRepositoryReal;
             _userRepositryReal = userRepositryReal;
             _authService = authService;
             _webHostEnvironment = webHostEnvironment;
+            _cartRepositoryReal = cartRepositoryReal;
         }
 
         public IActionResult Index()
@@ -41,6 +49,25 @@ namespace WebPortalEverthing.Controllers
 
             return View(viewModels);
         }
+
+        [IsAuthenticated]
+        [HttpPost]
+        public IActionResult AddToCart(int coffeId, int quantity = 1)
+        {
+            var userId = _authService.GetUserId();
+            _cartRepositoryReal.AddToCart(userId.Value, coffeId, quantity);
+            return RedirectToAction("Coffe");
+        }
+
+        [IsAuthenticated]
+        [HttpPost]
+        public IActionResult RemoveFromCart(int coffeId)
+        {
+            var userId = _authService.GetUserId();
+            int remainingQuantity = _cartRepositoryReal.RemoveFromCart(userId.Value, coffeId, 1);
+            return Json(new { success = true, remainingQuantity });
+        }
+
 
         public IActionResult AboutUs()
         {
@@ -80,6 +107,37 @@ namespace WebPortalEverthing.Controllers
 
             return viewModels;
         }
+
+        [HttpGet]
+        public IActionResult FilterByBrand(string brandName)
+        {
+            var valuesCoffeFromDb = _coffeShopRepository.GetCoffeByBrandName(brandName);
+
+            var userId = _authService.GetUserId();
+
+            var brands = _brandRepositoryReal.GetBrandsNamesWithUniqStatusInfo()
+                .Select(b => b.BrandName)
+                .ToList();
+
+            var viewModels = valuesCoffeFromDb
+                .Select(coffeFromDb =>
+                    new CoffeViewModel
+                    {
+                        Id = coffeFromDb.Id,
+                        Coffe = coffeFromDb.Coffe,
+                        Url = coffeFromDb.Url,
+                        Cost = coffeFromDb.Cost,
+                        CreatorName = coffeFromDb.Creator?.Login ?? "Неизвестный",
+                        Brand = coffeFromDb.Brand?.Name ?? "MaxWell",
+                        CanDeleteOrUpdate = coffeFromDb.Creator is null
+                            || coffeFromDb.Creator?.Id == userId,
+                        BrandNames = brands
+                    }
+                ).ToList();
+
+            return View("Coffe", viewModels);
+        }
+
 
         public IActionResult Coffe()
         {
@@ -141,22 +199,30 @@ namespace WebPortalEverthing.Controllers
         [IsAuthenticated]
         public IActionResult UserProfile()
         {
-            var viewModel = new ProfileViewModel();
-
-            viewModel.UserName = _authService.GetName()!;
-
-            var userId = _authService.GetUserId()!.Value;
-
-            viewModel.ProfileAvatar = _userRepositryReal.GetAvatarUrl(userId);
-
-            viewModel.Coffe = _coffeShopRepository
-                .GetAllByCreatorId(userId)
-                .Select(x => new CoffeShortViewModel
-                {
-                    Name = x.Coffe,
-                    Url = x.Url,
-                })
-                .ToList();
+            var viewModel = new ProfileViewModel
+            {
+                UserName = _authService.GetName()!,
+                ProfileAvatar = _userRepositryReal.GetAvatarUrl(_authService.GetUserId()!.Value),
+                Coffe = _coffeShopRepository
+                    .GetAllByCreatorId(_authService.GetUserId()!.Value)
+                    .Select(x => new CoffeShortViewModel
+                    {
+                        Name = x.Coffe,
+                        Url = x.Url,
+                    })
+                    .ToList(),
+                CoffeInCart = _cartRepositoryReal
+                    .GetCartItems(_authService.GetUserId()!.Value)
+                    .Select(x => new CoffeObjectViewModel
+                    {
+                        Id = x.CoffeId,
+                        Url = x.Coffe.Url,
+                        Coffe = x.Coffe.Coffe,
+                        Cost = x.Coffe.Cost,
+                        Quantity = x.Quantity
+                    })
+                    .ToList()
+            };
 
             return View(viewModel);
         }

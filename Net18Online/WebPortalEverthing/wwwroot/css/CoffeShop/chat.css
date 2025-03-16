@@ -7,3 +7,26 @@
 .template {
     display: none;
 }
+
+.coffe-message {
+    display: inline-block;
+    width: auto;
+    max-width: 100%;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    word-wrap: break-word;
+}
+
+.delete-button {
+    font-size: 14px;
+    padding: 0;
+    margin: 0 5px;
+    background: transparent;
+    border: none;
+    color: red;
+    cursor: pointer;
+}

@@ -3,6 +3,7 @@
 @using WebPortalEverthing.Localizations
 @inject AuthService authService
 @inject UserService userService
+@inject CartService cartService
 
 <!DOCTYPE html>
 <head>
@@ -16,6 +17,7 @@
     <link rel="stylesheet" href="~/css/CoffeShop/footer.css" />
     <link rel="stylesheet" href="~/css/CoffeShop/burger.css" />
     <link rel="stylesheet" href="~/css/CoffeShop/accordion.css" />
+    <link rel="stylesheet" href="~/css/CoffeShop/profile.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Play&display=swap" rel="stylesheet">
@@ -40,11 +42,9 @@
                 <li><a class="menu__item" href="/">@Coffe.Layout_ToPortal</a></li>
                 @if (authService.IsAdmin())
                 {
-                    <li><a class="menu__item" href="/CoffeShop">Admin</a></li>
+                    <li><a class="menu__item" href="/CoffeShop">@Coffe.Layout_Admin</a></li>
                 }
-                <li><a class="menu__item" href="#">@Coffe.Layout_Catalog</a></li>
                 <li><a class="menu__item" href="/CoffeShop/Coffe">@Coffe.Layout_Coffe</a></li>
-                <li><a class="menu__item" href="#">@Coffe.Layout_Equipment</a></li>
                 <li><a class="menu__item" href="/CoffeShop/AboutUs">@Coffe.Layout_Reviews</a></li>
             </ul>
         </div>
@@ -66,6 +66,11 @@
         <div class="header-actions">
             @if (User.Identity?.IsAuthenticated ?? false)
             {
+                <div>
+                    <div class="btn-group">
+                        <a class="btn btn-secondary" href="#">@Coffe.Layout_Thing <span class="btn btn-danger">@cartService.GetCartItemCount((int)authService.GetUserId())</span></a>
+                    </div>
+                </div>
                 <div class="logo">
                     <a href="/CoffeShop/UserProfile">
                         <img src="@userService.GetAvatar()" alt="User profile" />
@@ -84,22 +89,15 @@
     <footer>
         <div class="footer">
             <div class="row">
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-instagram"></i></a>
-                <a href="#"><i class="fa fa-youtube"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-            </div>
-            <div class="row">
                 <ul>
-                    <li><a href="#">Contact us</a></li>
-                    <li><a href="#">Our Services</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms & Conditions</a></li>
-                    <li><a href="#">Career</a></li>
+                    <li><a href="#">@Coffe.Footer_Contact</a></li>
+                    <li><a href="#">@Coffe.Footer_Service</a></li>
+                    <li><a href="#">@Coffe.Footer_Policy</a></li>
+                    <li><a href="#">@Coffe.Footer_Career</a></li>
                 </ul>
             </div>
             <div class="row">
-                Copyright © 2024 IWell. All rights reserved.
+                @Coffe.Footer_Copyright © @DateTime.Now.Year IWell. @Coffe.Footer_Rights.
             </div>
         </div>
     </footer>

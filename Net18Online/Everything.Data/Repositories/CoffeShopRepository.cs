@@ -9,7 +9,7 @@ namespace Everything.Data.Repositories
         void Create(CoffeData dataCoffe, int currentUserId, int brandId);
         IEnumerable<CoffeData> GetAllWithCreatorsAndBrand();
         IEnumerable<CoffeData> GetAllByCreatorId(int creatorId);
-
+        IEnumerable<CoffeData> GetCoffeByBrandName(string brandName);
     }
 
     public class CoffeShopRepository : BaseRepository<CoffeData>, IKeyCoffeShopRepository
@@ -27,6 +27,15 @@ namespace Everything.Data.Repositories
             dataCoffe.Brand = brand;
 
             Add(dataCoffe);
+        }
+
+        public IEnumerable<CoffeData> GetCoffeByBrandName(string brandName)
+        {
+            return _dbSet
+                .Include(x => x.Creator)
+                .Include(x => x.Brand)
+                .Where(x => x.Brand != null && x.Brand.Name == brandName)
+                .ToList();
         }
 
         public IEnumerable<CoffeData> GetAllByCreatorId(int creatorId)

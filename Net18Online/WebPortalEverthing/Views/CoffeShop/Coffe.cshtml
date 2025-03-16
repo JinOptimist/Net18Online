@@ -7,6 +7,7 @@
 
 @section Scripts {
     <script src="~/js/CoffeShop/Coffe.js"></script>
+    <script src="~/js/CoffeShop/script.js"></script>
 }
 
 
@@ -15,26 +16,6 @@
     <div class="catalog-filter">
         <div class="menu">
             <span class="catalog">@Coffe.Coffe_Filter</span>
-            <div class="custom-accordion">
-                <div class="custom-accordion-item open">
-                    <h2 class="custom-accordion-header">
-                        <button class="custom-accordion-toggle" type="button">
-                            @Coffe.Coffe_Filter_Cost
-                        </button>
-                    </h2>
-                    <div class="custom-accordion-content">
-                        <form action="#" method="post">
-                            <div class="custom-accordion-body">
-                                <label for="customRange2" class="custom-label">
-                                    @Coffe.Coffe_Filter_Price: <span id="rangeValue">30</span> $
-                                </label>
-                                <input type="range" name="form-range" min="1" max="100" id="customRange2" value="50" />
-                                <button type="submit" class="btn btn-primary">C</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
             <div class="custom-accordion">
                 <div class="custom-accordion-item open">
                     <h2 class="custom-accordion-header">
@@ -55,6 +36,7 @@
                                         </li>
                                     }
                                 </ul>
+                                <button id="resetFilter" class="reset-button">@Coffe.Coffe_Filter_Reset</button>
                             </div>
                         </div>
                     </div>
@@ -75,13 +57,13 @@
                         <span class="product-price"> @coffe.Cost $</span>
                     </div>
                     <div class="product-bottom">
-                        <button type="submit" class="product-button">
-                            @Coffe.Coffe_Buy
-                        </button>
-                        <button type="submit" class="bag-product-button">
-                            @Coffe.Coffe_Cart
-                        </button>
-                    </div>
+                        <form action="/CoffeShop/AddToCart" method="post">
+                            <input type="hidden" name="coffeId" value="@coffe.Id" />
+                            <button type="submit" class="bag-product-button">
+                                @Coffe.Coffe_Cart
+                            </button>
+                        </form>
+                    </div>                    
                     <div class="sales">
                     </div>
                 </div>

@@ -124,7 +124,7 @@
     <value>Купить</value>
   </data>
   <data name="Coffe_Cart" xml:space="preserve">
-    <value>Корзина</value>
+    <value>В Корзину</value>
   </data>
   <data name="Coffe_Filter" xml:space="preserve">
     <value>Фильтры</value>
@@ -164,5 +164,35 @@
   </data>
   <data name="Profile_Default_Avatar" xml:space="preserve">
     <value>Установить готовый аватар</value>
+  </data>
+  <data name="Footer_Contact" xml:space="preserve">
+    <value>Наши контакты</value>
+  </data>
+  <data name="Footer_Service" xml:space="preserve">
+    <value>Наши Сервисы</value>
+  </data>
+  <data name="Footer_Policy" xml:space="preserve">
+    <value>Пользовательское Cоглашение</value>
+  </data>
+  <data name="Footer_Career" xml:space="preserve">
+    <value>Карьера</value>
+  </data>
+  <data name="Footer_Copyright" xml:space="preserve">
+    <value>Авторское право</value>
+  </data>
+  <data name="Footer_Rights" xml:space="preserve">
+    <value>Все права защищены</value>
+  </data>
+  <data name="Layout_Thing" xml:space="preserve">
+    <value>Корзина</value>
+  </data>
+  <data name="Layout_Admin" xml:space="preserve">
+    <value>Админ</value>
+  </data>
+  <data name="Profile_Created" xml:space="preserve">
+    <value>Созданно мной</value>
+  </data>
+  <data name="Coffe_Filter_Reset" xml:space="preserve">
+    <value>Сбросить</value>
   </data>
 </root>

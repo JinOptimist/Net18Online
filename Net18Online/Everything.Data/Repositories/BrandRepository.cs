@@ -8,6 +8,8 @@ namespace Everything.Data.Repositories
     public interface IBrandRepositoryReal : IBrandRepository<BrandData>
     {
         public IEnumerable<UniqBrandNamesInfo> GetBrandsNamesWithUniqStatusInfo();
+        bool IsBrandUniq(string brand);
+
     }
 
     public class BrandRepository : BaseRepository<BrandData>, IBrandRepositoryReal
@@ -31,6 +33,12 @@ namespace Everything.Data.Repositories
             brand.Coffe.Add(coffe);
 
             _webDbContext.SaveChanges();
+        }
+
+
+        public bool IsBrandUniq(string brand)
+        {
+            return !_dbSet.Any(x => x.Name == brand);
         }
 
         public IEnumerable<UniqBrandNamesInfo> GetBrandsNamesWithUniqStatusInfo()

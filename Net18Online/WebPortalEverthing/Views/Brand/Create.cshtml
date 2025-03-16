@@ -7,9 +7,11 @@
 <form method="post">
     <div>
         @Html.TextBoxFor(x => x.Name, new { placeholder = "Название" })
+        @Html.ValidationMessageFor(x => x.Name)
     </div>
     <div>
         @Html.TextBoxFor(x => x.Company, new { placeholder = "Компания владелец" })
+        @Html.ValidationMessageFor(x => x.Company)
     </div>
     <button type="submit"> создать </button>
 </form>

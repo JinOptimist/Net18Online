@@ -57,6 +57,7 @@ builder.Services.AddScoped<TextProvider>();
 builder.Services.AddScoped<MazeBuilder>();
 builder.Services.AddScoped<LoadAuthService>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<CartService>();
 builder.Services.AddScoped<LoadUserService>();
 builder.Services.AddScoped<LoadVolumeService>();
 builder.Services.AddScoped<FileProvider>();

@@ -21,20 +21,20 @@ namespace WebPortalEverthing.Hubs
             _coffeChatMessageRepository = coffeChatMessageRepository;
         }
 
-        public void AddNewMessage(string message)
+        public async Task AddNewMessage(string message)
         {
             var userName = _authService.GetName();
 
             var newMessage = $"{userName}: {message}";
 
-            SendMessage(newMessage);
+            await SendMessage(newMessage);
         }
 
-        private void SendMessage(string message)
+        private async Task SendMessage(string message)
         {
             var userId = _authService.GetUserId();
             _coffeChatMessageRepository.AddMessage(userId, message);
-            Clients.All.NewMessageAdded(message).Wait();
+            await Clients.All.NewMessageAdded(message);
         }
     }
 }

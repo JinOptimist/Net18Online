@@ -79,7 +79,7 @@ namespace WebPortalEverthing.Localizations {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Корзина.
+        ///   Looks up a localized string similar to В Корзину.
         /// </summary>
         public static string Coffe_Cart {
             get {
@@ -115,11 +115,83 @@ namespace WebPortalEverthing.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Сбросить.
+        /// </summary>
+        public static string Coffe_Filter_Reset {
+            get {
+                return ResourceManager.GetString("Coffe_Filter_Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Язык.
         /// </summary>
         public static string Coffe_Language {
             get {
                 return ResourceManager.GetString("Coffe_Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Карьера.
+        /// </summary>
+        public static string Footer_Career {
+            get {
+                return ResourceManager.GetString("Footer_Career", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Наши контакты.
+        /// </summary>
+        public static string Footer_Contact {
+            get {
+                return ResourceManager.GetString("Footer_Contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Авторское право.
+        /// </summary>
+        public static string Footer_Copyright {
+            get {
+                return ResourceManager.GetString("Footer_Copyright", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Пользовательское Cоглашение.
+        /// </summary>
+        public static string Footer_Policy {
+            get {
+                return ResourceManager.GetString("Footer_Policy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Все права защищены.
+        /// </summary>
+        public static string Footer_Rights {
+            get {
+                return ResourceManager.GetString("Footer_Rights", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Наши Сервисы.
+        /// </summary>
+        public static string Footer_Service {
+            get {
+                return ResourceManager.GetString("Footer_Service", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Админ.
+        /// </summary>
+        public static string Layout_Admin {
+            get {
+                return ResourceManager.GetString("Layout_Admin", resourceCulture);
             }
         }
         
@@ -160,6 +232,15 @@ namespace WebPortalEverthing.Localizations {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Корзина.
+        /// </summary>
+        public static string Layout_Thing {
+            get {
+                return ResourceManager.GetString("Layout_Thing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to На портал.
         /// </summary>
         public static string Layout_ToPortal {
@@ -183,6 +264,15 @@ namespace WebPortalEverthing.Localizations {
         public static string Profile_Cart {
             get {
                 return ResourceManager.GetString("Profile_Cart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Созданно мной.
+        /// </summary>
+        public static string Profile_Created {
+            get {
+                return ResourceManager.GetString("Profile_Created", resourceCulture);
             }
         }
         
