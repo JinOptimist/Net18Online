@@ -10,6 +10,12 @@ $(document).ready(function () {
         let cartItem = button.closest(".cart-item");
         let coffeId = cartItem.find("input[name='coffeId']").val();
         let quantitySpan = cartItem.find(".cart-quantity");
+        let priceSpan = cartItem.find(".cart-price");
+
+        let priceText = priceSpan.text().match(/[\d,\.]+/g)[0];
+        let quantityText = quantitySpan.text().match(/\d+$/)[0];
+
+        let pricePerItem = parseFloat(priceText.replace(',', '.')) / parseInt(quantityText);
 
         $.ajax({
             url: "/CoffeShop/RemoveFromCart",
@@ -19,6 +25,8 @@ $(document).ready(function () {
                 if (response.success) {
                     if (response.remainingQuantity > 0) {
                         quantitySpan.text(quantitySpan.text().replace(/\d+$/, response.remainingQuantity));
+                        let newTotal = (pricePerItem * response.remainingQuantity).toFixed(2);
+                        priceSpan.text(newTotal + " $");
                     } else {
                         cartItem.fadeOut(300, function () {
                             $(this).remove();

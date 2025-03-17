@@ -67,7 +67,7 @@
             @if (User.Identity?.IsAuthenticated ?? false)
             {
                 <div class="cart-group">
-                    <a href="#" class="cart-link">
+                    <a href="/CoffeShop/UserProfile" class="cart-link">
                         @Coffe.Layout_Thing
                         <span class="cart-count">@cartService.GetCartItemCount((int)authService.GetUserId())</span>
                     </a>
